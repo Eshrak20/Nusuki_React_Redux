@@ -3,8 +3,8 @@ import { features } from "@/data/education/whyNusukiData";
 
 const WhyNusuki = () => {
   return (
-    <section className="bg-white py-16 px-4">
-      <div className="">
+    <section className="py-16 px-4 bg-background transition-colors duration-300">
+      <div className="max-w-7xl mx-auto">
         <div className="-mb-3">
           <EduTitle name="Why Nusuki ?" />
         </div>
@@ -13,7 +13,7 @@ const WhyNusuki = () => {
           {features.map((item, index) => (
             <div
               key={index}
-              className="bg-white p-8 rounded-xl shadow-[0_4px_20px_rgba(0,0,0,0.05)] border border-gray-100 flex flex-col h-full"
+              className="bg-card p-8 rounded-xl shadow-sm border border-border flex flex-col h-full transition-all duration-300"
             >
               <div className="mb-4">{item.icon}</div>
 
@@ -21,7 +21,8 @@ const WhyNusuki = () => {
                 {item.title}
               </h3>
 
-              <p className="text-primary/70 text-[15px] leading-relaxed mb-6 grow">
+              {/* Changed text-primary/70 to text-muted-foreground for better dark mode contrast */}
+              <p className="text-muted-foreground text-[15px] leading-relaxed mb-6 grow">
                 {item.description}
               </p>
             </div>

@@ -4,9 +4,10 @@ import { ourCoreStrengthData } from "@/data/education/ourCoreStrengthData";
 
 const OurCoreStrength = () => {
   return (
-    <section className="relative pt-36 pb-12 bg-white overflow-hidden">
-      {/* Subtle Background Decorative Gradient */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-125 bg-linear-to-b from-primary/5 to-transparent -z-10" />
+    // Changed bg-white to bg-background
+    <section className="relative pt-36 pb-12 bg-background transition-colors duration-300 overflow-hidden">
+      {/* Subtle Background Decorative Gradient - Now uses theme primary color */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-125 bg-linear-to-b from-primary/10 to-transparent -z-10" />
 
       <div className="max-w-7xl mx-auto px-6">
         {/* Header Section */}
@@ -19,10 +20,11 @@ const OurCoreStrength = () => {
           {ourCoreStrengthData.map((item, index) => (
             <div
               key={index}
-              className="group p-8 bg-white rounded-2xl border border-slate-100 shadow-sm hover:shadow-2xl hover:-translate-y-2 transition-all duration-500"
+              // Changed bg-white to bg-card, border-slate-100 to border-border
+              className="group p-8 bg-card rounded-2xl border border-border shadow-sm hover:shadow-2xl hover:-translate-y-2 transition-all duration-500"
             >
               <div className="flex flex-col items-center text-center">
-                {/* Number/Stat */}
+                {/* Number/Stat - Uses text-primary (auto-swaps in dark mode) */}
                 <span className="text-5xl font-extrabold mb-4 text-primary tracking-tight">
                   {item.value}
                 </span>
@@ -33,10 +35,10 @@ const OurCoreStrength = () => {
                 </h3>
 
                 {/* Decorative Divider */}
-                <div className="w-10 h-1 bg-primary/10 mb-4 group-hover:w-20 group-hover:bg-primary transition-all duration-500" />
+                <div className="w-10 h-1 bg-primary/20 mb-4 group-hover:w-20 group-hover:bg-primary transition-all duration-500" />
 
-                {/* Description */}
-                <p className="text-slate-600 leading-relaxed text-sm md:text-base">
+                {/* Description - Changed text-slate-600 to text-muted-foreground */}
+                <p className="text-muted-foreground leading-relaxed text-sm md:text-base">
                   {item.description}
                 </p>
               </div>
@@ -52,10 +54,10 @@ const OurCoreStrength = () => {
                 Your Study Abroad Steps
               </h2>
             </div>
-            
           </div>
 
-          <div className="relative group rounded-3xl overflow-hidden bg-white p-2">
+          {/* Container - Changed bg-white to bg-card */}
+          <div className="relative group rounded-3xl overflow-hidden bg-card p-2 border border-border shadow-md">
             <img
               className="w-full h-auto object-cover rounded-2xl transition-transform duration-700 group-hover:scale-[1.02]"
               src={image}

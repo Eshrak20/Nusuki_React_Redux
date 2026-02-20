@@ -3,13 +3,13 @@ import { partners } from "@/data/education/educationPartnerData";
 
 const EducationPartner = () => {
   return (
-    <section className="py-20 px-6">
+    <section className="pt-20 pb-32 px-6">
       <div className="max-w-7xl mx-auto">
         {/* Section Header */}
         <div className="-mb-10 text-center">
           <EduTitle name="Our Education Partners" />
         </div>
-        <p className="text-gray-500 mb-16 text-center text-lg">
+        <p className="text-muted-foreground mb-16 text-center text-lg">
           Collaborating with world-class institutions to deliver excellence.
         </p>
 
