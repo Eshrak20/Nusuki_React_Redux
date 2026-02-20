@@ -3,32 +3,40 @@ import { partners } from "@/data/education/educationPartnerData";
 
 const EducationPartner = () => {
   return (
-    <section className="bg-white py-16 px-4">
-      {/* Centered Container */}
-      <div className="">
-        <div className="mb-8">
+    <section className="py-20 px-6">
+      <div className="max-w-7xl mx-auto">
+        {/* Section Header */}
+        <div className="-mb-10 text-center">
           <EduTitle name="Our Education Partners" />
         </div>
+        <p className="text-gray-500 mb-16 text-center text-lg">
+          Collaborating with world-class institutions to deliver excellence.
+        </p>
 
-        {/* Logo Grid Container using Flex for easy centering of last row */}
-        <div className="flex flex-wrap justify-center border-t border-l border-gray-100">
+        {/* Centered Logo Flex Container */}
+        <div className="flex flex-wrap justify-center gap-6">
           {partners.map((partner, index) => (
             <div
               key={index}
               className="
-                flex items-center justify-center p-6
-                border-r border-b border-gray-100
-                transition-colors duration-300 hover:bg-gray-50/50
-                w-1/2 md:w-1/4
+                group relative flex items-center justify-center 
+                p-3 bg-white rounded-2xl border border-gray-100
+                shadow-sm hover:shadow-md hover:border-blue-100
+                transition-all duration-300 ease-in-out
+                /* Responsive Widths */
+                w-[calc(50%-1.5rem)] md:w-[calc(33.333%-1.5rem)] lg:w-[calc(25%-1.5rem)]
+                max-h-50
               "
             >
-              <div className="flex items-center justify-center">
-                <img
-                  src={partner.logo}
-                  alt={partner.name}
-                  className="h-40 w-48 object-contain grayscale hover:grayscale-0 transition-all duration-300 opacity-70 hover:opacity-100"
-                />
-              </div>
+              <img
+                src={partner.logo}
+                alt={partner.name}
+                className="
+                    max-h-25 max-w-50 object-contain 
+                    transition-transform duration-500 
+                    group-hover:scale-110
+                  "
+              />
             </div>
           ))}
         </div>
