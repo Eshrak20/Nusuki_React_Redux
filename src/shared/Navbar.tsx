@@ -158,14 +158,18 @@ export default function Navbar() {
             <div className="hidden sm:flex gap-2">
               <Link to="/login">
                 <Button
-                  className="rounded-full font-medium text-primary hover:bg-primary hover:text-white"
+                  // Updated: hover:text-primary-foreground ensures text is readable on primary background in both modes
+                  className="rounded-full font-medium text-primary transition-colors duration-300"
                   variant="ghost"
                 >
                   Login
                 </Button>
               </Link>
               <Link to="/signup">
-                <Button className="bg-primary rounded-full font-medium text-white hover:opacity-90">
+                <Button
+                  // Updated: text-primary-foreground matches your CSS variable for high contrast
+                  className="bg-primary rounded-full font-medium text-primary-foreground hover:opacity-90 transition-opacity"
+                >
                   Sign Up
                 </Button>
               </Link>
@@ -177,13 +181,18 @@ export default function Navbar() {
             <div className="md:hidden">
               <Popover>
                 <PopoverTrigger asChild>
-                  <Button variant="ghost" size="icon">
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="text-foreground"
+                  >
                     <MenuIcon size={20} />
                   </Button>
                 </PopoverTrigger>
 
                 <PopoverContent
                   align="end"
+                  // bg-card and border-border handle dark mode automatically per your CSS
                   className="w-64 border-border bg-card p-3 shadow-xl"
                 >
                   {navigationLinks.map((link) => {
@@ -196,10 +205,11 @@ export default function Navbar() {
                           <button
                             onClick={() => toggleSubmenu(link.label)}
                             className={cn(
-                              "flex w-full items-center justify-between rounded-md px-3 py-2 font-semibold",
+                              "flex w-full items-center justify-between rounded-md px-3 py-2 transition-colors",
+                              // Use foreground for default, hajj for active
                               location.pathname.startsWith(link.href)
-                                ? "text-hajj"
-                                : "",
+                                ? "font-extrabold"
+                                : "text-foreground",
                             )}
                           >
                             {link.label}
@@ -215,10 +225,10 @@ export default function Navbar() {
                           <Link
                             to={link.href}
                             className={cn(
-                              "block rounded-md px-3 py-2 font-semibold",
+                              "block rounded-md px-3 py-2 transition-colors",
                               location.pathname === link.href
-                                ? "text-hajj"
-                                : "",
+                                ? "text-primary font-extrabold"
+                                : "text-foreground",
                             )}
                           >
                             {link.label}
@@ -229,7 +239,7 @@ export default function Navbar() {
                           <motion.div
                             initial={{ height: 0, opacity: 0 }}
                             animate={{ height: "auto", opacity: 1 }}
-                            className="ml-4 mt-1 flex flex-col gap-1 border-l pl-2"
+                            className="ml-4 mt-1 flex flex-col gap-1 border-l border-border pl-2"
                           >
                             {link.subLinks.map((sub) => (
                               <Link
@@ -237,6 +247,7 @@ export default function Navbar() {
                                 to={sub.href}
                                 className={cn(
                                   "rounded-md px-3 py-2 text-lg transition-colors",
+                                  // text-white is usually okay on the colored 'hajj' background
                                   location.pathname === sub.href
                                     ? "bg-hajj text-white"
                                     : "text-muted-foreground hover:bg-hajj hover:text-white",
@@ -259,12 +270,24 @@ export default function Navbar() {
       {showTopBtn && (
         <button
           onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-          className="fixed bottom-6 right-6 w-14 h-14 rounded-full bg-primary text-white shadow-xl hover:shadow-2xl transition-all duration-300 ease-out z-50 group border-2 border-blue-400/30 hover:border-blue-300/60 hover:scale-110 transform hover:-translate-y-1 animate-pulse-slow"
+          className="
+      fixed bottom-6 right-6 w-14 h-14 rounded-full z-50 group transform transition-all duration-300 ease-out 
+      bg-primary text-primary-foreground shadow-xl 
+      hover:shadow-2xl hover:scale-110 hover:-translate-y-1 
+      border-2 border-primary/30 hover:border-primary/60 
+      animate-pulse-slow
+    "
           aria-label="Scroll to top"
         >
           <ArrowUp className="w-6 h-6 mx-auto group-hover:-translate-y-0.5 transition-transform duration-300" />
 
-          <div className="absolute inset-0 rounded-full bg-blue-400/20 blur-md group-hover:bg-blue-400/30 transition-all duration-500 -z-10"></div>
+          {/* Dynamic Glow: Uses primary color with opacity so it matches the theme */}
+          <div
+            className="
+      absolute inset-0 rounded-full blur-md -z-10 transition-all duration-500
+      bg-primary/20 group-hover:bg-primary/40
+    "
+          ></div>
         </button>
       )}
     </>
