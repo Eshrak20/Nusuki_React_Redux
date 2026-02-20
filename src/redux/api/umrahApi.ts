@@ -1,0 +1,36 @@
+import type { SignificanceResponse } from "@/types/hajj/types.sig";
+import type { VisaRequirementsResponse } from "../../types/hajj/types.visa";
+import { baseApi } from "./baseApi";
+import type { HajjUmPackagesResponse } from "@/types/hajj/types.pack";
+
+export const umrahApi = baseApi.injectEndpoints({
+  endpoints: (builder) => ({
+    getUmrahVisa: builder.query<VisaRequirementsResponse, void>({
+      query: () => ({
+        url: "/umrah-visa-requirements",
+        method: "GET",
+      }),
+      providesTags: ["Umrah"],
+    }),
+    getUmrahSig: builder.query<SignificanceResponse, void>({
+      query: () => ({
+        url: "/umrah-significance",
+        method: "GET",
+      }),
+      providesTags: ["Umrah"],
+    }),
+    getUmrahPack: builder.query<HajjUmPackagesResponse, void>({
+      query: () => ({
+        url: "/umrah-packages",
+        method: "GET",
+      }),
+      providesTags: ["Umrah"],
+    }),
+  }),
+});
+
+export const {
+  useGetUmrahVisaQuery,
+  useGetUmrahSigQuery,
+  useGetUmrahPackQuery,
+} = umrahApi;
