@@ -6,7 +6,7 @@ const OurCoreStrength = () => {
   return (
     <section className="relative pt-36 pb-12 bg-white overflow-hidden">
       {/* Subtle Background Decorative Gradient */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[500px] bg-gradient-to-b from-primary/5 to-transparent -z-10" />
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-125 bg-linear-to-b from-primary/5 to-transparent -z-10" />
 
       <div className="max-w-7xl mx-auto px-6">
         {/* Header Section */}

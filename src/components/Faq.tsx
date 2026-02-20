@@ -32,7 +32,7 @@ const Faq = ({ faqs }: FaqProps) => {
               <AccordionTrigger
                 className="flex justify-between items-center rounded-t-lg p-5 font-bold text-sm md:text-base tracking-tight shadow-md transition-all duration-300 no-underline hover:no-underline focus:no-underline focus:outline-none
                   bg-white text-hajj
-                  data-[state=open]:bg-primary data-[state=open]:text-white data-[state=open]:rounded-b-none"
+                  data-[state=open]:bg-hajj data-[state=open]:text-white data-[state=open]:rounded-b-none"
               >
                 {faq.question}
               </AccordionTrigger>
