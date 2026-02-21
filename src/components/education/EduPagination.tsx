@@ -1,33 +1,40 @@
-import { Pagination } from "swiper/modules";
-import { PaginationContent, PaginationEllipsis, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "../ui/pagination";
+import { useDispatch } from "react-redux";
+import { setPage } from "@/redux/features/universityFilterSlice";
 
-const EduPagination = () => {
+const EduPagination = ({ pagination }) => {
+  const dispatch = useDispatch();
+
+  if (!pagination) return null;
+
+  const { current_page, last_page } = pagination;
+
+  const handlePageChange = (page) => {
+    if (page >= 1 && page <= last_page) {
+      dispatch(setPage(page));
+    }
+  };
+
+  const pages = Array.from({ length: last_page }, (_, i) => i + 1);
+
   return (
-    <div>
-      <Pagination>
-        <PaginationContent>
-          <PaginationItem>
-            <PaginationPrevious href="#" />
-          </PaginationItem>
-          <PaginationItem>
-            <PaginationLink href="#">1</PaginationLink>
-          </PaginationItem>
-          <PaginationItem>
-            <PaginationLink href="#" isActive>
-              2
-            </PaginationLink>
-          </PaginationItem>
-          <PaginationItem>
-            <PaginationLink href="#">3</PaginationLink>
-          </PaginationItem>
-          <PaginationItem>
-            <PaginationEllipsis />
-          </PaginationItem>
-          <PaginationItem>
-            <PaginationNext href="#" />
-          </PaginationItem>
-        </PaginationContent>
-      </Pagination>
+    <div className="flex gap-2 justify-center mt-4">
+      <button onClick={() => handlePageChange(current_page - 1)} disabled={current_page === 1}>
+        Prev
+      </button>
+
+      {pages.map((p) => (
+        <button
+          key={p}
+          onClick={() => handlePageChange(p)}
+          className={p === current_page ? "font-bold underline" : ""}
+        >
+          {p}
+        </button>
+      ))}
+
+      <button onClick={() => handlePageChange(current_page + 1)} disabled={current_page === last_page}>
+        Next
+      </button>
     </div>
   );
 };

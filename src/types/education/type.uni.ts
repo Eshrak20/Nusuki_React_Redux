@@ -29,6 +29,6 @@ export interface UniversityApiResponse {
 
 export interface UniversityQueryParams {
   page?: number;
-  search?: string;
+  keyword?: string;
   country?: string;
 }
