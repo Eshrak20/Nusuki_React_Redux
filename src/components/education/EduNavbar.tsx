@@ -10,6 +10,7 @@ import {
   X,
   ChevronDown,
 } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const EduNavbar = () => {
   const [activeTab, setActiveTab] = useState("Home");
@@ -19,10 +20,30 @@ const EduNavbar = () => {
 
   const navItems = [
     { name: "Home", icon: <Home size={22} />, hasSubmenu: false },
-    { name: "Destinations", icon: <MapPin size={22} />, hasSubmenu: true },
-    { name: "Find Institution", icon: <School size={22} />, hasSubmenu: false },
-    { name: "Courses", icon: <GraduationCap size={22} />, hasSubmenu: false },
-    { name: "Tests", icon: <FileText size={22} />, hasSubmenu: false },
+    {
+      name: "Destinations",
+      icon: <MapPin size={22} />,
+      hasSubmenu: true,
+      path: "#",
+    },
+    {
+      name: "Find Institution",
+      icon: <School size={22} />,
+      hasSubmenu: false,
+      path: "/education/institution",
+    },
+    {
+      name: "Courses",
+      icon: <GraduationCap size={22} />,
+      hasSubmenu: false,
+      path: "/education/courses",
+    },
+    {
+      name: "Tests",
+      icon: <FileText size={22} />,
+      hasSubmenu: false,
+      path: "/education/tests",
+    },
   ];
 
   return (
@@ -43,7 +64,8 @@ const EduNavbar = () => {
               key={item.name}
               className="relative group lg:py-5 h-full flex items-center"
             >
-              <button
+              <Link
+                to={item.path as string}
                 onClick={() => setActiveTab(item.name)}
                 className={`flex items-center space-x-2 text-[16px] font-medium transition-colors cursor-pointer
                   ${
@@ -71,7 +93,7 @@ const EduNavbar = () => {
                 >
                   {item.name}
                 </span>
-              </button>
+              </Link>
 
               {activeTab === item.name && (
                 <div className="absolute bottom-2 left-0 w-full h-1 bg-primary rounded-t-md" />
@@ -118,7 +140,8 @@ const EduNavbar = () => {
         <div className="flex flex-col space-y-4">
           {navItems.map((item) => (
             <div key={item.name} className="flex flex-col">
-              <button
+              <Link
+                to={item.path as string}
                 onClick={() => {
                   // If clicking the already active tab, close it (toggle effect)
                   if (activeTab === item.name) {
@@ -160,7 +183,7 @@ const EduNavbar = () => {
                     className={`transition-transform duration-200 ${activeTab === item.name ? "rotate-180" : ""}`}
                   />
                 )}
-              </button>
+              </Link>
 
               {/* Mobile Submenu - Active items now colored */}
               {item.hasSubmenu && (
