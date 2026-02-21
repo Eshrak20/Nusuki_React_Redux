@@ -35,7 +35,7 @@ const OurCoreStrength = () => {
                 </h3>
 
                 {/* Decorative Divider */}
-                <div className="w-10 h-1 bg-primary/20 mb-4 group-hover:w-20 group-hover:bg-primary transition-all duration-500" />
+                <div className="hidden lg:block w-10 h-1 bg-primary/20 mb-4 group-hover:w-20 group-hover:bg-primary transition-all duration-500" />
 
                 {/* Description - Changed text-slate-600 to text-muted-foreground */}
                 <p className="text-muted-foreground leading-relaxed text-sm md:text-base">
@@ -48,7 +48,7 @@ const OurCoreStrength = () => {
 
         {/* Study Abroad Steps Section */}
         <div className="">
-          <div className="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-6">
+          <div className="flex flex-col md:flex-row md:items-center justify-between mb-2 lg:mb-8 gap-6">
             <div className="flex-1">
               <h2 className="text-primary text-3xl md:text-4xl font-bold tracking-tight mb-2">
                 Your Study Abroad Steps

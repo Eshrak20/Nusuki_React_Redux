@@ -3,7 +3,7 @@ import { features } from "@/data/education/whyNusukiData";
 
 const WhyNusuki = () => {
   return (
-    <section className="py-16 px-4 bg-background transition-colors duration-300">
+    <section className="py-28 px-4 bg-background transition-colors duration-300">
       <div className="max-w-7xl mx-auto">
         <div className="-mb-3">
           <EduTitle name="Why Nusuki ?" />

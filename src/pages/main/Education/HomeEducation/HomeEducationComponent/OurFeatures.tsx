@@ -4,7 +4,7 @@ import { features } from "@/data/education/ourFeaturesData";
 const OurFeatures = () => {
   return (
     // Changed to use theme-based background
-    <section className="py-16 px-4 bg-background transition-colors duration-300">
+    <section className="lg:py-16 px-4 bg-background transition-colors duration-300">
       <div className="max-w-7xl mx-auto">
         {" "}
         {/* Added wrapper to match your site's standard width */}

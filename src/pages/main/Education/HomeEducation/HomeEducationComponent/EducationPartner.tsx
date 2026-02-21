@@ -3,7 +3,7 @@ import { partners } from "@/data/education/educationPartnerData";
 
 const EducationPartner = () => {
   return (
-    <section className="pt-20 pb-32 px-6">
+    <section className="pt-2 lg:pt-20 pb-20 lg:pb-32 px-6">
       <div className="max-w-7xl mx-auto">
         {/* Section Header */}
         <div className="-mb-10 text-center">
@@ -32,7 +32,7 @@ const EducationPartner = () => {
                 src={partner.logo}
                 alt={partner.name}
                 className="
-                    max-h-25 max-w-50 object-contain 
+                    max-h-25 max-w-44 object-contain 
                     transition-transform duration-500 
                     group-hover:scale-110
                   "
