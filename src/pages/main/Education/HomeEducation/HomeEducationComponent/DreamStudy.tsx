@@ -13,7 +13,7 @@ const DreamStudy = () => {
           </div>
 
           {/* Fixed p tag: added text-muted-foreground for dark mode compatibility */}
-          <p className="text-muted-foreground text-base md:text-lg max-w-2xl leading-relaxed">
+          <p className="text-muted-foreground text-base md:text-lg lg:text-left mx-7 lg:mx-0 text-center max-w-2xl leading-relaxed">
             Start your inspiring academic journey in these vibrant and welcoming
             study destinations.
           </p>
