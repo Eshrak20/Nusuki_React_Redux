@@ -10,21 +10,18 @@ export const umrahApi = baseApi.injectEndpoints({
         url: "/umrah-visa-requirements",
         method: "GET",
       }),
-      providesTags: ["Umrah"],
     }),
     getUmrahSig: builder.query<SignificanceResponse, void>({
       query: () => ({
         url: "/umrah-significance",
         method: "GET",
       }),
-      providesTags: ["Umrah"],
     }),
     getUmrahPack: builder.query<HajjUmPackagesResponse, void>({
       query: () => ({
         url: "/umrah-packages",
         method: "GET",
       }),
-      providesTags: ["Umrah"],
     }),
   }),
 });

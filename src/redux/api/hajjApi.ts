@@ -10,28 +10,24 @@ export const hajjApi = baseApi.injectEndpoints({
         url: "/hajj-visa-requirements",
         method: "GET",
       }),
-      providesTags: ["Hajj"],
     }),
     getHajjPreRegister: builder.query<VisaRequirementsResponse, void>({
       query: () => ({
         url: "/hajj-pre-registration",
         method: "GET",
       }),
-      providesTags: ["Hajj"],
     }),
     getHajjSig: builder.query<SignificanceResponse, void>({
       query: () => ({
         url: "/hajj-significance",
         method: "GET",
       }),
-      providesTags: ["Hajj"],
     }),
     getHajjPack: builder.query<HajjUmPackagesResponse, void>({
       query: () => ({
         url: "/hajj-packages",
         method: "GET",
       }),
-      providesTags: ["Hajj"],
     }),
   }),
 });

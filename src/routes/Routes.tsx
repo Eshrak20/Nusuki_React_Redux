@@ -11,6 +11,7 @@ import Visa from "@/pages/main/Visa/Visa";
 import EducationLayout from "@/layouts/EducationLayout";
 import HomeEducation from "@/pages/main/Education/HomeEducation/HomeEducation";
 import ErrorPage from "@/components/ErrorPage";
+import HomeInstitution from "@/pages/main/Education/Institution/HomeInstitution/HomeInstitution";
 
 export const router = createBrowserRouter([
   {
@@ -29,6 +30,10 @@ export const router = createBrowserRouter([
           {
             index: true,
             element: <HomeEducation />,
+          },
+          {
+            path:"institute",
+            element: <HomeInstitution />,
           },
         ],
       },

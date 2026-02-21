@@ -9,6 +9,5 @@ export const baseApi = createApi({
 
     credentials: "include",
   }),
-  tagTypes: ["Flight", "Hajj", "Umrah", "Visa"],
   endpoints: () => ({}),
 });

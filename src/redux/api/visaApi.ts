@@ -8,14 +8,12 @@ export const visaApi = baseApi.injectEndpoints({
         url: "/visa/tour-packages",
         method: "GET",
       }),
-      providesTags: ["Visa"],
     }),
     getVisaServices: builder.query<CmnCardSliderListResponse, void>({
       query: () => ({
         url: "/visa/services",
         method: "GET",
       }),
-      providesTags: ["Visa"],
     }),
   }),
 });
