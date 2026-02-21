@@ -3,7 +3,7 @@ import { destinations } from "@/data/education/dreamStudyData";
 
 const DreamStudy = () => {
   return (
-    <section className="pt-30 pb-10 px-4 bg-background transition-colors duration-300">
+    <section className="pt-10 lg:pt-30 pb-10 px-4 bg-background transition-colors duration-300">
       <div className="max-w-7xl mx-auto">
         {/* Header Section */}
         <div className="mb-12">
