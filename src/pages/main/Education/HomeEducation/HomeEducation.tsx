@@ -5,6 +5,10 @@ import WhyNusuki from "./HomeEducationComponent/WhyNusuki";
 import EducationPartner from "./HomeEducationComponent/EducationPartner";
 
 const HomeEducation = () => {
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth",
+  });
   return (
     <>
       <div className="max-w-7xl mx-auto">

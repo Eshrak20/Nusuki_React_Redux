@@ -54,6 +54,8 @@ const navigationLinks = [
 
 export default function Navbar() {
   const location = useLocation();
+  console.log(location);
+  
   const [openMobileMenu, setOpenMobileMenu] = useState<string | null>(null);
   const [showTopBtn, setShowTopBtn] = useState(false);
   useEffect(() => {
@@ -270,13 +272,13 @@ export default function Navbar() {
       {showTopBtn && (
         <button
           onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-          className="
+          className={`
       fixed bottom-6 right-6 w-14 h-14 rounded-full z-50 group transform transition-all duration-300 ease-out 
-      bg-primary text-primary-foreground shadow-xl 
+      ${location.pathname.startsWith("/hajj") || location.pathname.startsWith("/umrah") ? "bg-hajj" : "bg-primary"} text-primary-foreground shadow-xl 
       hover:shadow-2xl hover:scale-110 hover:-translate-y-1 
       border-2 border-primary/30 hover:border-primary/60 
       animate-pulse-slow
-    "
+    `}
           aria-label="Scroll to top"
         >
           <ArrowUp className="w-6 h-6 mx-auto group-hover:-translate-y-0.5 transition-transform duration-300" />

@@ -2,6 +2,7 @@ import EduTitle from "@/components/education/EduTitle";
 import { partners } from "@/data/education/educationPartnerData";
 
 const EducationPartner = () => {
+  
   return (
     <section className="pt-2 lg:pt-20 pb-20 lg:pb-32 px-6">
       <div className="max-w-7xl mx-auto">

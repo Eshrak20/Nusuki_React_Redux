@@ -33,7 +33,7 @@ const HajjUmPackages = () => {
     undefined,
     { skip: !isUmrahPack },
   );
-
+  
   /* ---------------- BANNER TITLE ---------------- */
   const bannerTitle = isHajjPack ? "Hajj Packages 2026" : "Umrah Packages";
 
@@ -48,12 +48,12 @@ const HajjUmPackages = () => {
 
   /* ---------------- SAFE DATA EXTRACTION ---------------- */
   const packages = isHajjPack
-    ? (hajjResponse?.data ?? [])
-    : (umrahResponse?.data ?? []);
+  ? (hajjResponse?.data.data ?? [])
+  : (umrahResponse?.data.data ?? []);
 
   if (packages.length === 0) {
     return (
-      <div className="py-20 text-center text-gray-500">
+      <div className="py-48 text-center text-gray-500">
         No packages available right now.
       </div>
     );
@@ -61,29 +61,18 @@ const HajjUmPackages = () => {
 
   /* ================= LOGIC ================= */
 
-  // First 3 items
-  const firstRowPackages = packages.slice(0, 3);
+  // // First 3 items
+  // const firstRowPackages = packages?.slice(0, 6);
 
-  // Remaining
-  const remainingPackages = packages.slice(3);
+  // // Remaining
+  // const remainingPackages = packages?.slice(3);
 
-  // Group remaining by category
-  const groupedPackages = remainingPackages.reduce(
-    (acc: Record<string, typeof packages>, item) => {
-      if (!acc[item.category]) {
-        acc[item.category] = [];
-      }
-      acc[item.category].push(item);
-      return acc;
-    },
-    {},
-  );
 
   return (
     <>
       <HajjUmrahBanner title={bannerTitle} />
 
-      <div className="max-w-387.5 mx-auto py-10 px-4">
+      <div className="max-w-350 mx-auto py-10 px-4">
         <AboBanHajjUmrah
           title={`Our ${isHajjPack ? "Hajj" : "Umrah"} Packages`}
           description="Choose the package that best suits your spiritual journey, comfort, and budget."
@@ -91,19 +80,8 @@ const HajjUmPackages = () => {
 
         {/* ===== FIRST ROW ===== */}
         <section className="my-20">
-          <HajjUmPackCard packages={firstRowPackages} />
+          <HajjUmPackCard data={packages} />
         </section>
-
-        {/* ===== CATEGORY SECTIONS ===== */}
-        {Object.entries(groupedPackages).map(([category, items]) => (
-          <section key={category} className="my-20">
-            <h1 className="mb-10 text-center text-3xl font-semibold">
-              {category}
-            </h1>
-
-            <HajjUmPackCard packages={items} />
-          </section>
-        ))}
 
         <Faq faqs={faqData} />
 
