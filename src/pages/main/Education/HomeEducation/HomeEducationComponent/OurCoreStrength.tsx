@@ -3,6 +3,7 @@ import image from "../../../../../assets/reactAssets/Education/image.png";
 import { ourCoreStrengthData } from "@/data/education/ourCoreStrengthData";
 
 const OurCoreStrength = () => {
+
   return (
     // Changed bg-white to bg-background
     <section className="relative pt-36 pb-12 bg-background transition-colors duration-300 overflow-hidden">

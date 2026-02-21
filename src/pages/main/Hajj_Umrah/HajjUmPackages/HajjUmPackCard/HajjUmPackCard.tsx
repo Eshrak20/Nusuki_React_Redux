@@ -1,18 +1,6 @@
-import type { HajjUmPackCardProps } from "@/types/hajj/types.pack";
-import { useState } from "react";
-import {
-  Phone,
-  Download,
-  Clock,
-  Plane,
-  Bed,
-  Building2,
-  Building,
-  Utensils,
-  MapPin,
-} from "lucide-react";
+import type { HajjPackageItem, HajjPackageList } from "@/types/hajj/types.pack";
+import { Play } from "lucide-react";
 import { motion, type Variants } from "framer-motion";
-import type { ReactNode } from "react";
 
 /* ======================================================
    Motion Configuration
@@ -51,219 +39,68 @@ const cardVariants: Variants = {
 };
 
 /* ======================================================
-   Helpers
-====================================================== */
-
-const getDirectionByIndex = (index: number): Direction => {
-  if (index === 0) return "left";
-  if (index === 2) return "right";
-  return "center";
-};
-
-// Get center indexes of each row (3 cards per row)
-const getCenterIndexes = (length: number) => {
-  const centers: number[] = [];
-  for (let i = 0; i < length; i += 3) {
-    if (i + 1 < length) centers.push(i + 1);
-  }
-  return centers;
-};
-
-/* ======================================================
-   Feature Row
-====================================================== */
-
-interface FeatureRowProps {
-  icon: ReactNode;
-  label: string;
-  value?: string | number;
-  isFeatured: boolean;
-}
-
-const FeatureRow = ({ icon, label, value, isFeatured }: FeatureRowProps) => (
-  <div
-    className={`flex items-center justify-between border-b py-2 last:border-0 ${
-      isFeatured ? "border-white" : "border-hajj"
-    }`}
-  >
-    <div className="flex items-center gap-2">
-      <span className={isFeatured ? "text-white" : "text-hajj"}>{icon}</span>
-      <span className="font-semibold">{label}:</span>
-    </div>
-    <span className="font-light">{value || "N/A"}</span>
-  </div>
-);
-
-/* ======================================================
    Main Component
 ====================================================== */
 
-const HajjUmPackCard = ({ packages }: HajjUmPackCardProps) => {
-  const [featuredIndex, setFeaturedIndex] = useState<number | null>(null);
-
-  if (!packages?.length) return null;
-
-  // Compute center indexes
-  const centerIndexes = getCenterIndexes(packages.length);
-
+const HajjUmPackCard = ({ data }: HajjPackageList) => {
   return (
     <motion.section
       variants={containerVariants}
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, amount: 0.25 }}
-      className="mt-12 grid  grid-cols-1 gap-8 md:grid-cols-3 md:gap-10"
+      className="mt-12 grid grid-cols-1 gap-8 md:grid-cols-3 md:gap-14"
     >
-      {packages.map((pkg, index) => {
-        // ✅ Determine if featured
-        const isFeatured =
-          featuredIndex !== null
-            ? index === featuredIndex
-            : centerIndexes.includes(index);
-
-        const direction = getDirectionByIndex(index);
-
+      {data.map((pkg: HajjPackageItem) => {
         return (
           <motion.article
             key={pkg.id}
-            custom={direction}
-            onClick={() => setFeaturedIndex(index)}
             variants={cardVariants}
-            whileHover={{
-              y: -6,
-              scale: isFeatured ? 1.05 : 1.02,
-            }}
-            transition={{ type: "spring", stiffness: 220, damping: 20 }}
-            className={`relative flex flex-col p-6 cursor-pointer ${
-              isFeatured
-                ? "z-10 rounded-xl bg-hajj py-12 text-white shadow-2xl"
-                : "rounded-lg border border-gray-100 bg-white py-8 text-gray-800 shadow-lg"
-            }`}
+            initial="initial"
+            whileHover="hover"
+            className="relative flex flex-col overflow-hidden rounded-[2rem] bg-[#f2f2f2] shadow-xl transition-shadow duration-300 hover:shadow-2xl"
           >
-            {/* Header */}
-            <header className="mb-4 flex items-start gap-3">
-              <div className={isFeatured ? "text-white" : "text-hajj"}>
-                {index === 0 && <Utensils size={32} />}
-                {index === 1 && <Building2 size={32} />}
-                {index === 2 && <Building size={32} />}
+            {/* Package Image */}
+            <div className="relative h-96 w-full overflow-hidden rounded-b-[1.5rem]">
+              <img
+                src={pkg.card_image}
+                alt={pkg.name}
+                className="h-full w-full object-cover"
+              />
+            </div>
+
+            {/* Content Section */}
+            <div className="flex flex-col items-center px-6 pb-8 pt-6 text-center">
+              {/* Title */}
+              <h3 className="text-3xl font-black tracking-tight h-12 inline-flex items-center gap-2 bg-linear-to-r from-[#1a1a1a] to-hajj-secondary bg-clip-text text-transparent">
+                {pkg.name}
+              </h3>
+
+              {/* Tagline */}
+              <p className="mt-2 text-lg font-bold text-hajj">{pkg.tagline}</p>
+
+              {/* Pricing */}
+              <div className="mt-6 flex items-center gap-2 text-xl font-extrabold text-[#1a1a1a]">
+                <span className="font-medium text-gray-600">Begins At</span>
+                <span className="text-2xl">
+                  {Number(pkg.price).toLocaleString()}
+                </span>
+                <span className="font-medium text-gray-600">BDT</span>
               </div>
 
-              <div>
-                <h3 className="font-serif text-2xl font-bold">{pkg.title}</h3>
-                <p
-                  className={`mt-1 text-xs ${
-                    isFeatured ? "text-gray-200" : "text-gray-500"
-                  }`}
-                >
-                  {pkg.short_description}
-                </p>
-              </div>
-            </header>
-
-            <hr
-              className={`my-4 ${
-                isFeatured ? "border-white" : "border-dotted border-hajj"
-              }`}
-            />
-
-            {/* Price */}
-            <section className="mb-6 flex items-baseline gap-1">
-              <span className="text-xs font-bold uppercase">BDT</span>
-              <span className="text-5xl font-black">{pkg.price}</span>
-              <span
-                className={`ml-2 text-[10px] font-bold uppercase ${
-                  isFeatured ? "text-white" : "text-hajj"
-                }`}
-              >
-                Starts From
-              </span>
-            </section>
-
-            {/* Features */}
-            <section className="grow text-sm">
-              <FeatureRow
-                icon={<Clock size={16} />}
-                label="Duration"
-                value={pkg.duration}
-                isFeatured={isFeatured}
-              />
-
-              <FeatureRow
-                icon={<Plane size={16} />}
-                label="Flight"
-                value={pkg.flight}
-                isFeatured={isFeatured}
-              />
-
-              <FeatureRow
-                icon={<Bed size={16} />}
-                label="Hotel Aziziyah/Shisha"
-                value={pkg.hotel_aziziyah_shisha}
-                isFeatured={isFeatured}
-              />
-
-              <FeatureRow
-                icon={<Building2 size={16} />}
-                label="Hotel Makkah"
-                value={pkg.hotel_makkah}
-                isFeatured={isFeatured}
-              />
-
-              <FeatureRow
-                icon={<Building size={16} />}
-                label="Hotel Madinah"
-                value={pkg.hotel_madinah}
-                isFeatured={isFeatured}
-              />
-
-              <FeatureRow
-                icon={<Utensils size={16} />}
-                label="Food"
-                value={pkg.food}
-                isFeatured={isFeatured}
-              />
-
-              <FeatureRow
-                icon={<MapPin size={16} />}
-                label="Services"
-                value={pkg.services}
-                isFeatured={isFeatured}
-              />
-            </section>
-
-            {/* Actions */}
-            <footer className="mt-8 space-y-3">
+              {/* View Details Button */}
               <motion.button
-                whileHover={{ y: -2 }}
-                whileTap={{ scale: 0.97 }}
-                className={`flex w-full items-center justify-center gap-2 rounded-md py-3 text-xs font-bold uppercase tracking-widest shadow-md transition-colors ${
-                  isFeatured
-                    ? "bg-white text-hajj hover:bg-gray-100"
-                    : "bg-hajj text-white hover:bg-hajj/80"
-                }`}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                transition={{ type: "spring", stiffness: 400, damping: 25 }}
+                className="mt-8 flex items-center gap-3 rounded-full bg-hajj px-8 py-3 text-lg font-bold text-white shadow-md hover:shadow-lg transition-shadow"
               >
-                <Phone size={14} /> Call Now
+                <div className="flex h-8 w-8 items-center justify-center rounded-full bg-white text-hajj">
+                  <Play fill="currentColor" size={16} className="ml-0.5" />
+                </div>
+                View Details
               </motion.button>
-
-              <motion.a
-                href={pkg.attachment}
-                target="_blank"
-                rel="noopener noreferrer"
-                whileHover={{ y: -2 }}
-                whileTap={{ scale: 0.97 }}
-                className={`flex w-full items-center justify-center gap-2 rounded-md py-3 text-xs font-bold uppercase tracking-widest shadow-md transition-colors ${
-                  isFeatured
-                    ? "bg-white text-hajj hover:bg-gray-100"
-                    : "bg-hajj text-white hover:bg-hajj/80"
-                }`}
-              >
-                <Download size={14} /> Download Itinerary
-              </motion.a>
-            </footer>
-
-            <p className="mt-4 text-center text-[10px]">
-              *Terms & Conditions Applicable
-            </p>
+            </div>
           </motion.article>
         );
       })}

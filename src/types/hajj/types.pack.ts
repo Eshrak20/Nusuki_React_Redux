@@ -1,46 +1,31 @@
 import type { ApiResponse } from "../types.common";
 
 /* ================= SINGLE PACKAGE ================= */
-export interface HajjUmPackageItem {
-  id: string;
-  is_featured: boolean;
-  category:
-    | "Fixed Package"
-    | "Economy Fixed Package"
-    | "Platinum Shifting Package";
-
-  special_package?: boolean;
-
-  title: string;
-
-  /* 🔥 FIXED NAME */
-  short_description: string;
-
-  /* 🔥 FIXED — price is object */
+export interface HajjPackageItem {
+  id: number;
+  name: string;
+  tagline: string;
   price: string;
+  card_image: string;
+  created_at: string;
+  updated_at: string;
+}
 
-  duration: string;
-  flight: string;
-
-  /* 🔥 FLATTENED HOTELS (since component uses flat fields) */
-  hotel_makkah: string;
-  hotel_madinah: string;
-  hotel_aziziyah_shisha?: string;
-
-  food: string;
-
-  /* 🔥 FIXED — component uses services */
-  services: string;
-
-  /* 🔥 USED IN DOWNLOAD BUTTON */
-  attachment?: string;
+export interface HajjPackageList {
+  current_page?: number;
+  data: HajjPackageItem[];
+  last_page?: number;
+  per_page?: number;
+  total?: number;
 }
 
 /* ================= COMPONENT PROPS ================= */
-export interface HajjUmPackCardProps {
-  packages?: HajjUmPackageItem[];
-  isSpecial?: boolean;
+export interface HajjPackageApiResponse {
+  success: boolean;
+  message: string;
+  data: HajjPackageList;
+  code: number;
 }
 
 /* ================= API RESPONSE ================= */
-export type HajjUmPackagesResponse = ApiResponse<HajjUmPackageItem[]>;
+export type HajjUmPackagesResponse = ApiResponse<HajjPackageApiResponse[]>;

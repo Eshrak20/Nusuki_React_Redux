@@ -1,7 +1,7 @@
 import type { SignificanceResponse } from "@/types/hajj/types.sig";
 import type { VisaRequirementsResponse } from "../../types/hajj/types.visa";
 import { baseApi } from "./baseApi";
-import type { HajjUmPackagesResponse } from "@/types/hajj/types.pack";
+import type { HajjPackageApiResponse } from "@/types/hajj/types.pack";
 
 export const hajjApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -23,7 +23,7 @@ export const hajjApi = baseApi.injectEndpoints({
         method: "GET",
       }),
     }),
-    getHajjPack: builder.query<HajjUmPackagesResponse, void>({
+    getHajjPack: builder.query<HajjPackageApiResponse, void>({
       query: () => ({
         url: "/hajj-packages",
         method: "GET",
