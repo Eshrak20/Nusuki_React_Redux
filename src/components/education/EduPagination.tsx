@@ -13,24 +13,25 @@ interface EduPaginationProps {
     current_page: number;
     last_page: number;
   };
-  onPageChange?: (page: number) => void; // optional callback
+  onPageChange?: (page: number) => void;
 }
 
 const EduPagination = ({ pagination, onPageChange }: EduPaginationProps) => {
   const { current_page, last_page } = pagination;
 
-  const handleClick = (page: number) => {
-    if (onPageChange) onPageChange(page);
+  const handleClick = (e: React.MouseEvent, page: number) => {
+    e.preventDefault(); // Prevent page jump
+    if (onPageChange && page >= 1 && page <= last_page) {
+      onPageChange(page);
+    }
   };
 
-  // Generate an array of pages to display with ellipsis logic
   const getPages = () => {
     const pages: (number | string)[] = [];
-    const maxPagesToShow = 5; // total visible page numbers (adjust as you like)
-    let startPage = Math.max(current_page - 2, 1);
+    const maxPagesToShow = 3;
+    let startPage = Math.max(current_page - 1, 1);
     let endPage = Math.min(startPage + maxPagesToShow - 1, last_page);
 
-    // adjust startPage if at the end
     if (endPage - startPage < maxPagesToShow - 1) {
       startPage = Math.max(endPage - maxPagesToShow + 1, 1);
     }
@@ -39,17 +40,13 @@ const EduPagination = ({ pagination, onPageChange }: EduPaginationProps) => {
       pages.push(i);
     }
 
-    if (startPage > 2) {
-      pages.unshift("...");
-      pages.unshift(1);
-    } else if (startPage === 2) {
+    if (startPage > 1) {
+      if (startPage > 2) pages.unshift("...");
       pages.unshift(1);
     }
 
-    if (endPage < last_page - 1) {
-      pages.push("...");
-      pages.push(last_page);
-    } else if (endPage === last_page - 1) {
+    if (endPage < last_page) {
+      if (endPage < last_page - 1) pages.push("...");
       pages.push(last_page);
     }
 
@@ -59,39 +56,60 @@ const EduPagination = ({ pagination, onPageChange }: EduPaginationProps) => {
   const pages = getPages();
 
   return (
-    <Pagination className="flex justify-center mt-6">
-      <PaginationContent className="space-x-1">
+    <Pagination className="flex justify-center mt-12 mb-8">
+      <PaginationContent className="flex justify-center w-4xl mx-auto">
+        {/* Previous Button */}
         <PaginationItem>
           <PaginationPrevious
             href="#"
-            disabled={current_page === 1}
-            onClick={() => handleClick(current_page - 1)}
+            className={`rounded-lg border transition-all hover:bg-gray-100 ${
+              current_page === 1
+                ? "opacity-40 cursor-not-allowed"
+                : "cursor-pointer"
+            }`}
+            onClick={(e) => handleClick(e, current_page - 1)}
           />
         </PaginationItem>
 
-        {pages.map((page, idx) =>
-          page === "..." ? (
-            <PaginationItem key={idx}>
-              <PaginationEllipsis />
-            </PaginationItem>
-          ) : (
-            <PaginationItem key={idx}>
-              <PaginationLink
-                href="#"
-                isActive={page === current_page}
-                onClick={() => handleClick(page as number)}
-              >
-                {page}
-              </PaginationLink>
-            </PaginationItem>
-          )
-        )}
+        {/* Page Numbers */}
+        <div className="flex items-center gap-1.5">
+          {pages.map((page, idx) =>
+            page === "..." ? (
+              <PaginationItem key={`ellipsis-${idx}`}>
+                <PaginationEllipsis className="text-gray-400" />
+              </PaginationItem>
+            ) : (
+              <PaginationItem key={`page-${page}`}>
+                <PaginationLink
+                  href="#"
+                  isActive={page === current_page}
+                  className={`
+                    w-10 h-10 rounded-lg text-sm font-semibold transition-all border
+                    ${
+                      page === current_page
+                        ? "bg-primary border-primary text-white shadow-md hover:bg-primary hover:text-white"
+                        : "bg-white border-gray-200 text-gray-600 hover:border-primary hover:text-white hover:bg-primary"
+                    }
+                  `}
+                  onClick={(e) => handleClick(e, page as number)}
+                >
+                  {page}
+                </PaginationLink>
+              </PaginationItem>
+            ),
+          )}
+        </div>
 
+        {/* Next Button */}
         <PaginationItem>
           <PaginationNext
             href="#"
-            disabled={current_page === last_page}
-            onClick={() => handleClick(current_page + 1)}
+            className={`rounded-lg border transition-all hover:bg-gray-100 ${
+              current_page === last_page
+                ? "opacity-40 cursor-not-allowed"
+                : "cursor-pointer"
+            }`}
+            onClick={(e) => handleClick(e, current_page + 1)}
           />
         </PaginationItem>
       </PaginationContent>

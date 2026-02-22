@@ -53,9 +53,7 @@ const navigationLinks = [
 ];
 
 export default function Navbar() {
-  const location = useLocation();
-  console.log(location);
-  
+  const location = useLocation()
   const [openMobileMenu, setOpenMobileMenu] = useState<string | null>(null);
   const [showTopBtn, setShowTopBtn] = useState(false);
   useEffect(() => {
