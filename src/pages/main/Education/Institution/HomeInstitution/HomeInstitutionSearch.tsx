@@ -5,9 +5,9 @@ import type { RootState, AppDispatch } from "@/redux/store";
 const HomeInstitutionSearch = () => {
   const dispatch = useDispatch<AppDispatch>();
 
-  const keyword = useSelector(
-    (state: RootState) => state.universityFilter.keyword
-  );
+  const keyword = useSelector((state: RootState) => state.universityFilter.keyword);
+
+
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     dispatch(setSearch(e.target.value));

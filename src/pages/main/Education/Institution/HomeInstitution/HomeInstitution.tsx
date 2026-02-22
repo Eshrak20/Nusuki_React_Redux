@@ -3,10 +3,12 @@ import HomeInstitutionCard from "./HomeInstitutionCard";
 import EduPagination from "@/components/education/EduPagination";
 import HomeInstitutionSearch from "./HomeInstitutionSearch";
 import HomeInstitutionCountrySearch from "./HomeInstitutionCountrySearch";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import type { RootState } from "@/redux/store";
+import { setPage } from "@/redux/features/universityFilterSlice";
 
 const HomeInstitution = () => {
+  const dispatch = useDispatch();
   const { keyword, country, page } = useSelector(
     (state: RootState) => state.universityFilter
   );
@@ -23,7 +25,7 @@ const HomeInstitution = () => {
   const pagination = data?.data;
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-6">
       <div className="flex flex-col md:flex-row gap-4">
         <HomeInstitutionSearch />
         <HomeInstitutionCountrySearch />
@@ -37,7 +39,15 @@ const HomeInstitution = () => {
         )}
       </div>
 
-      {pagination && <EduPagination pagination={pagination} />}
+      {pagination && (
+        <EduPagination
+          pagination={{
+            current_page: pagination.current_page,
+            last_page: pagination.last_page,
+          }}
+          onPageChange={(newPage) => dispatch(setPage(newPage))}
+        />
+      )}
     </div>
   );
 };

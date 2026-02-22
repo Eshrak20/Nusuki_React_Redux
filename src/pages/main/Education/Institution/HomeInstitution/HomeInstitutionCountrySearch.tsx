@@ -1,13 +1,20 @@
 import { useDispatch, useSelector } from "react-redux";
 import { setCountry } from "@/redux/features/universityFilterSlice";
+import type { RootState } from "@/redux/store";
 
-const countries = ["USA", "UK", "Canada", "Australia", "Germany", "India"];
+const countries = ['USA', 'Canada', 'UK', 'Ireland', 'Australia', 'NewZealand',
+  'Germany', 'Sweden', 'Netherlands', 'France', 'Finland', 'Dubai', 'Singapore',
+  'Malta', 'Hungary', 'Spain', 'Poland', 'Malaysia', 'Denmark', 'Italy', 'Switzerland',
+  'Lithuania', 'Cyprus', 'China', 'Vietnam', 'Japan', 'Mauritius', 'Austria', 'Belgium',
+  'Russia', 'SouthKorea', 'Georgia', 'Monaco', 'Croatia', 'India', 'SriLanka', 'Indonesia',
+  'AbuDhabi', 'Ajman', 'Sharjah', 'Latvia', 'RasAlKhaimah', 'Thailand', 'UmmAlQuwain',
+  'Luxembourg', 'Greece', 'Kazakhstan', 'SaudiArabia'];
 
 const HomeInstitutionCountrySearch = () => {
   const dispatch = useDispatch();
-  const { country } = useSelector((state) => state.universityFilter);
+  const { country } = useSelector((state: RootState) => state.universityFilter);
 
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     dispatch(setCountry(e.target.value));
   };
 
