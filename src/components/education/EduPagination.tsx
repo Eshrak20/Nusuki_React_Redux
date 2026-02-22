@@ -28,7 +28,7 @@ const EduPagination = ({ pagination, onPageChange }: EduPaginationProps) => {
     const pages: (number | string)[] = [];
     const maxPagesToShow = 5; // total visible page numbers (adjust as you like)
     let startPage = Math.max(current_page - 2, 1);
-    let endPage = Math.min(startPage + maxPagesToShow - 1, last_page);
+    const endPage = Math.min(startPage + maxPagesToShow - 1, last_page);
 
     // adjust startPage if at the end
     if (endPage - startPage < maxPagesToShow - 1) {
