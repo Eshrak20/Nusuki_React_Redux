@@ -4,8 +4,8 @@ interface Props {
 
 const HajjUmDetPackOverView = ({ overview }: Props) => {
   return (
-    <div>
-      <h3 className="text-xl font-semibold mb-2">Overview</h3>
+    <div className="px-24">
+      <h3 className="text-xl font-semibold mb-5">Package Overview</h3>
       <p className="text-gray-700 leading-relaxed">
         {overview}
       </p>

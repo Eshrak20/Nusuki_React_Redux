@@ -22,7 +22,7 @@ const HomeInstitutionCard = ({ universities }) => {
             {/* line-clamp-2: Truncates text after 2 lines 
                 min-h-[3rem]: Keeps the height consistent across all cards
             */}
-            <h3 className="font-bold text-gray-800 text-[15px] leading-tight mb-2 line-clamp-2 min-h-[2.5rem]">
+            <h3 className="font-bold text-gray-800 text-[15px] leading-tight mb-2 line-clamp-2 min-h-10">
               {uni.name}
             </h3>
             
