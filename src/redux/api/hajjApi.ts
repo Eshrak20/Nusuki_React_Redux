@@ -1,7 +1,7 @@
 import type { SignificanceResponse } from "@/types/hajj/types.sig";
 import type { VisaRequirementsResponse } from "../../types/hajj/types.visa";
 import { baseApi } from "./baseApi";
-import type { HajjPackageApiResponse } from "@/types/hajj/types.pack";
+import type { HajjPackageApiResponse, HajjPackageDetailsResponse } from "@/types/hajj/types.pack";
 
 export const hajjApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -29,6 +29,12 @@ export const hajjApi = baseApi.injectEndpoints({
         method: "GET",
       }),
     }),
+    getHajjPackDetails: builder.query<HajjPackageDetailsResponse, number>({
+      query: (id) => ({
+        url: `/hajj-packages/detail/${id}`,
+        method: "GET",
+      }),
+    }),
   }),
 });
 
@@ -37,4 +43,5 @@ export const {
   useGetHajjPreRegisterQuery,
   useGetHajjSigQuery,
   useGetHajjPackQuery,
+  useGetHajjPackDetailsQuery
 } = hajjApi;

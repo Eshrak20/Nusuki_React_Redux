@@ -16,10 +16,10 @@ const CommonAbout = ({ title, img }: { title: string; img: string }) => {
           </Badge>
 
           <h2 className="text-4xl font-extrabold tracking-tight text-foreground md:text-5xl">
-            Why Choose Nusuki for <span className="text-primary">{title}</span>?
+            Why Choose Nusuki for <span className="text-hajj">{title}</span>?
           </h2>
 
-          <Separator className="mx-auto mt-6 h-1 w-24 bg-primary" />
+          <Separator className="mx-auto mt-6 h-1 w-24 bg-hajj" />
         </div>
 
         <div className="flex flex-col gap-16 lg:flex-row lg:items-center">
@@ -49,14 +49,14 @@ const CommonAbout = ({ title, img }: { title: string; img: string }) => {
                       border border-muted/40
                       bg-background
                       transition-all duration-300
-                      hover:border-primary/40
-                      hover:bg-primary/5
+                      hover:border-hajj/40
+                      hover:bg-hajj/5
                       hover:shadow-[0_10px_24px_-12px_rgba(0,0,0,0.18)]
                     "
                   >
                     <CardContent className="flex h-full items-center gap-3 px-4 py-2">
-                      <div className="rounded-lg bg-primary/10 p-2">
-                        <Icon className="h-5 w-5 text-primary" />
+                      <div className="rounded-lg bg-hajj/10 p-2">
+                        <Icon className="h-5 w-5 text-hajj" />
                       </div>
 
                       <p className="text-sm font-medium leading-snug text-muted-foreground">
@@ -67,7 +67,7 @@ const CommonAbout = ({ title, img }: { title: string; img: string }) => {
                 );
               })}
             </div>
-            <Card className="border-l-4 border-l-primary bg-muted/30">
+            <Card className="border-l-4 border-l-hajj bg-muted/30">
               <CardContent className="p-6 italic text-muted-foreground">
                 “What sets Nusuki apart is our commitment to transparency,
                 reliability, and personalized care — from preparation to safe
@@ -79,7 +79,7 @@ const CommonAbout = ({ title, img }: { title: string; img: string }) => {
           <div className="relative w-full lg:w-1/2 flex items-center justify-center p-4">
             <div className="relative w-full max-w-md lg:max-w-lg group">
               {/* Decorative Background Element - Adjusted for subtle depth */}
-              <div className="absolute -bottom-4 -right-4 -z-10 h-full w-full rounded-3xl bg-primary/5 transition-transform duration-500 group-hover:translate-x-2 group-hover:translate-y-2 lg:-bottom-8 lg:-right-8" />
+              <div className="absolute -bottom-4 -right-4 -z-10 h-full w-full rounded-3xl bg-hajj/5 transition-transform duration-500 group-hover:translate-x-2 group-hover:translate-y-2 lg:-bottom-8 lg:-right-8" />
 
               {/* Main Image Card */}
               <Card className="relative overflow-hidden rounded-3xl border-none shadow-2xl">
@@ -99,7 +99,7 @@ const CommonAbout = ({ title, img }: { title: string; img: string }) => {
               {/* Floating Badge - Positioned to stay within bounds */}
               <div className="absolute -left-6 bottom-12 hidden rounded-2xl bg-white p-4 shadow-2xl ring-1 ring-black/5 md:block dark:bg-slate-900">
                 <div className="flex flex-col items-center gap-1">
-                  <span className="text-3xl font-black tracking-tight text-primary">
+                  <span className="text-3xl font-black tracking-tight text-hajj">
                     100%
                   </span>
                   <span className="max-w-20 text-center text-[10px] font-bold uppercase leading-tight tracking-wider text-muted-foreground">

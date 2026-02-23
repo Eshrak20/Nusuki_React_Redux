@@ -12,6 +12,7 @@ import Faq from "@/components/Faq";
 import FormSubmission from "@/components/FormSubmission";
 import CommonAbout from "@/components/CommonAbout";
 import { faqData } from "@/data/faqData";
+import HajjUmPackCardSkeleton from "@/components/skeletons/HajjUmPackCardSkeleton";
 
 const HajjUmPackages = () => {
   window.scrollTo({
@@ -33,31 +34,22 @@ const HajjUmPackages = () => {
     undefined,
     { skip: !isUmrahPack },
   );
-  
+
   /* ---------------- BANNER TITLE ---------------- */
   const bannerTitle = isHajjPack ? "Hajj Packages 2026" : "Umrah Packages";
 
-  /* ---------------- LOADING ---------------- */
-  if ((isHajjPack && hajjLoading) || (isUmrahPack && umrahLoading)) {
-    return (
-      <div className="flex h-40 items-center justify-center animate-pulse text-hajj">
-        Loading...
-      </div>
-    );
-  }
-
   /* ---------------- SAFE DATA EXTRACTION ---------------- */
   const packages = isHajjPack
-  ? (hajjResponse?.data.data ?? [])
-  : (umrahResponse?.data.data ?? []);
+    ? (hajjResponse?.data.data ?? [])
+    : (umrahResponse?.data.data ?? []);
 
-  if (packages.length === 0) {
-    return (
-      <div className="py-48 text-center text-gray-500">
-        No packages available right now.
-      </div>
-    );
-  }
+  // if (packages.length === 0) {
+  //   return (
+  //     <div className="py-48 text-center text-gray-500">
+  //       No packages available right now.
+  //     </div>
+  //   );
+  // }
 
   /* ================= LOGIC ================= */
 
@@ -80,7 +72,11 @@ const HajjUmPackages = () => {
 
         {/* ===== FIRST ROW ===== */}
         <section className="my-20">
-          <HajjUmPackCard data={packages} />
+          {(isHajjPack && hajjLoading) || (isUmrahPack && umrahLoading) ? (
+            <HajjUmPackCardSkeleton />
+          ) : (
+            <HajjUmPackCard data={packages} />
+          )}
         </section>
 
         <Faq faqs={faqData} />

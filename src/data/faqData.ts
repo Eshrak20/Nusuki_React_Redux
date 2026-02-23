@@ -3,7 +3,7 @@ export const faqData = [
     id: 1,
     question: "What is included in the Umrah travel package?",
     answer:
-      "Typically, Umrah packages include essential flights and accommodation in Makkah and Madinah. Furthermore, these packages cover transportation and visa processing as well as guided tours. In addition, certain premium options may also include meals and travel insurance; consequently, every logistical detail is managed. Specifically, travelers often receive educational materials about Umrah rituals to ensure a smooth experience. Moreover, this ensures a meaningful journey, while providing a structured environment for spiritual growth. Ultimately, these comprehensive services provide peace of mind; therefore, pilgrims can focus entirely on their worship instead of logistics. In short, by outsourcing the complexities of the trip, the traveler gains a profound connection to the holy sites without the burden of administrative stress.",
+      "Umrah packages typically include flights, accommodation in Makkah and Madinah, transportation, visa processing, and guided support. Premium options may also offer meals and travel insurance. Overall, everything is arranged so pilgrims can focus fully on their worship without logistical stress.",
   },
   {
     id: 2,

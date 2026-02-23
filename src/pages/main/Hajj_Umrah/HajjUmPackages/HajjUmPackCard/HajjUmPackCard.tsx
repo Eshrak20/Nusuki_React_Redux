@@ -1,13 +1,13 @@
 import type { HajjPackageItem, HajjPackageList } from "@/types/hajj/types.pack";
 import { Play } from "lucide-react";
 import { motion, type Variants } from "framer-motion";
-
+import { Link } from "react-router-dom";
 /* ======================================================
    Motion Configuration
 ====================================================== */
 
 type Direction = "left" | "center" | "right";
-
+const MotionLink = motion(Link);
 const containerVariants: Variants = {
   hidden: {},
   visible: {
@@ -89,7 +89,8 @@ const HajjUmPackCard = ({ data }: HajjPackageList) => {
               </div>
 
               {/* View Details Button */}
-              <motion.button
+              <MotionLink
+                to={`${pkg.id}`}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 transition={{ type: "spring", stiffness: 400, damping: 25 }}
@@ -99,7 +100,7 @@ const HajjUmPackCard = ({ data }: HajjPackageList) => {
                   <Play fill="currentColor" size={16} className="ml-0.5" />
                 </div>
                 View Details
-              </motion.button>
+              </MotionLink>
             </div>
           </motion.article>
         );

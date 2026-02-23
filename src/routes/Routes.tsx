@@ -12,12 +12,13 @@ import EducationLayout from "@/layouts/EducationLayout";
 import HomeEducation from "@/pages/main/Education/HomeEducation/HomeEducation";
 import ErrorPage from "@/components/ErrorPage";
 import HomeInstitution from "@/pages/main/Education/Institution/HomeInstitution/HomeInstitution";
+import HajjUmMainDetPack from "@/pages/main/Hajj_Umrah/HajjUmPackages/HajjUmDetPack/HajjUmMainDetPack";
 
 export const router = createBrowserRouter([
   {
     path: "/",
     Component: MainLayout,
-    errorElement: <ErrorPage />, 
+    errorElement: <ErrorPage />,
     children: [
       {
         index: true,
@@ -32,7 +33,7 @@ export const router = createBrowserRouter([
             element: <HomeEducation />,
           },
           {
-            path:"institution",
+            path: "institution",
             element: <HomeInstitution />,
           },
         ],
@@ -69,6 +70,10 @@ export const router = createBrowserRouter([
             path: "packages",
             element: <HajjUmPackages />,
           },
+          {
+            path: "packages/:id",
+            element: <HajjUmMainDetPack />,
+          }
         ],
       },
       {
