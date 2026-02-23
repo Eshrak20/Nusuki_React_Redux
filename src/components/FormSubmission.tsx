@@ -58,7 +58,7 @@ const FormSubmission = ({ title }: TitleProps) => {
           >
             Contact Inquiry
           </motion.div>
-          <h2 className="text-3xl md:text-4xl font-serif italic">{title}</h2>
+          <h2 className="text-3xl md:text-4xl  italic">{title}</h2>
           <p className="text-white/70 mt-3 text-sm max-w-md mx-auto">
             Fill out the form below and our team will get back to you within 24 hours.
           </p>

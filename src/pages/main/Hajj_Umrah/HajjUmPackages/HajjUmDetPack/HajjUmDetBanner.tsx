@@ -32,8 +32,8 @@ const HajjUmDetBanner = ({ pack }: Props) => {
             {/* 1. Sophisticated Overlays */}
             <div className="absolute inset-0 z-20 pointer-events-none">
                 {/* Deep vignettes for text readability */}
-                <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/20 to-black/90"></div>
-                <div className="absolute inset-0 bg-gradient-to-r from-black/40 via-transparent to-black/40"></div>
+                <div className="absolute inset-0 bg-linear-to-b from-black/80 via-black/20 to-black/90"></div>
+                <div className="absolute inset-0 bg-linear-to-r from-black/40 via-transparent to-black/40"></div>
 
                 {/* Spiritual Glow Orbs */}
                 <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-emerald-600/10 rounded-full blur-[120px] animate-pulse"></div>
@@ -47,8 +47,7 @@ const HajjUmDetBanner = ({ pack }: Props) => {
                 style={{ y, scale }}
             >
                 <img
-                    // src={pack.card_image}
-                    src={'/src/assets/Images/BannerImage.jpg'}
+                    src={pack.card_image}
                     alt={pack.name}
                     className={`absolute inset-0 w-full h-full object-cover transition-all duration-1000 ease-in-out ${loaded ? "opacity-100 blur-0 scale-100" : "opacity-0 blur-xl scale-110"
                         }`}
@@ -94,7 +93,7 @@ const HajjUmDetBanner = ({ pack }: Props) => {
                 )}
 
                 {/* Animated Main Title */}
-                <h1 className="flex flex-wrap justify-center gap-x-3 md:gap-x-6 text-5xl md:text-7xl lg:text-8xl font-serif font-bold text-white mb-6">
+                <h1 className="flex flex-wrap justify-center gap-x-3 md:gap-x-6 text-5xl md:text-7xl lg:text-8xl  font-bold text-white mb-6">
                     {titleChars.map((char, index) => (
                         <motion.span
                             key={index}
@@ -127,7 +126,7 @@ const HajjUmDetBanner = ({ pack }: Props) => {
                     initial={{ scaleX: 0 }}
                     animate={{ scaleX: 1 }}
                     transition={{ duration: 1.5, delay: 1, ease: "easeInOut" }}
-                    className="h-[1px] bg-gradient-to-r from-transparent via-gold-500/50 to-transparent mt-10 w-full max-w-md"
+                    className="h-px bg-linear-to-r from-transparent via-gold-500/50 to-transparent mt-10 w-full max-w-md"
                     style={{ backgroundColor: 'rgba(212, 175, 55, 0.3)' }}
                 />
             </div>
@@ -163,7 +162,7 @@ const HajjUmDetBanner = ({ pack }: Props) => {
                 className="absolute bottom-10 left-1/2 -translate-x-1/2 z-30 flex flex-col items-center gap-2"
             >
                 <span className="text-[10px] text-white/40 tracking-[0.3em] uppercase">Explore Details</span>
-                <div className="w-[1px] h-12 bg-gradient-to-b from-white/60 to-transparent"></div>
+                <div className="w-px h-12 bg-linear-to-b from-white/60 to-transparent"></div>
             </motion.div>
         </motion.section>
     );
