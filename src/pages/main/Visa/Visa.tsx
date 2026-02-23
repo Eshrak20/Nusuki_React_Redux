@@ -1,4 +1,4 @@
-import CommonAbout from "@/components/CommonAbout";
+// import CommonAbout from "@/components/CommonAbout";
 import ExclusiveOffer from "@/components/ExclusiveOffer";
 import {
   useGetVisaServicesQuery,
@@ -29,7 +29,7 @@ const Visa = () => {
         </div>
         <CmnCardSlider cmnCardSliderList={cmnCardSliderList2} />
       </div>
-      <CommonAbout title="Visa" />
+      {/* <CommonAbout title="Visa" /> */}
     </>
   );
 };

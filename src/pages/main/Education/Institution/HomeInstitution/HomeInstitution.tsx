@@ -33,9 +33,9 @@ const HomeInstitution = () => {
     <div className="pt-44 pb-20 max-w-7xl mx-auto min-h-screen">
       {/* Search and Filter Header */}
       <div className="flex flex-col md:flex-row items-center justify-between mb-15">
-        <p className="text-gray-500 text-sm font-medium order-3 md:order-1">
-          Showing Results in{" "}
-          <span className="text-gray-800">{country || "All Countries"}</span>
+        <p className="text-foreground/80 text-sm font-medium order-3 md:order-1">
+          Showing Results in:{" "}
+          <span className="text-foreground">{country || "All Countries"}</span>
         </p>
 
         <div className="w-full md:w-1/3 order-1 md:order-2">

@@ -8,6 +8,10 @@ import DetInstitutionRanking from "./DetInstitutionRanking";
 import DetInstitutionWhyChose from "./DetInstitutionWhyChose";
 import DetInstitutionIntakes from "./DetInstitutionIntakes";
 import DetInstitutionRecruiters from "./DetInstitutionRecruiters";
+import DetInstitutionCultural from "./DetInstitutionCultural";
+import DetInstitutionFaq from "./DetInstitutionFaq";
+import DetInstitutionAccomplish from "./DetInstitutionAccomplish";
+import DetInstitutionScholarships from "./DetInstitutionScholarships";
 
 const DetInstitutionMain = () => {
   const { id } = useParams<{ id: string }>();
@@ -25,7 +29,6 @@ const DetInstitutionMain = () => {
 
   return (
     <div className="space-y-16">
-
       <DetInstitutionOverview university={university} />
       <DetInstitutionRanking ranking={detail?.rankingSection} />
       <DetInstitutionPrograms programs={detail?.topCourseDetail} />
@@ -34,7 +37,11 @@ const DetInstitutionMain = () => {
       <DetInstitutionAdmissionReq admission={detail?.admissionRequirementDetail} />
       <DetInstitutionRecruiters placement={detail?.universityPlacementSection} />
       <DetInstitutionWhyChose overview={detail?.overviewSection} />
-
+      
+      <DetInstitutionCultural culture={detail?.cultureSection} />
+      <DetInstitutionFaq faq={detail?.faqSection} />
+      <DetInstitutionAccomplish accomplish={detail?.accomplishSection} />
+      <DetInstitutionScholarships scholarships={detail?.scholarshipsAvailable} />
     </div>
   );
 };

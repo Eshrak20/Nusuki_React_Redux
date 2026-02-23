@@ -16,10 +16,6 @@ import { Button } from "@/components/ui/button";
 
 
 const Footer = () => {
-  const grayGold = "#B8A97A";
-  const logoStyle =
-    "h-10 w-auto object-contain grayscale hover:grayscale-0 transition-all duration-300";
-
   const socialLinks = [
     { icon: Facebook, link: "https://facebook.com/yourpage" },
     { icon: Twitter, link: "https://twitter.com/yourprofile" },

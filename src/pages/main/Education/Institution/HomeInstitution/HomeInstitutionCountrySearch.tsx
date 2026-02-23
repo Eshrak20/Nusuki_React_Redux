@@ -70,15 +70,13 @@ const HomeInstitutionCountrySearch = () => {
       {/* Trigger Button */}
       <div
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center justify-between w-full bg-white border border-gray-300 py-2.5 px-4 rounded-lg cursor-pointer text-sm shadow-sm"
+        className="flex items-center justify-between w-full bg-background border border-border py-2.5 px-4 rounded-lg cursor-pointer text-sm shadow-sm text-foreground hover:bg-accent hover:text-accent-foreground transition-colors"
       >
-        <span
-          className={country ? "text-primary font-medium" : "text-gray-500"}
-        >
+        <span className={country ? "text-primary font-medium" : "text-muted-foreground"}>
           {country || "Filter By"}
         </span>
         <ChevronDown
-          className={`h-4 w-4 text-gray-400 transition-transform ${isOpen ? "rotate-180" : ""}`}
+          className={`h-4 w-4 text-gray-400 transition-transform dark:text-gray-300 ${isOpen ? "rotate-180" : ""}`}
         />
       </div>
 
@@ -91,10 +89,10 @@ const HomeInstitutionCountrySearch = () => {
             onClick={() => setIsOpen(false)}
           />
 
-          <ul className="absolute z-20 w-full mt-2 bg-white border border-gray-200 rounded-lg shadow-xl max-h-60 overflow-y-auto overflow-x-hidden custom-scrollbar">
+          <ul className="absolute z-20 w-full mt-2 bg-background border border-border rounded-lg shadow-xl max-h-60 overflow-y-auto overflow-x-hidden custom-scrollbar">
             <li
               onClick={() => handleSelect("")}
-              className="px-4 py-2 text-sm text-gray-700 hover:bg-primary hover:text-white cursor-pointer transition-colors"
+              className="px-4 py-2 text-sm text-foreground hover:bg-accent hover:text-accent-foreground cursor-pointer transition-colors"
             >
               All Countries
             </li>
@@ -103,8 +101,8 @@ const HomeInstitutionCountrySearch = () => {
                 key={c}
                 onClick={() => handleSelect(c)}
                 className={`px-4 py-2 text-sm cursor-pointer transition-colors
-                  ${country === c ? "bg-primary text-white font-bold" : "text-gray-700"}
-                  hover:bg-primary hover:text-white`}
+                  ${country === c ? "bg-accent text-accent-foreground font-bold" : "text-foreground"}
+                  hover:bg-accent hover:text-accent-foreground`}
               >
                 {c}
               </li>

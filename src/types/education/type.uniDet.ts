@@ -21,6 +21,7 @@ export interface UniversityDetailJson {
   universityBannerImage: string;
   universityName: string;
   extraDetail?: string;
+
   overviewSection: OverviewSection;
   rankingSection: RankingSection;
   intakeSection: IntakeSection;
@@ -28,8 +29,13 @@ export interface UniversityDetailJson {
   costToStudySection: CostToStudySection;
   admissionRequirementDetail: AdmissionRequirementDetail;
   universityPlacementSection: PlacementSection;
-}
 
+  // ✅ Fixed property names to match API response
+  cultureSection?: CultureSection;      // matches API response
+  faqSection: FAQSection;               // matches API response
+  scholarshipsAvailable: ScholarshipsSection; // Fixed: was scholarshipsAvailable, not scholarshipsSection
+  accomplishSection: AccomplishSection; // matches API response
+}
 /* ================= OVERVIEW ================= */
 export interface OverviewSection {
   heading: string;
@@ -120,4 +126,100 @@ export interface PlacementSection {
     expenceType: string;
     totalSalary: string;
   }[];
+}
+
+//DetInstitutionCultural 
+export interface MediaImage {
+  id: number;
+  name?: string;
+  alternativeText?: string;
+  url: string;
+  width?: number;
+  height?: number;
+}
+
+export interface MediaItem {
+  id: number;
+  videoUrl: string | null;
+  desktopImage: MediaImage | null;
+  mobileImage: MediaImage | null;
+}
+
+export interface CultureSection {
+  id: number;
+  title: string;
+  medias: MediaItem[];
+}
+
+export interface DetInstitutionCulturalProps {
+  culture?: CultureSection;
+}
+
+
+
+// Faq
+export interface FAQDetail {
+  id: number;
+  title: string;
+  description: string;
+}
+
+export interface FAQSection {
+  id: number;
+  heading: string;
+  description: string | null;
+  iconImage?: {
+    imageUrl: string;
+    imageAltTag?: string | null;
+  };
+  faqDetail: FAQDetail[];
+}
+
+export interface DetInstitutionFaqProps {
+  faq: FAQSection;
+}
+
+//DetInstitutionScholarships
+
+export interface ScholarshipCard {
+  id: number;
+  name: string;
+  detail: string[]; // Array of strings like ["Type : Merit Based", "Level : Masters", "Amount : $3600 to $4500"]
+}
+
+export interface ScholarshipsSection {
+  id: number;
+  heading: string;
+  description: string;
+  iconImage?: {
+    imageUrl: string;
+    imageAltTag?: string | null;
+  };
+  scholarshipsCard: ScholarshipCard[];
+}
+
+export interface DetInstitutionScholarshipsProps {
+  scholarships?: ScholarshipsSection;
+}
+// DetInstitutionAccomplish
+
+export interface Button {
+  id: number;
+  label: string;
+  bgColor: string | null;
+  textColor: string | null;
+}
+
+export interface AccomplishSection {
+  id: number;
+  sectionTitle: string;
+  sectionBgColorTop?: string;
+  sectionBgColorBottom?: string;
+  sectionBgColor?: string;
+  sectionTitleColor?: string;
+  button: Button;
+}
+
+export interface DetInstitutionAccomplishProps {
+  accomplish?: AccomplishSection;
 }

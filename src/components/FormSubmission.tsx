@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -79,7 +79,7 @@ const FormSubmission = ({ title }: TitleProps) => {
                   <FormField
                     key={item.name}
                     control={form.control}
-                    name={item.name as any}
+                    name={item.name as never}
                     render={({ field }) => (
                       <FormItem className="relative">
                         <div 
