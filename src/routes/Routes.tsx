@@ -13,6 +13,7 @@ import HomeEducation from "@/pages/main/Education/HomeEducation/HomeEducation";
 import ErrorPage from "@/components/ErrorPage";
 import HomeInstitution from "@/pages/main/Education/Institution/HomeInstitution/HomeInstitution";
 import HajjUmMainDetPack from "@/pages/main/Hajj_Umrah/HajjUmPackages/HajjUmDetPack/HajjUmMainDetPack";
+import DetInstitutionMain from "@/pages/main/Education/Institution/DetInstitution/DetInstitutionMain";
 
 export const router = createBrowserRouter([
   {
@@ -35,6 +36,10 @@ export const router = createBrowserRouter([
           {
             path: "institution",
             element: <HomeInstitution />,
+          },
+          {
+            path: "institution/:id",
+            element: <DetInstitutionMain />,
           },
         ],
       },

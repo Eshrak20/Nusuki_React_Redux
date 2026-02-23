@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 const HomeInstitutionCard = ({ universities }) => {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -25,11 +27,11 @@ const HomeInstitutionCard = ({ universities }) => {
             <h3 className="font-bold text-gray-800 text-[15px] leading-tight mb-2 line-clamp-2 min-h-[2.5rem]">
               {uni.name}
             </h3>
-            
+
             <p className="text-[13px] text-gray-400 mb-1">
               {uni.location || uni.country}
             </p>
-            
+
             <p className="text-[13px] text-gray-800 font-medium truncate mb-4">
               {uni.universityUrl}
             </p>
@@ -37,9 +39,9 @@ const HomeInstitutionCard = ({ universities }) => {
 
           {/* Action Buttons */}
           <div className="flex gap-4 mt-auto">
-            <button className="flex-1 py-2.5 px-2 border border-primary/40 text-primary text-sm font-semibold rounded-lg hover:bg-primary/10 transition-colors">
+            <Link to={`${uni.id}`} className="flex-1 py-2.5 px-2 border border-primary/40 text-primary text-sm font-semibold rounded-lg hover:bg-primary/10 transition-colors">
               Know More
-            </button>
+            </Link>
             <button className="flex-1 py-2.5 px-2 bg-primary text-white text-sm font-semibold rounded-lg hover:opacity-90 transition-opacity shadow-md">
               Apply Now
             </button>

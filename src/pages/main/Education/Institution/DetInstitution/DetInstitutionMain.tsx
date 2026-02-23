@@ -1,0 +1,42 @@
+import { useGetUniversitiesDetailsQuery } from "@/redux/api/educationApi/universityApi";
+import { useParams } from "react-router-dom";
+import DetInstitutionCost from "./DetInstitutionCost";
+import DetInstitutionAdmissionReq from "./DetInstitutionAdmissionReq";
+import DetInstitutionOverview from "./DetInstitutionOverview";
+import DetInstitutionPrograms from "./DetInstitutionPrograms";
+import DetInstitutionRanking from "./DetInstitutionRanking";
+import DetInstitutionWhyChose from "./DetInstitutionWhyChose";
+import DetInstitutionIntakes from "./DetInstitutionIntakes";
+import DetInstitutionRecruiters from "./DetInstitutionRecruiters";
+
+const DetInstitutionMain = () => {
+  const { id } = useParams<{ id: string }>();
+
+  const { data, isLoading } = useGetUniversitiesDetailsQuery(
+    { id: id! },
+    { skip: !id }
+  );
+
+  if (!id) return <div>ID not found</div>;
+  if (isLoading) return <div>Loading...</div>;
+
+  const university = data?.data;
+  const detail = university?.detail_json;
+
+  return (
+    <div className="space-y-16">
+
+      <DetInstitutionOverview university={university} />
+      <DetInstitutionRanking ranking={detail?.rankingSection} />
+      <DetInstitutionPrograms programs={detail?.topCourseDetail} />
+      <DetInstitutionCost cost={detail?.costToStudySection} />
+      <DetInstitutionIntakes intakes={detail?.intakeSection} />
+      <DetInstitutionAdmissionReq admission={detail?.admissionRequirementDetail} />
+      <DetInstitutionRecruiters placement={detail?.universityPlacementSection} />
+      <DetInstitutionWhyChose overview={detail?.overviewSection} />
+
+    </div>
+  );
+};
+
+export default DetInstitutionMain;
