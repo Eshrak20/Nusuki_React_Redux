@@ -1,12 +1,6 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
-/* @import url('https://fonts.googleapis.com/css2?family=Murecho:wght@100..900&display=swap');
-
-body {
-  font-family: "Murecho", sans-serif;
-} */
-
 @font-face {
   font-family: "Murecho";
   src: url("./assets/Font-Families/murecho-v17-latin/murecho-v17-latin-regular.woff2") format("woff2");
@@ -69,7 +63,6 @@ body {
   /* Neutrals - Light Mode */
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
-  /* Deep blue-gray */
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.145 0 0);
   --popover: oklch(1 0 0);
@@ -77,19 +70,19 @@ body {
 
   /* Primary: #5fc9f3 (Sky Blue) */
   --primary: oklch(29.43% 0.103 265.52);
-  /* --hajj: oklch(0.6305 0.1123 227.43); */
-  --hajj: oklch(35.74% 0.086 154.39);
-  --hajj-secondary : oklch(63.30% 0.122 84.83);
+  
+  /* Hajj Colors - Light Mode */
+  --hajj: oklch(35.74% 0.086 154.39); /* Dark Teal */
+  --hajj-secondary: oklch(63.30% 0.122 84.83);
   --skeleton: oklch(91.424% 0.01108 235.152);
 
   --primary-foreground: oklch(0.985 0 0);
-  /* Dark text for light primary */
 
   /* Secondary: #1e549f (Royal Blue) */
   --secondary: oklch(0.97 0 0);
   --secondary-foreground: oklch(0.205 0 0);
 
-  /* Accent: A blend or high-contrast utility */
+  /* Accent */
   --accent: oklch(0.97 0 0);
   --accent-foreground: oklch(0.205 0 0);
 
@@ -105,7 +98,7 @@ body {
   --input: oklch(0.922 0 0);
   --ring: oklch(0.708 0 0);
 
-  /* Sidebar (Using Secondary Blue for a professional look) */
+  /* Sidebar */
   --sidebar: oklch(0.985 0 0);
   --sidebar-foreground: oklch(0.145 0 0);
   --sidebar-primary: oklch(0.205 0 0);
@@ -114,6 +107,8 @@ body {
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
+  
+  /* Charts */
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.6 0.118 184.704);
   --chart-3: oklch(0.398 0.07 227.392);
@@ -124,27 +119,33 @@ body {
 .dark {
   /* Neutrals - Dark Mode */
   --background: oklch(0.145 0 0);
-  /* Deep Secondary-based background */
   --foreground: oklch(0.985 0 0);
   --card: oklch(0.205 0 0);
   --card-foreground: oklch(0.985 0 0);
   --popover: oklch(0.205 0 0);
   --popover-foreground: oklch(0.985 0 0);
 
-  /* Primary: #5fc9f3 - Adjusted for Dark Mode glow */
+  /* Primary */
   --primary: oklch(0.922 0 0);
   --primary-foreground: oklch(0.205 0 0);
 
-  /* Secondary: #1e549f */
+  /* Hajj Colors - Dark Mode (Lighter for contrast) */
+  --hajj: oklch(0.75 0.12 154.39); /* Lighter Teal for visibility */
+  --hajj-secondary: oklch(0.75 0.14 84.83);
+
+  /* Secondary */
   --secondary: oklch(0.269 0 0);
   --secondary-foreground: oklch(0.985 0 0);
 
+  /* Muted */
   --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
+  --muted-foreground: oklch(0.708 0 0); /* Light gray text for dark mode */
 
+  /* Accent */
   --accent: oklch(0.269 0 0);
   --accent-foreground: oklch(0.985 0 0);
 
+  /* Destructive */
   --destructive: oklch(0.704 0.191 22.216);
   --destructive-foreground: oklch(1 0 0);
 
@@ -152,19 +153,22 @@ body {
   --input: oklch(1 0 0 / 15%);
   --ring: oklch(0.556 0 0);
 
+  /* Sidebar */
   --sidebar: oklch(0.205 0 0);
   --sidebar-foreground: oklch(0.985 0 0);
   --sidebar-primary: oklch(0.488 0.243 264.376);
   --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.269 0 0);
+  --sidebar-accent-foreground: oklch(0.985 0 0);
+  --sidebar-ring: oklch(0.556 0 0);
+
+  /* Charts */
   --chart-1: oklch(0.488 0.243 264.376);
   --chart-2: oklch(0.696 0.17 162.48);
   --chart-3: oklch(0.769 0.188 70.08);
   --chart-4: oklch(0.627 0.265 303.9);
   --chart-5: oklch(0.645 0.246 16.439);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-ring: oklch(0.556 0 0);
 }
 
 @layer base {
