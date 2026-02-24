@@ -103,7 +103,7 @@ const HajjUmDetPackInfo = ({ pack }: Props) => {
               </div>
 
               {/* Experience Section */}
-              <div className="bg-hajj/5 dark:bg-hajj/10 p-8 rounded-2xl border border-hajj/10">
+              <div className="bg-hajj/5 dark:bg-hajj/20 p-8 rounded-2xl border border-hajj/10">
                 <p className="text-hajj flex items-center gap-2 mb-4 uppercase tracking-[0.2em] text-[10px] font-bold">
                   <Quote size={14} /> The Experience
                 </p>
@@ -119,7 +119,7 @@ const HajjUmDetPackInfo = ({ pack }: Props) => {
       </section>
 
       {/* --- SECTION 2: STATS BAR --- */}
-      <section className="bg-hajj py-16 text-white border-y border-hajj-secondary/20">
+      <section className="bg-hajj dark:bg-hajj/30 py-16 text-white border-y border-hajj-secondary/20">
         <div className="max-w-7xl mx-auto px-8 lg:px-24">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <StatItem
@@ -130,7 +130,7 @@ const HajjUmDetPackInfo = ({ pack }: Props) => {
             <StatItem
               icon={<Moon size={24} />}
               label="Number of Nights"
-              value={`Nights: ${pack.num_of_nights}`}
+              value={pack.num_of_nights}
             />
             <StatItem
               icon={<Star size={24} />}
@@ -166,14 +166,16 @@ const DetailItem = ({
         {label}
       </span>
     </div>
-    <p
-      className={`
+    {value && (
+      <p
+        className={`
       ${isPrimary ? "text-3xl font-medium" : "text-2xl font-light"} 
       text-foreground tracking-tight transition-all duration-300 group-hover:translate-x-1
     `}
-    >
-      {value}
-    </p>
+      >
+        {value}
+      </p>
+    )}
   </div>
 );
 
