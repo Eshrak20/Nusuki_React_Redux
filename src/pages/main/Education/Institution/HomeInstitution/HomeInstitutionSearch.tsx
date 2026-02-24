@@ -21,15 +21,14 @@ const HomeInstitutionSearch = () => {
     <div className="w-full mx-auto px-4">
       {/* Main Search Container */}
       <div
-        className={`relative transition-all duration-500 ease-out ${
-          isFocused || isHovered ? "scale-[1.02]" : "scale-100"
-        }`}
+        className={`relative transition-all duration-500 ease-out ${isFocused || isHovered ? "scale-[1.02]" : "scale-100"
+          }`}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       >
         {/* Animated Background Gradient */}
         <div
-          className={`absolute -inset-1 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600
+          className={`absolute -inset-1 bg-linear-to-r from-primary via-primary to-primary
           rounded-[32px] opacity-75 blur-xl transition-all duration-700
           ${isFocused ? "opacity-100 blur-2xl animate-pulse" : "opacity-0"}`}
         />
@@ -39,8 +38,8 @@ const HomeInstitutionSearch = () => {
           className={`relative flex items-center bg-white dark:bg-gray-900
           rounded-2xl border-2 transition-all duration-300 shadow-lg
           ${isFocused
-            ? "border-primary shadow-2xl shadow-primary/30"
-            : "border-gray-200 dark:border-gray-700 hover:border-primary"}
+              ? "border-gray-200 dark:border-gray-700 shadow-2xl shadow-primary/30"
+              : "border-gray-200 dark:border-gray-700"}
           `}
         >
           {/* Left Icon with Animation */}
@@ -55,7 +54,7 @@ const HomeInstitutionSearch = () => {
           <input
             ref={inputRef}
             type="text"
-            placeholder="Search for universities, programs, locations..."
+            placeholder="Search universities"
             value={keyword}
             onChange={(e) => dispatch(setSearch(e.target.value))}
             onFocus={() => setIsFocused(true)}

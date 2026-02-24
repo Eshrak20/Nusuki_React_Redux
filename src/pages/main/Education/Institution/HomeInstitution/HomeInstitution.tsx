@@ -6,6 +6,7 @@ import { useSelector, useDispatch } from "react-redux";
 import type { RootState } from "@/redux/store";
 import { setPage } from "@/redux/features/universityFilterSlice";
 import EduPagination from "@/components/education/EduPagination";
+import HomeInstitutionCardSkeleton from "@/components/skeletons/HomeInstitutionCardSkeleton";
 
 const HomeInstitution = () => {
   const dispatch = useDispatch();
@@ -19,12 +20,6 @@ const HomeInstitution = () => {
     country,
   });
 
-  if (isLoading)
-    return (
-      <div className="flex justify-center items-center py-40 text-primary font-medium">
-        Loading universities...
-      </div>
-    );
 
   const universities = data?.data?.data ?? [];
   const pagination = data?.data;
@@ -48,26 +43,31 @@ const HomeInstitution = () => {
       </div>
 
       {/* Grid Section */}
-      <div className="mb-10">
-        {universities.length ? (
+
+
+      <div className="my-20">
+        {isLoading ? (
+          <HomeInstitutionCardSkeleton />
+        ) : universities.length > 0 ? (
           <HomeInstitutionCard universities={universities} />
         ) : (
-          <div className="text-center py-20 text-gray-500">
+          <div className="text-center py-20 text-muted-foreground">
             No universities found matching your criteria.
           </div>
         )}
       </div>
 
+
       <div className="max-w-7xl mx-auto">
         {pagination && (
-        <EduPagination
-          pagination={{
-            current_page: pagination.current_page,
-            last_page: pagination.last_page,
-          }}
-          onPageChange={(newPage: number) => dispatch(setPage(newPage))}
-        />
-      )}
+          <EduPagination
+            pagination={{
+              current_page: pagination.current_page,
+              last_page: pagination.last_page,
+            }}
+            onPageChange={(newPage: number) => dispatch(setPage(newPage))}
+          />
+        )}
       </div>
     </div>
   );

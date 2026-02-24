@@ -20,6 +20,8 @@ export interface UniversityData {
 export interface UniversityDetailJson {
   universityBannerImage: string;
   universityName: string;
+  location: string;
+  universityUrl: string;
   extraDetail?: string;
 
   overviewSection: OverviewSection;
@@ -222,4 +224,16 @@ export interface AccomplishSection {
 
 export interface DetInstitutionAccomplishProps {
   accomplish?: AccomplishSection;
+}
+
+
+/* ================= MINI BANNER TYPE ================= */
+
+export interface UniversityBannerCardMini {
+  uni_logo: string;
+  universityName: string;
+  extraDetail?: string;
+  location: string;
+  universityUrl: string;
+  universityBannerImage: string;
 }

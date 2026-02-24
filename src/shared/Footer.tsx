@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import logo from "../assets/reactAssets/Logo/main-logo.webp";
+import logo from "../assets/reactAssets/Logo/whiteLogo.png";
 import { footerPayImages } from "@/data/footerPayImages";
 import {
   Facebook,

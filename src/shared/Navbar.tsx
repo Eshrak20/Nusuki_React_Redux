@@ -3,7 +3,8 @@ import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { MenuIcon, ChevronDown, ArrowUp } from "lucide-react";
 
-import logo from "../assets/reactAssets/Logo/main-logo.webp";
+import logoWhite from "../assets/reactAssets/Logo/whiteLogo.png";
+import logoDark from "../assets/reactAssets/Logo/darkLogo.png";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -80,7 +81,8 @@ export default function Navbar() {
         <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 md:px-6">
           {/* Logo */}
           <Link to="/" className="flex h-12 w-40 items-center">
-            <img src={logo} alt="Logo" className="object-contain" />
+            <img src={logoWhite} alt="Logo" className="dark:hidden object-contain" />
+            <img src={logoDark} alt="Logo" className="hidden dark:block object-contain" />
           </Link>
 
           {/* Desktop Navigation */}
@@ -140,7 +142,7 @@ export default function Navbar() {
                             "inline-flex h-9 items-center justify-center rounded-md px-3 py-2 text-lg text-primary font-medium transition-colors",
                             "hover:text-primary hover:font-semibold",
                             location.pathname === link.href &&
-                              "text-primary font-semibold",
+                            "text-primary font-semibold",
                           )}
                         >
                           {link.label}

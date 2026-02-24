@@ -10,14 +10,12 @@ import {
   X,
   ChevronDown,
 } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const EduNavbar = () => {
-  const [activeTab, setActiveTab] = useState("Home");
+  const location = useLocation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-
   const countries = ["USA", "UK", "Canada", "Australia", "Germany"];
-
   const navItems = [
     { name: "Home", icon: <Home size={22} />, hasSubmenu: false },
     {
@@ -45,6 +43,8 @@ const EduNavbar = () => {
       path: "/education/tests",
     },
   ];
+  const activeTab = navItems.find(item => item.path === location.pathname)?.name || "Home";
+
 
   return (
     <nav className="bg-card rounded-xl shadow-2xl h-20 lg:h-24 px-4 lg:px-6 py-3 border border-border relative">
@@ -66,31 +66,16 @@ const EduNavbar = () => {
             >
               <Link
                 to={item.path as string}
-                onClick={() => setActiveTab(item.name)}
                 className={`flex items-center space-x-2 text-[16px] font-medium transition-colors cursor-pointer
-                  ${
-                    activeTab === item.name
-                      ? "text-primary font-bold"
-                      : "text-foreground/70 hover:font-bold hover:text-primary"
-                  }
-                `}
-              >
-                <span
-                  className={`${
-                    activeTab === item.name
-                      ? "text-primary font-bold"
-                      : "text-foreground/70 hover:font-bold hover:text-primary"
+    ${activeTab === item.name
+                    ? "text-primary font-bold"
+                    : "text-foreground/70 hover:font-bold hover:text-primary"
                   }`}
-                >
+              >
+                <span className={activeTab === item.name ? "text-primary" : "text-foreground/70 hover:text-primary"}>
                   {item.icon}
                 </span>
-                <span
-                  className={
-                    activeTab === item.name
-                      ? "text-primary font-bold"
-                      : "text-foreground"
-                  }
-                >
+                <span className={activeTab === item.name ? "text-primary font-bold" : "text-foreground"}>
                   {item.name}
                 </span>
               </Link>
@@ -131,68 +116,37 @@ const EduNavbar = () => {
 
       {/* Smooth Mobile Sidebar Overlay */}
       <div
-        className={`lg:hidden absolute top-full left-0 w-full bg-card border-t border-border shadow-2xl z-50 rounded-b-xl overflow-hidden transition-all duration-300 ease-in-out ${
-          isMenuOpen
-            ? "max-h-125 opacity-100 py-4 px-4"
-            : "max-h-0 opacity-0 py-0 px-4"
-        }`}
+        className={`lg:hidden absolute top-full left-0 w-full bg-card border-t border-border shadow-2xl z-50 rounded-b-xl overflow-hidden transition-all duration-300 ease-in-out ${isMenuOpen
+          ? "max-h-125 opacity-100 py-4 px-4"
+          : "max-h-0 opacity-0 py-0 px-4"
+          }`}
       >
         <div className="flex flex-col space-y-4">
           {navItems.map((item) => (
             <div key={item.name} className="flex flex-col">
               <Link
                 to={item.path as string}
-                onClick={() => {
-                  // If clicking the already active tab, close it (toggle effect)
-                  if (activeTab === item.name) {
-                    setActiveTab("");
-                  } else {
-                    setActiveTab(item.name);
-                  }
-
-                  // Only close the entire sidebar if the item doesn't have a submenu
-                  if (!item.hasSubmenu) setIsMenuOpen(false);
-                }}
-                className={`flex items-center justify-between py-2 text-lg font-medium transition-colors ${
-                  activeTab === item.name ? "text-primary" : "text-foreground"
-                }`}
+                className={`flex items-center space-x-2 text-[16px] font-medium transition-colors cursor-pointer
+    ${activeTab === item.name
+                    ? "text-primary font-bold"
+                    : "text-foreground/70 hover:font-bold hover:text-primary"
+                  }`}
               >
-                <div className="flex items-center space-x-3">
-                  <span
-                    className={
-                      activeTab === item.name
-                        ? "text-primary"
-                        : "text-foreground"
-                    }
-                  >
-                    {item.icon}
-                  </span>
-                  <span
-                    className={
-                      activeTab === item.name
-                        ? "text-primary font-bold"
-                        : "text-foreground"
-                    }
-                  >
-                    {item.name}
-                  </span>
-                </div>
-                {item.hasSubmenu && (
-                  <ChevronDown
-                    size={20}
-                    className={`transition-transform duration-200 ${activeTab === item.name ? "rotate-180" : ""}`}
-                  />
-                )}
+                <span className={activeTab === item.name ? "text-primary" : "text-foreground/70 hover:text-primary"}>
+                  {item.icon}
+                </span>
+                <span className={activeTab === item.name ? "text-primary font-bold" : "text-foreground"}>
+                  {item.name}
+                </span>
               </Link>
 
               {/* Mobile Submenu - Active items now colored */}
               {item.hasSubmenu && (
                 <div
-                  className={`pl-10 flex flex-col space-y-2 transition-all duration-200 overflow-hidden ${
-                    activeTab === item.name
-                      ? "max-h-40 mt-2 border-l-2 border-primary/20"
-                      : "max-h-0"
-                  }`}
+                  className={`pl-10 flex flex-col space-y-2 transition-all duration-200 overflow-hidden ${activeTab === item.name
+                    ? "max-h-40 mt-2 border-l-2 border-primary/20"
+                    : "max-h-0"
+                    }`}
                 >
                   {countries.map((c) => (
                     <a
