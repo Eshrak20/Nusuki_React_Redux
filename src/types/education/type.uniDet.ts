@@ -62,10 +62,16 @@ export interface RankingSection {
 
 /* ================= INTAKES ================= */
 export interface IntakeSection {
+  id: number;
   heading: string;
-  intakes?: {
+  description: string;
+  iconImge?: {
+    imageUrl: string;
+    alt: string | null;
+  };
+  intakeDetail: {
     id: number;
-    name: string;
+    intake: string; // The API uses "intake" instead of "name"
     description: string;
   }[];
 }
@@ -86,34 +92,51 @@ export interface TopCourseCategory {
 
 /* ================= COST ================= */
 export interface CostToStudySection {
+  id: number;
   heading: string;
-  cost?: {
+  description: string;
+  note: string;
+  currency: string;
+
+  iconImage?: {
+    id: number;
+    imageUrl: string;
+    alt: string | null;
+    imageAltTag: string | null;
+  };
+
+  costToStudy: {
     id: number;
     expenseType: string;
+    diploma: string | null;
+    degree: string | null;
+    isTotal: boolean | null;
     annualExpenses: string;
   }[];
 }
-
 /* ================= ADMISSION ================= */
-export interface AdmissionRequirementDetail {
-  bachelors?: AdmissionRequirementCategory;
-  masters?: AdmissionRequirementCategory;
+export interface RequirementCard {
+  id: number;
+  title: string;
+  description?: string | null;
+  cardDetails: string; // HTML string containing ✅ content
 }
 
 export interface AdmissionRequirementCategory {
+  id: number;
+  name: string; // e.g., "Postgrad", "Undergrad"
+  requirementCard: RequirementCard[];
+  // Optional legacy fields in case other API endpoints use them
   gpa?: string;
   ielts?: string;
   toefl?: string;
   gre?: string;
   sat?: string;
-  id?: number;
-  name?: string;
-  requirementCard?: {
-    id?: number;
-    title?: string;
-    cardDetails?: string;
-  }[];
 }
+
+// The main type used in your component props
+// Since the API returns [ {Postgrad}, {Undergrad} ]
+export type AdmissionRequirementDetail = AdmissionRequirementCategory[];
 
 /* ================= PLACEMENT ================= */
 export interface PlacementSection {

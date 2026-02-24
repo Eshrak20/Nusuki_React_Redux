@@ -8,7 +8,6 @@ import {
   Video,
   Menu,
   X,
-  ChevronDown,
 } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 
@@ -43,7 +42,11 @@ const EduNavbar = () => {
       path: "/education/tests",
     },
   ];
-  const activeTab = navItems.find(item => item.path === location.pathname)?.name || "Home";
+  const activeTab =
+    navItems.find(item =>
+      location.pathname === item.path ||
+      location.pathname.startsWith(item.path + "/")
+    )?.name || "Home";
 
 
   return (

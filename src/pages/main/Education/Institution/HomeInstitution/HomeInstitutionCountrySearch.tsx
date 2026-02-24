@@ -52,7 +52,7 @@ const countries = [
   "Luxembourg",
   "Greece",
   "Kazakhstan",
-  "Saudi Arabia",
+  "SaudiArabia",
 ];
 
 const HomeInstitutionCountrySearch = () => {
@@ -67,10 +67,17 @@ const HomeInstitutionCountrySearch = () => {
 
   return (
     <div className="relative w-full">
+      {/* Glowy background */}
+      <div
+        className={`absolute -inset-1 bg-linear-to-r from-primary/10 via-primary/10 to-primary/10
+      rounded-lg opacity-75 blur-xl transition-all duration-700
+      ${isOpen ? "opacity-100 blur-2xl animate-pulse" : "opacity-0"}`}
+      />
+
       {/* Trigger Button */}
       <div
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center justify-between w-full bg-background border border-border py-2.5 px-4 rounded-lg cursor-pointer text-sm shadow-sm text-foreground hover:bg-accent hover:text-accent-foreground transition-colors"
+        className="relative flex items-center justify-between w-full bg-background border border-border py-2.5 px-4 rounded-lg cursor-pointer text-sm shadow-sm text-foreground hover:bg-accent hover:text-accent-foreground transition-colors"
       >
         <span className={country ? "text-primary font-medium" : "text-muted-foreground"}>
           {country || "Filter By"}
@@ -84,10 +91,7 @@ const HomeInstitutionCountrySearch = () => {
       {isOpen && (
         <>
           {/* Overlay to close when clicking outside */}
-          <div
-            className="fixed inset-0 z-10"
-            onClick={() => setIsOpen(false)}
-          />
+          <div className="fixed inset-0 z-10" onClick={() => setIsOpen(false)} />
 
           <ul className="absolute z-20 w-full mt-2 bg-background border border-border rounded-lg shadow-xl max-h-60 overflow-y-auto overflow-x-hidden custom-scrollbar">
             <li
@@ -101,8 +105,8 @@ const HomeInstitutionCountrySearch = () => {
                 key={c}
                 onClick={() => handleSelect(c)}
                 className={`px-4 py-2 text-sm cursor-pointer transition-colors
-                  ${country === c ? "bg-accent text-accent-foreground font-bold" : "text-foreground"}
-                  hover:bg-accent hover:text-accent-foreground`}
+              ${country === c ? "bg-accent text-accent-foreground font-bold" : "text-foreground"}
+              hover:bg-accent hover:text-accent-foreground`}
               >
                 {c}
               </li>

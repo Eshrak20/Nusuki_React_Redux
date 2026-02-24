@@ -28,7 +28,7 @@ const HomeInstitutionSearch = () => {
       >
         {/* Animated Background Gradient */}
         <div
-          className={`absolute -inset-1 bg-linear-to-r from-primary via-primary to-primary
+          className={`absolute -inset-1 bg-linear-to-r from-primary/10 via-primary/20 to-primary/10
           rounded-[32px] opacity-75 blur-xl transition-all duration-700
           ${isFocused ? "opacity-100 blur-2xl animate-pulse" : "opacity-0"}`}
         />

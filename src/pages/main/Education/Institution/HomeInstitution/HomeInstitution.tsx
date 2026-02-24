@@ -25,19 +25,22 @@ const HomeInstitution = () => {
   const pagination = data?.data;
 
   return (
-    <div className="pt-44 pb-20 max-w-7xl mx-auto min-h-screen">
+    <div className="pt-32 pb-3 max-w-7xl mx-auto min-h-screen">
       {/* Search and Filter Header */}
-      <div className="flex flex-col md:flex-row items-center justify-between mb-15">
-        <p className="text-foreground/80 text-sm font-medium order-3 md:order-1">
+      <div className="flex flex-col md:flex-row items-center justify-between mb-7 gap-6 md:gap-10 pl-2">
+        {/* Showing Results */}
+        <p className="text-foreground/80 text-sm font-medium order-3 md:order-1 whitespace-nowrap mr-auto">
           Showing Results in:{" "}
-          <span className="text-foreground">{country || "All Countries"}</span>
+          <span className="text-foreground font-semibold">{country || "All Countries"}</span>
         </p>
 
-        <div className="w-full md:w-1/3 order-1 md:order-2">
+        {/* First Search Bar */}
+        <div className="w-full md:w-1/2 order-1 md:order-2">
           <HomeInstitutionSearch />
         </div>
 
-        <div className="w-full md:w-1/5 order-2 md:order-3">
+        {/* Second Search Bar */}
+        <div className="w-full md:w-1/4 order-2 md:order-3">
           <HomeInstitutionCountrySearch />
         </div>
       </div>
@@ -45,7 +48,7 @@ const HomeInstitution = () => {
       {/* Grid Section */}
 
 
-      <div className="my-20">
+      <div className="">
         {isLoading ? (
           <HomeInstitutionCardSkeleton />
         ) : universities.length > 0 ? (

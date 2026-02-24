@@ -13,10 +13,10 @@ const HajjUmMainDetPack = () => {
     const [isGalleryOpen, setIsGalleryOpen] = useState(false);
   const { id } = useParams();
 
-  window.scrollTo({
-    top: 0,
-    behavior: "smooth",
-  });
+  // window.scrollTo({
+  //   top: 0,
+  //   behavior: "smooth",
+  // });
   const { data, isLoading, isError } = useGetHajjPackDetailsQuery(Number(id));
 
   if (isLoading) return <div>Loading...</div>;
