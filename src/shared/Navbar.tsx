@@ -170,7 +170,7 @@ export default function Navbar() {
               <Link to="/signup">
                 <Button
                   // Updated: text-primary-foreground matches your CSS variable for high contrast
-                  className="bg-primary rounded-full font-medium text-primary-foreground hover:opacity-90 transition-opacity"
+                  className={`bg-primary ${location.pathname.startsWith("/hajj") || location.pathname.startsWith("/umrah") ? "bg-hajj" : ""} rounded-full font-medium text-primary-foreground hover:opacity-90 transition-opacity`}
                 >
                   Sign Up
                 </Button>

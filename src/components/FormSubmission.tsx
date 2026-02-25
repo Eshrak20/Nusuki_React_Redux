@@ -40,26 +40,27 @@ const FormSubmission = ({ title }: TitleProps) => {
         setIsSuccess(false);
         form.reset();
       }, 5000);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
       alert("Something went wrong. Please try again.");
     }
   };
 
   return (
-    <section className="py-20 bg-gray-50/50 min-h-screen flex items-center justify-center">
-      <div className="w-full  bg-white rounded-3xl shadow-xl shadow-gray-200/50 border border-gray-100 overflow-hidden">
+    <section className="lg:py-20 -py-8 bg-gray-50/50 min-h-screen flex items-center justify-center">
+      <div className="w-full bg-white lg:rounded-3xl lg:shadow-xl shadow-gray-200/50 border border-gray-100 overflow-hidden">
         
         {/* Header Section */}
-        <div className="bg-hajj p-10 text-center text-white">
+        <div className="bg-hajj p-8 lg:p-10 text-center text-white">
           <motion.div 
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            className="inline-block px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-md text-[10px] font-bold uppercase tracking-[0.2em] mb-4"
+            className="lg:inline-block hidden lg:px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-md text-[10px] font-bold uppercase tracking-[0.2em] mb-4"
           >
             Contact Inquiry
           </motion.div>
-          <h2 className="text-3xl md:text-4xl  italic">{title}</h2>
-          <p className="text-white/70 mt-3 text-sm max-w-md mx-auto">
+          <h2 className="text-lg lg:text-3xl md:text-4xl italic">{title}</h2>
+          <p className="text-white/70 mt-3 hidden lg:block text-sm max-w-md mx-auto">
             Fill out the form below and our team will get back to you within 24 hours.
           </p>
         </div>

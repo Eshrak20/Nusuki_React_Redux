@@ -7,47 +7,57 @@ import HajjUmDetPackOverView from "./HajjUmDetPackOverView";
 import HajjUmDetBanner from "./HajjUmDetBanner";
 import { useParams } from "react-router-dom";
 import GalleryPreview from "@/components/GalleryPreview";
-import { useState } from "react";
+import { useState, useMemo, useCallback } from "react";
+import HajjUmDetCancel from "./HajjUmDetCancel";
 
 const HajjUmMainDetPack = () => {
-    const [isGalleryOpen, setIsGalleryOpen] = useState(false);
+  const [isGalleryOpen, setIsGalleryOpen] = useState(false);
+  const [galleryKey, setGalleryKey] = useState(0);
+
+  const handleOpenGallery = useCallback(() => {
+    setIsGalleryOpen(true);
+    // Increment key to force GalleryPreview to remount with fresh state
+    setGalleryKey((prev) => prev + 1);
+  }, []);
   const { id } = useParams();
 
-  // window.scrollTo({
-  //   top: 0,
-  //   behavior: "smooth",
-  // });
   const { data, isLoading, isError } = useGetHajjPackDetailsQuery(Number(id));
 
-  if (isLoading) return <div>Loading...</div>;
-  if (isError || !data?.data) return <div>No Data Found</div>;
+  const galleryImages = useMemo(
+    () => data?.data?.images?.map((img) => img.image_url) ?? [],
+    [data],
+  );
+
+  const handleCloseGallery = useCallback(() => {
+    setIsGalleryOpen(false);
+  }, []);
+
+  // Handle loading/error states with conditional rendering, not early returns
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (isError || !data?.data) {
+    return <div>No Data Found</div>;
+  }
 
   const pack = data.data;
 
-  const galleryImages = pack.images.map(img => img.image_url);
-  
-
-
-  const handleOpenGallery = () => {
-    setIsGalleryOpen(true);
-  };
-
-  const handleCloseGallery = () => {
-    setIsGalleryOpen(false);
-  };
   return (
     <div className="space-y-10">
       <HajjUmDetBanner pack={pack} />
       <HajjUmDetPackInfo pack={pack} />
       <HajjUmDetPackOverView overview={pack.overview} />
       <HajjUmDetPackImg images={pack.images} onSeeAll={handleOpenGallery} />
-       <GalleryPreview 
-        gallery={galleryImages} 
-        open={isGalleryOpen} 
-        onClose={handleCloseGallery} 
+      <GalleryPreview
+        key={galleryKey}
+        gallery={galleryImages}
+        open={isGalleryOpen}
+        onClose={handleCloseGallery}
       />
-      <HajjUmDetPackItinerary itineraries={pack.package_itineraries} />
       <HajjUmDetPackAcc accommodations={pack.package_accommodations} />
+      <HajjUmDetPackItinerary itineraries={pack.package_itineraries} />
+      <HajjUmDetCancel />
     </div>
   );
 };
