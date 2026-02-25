@@ -64,6 +64,30 @@ export interface Accommodation {
   images: AccommodationImage[];
 }
 
+export interface Service {
+  id: number;
+  name: string;
+  additional_fees: boolean;
+}
+
+export interface PackageServices {
+  category: string;
+  services: Service[];
+}
+
+
+export interface SightActivity {
+  id: number;
+  name: string;
+  activity_duration: number;
+  additional_fees: boolean;
+}
+
+export interface PackageSight {
+  category: string;
+  activities: SightActivity[];
+}
+
 export interface PackageAccommodation {
   id: number;
   hajj_package_id: string;
@@ -120,6 +144,8 @@ export interface HajjPackageDetails {
   images: ImageItem[];
   package_accommodations: PackageAccommodation[];
   package_itineraries: PackageItinerary[];
+  package_services: PackageServices[];
+  package_sight_seeings: PackageSight[];
 }
 
 /* ================= DETAILS API RESPONSE ================= */

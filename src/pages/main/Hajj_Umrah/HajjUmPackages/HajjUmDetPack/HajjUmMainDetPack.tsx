@@ -9,6 +9,9 @@ import { useParams } from "react-router-dom";
 import GalleryPreview from "@/components/GalleryPreview";
 import { useState, useMemo, useCallback } from "react";
 import HajjUmDetCancel from "./HajjUmDetCancel";
+import HajjUmDetPackageServices from "./HajjUmDetPackageServices";
+import HajjUmDetPackageSighting from "./HajjUmDetPackageSighting";
+import HajjUmDetIncludedServices from "./HajjUmDetIncludedServices";
 
 const HajjUmMainDetPack = () => {
   const [isGalleryOpen, setIsGalleryOpen] = useState(false);
@@ -42,6 +45,7 @@ const HajjUmMainDetPack = () => {
   }
 
   const pack = data.data;
+  // console.log(pack.package_services)
 
   return (
     <div className="space-y-10">
@@ -55,8 +59,11 @@ const HajjUmMainDetPack = () => {
         open={isGalleryOpen}
         onClose={handleCloseGallery}
       />
+      <HajjUmDetPackageServices services={pack.package_services} />
       <HajjUmDetPackAcc accommodations={pack.package_accommodations} />
       <HajjUmDetPackItinerary itineraries={pack.package_itineraries} />
+      <HajjUmDetIncludedServices />
+      <HajjUmDetPackageSighting sight={pack.package_sight_seeings}/>
       <HajjUmDetCancel />
     </div>
   );

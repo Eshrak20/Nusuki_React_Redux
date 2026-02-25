@@ -80,7 +80,7 @@ export default function Navbar() {
       >
         <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 md:px-6">
           {/* Logo */}
-          <Link to="/" className="flex h-12 w-40 items-center">
+          <Link to="/" className="flex h-12 w-56 items-center">
             <img src={logoWhite} alt="Logo" className="dark:hidden object-contain" />
             <img src={logoDark} alt="Logo" className="hidden dark:block object-contain" />
           </Link>
