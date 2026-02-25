@@ -2,13 +2,13 @@ import type { ReqListProps } from "../../../../../types/hajj/types.visa";
 
 const ReqList = ({ title, requirements, note }: ReqListProps) => {
   return (
-    <div className="max-w-4xl space-y-10">
+    <div className="max-w-4xl space-y-5 lg:space-y-10">
       {/* Header Section */}
       <header className="space-y-2">
-        <h2 className="text-3xl font-extrabold tracking-tight text-hajj lg:text-4xl">
+        <h2 className="text-xl font-extrabold tracking-tight text-hajj lg:text-4xl">
           {title}
         </h2>
-        <div className="h-1.5 w-20 rounded-full bg-hajj" />
+        <div className="lg:h-1.5 h-1 w-20 rounded-full bg-hajj" />
       </header>
 
       {/* Requirements List */}
@@ -33,10 +33,10 @@ const ReqList = ({ title, requirements, note }: ReqListProps) => {
 
             {/* Content */}
             <div className="space-y-1.5">
-              <h4 className="text-lg font-bold leading-none text-foreground">
+              <h4 className="lg:text-lg text-sm font-bold leading-none text-foreground">
                 {item.title}
               </h4>
-              <p className="text-[15px] leading-relaxed text-muted-foreground/90">
+              <p className="lg:text-[15px] text-[11px] leading-relaxed text-muted-foreground/90">
                 {item.description}
               </p>
             </div>
@@ -69,7 +69,7 @@ const ReqList = ({ title, requirements, note }: ReqListProps) => {
               <span className="text-sm font-bold uppercase tracking-wider text-hajj">
                 Important Note
               </span>
-              <p className="text-[14px] leading-relaxed text-muted-foreground">
+              <p className="lg:text-[14px] text-[12px] leading-relaxed text-muted-foreground">
                 {note}
               </p>
             </div>

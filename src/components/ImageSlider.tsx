@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
@@ -27,9 +27,11 @@ const ImageSlider = ({ images }: ImageSliderProps) => {
 
   const currentIndex = Math.abs(page % images.length);
 
-  const paginate = (newDirection: number) => {
-    setPage([page + newDirection, newDirection]);
-  };
+  const paginate = useCallback((newDirection: number) => {
+    // 3. Use functional update (prev) => ... 
+    // This allows the function to stay the same even when 'page' changes
+    setPage(([prevPage]) => [prevPage + newDirection, newDirection]);
+  }, []);
 
   // Auto-slide functionality
   useEffect(() => {
@@ -63,7 +65,7 @@ const ImageSlider = ({ images }: ImageSliderProps) => {
           animate="center"
           exit="exit"
           transition={{
-            x: { type: "spring", stiffness: 300, damping: 30 },
+            x: { type: "spring", stiffness: 100, damping: 30 },
             opacity: { duration: 0.2 },
           }}
           className="absolute w-full h-full object-cover"

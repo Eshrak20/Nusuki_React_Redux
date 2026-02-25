@@ -7,7 +7,6 @@ interface Props {
 }
 
 const HajjUmDetPackImg = ({ images, onSeeAll }: Props) => {
-    
   const leftImg = images[0];
   const midTopImg = images[1];
   const midBotImg = images[2];
@@ -75,7 +74,7 @@ const HajjUmDetPackImg = ({ images, onSeeAll }: Props) => {
             whileInView={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.3 }}
             viewport={{ once: true }}
-            className="relative overflow-hidden rounded-xl h-full group" 
+            className="relative overflow-hidden rounded-xl h-full group"
           >
             <img
               src={rightImg.image_url}
