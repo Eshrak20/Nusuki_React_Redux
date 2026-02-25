@@ -5,8 +5,8 @@ interface Props {
 }
 
 const DetInstitutionWhyChose = ({ overview }: Props) => {
+  console.log("overview",overview)
   if (!overview?.whyChoose) return null;
-
   return (
     <div className="bg-white rounded-2xl shadow-sm p-6 space-y-4">
       <h2 className="text-xl font-semibold">Why Choose This University?</h2>

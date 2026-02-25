@@ -140,19 +140,27 @@ export type AdmissionRequirementDetail = AdmissionRequirementCategory[];
 
 /* ================= PLACEMENT ================= */
 export interface PlacementSection {
+  id: number;
   heading: string;
-  recruiters?: string[]; // simple array of recruiter names
-  placementCard?: {
+  subHeading: string;
+  description: string;
+  currency: string;
+  jobHeading: string;
+  note: string;
+  placementCard: {
     id: number;
-    image: string;
+    title: string;
+    image: string | null;
   }[];
-  averageSalary?: {
+  averageSalary: {
     id: number;
     expenceType: string;
     totalSalary: string;
+    degree: string | null;
+    diploma: string | null;
+    isTotal: boolean | null;
   }[];
 }
-
 //DetInstitutionCultural 
 export interface MediaImage {
   id: number;

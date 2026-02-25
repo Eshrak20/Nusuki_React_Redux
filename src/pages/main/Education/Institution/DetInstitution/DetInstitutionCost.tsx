@@ -16,6 +16,14 @@ import type { CostToStudySection } from "@/types/education/type.uniDet";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 import { type Variants } from "framer-motion";
 
 interface Props {
@@ -70,6 +78,9 @@ const DetInstitutionCost = ({ cost }: Props) => {
     return acc + amount;
   }, 0);
 
+  // Determine if we should use table view (more than 8 items)
+  const useTableView = (cost.costToStudy?.length || 0) > 8;
+
   return (
     <section className="max-w-7xl mx-auto px-4 py-16 md:py-24">
       {/* Header Section with enhanced design */}
@@ -87,29 +98,8 @@ const DetInstitutionCost = ({ cost }: Props) => {
 
         <div className="flex flex-col md:flex-row md:items-center gap-6 mb-8">
           {/* Icon and Title */}
-          {/* <div className="flex items-center gap-5">
+          <div className="flex items-center gap-5">
             <div className="relative">
-              <div className="absolute inset-0 bg-primary/20 rounded-2xl blur-md" />
-              {cost.iconImage?.imageUrl ? (
-                <img
-                  src={cost.iconImage.imageUrl}
-                  alt={cost.iconImage.imageAltTag || cost.heading}
-                  className="relative w-16 h-16 object-contain p-3 bg-card rounded-2xl border border-border shadow-sm"
-                />
-              ) : (
-                <div className="relative w-16 h-16 flex items-center justify-center bg-primary/10 rounded-2xl border border-primary/20">
-                  <IndianRupee className="w-8 h-8 text-primary" />
-                </div>
-              )}
-            </div>
-            <h2 className="text-4xl md:text-5xl font-bold bg-linear-to-r from-foreground to-foreground/70 bg-clip-text text-transparent">
-              {cost.heading || "Cost to Study"}
-            </h2>
-          </div> */}
-
-          {/* Icon and Title */}
-          <div className="flex  items-center gap-5">
-            <div className="relative ">
               <div className="absolute inset-0 bg-primary/20 rounded-2xl blur-md" />
               <div className="relative w-16 h-16 flex items-center justify-center bg-linear-to-br from-primary/20 via-primary/10 to-transparent rounded-2xl border border-primary/30 shadow-lg">
                 <IndianRupee className="w-8 h-8 text-primary" />
@@ -133,7 +123,7 @@ const DetInstitutionCost = ({ cost }: Props) => {
           )}
         </div>
 
-        {/* Description with enhanced styling - FIXED */}
+        {/* Description with enhanced styling */}
         {cost.description && (
           <div className="relative max-w-3xl">
             <div className="absolute left-0 top-0 bottom-0 w-1 bg-linear-to-b from-primary via-primary/50 to-transparent rounded-full" />
@@ -147,82 +137,148 @@ const DetInstitutionCost = ({ cost }: Props) => {
         )}
       </motion.div>
 
-      {/* Cost Cards Grid */}
-      <motion.div
-        variants={containerVariants}
-        initial="hidden"
-        animate="visible"
-        className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8"
-      >
-        {cost.costToStudy?.map((item) => {
-          const IconComponent = getExpenseIcon(item.expenseType);
-          const amount = parseFloat(item.annualExpenses?.replace(/[^0-9.-]+/g, "") || "0");
+      {/* Conditional Rendering: Cards or Table */}
+      {!useTableView ? (
+        /* Cards Grid View - For 8 items or less */
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+          className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8"
+        >
+          {cost.costToStudy?.map((item) => {
+            const IconComponent = getExpenseIcon(item.expenseType);
+            const amount = parseFloat(item.annualExpenses?.replace(/[^0-9.-]+/g, "") || "0");
 
-          return (
-            <motion.div
-              key={item.id}
-              variants={itemVariants}
-              whileHover={{ y: -4 }}
-              className="group"
-            >
-              <Card className="relative h-full overflow-hidden border-border/50 hover:border-primary/30 transition-all duration-300 bg-linear-to-br from-card to-card/50">
-                {/* Hover gradient effect */}
-                <div className="absolute inset-0 bg-linear-to-br from-primary/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+            return (
+              <motion.div
+                key={item.id}
+                variants={itemVariants}
+                whileHover={{ y: -4 }}
+                className="group"
+              >
+                <Card className="relative h-full overflow-hidden border-border/50 hover:border-primary/30 transition-all duration-300 bg-linear-to-br from-card to-card/50">
+                  {/* Hover gradient effect */}
+                  <div className="absolute inset-0 bg-linear-to-br from-primary/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
-                {/* Top accent bar */}
-                <div className="absolute top-0 left-0 right-0 h-1 bg-linear-to-r from-primary/0 via-primary to-primary/0 transform -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
+                  {/* Top accent bar */}
+                  <div className="absolute top-0 left-0 right-0 h-1 bg-linear-to-r from-primary/0 via-primary to-primary/0 transform -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
 
-                <CardContent className="p-6 relative">
-                  {/* Header with icon and type */}
-                  <div className="flex items-start justify-between mb-4">
-                    <div className="p-3 rounded-xl bg-primary/10 text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-all duration-300">
-                      <IconComponent className="w-5 h-5" />
+                  <CardContent className="p-6 relative">
+                    {/* Header with icon and type */}
+                    <div className="flex items-start justify-between mb-4">
+                      <div className="p-3 rounded-xl bg-primary/10 text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-all duration-300">
+                        <IconComponent className="w-5 h-5" />
+                      </div>
+
+                      {/* Amount badge */}
+                      <Badge
+                        variant="secondary"
+                        className="bg-primary/10 text-primary border-0 font-mono"
+                      >
+                        Annual
+                      </Badge>
                     </div>
 
-                    {/* Amount badge */}
-                    <Badge
-                      variant="secondary"
-                      className="bg-primary/10 text-primary border-0 font-mono"
-                    >
-                      Annual
-                    </Badge>
-                  </div>
+                    {/* Expense Type */}
+                    <h3 className="text-lg font-semibold mb-2 group-hover:text-primary transition-colors">
+                      {item.expenseType}
+                    </h3>
 
-                  {/* Expense Type */}
-                  <h3 className="text-lg font-semibold mb-2 group-hover:text-primary transition-colors">
-                    {item.expenseType}
-                  </h3>
-
-                  {/* Amount with animation */}
-                  <div className="space-y-1 mb-4">
-                    <p className="text-3xl font-bold tracking-tight">
-                      <span className="text-primary">₹</span>
-                      {amount.toLocaleString('en-IN')}
-                    </p>
-                    <p className="text-xs text-muted-foreground">
-                      Estimated annual expense
-                    </p>
-                  </div>
-
-                  {/* Divider */}
-                  <Separator className="my-4 bg-border/50" />
-
-                  {/* Footer with year info */}
-                  <div className="flex items-center justify-between text-sm">
-                    <div className="flex items-center gap-1.5 text-muted-foreground">
-                      <Calendar className="w-3.5 h-3.5" />
-                      <span>Per academic year</span>
+                    {/* Amount with animation */}
+                    <div className="space-y-1 mb-4">
+                      <p className="text-3xl font-bold tracking-tight">
+                        <span className="text-primary">₹</span>
+                        {amount.toLocaleString('en-IN')}
+                      </p>
+                      <p className="text-xs text-muted-foreground">
+                        Estimated annual expense
+                      </p>
                     </div>
-                    <Info className="w-4 h-4 text-muted-foreground/40 group-hover:text-primary/40 transition-colors cursor-help" />
-                  </div>
-                </CardContent>
-              </Card>
-            </motion.div>
-          );
-        })}
-      </motion.div>
 
-      {/* Note Section - FIXED */}
+                    {/* Divider */}
+                    <Separator className="my-4 bg-border/50" />
+
+                    {/* Footer with year info */}
+                    <div className="flex items-center justify-between text-sm">
+                      <div className="flex items-center gap-1.5 text-muted-foreground">
+                        <Calendar className="w-3.5 h-3.5" />
+                        <span>Per academic year</span>
+                      </div>
+                      <Info className="w-4 h-4 text-muted-foreground/40 group-hover:text-primary/40 transition-colors cursor-help" />
+                    </div>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            );
+          })}
+        </motion.div>
+      ) : (
+        /* Table View - For more than 8 items */
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="relative"
+        >
+          <Card className="overflow-hidden border-border/50 bg-card/50 backdrop-blur-sm">
+            <CardContent className="p-0">
+              <Table>
+                <TableHeader className="bg-primary/5">
+                  <TableRow className="hover:bg-transparent border-border/50">
+                    <TableHead className="w-[50%] py-4 text-base font-semibold">Expense Type</TableHead>
+                    <TableHead className="py-4 text-base font-semibold text-right">Annual Expenses (₹)</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {cost.costToStudy?.map((item, index) => {
+                    const amount = parseFloat(item.annualExpenses?.replace(/[^0-9.-]+/g, "") || "0");
+                    const IconComponent = getExpenseIcon(item.expenseType);
+                    
+                    return (
+                      <motion.tr
+                        key={item.id}
+                        initial={{ opacity: 0, x: -20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: index * 0.05 }}
+                        className="group border-border/50 hover:bg-primary/5 transition-colors"
+                      >
+                        <TableCell className="py-4">
+                          <div className="flex items-center gap-3">
+                            <div className="p-2 rounded-lg bg-primary/10 text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-all duration-300">
+                              <IconComponent className="w-4 h-4" />
+                            </div>
+                            <span className="font-medium">{item.expenseType}</span>
+                          </div>
+                        </TableCell>
+                        <TableCell className="py-4 text-right">
+                          <div className="inline-flex items-center gap-1.5">
+                            <span className="text-lg font-bold tracking-tight text-primary">
+                              ₹{amount.toLocaleString('en-IN')}
+                            </span>
+                            <Badge variant="outline" className="ml-2 border-primary/20 text-xs">
+                              Annual
+                            </Badge>
+                          </div>
+                        </TableCell>
+                      </motion.tr>
+                    );
+                  })}
+                </TableBody>
+              </Table>
+            </CardContent>
+          </Card>
+          
+          {/* View toggle hint */}
+          <div className="mt-4 text-center">
+            <Badge variant="outline" className="border-primary/20 bg-primary/5">
+              Showing {cost.costToStudy?.length} expense items in table view
+            </Badge>
+          </div>
+        </motion.div>
+      )}
+
+      {/* Note Section */}
       {cost.note && (
         <motion.div
           initial={{ opacity: 0, y: 20 }}

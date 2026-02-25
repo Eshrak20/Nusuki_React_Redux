@@ -6,13 +6,13 @@ import DetInstitutionPrograms from "./DetInstitutionPrograms";
 import DetInstitutionRanking from "./DetInstitutionRanking";
 import DetInstitutionIntakes from "./DetInstitutionIntakes";
 import DetInstitutionAdmissionReq from "./DetInstitutionAdmissionReq";
-// import DetInstitutionWhyChose from "./DetInstitutionWhyChose";
-// import DetInstitutionRecruiters from "./DetInstitutionRecruiters";
-// import DetInstitutionCultural from "./DetInstitutionCultural";
-// import DetInstitutionFaq from "./DetInstitutionFaq";
-// import DetInstitutionAccomplish from "./DetInstitutionAccomplish";
-// import DetInstitutionScholarships from "./DetInstitutionScholarships";
+import DetInstitutionRecruiters from "./DetInstitutionRecruiters";
+import DetInstitutionWhyChose from "./DetInstitutionWhyChose";
 import DetInstitutionBanner from "./DetInstitutionBanner";
+import DetInstitutionCultural from "./DetInstitutionCultural";
+import DetInstitutionFaq from "./DetInstitutionFaq";
+import DetInstitutionAccomplish from "./DetInstitutionAccomplish";
+import DetInstitutionScholarships from "./DetInstitutionScholarships";
 import type { UniversityBannerCardMini } from "@/types/education/type.uniDet";
 
 const DetInstitutionMain = () => {
@@ -47,15 +47,15 @@ const DetInstitutionMain = () => {
       <DetInstitutionOverview university={university} />
       <DetInstitutionRanking ranking={detail?.rankingSection} />
       <DetInstitutionPrograms programs={detail?.topCourseDetail} />
+      <DetInstitutionCultural culture={detail?.cultureSection} />
       <DetInstitutionCost cost={detail?.costToStudySection} />
       <DetInstitutionIntakes intakes={detail?.intakeSection} />
       <DetInstitutionAdmissionReq admission={detail?.admissionRequirementDetail} />
-      {/* <DetInstitutionRecruiters placement={detail?.universityPlacementSection} />
-      <DetInstitutionWhyChose overview={detail?.overviewSection} />
-      <DetInstitutionCultural culture={detail?.cultureSection} />
-      <DetInstitutionFaq faq={detail?.faqSection} />
+      <DetInstitutionRecruiters placement={detail?.universityPlacementSection} />
+      {/* <DetInstitutionFaq faq={detail?.faqSection} />
       <DetInstitutionAccomplish accomplish={detail?.accomplishSection} />
-      <DetInstitutionScholarships scholarships={detail?.scholarshipsAvailable} /> */}
+      <DetInstitutionScholarships scholarships={detail?.scholarshipsAvailable} />
+      <DetInstitutionWhyChose overview={detail?.overviewSection} /> */}
     </div>
   );
 };

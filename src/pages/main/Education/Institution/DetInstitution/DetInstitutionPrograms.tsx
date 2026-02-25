@@ -1,9 +1,21 @@
 "use client";
-import { motion } from "framer-motion";
-import { BookOpen, Clock, GraduationCap, Award, Calendar } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { 
+  BookOpen, Clock, GraduationCap, Award, Calendar, Sparkles, 
+  Users, Globe, Library, ChevronRight, Trophy, Search, CheckCircle2 
+} from "lucide-react";
 import type { TopCourseCategory } from "@/types/education/type.uniDet";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 import { Typewriter } from "@/components/Typewriter";
 
 interface Props {
@@ -13,132 +25,205 @@ interface Props {
 const DetInstitutionPrograms = ({ programs }: Props) => {
   if (!programs) return null;
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1
-      }
-    }
-  };
+  // Logic for filtering remains the same
+  const mastersPrograms = programs.filter(p => 
+    /master|postgraduate/i.test(p.name || "")
+  );
+  const bachelorPrograms = programs.filter(p => 
+    /bachelor|undergraduate/i.test(p.name || "")
+  );
+  const otherPrograms = programs.filter(p => 
+    !mastersPrograms.includes(p) && !bachelorPrograms.includes(p)
+  );
 
-  const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: { opacity: 1, y: 0 }
-  };
+  const mastersCount = mastersPrograms.reduce((acc, cat) => acc + (cat.cardDetail?.length || 0), 0);
+  const bachelorCount = bachelorPrograms.reduce((acc, cat) => acc + (cat.cardDetail?.length || 0), 0);
+  const otherCount = otherPrograms.reduce((acc, cat) => acc + (cat.cardDetail?.length || 0), 0);
 
-  return (
-    <section className="py-16 space-y-20">
-      {programs.map((category, catIndex) => (
-        <div key={category.id || catIndex} className="space-y-10">
-          {/* Enhanced Category Header */}
-          <div className="relative">
-            {/* Background accent */}
-            <div className="absolute inset-0 flex items-center" aria-hidden="true">
-              <div className="w-full border-t border-border/40" />
-            </div>
-            
-            <div className="relative flex items-center gap-4 bg-background pr-8">
-              <div className="p-3 rounded-xl bg-primary/10 text-primary">
-                <GraduationCap className="w-7 h-7" />
+  const renderProgramTable = (programs: TopCourseCategory[], title: string) => {
+    const allCourses = programs.flatMap(category => 
+      category.cardDetail?.map(course => ({ ...course, categoryName: category.name })) || []
+    );
+
+    return (
+      <motion.div 
+        initial={{ opacity: 0, scale: 0.98 }}
+        animate={{ opacity: 1, scale: 1 }}
+        className="space-y-8"
+      >
+        <Card className="overflow-hidden border-primary/20 shadow-2xl bg-card/50 backdrop-blur-sm">
+          {/* Enhanced Table Header/Hero */}
+          <div className="bg-gradient-to-r from-primary/10 via-primary/5 to-transparent p-6 border-b border-primary/10">
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+              <div>
+                <h3 className="text-2xl font-bold tracking-tight text-foreground flex items-center gap-2">
+                  <Sparkles className="w-6 h-6 text-primary animate-pulse" />
+                  {title}
+                </h3>
+                <p className="text-muted-foreground text-sm mt-1">
+                  Explore our world-class curriculum and specialized career paths.
+                </p>
               </div>
-              <div className="flex-1">
-                <Typewriter 
-                  text={category.name || "Available Programs"} 
-                  className="text-3xl font-bold tracking-tight bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text"
-                />
-              </div>
-              <Badge variant="outline" className="hidden sm:flex gap-1 items-center text-sm px-3 py-1">
-                <Award className="w-3.5 h-3.5" />
-                {category.cardDetail?.length || 0} Programs
+              <Badge className="px-4 py-1.5 text-md font-bold bg-primary text-primary-foreground shadow-lg shadow-primary/20">
+                {allCourses.length} Specializations
               </Badge>
             </div>
           </div>
-
-          <motion.div 
-            variants={containerVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-100px" }}
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
-          >
-            {category.cardDetail?.map((course, index) => (
-              <motion.div
-                key={course.id || index}
-                variants={itemVariants}
-                transition={{ duration: 0.5, ease: "easeOut" }}
-              >
-                <Card className="group pt-7 relative h-full hover:shadow-xl transition-all duration-500 border-border/50 hover:border-primary/30 bg-card/50 backdrop-blur-sm hover:bg-card overflow-hidden">
-                  
-                  {/* Hover gradient effect */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                  
-                  {/* Top accent bar */}
-                  <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary/0 via-primary/50 to-primary/0 transform translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000" />
-
-                  <CardHeader className="pb-4 relative">
-                    <div className="flex items-start justify-between">
-                      <Badge 
-                        variant="secondary" 
-                        className="w-fit mb-3 font-medium bg-primary/10 text-primary hover:bg-primary/20 border-0"
-                      >
-                        <Calendar className="w-3 h-3 mr-1" />
-                        Program Details
-                      </Badge>
-                    </div>
-                    <CardTitle className="text-xl font-bold leading-tight group-hover:text-primary transition-colors duration-300 line-clamp-2">
-                      {course.courseName}
-                    </CardTitle>
-                  </CardHeader>
-                  
-                  <CardContent className="space-y-5 relative">
-                    {/* Decorative element */}
-                    <div className="absolute right-0 bottom-0 w-24 h-24 bg-gradient-to-tl from-primary/5 to-transparent rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-
-                    {/* Course Detail Row 1 */}
-                    <div className="flex items-start gap-4 group/item">
-                      <div className="mt-0.5 p-2.5 rounded-xl bg-primary/10 text-primary group-hover/item:bg-primary group-hover/item:text-primary-foreground transition-all duration-300">
-                        <BookOpen className="w-4 h-4" />
+          
+          <div className="overflow-x-auto">
+            <Table>
+              <TableHeader className="bg-muted/50">
+                <TableRow className="h-16 border-b border-primary/10">
+                  <TableHead className="w-16 text-center font-bold text-primary">#</TableHead>
+                  <TableHead className="font-bold text-lg min-w-[300px]">Program & Faculty</TableHead>
+                  <TableHead className="font-bold text-lg min-w-[200px]">Specialization</TableHead>
+                  <TableHead className="font-bold text-lg min-w-[180px]">Duration</TableHead>
+                  <TableHead className="font-bold text-lg text-right pr-8">Degree</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {allCourses.map((course, index) => (
+                  <TableRow 
+                    key={course.id || index}
+                    className="group hover:bg-primary/5 transition-all duration-300 h-24 border-b border-border/40"
+                  >
+                    <TableCell className="text-center font-mono text-lg text-muted-foreground/60">
+                      {(index + 1).toString().padStart(2, '0')}
+                    </TableCell>
+                    <TableCell>
+                      <div className="flex items-center gap-4">
+                        <div className="hidden sm:flex w-12 h-12 items-center justify-center rounded-2xl bg-primary/10 text-primary group-hover:scale-110 group-hover:bg-primary group-hover:text-primary-foreground transition-all duration-500">
+                          <GraduationCap className="w-6 h-6" />
+                        </div>
+                        <div>
+                          <p className="font-bold text-lg group-hover:text-primary transition-colors leading-tight">
+                            {course.courseName}
+                          </p>
+                          <span className="text-xs uppercase tracking-widest text-muted-foreground font-semibold">
+                            {course.categoryName}
+                          </span>
+                        </div>
                       </div>
-                      <div className="flex-1">
-                        <p className="font-semibold text-foreground/90 group-hover:text-foreground transition-colors">
-                          {course.title1}
-                        </p>
-                        <p className="text-sm text-muted-foreground/80 group-hover:text-muted-foreground transition-colors mt-0.5">
-                          {course.subTitle1}
-                        </p>
+                    </TableCell>
+                    <TableCell>
+                      <div className="flex flex-col">
+                        <span className="font-semibold text-foreground/90">{course.title1}</span>
+                        <span className="text-sm text-muted-foreground">{course.subTitle1}</span>
                       </div>
-                    </div>
+                    </TableCell>
+                    <TableCell>
+                      <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-secondary/50 w-fit">
+                        <Clock className="w-4 h-4 text-primary" />
+                        <span className="text-sm font-bold">{course.title2}</span>
+                      </div>
+                    </TableCell>
+                    <TableCell className="text-right pr-8">
+                       <div className="flex flex-col items-end">
+                          <Badge variant="outline" className="border-primary/50 text-primary font-bold">
+                            {course.categoryName?.includes('Master') ? "Postgraduate" : "Undergraduate"}
+                          </Badge>
+                       </div>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </div>
+        </Card>
+      </motion.div>
+    );
+  };
 
-                    {/* Course Detail Row 2 */}
-                    <div className="flex items-start gap-4 group/item">
-                      <div className="mt-0.5 p-2.5 rounded-xl bg-primary/10 text-primary group-hover/item:bg-primary group-hover/item:text-primary-foreground transition-all duration-300">
-                        <Clock className="w-4 h-4" />
-                      </div>
-                      <div className="flex-1">
-                        <p className="font-semibold text-foreground/90 group-hover:text-foreground transition-colors">
-                          {course.title2}
-                        </p>
-                        <p className="text-sm text-muted-foreground/80 group-hover:text-muted-foreground transition-colors mt-0.5">
-                          {course.subTitle2}
-                        </p>
-                      </div>
-                    </div>
-
-                    {/* Subtle divider */}
-                    <div className="pt-2">
-                      <div className="h-px bg-gradient-to-r from-transparent via-border to-transparent" />
-                    </div>
-                  </CardContent>
-                </Card>
-              </motion.div>
-            ))}
-          </motion.div>
+  return (
+    <section className="py-16 px-4 max-w-7xl mx-auto space-y-12">
+      {/* Visual Header */}
+      <div className="text-center space-y-4">
+        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-bold mb-4">
+          <Globe className="w-4 h-4" />
+          GLOBAL EDUCATION STANDARDS
         </div>
-      ))}
+        <Typewriter 
+          text="Academic Excellence" 
+          className="text-4xl md:text-6xl font-black tracking-tighter"
+        />
+        <p className="text-muted-foreground max-w-2xl mx-auto text-lg">
+          Choose from our diverse range of accredited programs designed to shape the leaders of tomorrow.
+        </p>
+      </div>
+
+      {/* Stats Section with more "Pop" */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
+        {[
+          { label: "Master's", count: mastersCount, icon: GraduationCap, color: "blue" },
+          { label: "Bachelor's", count: bachelorCount, icon: Library, color: "emerald" },
+          { label: "Other", count: otherCount, icon: Trophy, color: "amber" },
+          { label: "Total Courses", count: mastersCount + bachelorCount + otherCount, icon: Users, color: "primary" }
+        ].map((stat, i) => (
+          <Card key={i} className="relative overflow-hidden group hover:border-primary/50 transition-all duration-300 shadow-xl">
+            <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+              <stat.icon className="w-12 h-12" />
+            </div>
+            <CardContent className="p-6">
+              <p className="text-sm font-bold text-muted-foreground uppercase tracking-widest">{stat.label}</p>
+              <h4 className="text-4xl font-black mt-2 text-primary">{stat.count}</h4>
+            </CardContent>
+          </Card>
+        ))}
+      </div>
+
+      {/* Highly Visible Tabs */}
+      <Tabs defaultValue="masters" className="w-full">
+        <div className="flex justify-center mb-12">
+          <TabsList className="h-16 p-2 bg-muted/80 backdrop-blur-md border border-border rounded-2xl shadow-inner gap-2">
+            <TabsTrigger 
+              value="masters" 
+              className="rounded-xl px-8 h-12 text-md font-bold transition-all data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-lg"
+            >
+              Master's Degrees
+            </TabsTrigger>
+            <TabsTrigger 
+              value="bachelors" 
+              className="rounded-xl px-8 h-12 text-md font-bold transition-all data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-lg"
+            >
+              Bachelor's Degrees
+            </TabsTrigger>
+            <TabsTrigger 
+              value="other" 
+              className="rounded-xl px-8 h-12 text-md font-bold transition-all data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-lg"
+            >
+              Certifications
+            </TabsTrigger>
+          </TabsList>
+        </div>
+
+        <AnimatePresence mode="wait">
+          <TabsContent value="masters" className="focus-visible:outline-none">
+            {mastersPrograms.length > 0 ? renderProgramTable(mastersPrograms, "Master's Programs") : (
+               <EmptyState icon={GraduationCap} message="No Master's programs available" />
+            )}
+          </TabsContent>
+          <TabsContent value="bachelors" className="focus-visible:outline-none">
+            {bachelorPrograms.length > 0 ? renderProgramTable(bachelorPrograms, "Bachelor's Programs") : (
+               <EmptyState icon={Library} message="No Bachelor's programs available" />
+            )}
+          </TabsContent>
+          <TabsContent value="other" className="focus-visible:outline-none">
+            {otherPrograms.length > 0 ? renderProgramTable(otherPrograms, "Other Academic Programs") : (
+               <EmptyState icon={Award} message="No other programs available" />
+            )}
+          </TabsContent>
+        </AnimatePresence>
+      </Tabs>
     </section>
   );
 };
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const EmptyState = ({ icon: Icon, message }: { icon: any, message: string }) => (
+  <Card className="p-20 text-center border-dashed border-2 bg-muted/10">
+    <Icon className="w-16 h-16 mx-auto text-muted-foreground/20 mb-4" />
+    <p className="text-xl font-medium text-muted-foreground">{message}</p>
+  </Card>
+);
 
 export default DetInstitutionPrograms;
