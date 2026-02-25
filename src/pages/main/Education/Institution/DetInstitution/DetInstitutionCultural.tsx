@@ -1,19 +1,34 @@
-"use client";
-
-import React, { useState } from "react";
+import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Play, X, ChevronLeft, ChevronRight } from "lucide-react";
 import type { DetInstitutionCulturalProps } from "@/types/education/type.uniDet";
+import { Typewriter } from "@/components/Typewriter";
 
 const DetInstitutionCultural = ({ culture }: DetInstitutionCulturalProps) => {
   const [selectedImageIdx, setSelectedImageIdx] = useState<number | null>(null);
-  const [activeVideo, setActiveVideo] = useState<string | null>(null);
+  const [activeVideo, setActiveVideo] = useState<number | null>(null);
 
   const videos = culture?.medias.filter((media) => media.videoUrl) || [];
-  const images = culture?.medias.filter((media) => !media.videoUrl && media.desktopImage) || [];
+
+  // Filter out any images that contain the background pattern
+  const images = culture?.medias.filter((media) => {
+    if (media.videoUrl) return false;
+
+    // Check if either desktop or mobile image URL contains the pattern
+    const desktopUrl = media.desktopImage?.url || '';
+    const mobileUrl = media.mobileImage?.url || '';
+
+    // Return false (filter out) if either URL contains the pattern
+    return !desktopUrl.includes('gallery_Bg_Image_ce22c64c25_8de67b5015_e84e5173bd.png') &&
+      !mobileUrl.includes('gallery_Bg_Image_ce22c64c25_8de67b5015_e84e5173bd.png') &&
+      !desktopUrl.includes('thumbnail_gallery_Bg_Image_ce22c64c25_8de67b5015_e84e5173bd.png') &&
+      !mobileUrl.includes('thumbnail_gallery_Bg_Image_ce22c64c25_8de67b5015_e84e5173bd.png') &&
+      media.desktopImage; // Also ensure desktopImage exists
+  }) || [];
 
   // Helper to extract YouTube ID for thumbnails
   const getYouTubeId = (url: string) => {
+    // eslint-disable-next-line no-useless-escape
     const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
     const match = url.match(regExp);
     return (match && match[2].length === 11) ? match[2] : null;
@@ -27,24 +42,23 @@ const DetInstitutionCultural = ({ culture }: DetInstitutionCulturalProps) => {
   };
 
   return (
-    <section className="py-20 bg-white">
+    <section className="pt-10">
       <div className="container mx-auto px-4">
-        <div className="max-w-2xl mx-auto text-center mb-16">
-          <motion.h2 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-4xl md:text-5xl font-bold tracking-tight mb-4"
-          >
-            {culture?.title}
-          </motion.h2>
-          <div className="h-1 w-20 bg-primary mx-auto rounded-full" />
+        <div className="mx-auto mb-16 text-center">
+          <div className="inline-block">
+            <Typewriter
+              text={culture?.title || "Cultural Section of University"}
+              className="text-3xl font-bold tracking-tight sm:text-4xl text-center"
+              textClassName="text-foreground dark:text-foreground"
+            />
+            <div className="h-1 w-full mt-2 bg-primary rounded-full" />
+          </div>
         </div>
 
         {/* --- VIDEO SECTION --- */}
         {videos.length > 0 && (
           <div className="mb-20">
-            <motion.h3 
+            <motion.h3
               initial={{ opacity: 0, x: -20 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
@@ -53,7 +67,7 @@ const DetInstitutionCultural = ({ culture }: DetInstitutionCulturalProps) => {
               <span className="w-8 h-8 rounded-full bg-primary/10 text-primary flex items-center justify-center text-sm">01</span>
               Campus Experience
             </motion.h3>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               {videos.map((video, index) => {
                 const ytId = getYouTubeId(video.videoUrl!);
@@ -78,7 +92,7 @@ const DetInstitutionCultural = ({ culture }: DetInstitutionCulturalProps) => {
                             alt=""
                             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                             onError={(e) => {
-                              (e.target as HTMLImageElement).src = 
+                              (e.target as HTMLImageElement).src =
                                 `https://img.youtube.com/vi/${ytId}/hqdefault.jpg`;
                             }}
                           />
@@ -93,8 +107,8 @@ const DetInstitutionCultural = ({ culture }: DetInstitutionCulturalProps) => {
                             whileHover={{ scale: 1.1 }}
                             whileTap={{ scale: 0.9 }}
                           >
-                            <div className="absolute inset-0 rounded-full bg-primary/20 animate-ping" />
-                            <div className="relative w-20 h-20 bg-primary rounded-full flex items-center justify-center shadow-2xl">
+                            <div className="absolute inset-0 rounded-full dark:bg-primary bg-primary/20 animate-ping" />
+                            <div className="relative w-20 h-20 dark:bg-[#29308f] bg-primary/20 rounded-full flex items-center justify-center shadow-2xl">
                               <Play className="w-8 h-8 text-white ml-1" fill="white" />
                             </div>
                           </motion.button>
@@ -131,7 +145,7 @@ const DetInstitutionCultural = ({ culture }: DetInstitutionCulturalProps) => {
               <span className="w-8 h-8 rounded-full bg-primary/10 text-primary flex items-center justify-center text-sm">02</span>
               Photo Gallery
             </h3>
-            
+
             <div className="columns-1 sm:columns-2 lg:columns-3 gap-4 space-y-4">
               {images.map((image, idx) => (
                 <motion.div
@@ -163,16 +177,16 @@ const DetInstitutionCultural = ({ culture }: DetInstitutionCulturalProps) => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[100] bg-black/95 backdrop-blur-sm flex items-center justify-center p-4 md:p-10"
+            className="fixed inset-0 z-100 bg-black/95 backdrop-blur-sm flex items-center justify-center p-4 md:p-10"
           >
-            <button 
+            <button
               onClick={() => setSelectedImageIdx(null)}
-              className="absolute top-6 right-6 text-white/70 hover:text-white z-[110] transition-colors"
+              className="absolute top-6 right-6 text-white/70 hover:text-white z-110 transition-colors"
             >
               <X size={40} />
             </button>
 
-            <motion.div 
+            <motion.div
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               className="relative max-w-5xl w-full h-full flex items-center justify-center"
@@ -182,15 +196,15 @@ const DetInstitutionCultural = ({ culture }: DetInstitutionCulturalProps) => {
                 className="max-w-full max-h-full object-contain rounded-lg shadow-2xl"
                 alt="Enlarged campus"
               />
-              
+
               <div className="absolute inset-x-0 flex justify-between px-4">
-                <button 
+                <button
                   onClick={() => setSelectedImageIdx((prev) => (prev! > 0 ? prev! - 1 : images.length - 1))}
                   className="p-3 rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors"
                 >
                   <ChevronLeft size={32} />
                 </button>
-                <button 
+                <button
                   onClick={() => setSelectedImageIdx((prev) => (prev! < images.length - 1 ? prev! + 1 : 0))}
                   className="p-3 rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors"
                 >

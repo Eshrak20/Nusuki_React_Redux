@@ -13,7 +13,7 @@ const DetInstitutionAdmissionReq = ({ admission }: Props) => {
   if (!admission || !Array.isArray(admission) || admission.length === 0) return null;
 
   return (
-    <section className="py-12 space-y-10">
+    <section className="space-y-10">
       {/* Header Section */}
       <div className="flex flex-col gap-2">
         <div className="flex items-center gap-3">

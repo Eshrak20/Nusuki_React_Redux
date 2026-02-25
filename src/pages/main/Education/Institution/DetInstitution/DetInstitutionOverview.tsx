@@ -19,7 +19,7 @@ const DetInstitutionOverview = ({ university }: Props) => {
   };
 
   return (
-    <section className="space-y-10 py-8">
+    <section className="space-y-10 pt-8">
       <div className="space-y-4">
         {/* Shadcn-style Heading */}
         <Typewriter

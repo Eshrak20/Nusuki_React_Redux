@@ -48,12 +48,12 @@ const DetInstitutionRecruiters = ({ placement }: Props) => {
   };
 
   return (
-    <section className="max-w-7xl mx-auto px-4 py-16 md:py-24 overflow-hidden">
+    <section className="overflow-hidden">
       {/* --- Header Section --- */}
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="relative mb-16"
+        className="relative"
       >
         <div className="absolute inset-0 -z-10">
           <div className="absolute top-0 right-0 w-72 h-72 bg-primary/5 rounded-full blur-3xl" />

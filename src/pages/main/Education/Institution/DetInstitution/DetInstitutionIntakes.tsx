@@ -12,7 +12,7 @@ const DetInstitutionIntakes = ({ intakes }: Props) => {
   if (!intakes) return null;
 
   return (
-    <section className="py-10 space-y-8">
+    <section className="space-y-8">
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
         <div className="space-y-4 flex-1">
           {/* Reusable Typewriter for Heading */}
@@ -37,12 +37,12 @@ const DetInstitutionIntakes = ({ intakes }: Props) => {
           <motion.div 
             initial={{ scale: 0.8, opacity: 0 }}
             whileInView={{ scale: 1, opacity: 1 }}
-            className="hidden md:block bg-primary/5 p-4 rounded-full border border-primary/10"
+            className="hidden md:block bg-primary dark:bg-primary/5 p-4 rounded-full border border-primary/10"
           >
             <img 
               src={intakes.iconImge.imageUrl} 
               alt={intakes.iconImge.alt || "Intake Icon"} 
-              className="w-24 h-24 object-contain animate-pulse-slow"
+              className="w-24 h-20 object-contain animate-pulse-slow"
             />
           </motion.div>
         )}

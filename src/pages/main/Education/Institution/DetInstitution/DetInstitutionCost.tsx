@@ -86,18 +86,18 @@ const DetInstitutionCost = ({ cost }: Props) => {
   const useTableView = (cost.costToStudy?.length || 0) > 8;
 
   return (
-    <section className="max-w-7xl mx-auto px-4 py-16 md:py-24">
+    <section className="">
       {/* Header Section with Premium Bento Design */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, ease: "easeOut" }}
-        className="relative mb-16 p-1"
+        className="relative p-1 mb-20"
       >
         {/* Modern Background Glows */}
         <div className="absolute inset-0 -z-10 overflow-hidden">
           <div className="absolute -top-24 -right-24 w-96 h-96 bg-primary/10 rounded-full blur-[100px]" />
-          <div className="absolute -bottom-24 -left-24 w-72 h-72 bg-primary/5 rounded-full blur-[80px]" />
+          {/* <div className="absolute -bottom-24 -left-24 w-72 h-72 bg-primary/5 rounded-full blur-[80px]" /> */}
         </div>
 
         {/* Top Row: Title & Total Badge */}
@@ -146,7 +146,7 @@ const DetInstitutionCost = ({ cost }: Props) => {
             )}
 
             {/* Financial Aids Row */}
-            <div className="flex flex-wrap gap-3">
+            <div className="mt-18 flex flex-wrap gap-3">
               {[
                 { icon: Award, label: "Scholarships", sub: "Up to 50%", color: "bg-blue-500" },
                 { icon: CreditCard, label: "Easy EMI", sub: "0% Interest", color: "bg-emerald-500" },
@@ -371,17 +371,7 @@ const DetInstitutionCost = ({ cost }: Props) => {
         </motion.div>
       )}
 
-      {/* Additional Info Footer */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.6 }}
-        className="mt-8 text-center"
-      >
-        <p className="text-xs text-muted-foreground/60">
-          * All figures are estimates and may vary based on lifestyle and institution policies
-        </p>
-      </motion.div>
+
     </section>
   );
 };

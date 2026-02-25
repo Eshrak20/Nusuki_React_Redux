@@ -7,13 +7,12 @@ import DetInstitutionRanking from "./DetInstitutionRanking";
 import DetInstitutionIntakes from "./DetInstitutionIntakes";
 import DetInstitutionAdmissionReq from "./DetInstitutionAdmissionReq";
 import DetInstitutionRecruiters from "./DetInstitutionRecruiters";
-import DetInstitutionWhyChose from "./DetInstitutionWhyChose";
 import DetInstitutionBanner from "./DetInstitutionBanner";
 import DetInstitutionCultural from "./DetInstitutionCultural";
 import DetInstitutionFaq from "./DetInstitutionFaq";
 import DetInstitutionAccomplish from "./DetInstitutionAccomplish";
-import DetInstitutionScholarships from "./DetInstitutionScholarships";
 import type { UniversityBannerCardMini } from "@/types/education/type.uniDet";
+import DetInstitutionScholarships from "./DetInstitutionScholarships";
 
 const DetInstitutionMain = () => {
   const { id } = useParams<{ id: string }>();
@@ -46,16 +45,15 @@ const DetInstitutionMain = () => {
       <DetInstitutionBanner detail={bannerData} />
       <DetInstitutionOverview university={university} />
       <DetInstitutionPrograms programs={detail?.topCourseDetail} />
+      <DetInstitutionScholarships scholarships={detail?.scholarshipsAvailable} />
       <DetInstitutionRanking ranking={detail?.rankingSection} />
       <DetInstitutionCultural culture={detail?.cultureSection} />
       <DetInstitutionCost cost={detail?.costToStudySection} />
       <DetInstitutionIntakes intakes={detail?.intakeSection} />
       <DetInstitutionAdmissionReq admission={detail?.admissionRequirementDetail} />
       <DetInstitutionRecruiters placement={detail?.universityPlacementSection} />
-      {/* <DetInstitutionFaq faq={detail?.faqSection} />
+      <DetInstitutionFaq faq={detail?.faqSection} />
       <DetInstitutionAccomplish accomplish={detail?.accomplishSection} />
-      <DetInstitutionScholarships scholarships={detail?.scholarshipsAvailable} />
-      <DetInstitutionWhyChose overview={detail?.overviewSection} /> */}
     </div>
   );
 };

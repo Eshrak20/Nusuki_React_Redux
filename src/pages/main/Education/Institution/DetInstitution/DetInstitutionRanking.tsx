@@ -12,7 +12,7 @@ const DetInstitutionRanking = ({ ranking }: Props) => {
   if (!ranking) return null;
 
   return (
-    <section className="py-10 space-y-8">
+    <section className="space-y-8">
       {/* Reusable Typewriter for the Heading */}
       <Typewriter 
         text={ranking.heading || "Global Rankings"} 

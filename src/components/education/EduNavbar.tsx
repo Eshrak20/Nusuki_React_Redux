@@ -50,7 +50,7 @@ const EduNavbar = () => {
 
 
   return (
-    <nav className="bg-card rounded-xl shadow-2xl h-20 lg:h-24 px-4 lg:px-6 py-3 border border-border relative">
+      <nav className="bg-card rounded-xl shadow-2xl h-20 lg:h-24 px-4 lg:px-6 py-3 border border-border relative">
       <div className="max-w-6xl mx-auto flex items-center justify-between h-full">
         {/* Mobile Menu Toggle */}
         <button
@@ -130,7 +130,7 @@ const EduNavbar = () => {
               <Link
                 to={item.path as string}
                 className={`flex items-center space-x-2 text-[16px] font-medium transition-colors cursor-pointer
-    ${activeTab === item.name
+                           ${activeTab === item.name
                     ? "text-primary font-bold"
                     : "text-foreground/70 hover:font-bold hover:text-primary"
                   }`}

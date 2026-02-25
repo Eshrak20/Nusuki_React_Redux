@@ -1,8 +1,8 @@
 "use client";
 import { motion, AnimatePresence } from "framer-motion";
 import { 
-  BookOpen, Clock, GraduationCap, Award, Calendar, Sparkles, 
-  Users, Globe, Library, ChevronRight, Trophy, Search, CheckCircle2 
+  Clock, GraduationCap, Award, Sparkles, 
+  Users, Library, Trophy
 } from "lucide-react";
 import type { TopCourseCategory } from "@/types/education/type.uniDet";
 import { Card, CardContent } from "@/components/ui/card";
@@ -135,7 +135,7 @@ const DetInstitutionPrograms = ({ programs }: Props) => {
   };
 
   return (
-    <section className="py-16 px-4 max-w-7xl mx-auto space-y-12">
+    <section className="space-y-12">
       {/* Visual Header */}
       <div className="text-center space-y-4">
         {/* <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-bold mb-4">
@@ -186,12 +186,6 @@ const DetInstitutionPrograms = ({ programs }: Props) => {
               className="rounded-xl px-8 h-12 text-md font-bold transition-all data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-lg"
             >
               Bachelor's Degrees
-            </TabsTrigger>
-            <TabsTrigger 
-              value="other" 
-              className="rounded-xl px-8 h-12 text-md font-bold transition-all data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-lg"
-            >
-              Certifications
             </TabsTrigger>
           </TabsList>
         </div>
