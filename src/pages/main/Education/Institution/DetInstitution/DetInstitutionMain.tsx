@@ -45,8 +45,8 @@ const DetInstitutionMain = () => {
     <div className="max-w-7xl mx-auto space-y-16">
       <DetInstitutionBanner detail={bannerData} />
       <DetInstitutionOverview university={university} />
-      <DetInstitutionRanking ranking={detail?.rankingSection} />
       <DetInstitutionPrograms programs={detail?.topCourseDetail} />
+      <DetInstitutionRanking ranking={detail?.rankingSection} />
       <DetInstitutionCultural culture={detail?.cultureSection} />
       <DetInstitutionCost cost={detail?.costToStudySection} />
       <DetInstitutionIntakes intakes={detail?.intakeSection} />

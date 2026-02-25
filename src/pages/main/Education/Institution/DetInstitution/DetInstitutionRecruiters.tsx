@@ -106,7 +106,7 @@ const DetInstitutionRecruiters = ({ placement }: Props) => {
                   <img
                     src={recruiter.image}
                     alt="Partner"
-                    className="max-h-full max-w-full object-contain filter grayscale group-hover:grayscale-0 transition-all duration-300"
+                    className="max-h-full max-w-full object-contain filter  transition-all duration-300"
                   />
                 ) : (
                   <span className="text-muted-foreground font-medium text-sm text-center">{recruiter.title}</span>

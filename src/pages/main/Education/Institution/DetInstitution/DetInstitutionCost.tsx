@@ -10,7 +10,11 @@ import {
   Info,
   TrendingUp,
   Wallet,
-  GraduationCap
+  GraduationCap,
+  Award,
+  CreditCard,
+  Landmark,
+  Library
 } from "lucide-react";
 import type { CostToStudySection } from "@/types/education/type.uniDet";
 import { Card, CardContent } from "@/components/ui/card";
@@ -83,58 +87,115 @@ const DetInstitutionCost = ({ cost }: Props) => {
 
   return (
     <section className="max-w-7xl mx-auto px-4 py-16 md:py-24">
-      {/* Header Section with enhanced design */}
+      {/* Header Section with Premium Bento Design */}
       <motion.div
-        initial={{ opacity: 0, y: -20 }}
+        initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-        className="relative mb-12"
+        transition={{ duration: 0.6, ease: "easeOut" }}
+        className="relative mb-16 p-1"
       >
-        {/* Background decoration */}
-        <div className="absolute inset-0 -z-10">
-          <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl" />
-          <div className="absolute bottom-0 left-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl" />
+        {/* Modern Background Glows */}
+        <div className="absolute inset-0 -z-10 overflow-hidden">
+          <div className="absolute -top-24 -right-24 w-96 h-96 bg-primary/10 rounded-full blur-[100px]" />
+          <div className="absolute -bottom-24 -left-24 w-72 h-72 bg-primary/5 rounded-full blur-[80px]" />
         </div>
 
-        <div className="flex flex-col md:flex-row md:items-center gap-6 mb-8">
-          {/* Icon and Title */}
-          <div className="flex items-center gap-5">
-            <div className="relative">
-              <div className="absolute inset-0 bg-primary/20 rounded-2xl blur-md" />
-              <div className="relative w-16 h-16 flex items-center justify-center bg-linear-to-br from-primary/20 via-primary/10 to-transparent rounded-2xl border border-primary/30 shadow-lg">
-                <IndianRupee className="w-8 h-8 text-primary" />
-              </div>
+        {/* Top Row: Title & Total Badge */}
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10">
+          <div className="space-y-4">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-bold uppercase tracking-wider">
+              <IndianRupee className="w-3 h-3" />
+              Financial Planning
             </div>
-            <h2 className="text-4xl md:text-5xl font-bold bg-linear-to-r from-foreground to-foreground/70 bg-clip-text text-transparent">
+            <h2 className="text-4xl md:text-6xl font-extrabold tracking-tight text-foreground">
               {cost.heading || "Cost to Study"}
             </h2>
           </div>
 
-          {/* Total Cost Badge */}
           {totalExpenses > 0 && (
-            <Badge
-              variant="outline"
-              className="ml-auto px-4 py-2 text-base border-primary/30 bg-primary/5"
+            <motion.div
+              whileHover={{ scale: 1.02 }}
+              className="bg-card/50 backdrop-blur-md border border-border p-4 rounded-3xl shadow-xl flex items-center gap-4 pr-8"
             >
-              <TrendingUp className="w-4 h-4 mr-2 text-primary" />
-              <span className="font-semibold">Total: ₹{totalExpenses.toLocaleString('en-IN')}</span>
-              <span className="text-xs text-muted-foreground ml-2">(annual)</span>
-            </Badge>
+              <div className="w-12 h-12 rounded-2xl bg-primary flex items-center justify-center shadow-lg shadow-primary/20">
+                <TrendingUp className="w-6 h-6 text-primary-foreground" />
+              </div>
+              <div>
+                <p className="text-[10px] uppercase font-bold text-muted-foreground tracking-widest">Est. Annual Total</p>
+                <p className="text-3xl font-black text-foreground">₹{totalExpenses.toLocaleString('en-IN')}</p>
+              </div>
+            </motion.div>
           )}
         </div>
 
-        {/* Description with enhanced styling */}
-        {cost.description && (
-          <div className="relative max-w-3xl">
-            <div className="absolute left-0 top-0 bottom-0 w-1 bg-linear-to-b from-primary via-primary/50 to-transparent rounded-full" />
-            <div
-              className="prose prose-lg dark:prose-invert max-w-none pl-6 [&_span]:!text-muted-foreground [&_p]:!text-muted-foreground leading-relaxed"
-              dangerouslySetInnerHTML={{
-                __html: processHTMLContent(cost.description)
-              }}
-            />
+        {/* Main Layout Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+
+          {/* Left Column: Description & Trust Badges (5 cols) */}
+          <div className="lg:col-span-5 space-y-8">
+            {cost.description && (
+              <div className="relative group">
+                <div className="prose prose-lg dark:prose-invert max-w-none text-muted-foreground leading-relaxed italic">
+                  <span className="text-5xl absolute -left-4 -top-4 text-primary/10 font-serif">"</span>
+                  <div
+                    className="relative z-10"
+                    dangerouslySetInnerHTML={{ __html: processHTMLContent(cost.description) }}
+                  />
+                </div>
+              </div>
+            )}
+
+            {/* Financial Aids Row */}
+            <div className="flex flex-wrap gap-3">
+              {[
+                { icon: Award, label: "Scholarships", sub: "Up to 50%", color: "bg-blue-500" },
+                { icon: CreditCard, label: "Easy EMI", sub: "0% Interest", color: "bg-emerald-500" },
+                { icon: Landmark, label: "Loans", sub: "Tie-ups", color: "bg-amber-500" }
+              ].map((item, idx) => (
+                <div key={idx} className="flex items-center gap-3 bg-secondary/50 border border-border px-4 py-2 rounded-2xl hover:bg-secondary transition-colors cursor-default">
+                  <item.icon className="w-4 h-4 text-primary" />
+                  <div>
+                    <p className="text-xs font-bold leading-none">{item.label}</p>
+                    <p className="text-[10px] text-muted-foreground mt-1">{item.sub}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
-        )}
+
+          {/* Right Column: The Stats Grid (7 cols) */}
+          <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {[
+              { label: "Tuition Fee", val: "₹2.5L - 5L", icon: BookOpen, delay: 0.1 },
+              { label: "Hostel & Food", val: "₹80k - 1.2L", icon: Home, delay: 0.2 },
+              { label: "Transport", val: "₹15k - 25k", icon: Bus, delay: 0.3 },
+              { label: "Books & Misc", val: "₹20k - 30k", icon: Library, delay: 0.4 },
+            ].map((card, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: card.delay }}
+                whileHover={{ y: -5 }}
+                className="group relative overflow-hidden bg-card border border-border p-6 rounded-[2rem] transition-all hover:shadow-2xl hover:shadow-primary/5"
+              >
+                <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
+                  <card.icon className="w-20 h-20" />
+                </div>
+
+                <div className="relative z-10 space-y-4">
+                  <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-colors">
+                    <card.icon className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <p className="text-sm font-medium text-muted-foreground">{card.label}</p>
+                    <p className="text-2xl font-bold tracking-tight mt-1">{card.val}</p>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
       </motion.div>
 
       {/* Conditional Rendering: Cards or Table */}
@@ -234,7 +295,7 @@ const DetInstitutionCost = ({ cost }: Props) => {
                   {cost.costToStudy?.map((item, index) => {
                     const amount = parseFloat(item.annualExpenses?.replace(/[^0-9.-]+/g, "") || "0");
                     const IconComponent = getExpenseIcon(item.expenseType);
-                    
+
                     return (
                       <motion.tr
                         key={item.id}
@@ -268,7 +329,7 @@ const DetInstitutionCost = ({ cost }: Props) => {
               </Table>
             </CardContent>
           </Card>
-          
+
           {/* View toggle hint */}
           <div className="mt-4 text-center">
             <Badge variant="outline" className="border-primary/20 bg-primary/5">

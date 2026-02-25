@@ -51,12 +51,12 @@ const DetInstitutionPrograms = ({ programs }: Props) => {
         animate={{ opacity: 1, scale: 1 }}
         className="space-y-8"
       >
-        <Card className="overflow-hidden border-primary/20 shadow-2xl bg-card/50 backdrop-blur-sm">
+        <Card className="overflow-hidden border-primary/20  bg-card/50 backdrop-blur-sm">
           {/* Enhanced Table Header/Hero */}
-          <div className="bg-gradient-to-r from-primary/10 via-primary/5 to-transparent p-6 border-b border-primary/10">
+          <div className="bg-linear-to-r from-primary/10 via-primary/5 to-transparent p-6 border-b border-primary/10">
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
               <div>
-                <h3 className="text-2xl font-bold tracking-tight text-foreground flex items-center gap-2">
+                <h3 className="text-2xl text-center font-bold tracking-tight text-foreground flex items-center gap-2">
                   <Sparkles className="w-6 h-6 text-primary animate-pulse" />
                   {title}
                 </h3>
@@ -75,9 +75,9 @@ const DetInstitutionPrograms = ({ programs }: Props) => {
               <TableHeader className="bg-muted/50">
                 <TableRow className="h-16 border-b border-primary/10">
                   <TableHead className="w-16 text-center font-bold text-primary">#</TableHead>
-                  <TableHead className="font-bold text-lg min-w-[300px]">Program & Faculty</TableHead>
-                  <TableHead className="font-bold text-lg min-w-[200px]">Specialization</TableHead>
-                  <TableHead className="font-bold text-lg min-w-[180px]">Duration</TableHead>
+                  <TableHead className="font-bold text-lg min-w-75">Program & Faculty</TableHead>
+                  <TableHead className="font-bold text-lg min-w-50">Specialization</TableHead>
+                  <TableHead className="font-bold text-lg min-w-45">Duration</TableHead>
                   <TableHead className="font-bold text-lg text-right pr-8">Degree</TableHead>
                 </TableRow>
               </TableHeader>
@@ -138,17 +138,17 @@ const DetInstitutionPrograms = ({ programs }: Props) => {
     <section className="py-16 px-4 max-w-7xl mx-auto space-y-12">
       {/* Visual Header */}
       <div className="text-center space-y-4">
-        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-bold mb-4">
+        {/* <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-bold mb-4">
           <Globe className="w-4 h-4" />
           GLOBAL EDUCATION STANDARDS
-        </div>
+        </div> */}
         <Typewriter 
           text="Academic Excellence" 
-          className="text-4xl md:text-6xl font-black tracking-tighter"
+          className="text-3xl font-bold tracking-tight sm:text-4xl"
         />
-        <p className="text-muted-foreground max-w-2xl mx-auto text-lg">
+        {/* <p className="text-muted-foreground max-w-2xl mx-auto text-lg">
           Choose from our diverse range of accredited programs designed to shape the leaders of tomorrow.
-        </p>
+        </p> */}
       </div>
 
       {/* Stats Section with more "Pop" */}

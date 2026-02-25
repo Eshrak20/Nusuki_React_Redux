@@ -16,7 +16,7 @@ const DetInstitutionRanking = ({ ranking }: Props) => {
       {/* Reusable Typewriter for the Heading */}
       <Typewriter 
         text={ranking.heading || "Global Rankings"} 
-        className="text-3xl font-bold tracking-tight text-foreground"
+        className="text-3xl font-bold tracking-tight sm:text-4xl"
       />
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
