@@ -5,8 +5,14 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { 
-  User, Mail, Phone, BookOpen, MessageSquare, Send, CheckCircle2 
+import {
+  User,
+  Mail,
+  Phone,
+  BookOpen,
+  MessageSquare,
+  Send,
+  CheckCircle2,
 } from "lucide-react";
 
 import {
@@ -28,7 +34,11 @@ const FormSubmission = ({ title }: TitleProps) => {
   const form = useForm<z.infer<typeof contactSchema>>({
     resolver: zodResolver(contactSchema),
     defaultValues: {
-      name: "", email: "", phone: "", subject: "", description: "",
+      name: "",
+      email: "",
+      phone: "",
+      subject: "",
+      description: "",
     },
   });
 
@@ -40,7 +50,7 @@ const FormSubmission = ({ title }: TitleProps) => {
         setIsSuccess(false);
         form.reset();
       }, 5000);
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
       alert("Something went wrong. Please try again.");
     }
@@ -49,10 +59,9 @@ const FormSubmission = ({ title }: TitleProps) => {
   return (
     <section className="lg:py-20 -py-8 bg-gray-50/50 min-h-screen flex items-center justify-center">
       <div className="w-full bg-white lg:rounded-3xl lg:shadow-xl shadow-gray-200/50 border border-gray-100 overflow-hidden">
-        
         {/* Header Section */}
         <div className="bg-hajj p-8 lg:p-10 text-center text-white">
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             className="lg:inline-block hidden lg:px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-md text-[10px] font-bold uppercase tracking-[0.2em] mb-4"
@@ -61,7 +70,8 @@ const FormSubmission = ({ title }: TitleProps) => {
           </motion.div>
           <h2 className="text-lg lg:text-3xl md:text-4xl italic">{title}</h2>
           <p className="text-white/70 mt-3 hidden lg:block text-sm max-w-md mx-auto">
-            Fill out the form below and our team will get back to you within 24 hours.
+            Fill out the form below and our team will get back to you within 24
+            hours.
           </p>
         </div>
 
@@ -69,13 +79,32 @@ const FormSubmission = ({ title }: TitleProps) => {
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                
                 {/* Reusable Input Component Logic */}
                 {[
-                  { name: "name", label: "Full Name", icon: User, type: "text" },
-                  { name: "email", label: "Email Address", icon: Mail, type: "email" },
-                  { name: "phone", label: "Phone Number", icon: Phone, type: "tel" },
-                  { name: "subject", label: "Subject", icon: BookOpen, type: "text" },
+                  {
+                    name: "name",
+                    label: "Full Name",
+                    icon: User,
+                    type: "text",
+                  },
+                  {
+                    name: "email",
+                    label: "Email Address",
+                    icon: Mail,
+                    type: "email",
+                  },
+                  {
+                    name: "phone",
+                    label: "Phone Number",
+                    icon: Phone,
+                    type: "tel",
+                  },
+                  {
+                    name: "subject",
+                    label: "Subject",
+                    icon: BookOpen,
+                    type: "text",
+                  },
                 ].map((item) => (
                   <FormField
                     key={item.name}
@@ -83,18 +112,25 @@ const FormSubmission = ({ title }: TitleProps) => {
                     name={item.name as never}
                     render={({ field }) => (
                       <FormItem className="relative">
-                        <div 
+                        <div
                           className={`group flex items-center border-b-2 transition-all duration-300 ${
-                            focusedField === item.name ? "border-hajj" : "border-gray-200"
+                            focusedField === item.name
+                              ? "border-hajj"
+                              : "border-gray-200"
                           }`}
                         >
-                          <item.icon size={18} className={`mr-3 transition-colors ${focusedField === item.name ? "text-hajj" : "text-gray-400"}`} />
+                          <item.icon
+                            size={18}
+                            className={`mr-3 transition-colors ${focusedField === item.name ? "text-hajj" : "text-gray-400"}`}
+                          />
                           <div className="relative flex-1">
-                            <label className={`absolute left-0 transition-all duration-300 pointer-events-none ${
-                              field.value || focusedField === item.name 
-                                ? "-top-5 text-[10px] font-bold text-hajj uppercase tracking-tighter" 
-                                : "top-2 text-gray-400 text-sm"
-                            }`}>
+                            <label
+                              className={`absolute left-0 transition-all duration-300 pointer-events-none ${
+                                field.value || focusedField === item.name
+                                  ? "-top-5 text-[10px] font-bold text-hajj uppercase tracking-tighter"
+                                  : "top-2 text-gray-400 text-sm"
+                              }`}
+                            >
                               {item.label}
                             </label>
                             <FormControl>
@@ -120,25 +156,33 @@ const FormSubmission = ({ title }: TitleProps) => {
                   name="description"
                   render={({ field }) => (
                     <FormItem className="md:col-span-2 relative mt-4">
-                      <div className={`group flex items-start border-b-2 transition-all duration-300 ${
-                        focusedField === "description" ? "border-hajj" : "border-gray-200"
-                      }`}>
-                        <MessageSquare size={18} className={`mr-3 mt-3 transition-colors ${focusedField === "description" ? "text-hajj" : "text-gray-400"}`} />
+                      <div
+                        className={`group flex items-start border-b-2 transition-all duration-300 ${
+                          focusedField === "description"
+                            ? "border-hajj"
+                            : "border-gray-200"
+                        }`}
+                      >
+                        <MessageSquare
+                          size={18}
+                          className={`mr-3 mt-3 transition-colors ${focusedField === "description" ? "text-hajj" : "text-gray-400"}`}
+                        />
                         <div className="relative flex-1">
-                          <label className={`absolute left-0 transition-all duration-300 pointer-events-none ${
-                            field.value || focusedField === "description" 
-                              ? "-top-5 text-[10px] font-bold text-hajj uppercase tracking-tighter" 
-                              : "top-2 text-gray-400 text-sm"
-                          }`}>
+                          <label
+                            className={`absolute left-0 transition-all duration-300 pointer-events-none ${
+                              field.value || focusedField === "description"
+                                ? "-top-5 text-[10px] font-bold text-hajj uppercase tracking-tighter"
+                                : "top-2 text-gray-400 text-sm"
+                            }`}
+                          >
                             Your Message
                           </label>
                           <FormControl>
                             <textarea
                               {...field}
-                              rows={3}
                               onFocus={() => setFocusedField("description")}
                               onBlur={() => setFocusedField(null)}
-                              className="w-full py-2 bg-transparent outline-none text-gray-800 font-medium resize-none mt-1"
+                              className="w-full py-2 bg-transparent outline-none text-gray-800 font-medium resize-none mt-1 h-12 lg:h-20"
                             />
                           </FormControl>
                         </div>
@@ -153,7 +197,7 @@ const FormSubmission = ({ title }: TitleProps) => {
               <div className="pt-6 flex flex-col items-center">
                 <AnimatePresence mode="wait">
                   {isSuccess ? (
-                    <motion.div 
+                    <motion.div
                       initial={{ opacity: 0, scale: 0.9 }}
                       animate={{ opacity: 1, scale: 1 }}
                       className="flex items-center gap-2 text-green-600 font-bold"

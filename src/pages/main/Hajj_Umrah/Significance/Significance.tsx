@@ -53,7 +53,7 @@ const Significance = () => {
 
       {/* MAIN CONTENT */}
 
-      <div className="max-w-350 mx-auto py-10 px-4">
+      <div className="max-w-350 mx-auto py-7 lg:py-10 px-4">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-stretch">
           {/* Content Section */}
           <div className="flex flex-col justify-center">

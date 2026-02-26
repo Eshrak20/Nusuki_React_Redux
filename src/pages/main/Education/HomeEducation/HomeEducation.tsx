@@ -11,13 +11,15 @@ const HomeEducation = () => {
   });
   return (
     <>
-      <div className="max-w-7xl mx-auto">
+      <section className="bg-background">
+        <div className="max-w-7xl mx-auto">
         <OurCoreStrength />
         <DreamStudy />
         <OurFeatures />
         <WhyNusuki />
         <EducationPartner />
       </div>
+      </section>
     </>
   );
 };

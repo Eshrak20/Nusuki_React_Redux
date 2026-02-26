@@ -10,24 +10,24 @@ const StepGuide = ({
     <div className="py-12 space-y-10">
       {/* Header Section */}
       <div className="space-y-3">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-hajj/10 text-hajj text-sm font-medium">
+        <div className="hidden lg:inline-flex items-center gap-2 px-3 py-1 rounded-full bg-hajj/10 text-hajj text-sm font-medium">
           <Star className="w-4 h-4 fill-hajj" />
           <span>Step-by-Step Guide</span>
         </div>
-        <h2 className="text-3xl font-bold tracking-tight text-foreground">
+        <h2 className="text-xl lg:text-3xl font-bold tracking-tight text-foreground">
           {guide_title}
         </h2>
-        <p className="text-muted-foreground max-w-3xl text-lg leading-relaxed">
+        <p className="text-muted-foreground max-w-3xl text-sm lg:text-lg leading-relaxed">
           {guide_des}
         </p>
       </div>
 
       {/* Requirements Sections */}
-      <div className="grid gap-8">
+      <div className="grid gap-8 -mx-4">
         {requirements.map((section: StepSection, sIdx: number) => (
           <div
             key={section.id}
-            className="relative overflow-hidden rounded-2xl border border-border bg-card shadow-sm transition-all hover:shadow-md"
+            className="relative overflow-hidden lg:rounded-2xl border border-border bg-card lg:shadow-sm transition-all hover:shadow-md"
           >
             {/* Section Header */}
             <div className="bg-muted/30 px-6 py-4 border-b border-border flex items-center justify-between">

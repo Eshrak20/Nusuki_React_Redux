@@ -54,9 +54,13 @@ const navigationLinks = [
 ];
 
 export default function Navbar() {
-  const location = useLocation()
+  const location = useLocation();
   const [openMobileMenu, setOpenMobileMenu] = useState<string | null>(null);
   const [showTopBtn, setShowTopBtn] = useState(false);
+
+  // Added state to control the Popover manually
+  const [isPopoverOpen, setIsPopoverOpen] = useState(false);
+
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > 300) setShowTopBtn(true);
@@ -65,6 +69,12 @@ export default function Navbar() {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  // Helper to close the menu
+  const closeMobileMenu = () => {
+    setIsPopoverOpen(false);
+    setOpenMobileMenu(null);
+  };
 
   const toggleSubmenu = (label: string) => {
     setOpenMobileMenu(openMobileMenu === label ? null : label);
@@ -76,13 +86,21 @@ export default function Navbar() {
         initial={{ y: -100 }}
         animate={{ y: 0 }}
         transition={{ duration: 0.5, ease: "easeOut" }}
-        className="fixed top-0 left-0 z-50 w-full border-b border-border bg-background/95 py-3 backdrop-blur"
+        className="fixed top-0 left-0 z-50 w-full border-b border-border bg-card py-3 "
       >
         <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 md:px-6">
           {/* Logo */}
           <Link to="/" className="flex h-12 w-56 items-center">
-            <img src={logoWhite} alt="Logo" className="dark:hidden object-contain" />
-            <img src={logoDark} alt="Logo" className="hidden dark:block object-contain" />
+            <img
+              src={logoWhite}
+              alt="Logo"
+              className="dark:hidden object-contain"
+            />
+            <img
+              src={logoDark}
+              alt="Logo"
+              className="hidden dark:block object-contain"
+            />
           </Link>
 
           {/* Desktop Navigation */}
@@ -142,7 +160,7 @@ export default function Navbar() {
                             "inline-flex h-9 items-center justify-center rounded-md px-3 py-2 text-lg text-primary font-medium transition-colors",
                             "hover:text-primary hover:font-semibold",
                             location.pathname === link.href &&
-                            "text-primary font-semibold",
+                              "text-primary font-semibold",
                           )}
                         >
                           {link.label}
@@ -160,7 +178,6 @@ export default function Navbar() {
             <div className="hidden sm:flex gap-2">
               <Link to="/login">
                 <Button
-                  // Updated: hover:text-primary-foreground ensures text is readable on primary background in both modes
                   className="rounded-full font-medium text-primary transition-colors duration-300"
                   variant="ghost"
                 >
@@ -169,7 +186,6 @@ export default function Navbar() {
               </Link>
               <Link to="/signup">
                 <Button
-                  // Updated: text-primary-foreground matches your CSS variable for high contrast
                   className={`bg-primary ${location.pathname.startsWith("/hajj") || location.pathname.startsWith("/umrah") ? "bg-hajj" : ""} rounded-full font-medium text-primary-foreground hover:opacity-90 transition-opacity`}
                 >
                   Sign Up
@@ -181,7 +197,7 @@ export default function Navbar() {
 
             {/* Mobile Menu */}
             <div className="md:hidden">
-              <Popover>
+              <Popover open={isPopoverOpen} onOpenChange={setIsPopoverOpen}>
                 <PopoverTrigger asChild>
                   <Button
                     variant="ghost"
@@ -194,7 +210,6 @@ export default function Navbar() {
 
                 <PopoverContent
                   align="end"
-                  // bg-card and border-border handle dark mode automatically per your CSS
                   className="w-64 border-border bg-card p-3 shadow-xl"
                 >
                   {navigationLinks.map((link) => {
@@ -208,7 +223,6 @@ export default function Navbar() {
                             onClick={() => toggleSubmenu(link.label)}
                             className={cn(
                               "flex w-full items-center justify-between rounded-md px-3 py-2 transition-colors",
-                              // Use foreground for default, hajj for active
                               location.pathname.startsWith(link.href)
                                 ? "font-extrabold"
                                 : "text-foreground",
@@ -226,6 +240,7 @@ export default function Navbar() {
                         ) : (
                           <Link
                             to={link.href}
+                            onClick={closeMobileMenu}
                             className={cn(
                               "block rounded-md px-3 py-2 transition-colors",
                               location.pathname === link.href
@@ -247,9 +262,9 @@ export default function Navbar() {
                               <Link
                                 key={sub.href}
                                 to={sub.href}
+                                onClick={closeMobileMenu}
                                 className={cn(
                                   "rounded-md px-3 py-2 text-lg transition-colors",
-                                  // text-white is usually okay on the colored 'hajj' background
                                   location.pathname === sub.href
                                     ? "bg-hajj text-white"
                                     : "text-muted-foreground hover:bg-hajj hover:text-white",
@@ -282,8 +297,6 @@ export default function Navbar() {
           aria-label="Scroll to top"
         >
           <ArrowUp className="w-6 h-6 mx-auto group-hover:-translate-y-0.5 transition-transform duration-300" />
-
-          {/* Dynamic Glow: Uses primary color with opacity so it matches the theme */}
           <div
             className="
       absolute inset-0 rounded-full blur-md -z-10 transition-all duration-500

@@ -9,6 +9,12 @@ import EduPagination from "@/components/education/EduPagination";
 import HomeInstitutionCardSkeleton from "@/components/skeletons/HomeInstitutionCardSkeleton";
 
 const HomeInstitution = () => {
+  
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth",
+  });
+
   const dispatch = useDispatch();
   const { keyword, country, page } = useSelector(
     (state: RootState) => state.universityFilter,
@@ -19,7 +25,6 @@ const HomeInstitution = () => {
     keyword,
     country,
   });
-
 
   const universities = data?.data?.data ?? [];
   const pagination = data?.data;

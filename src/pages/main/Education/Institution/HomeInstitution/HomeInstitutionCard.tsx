@@ -35,7 +35,7 @@ const HomeInstitutionCard = ({ universities }: HomeInstitutionCardProps) => {
           <hr className="border-muted dark:border-muted-dark mb-5" />
           <div className="p-4">
             {/* Content */}
-            <div className="grow">
+            <div className="grow h-33">
               <h3 className="font-bold text-foreground dark:text-foreground-dark text-[15px] leading-tight mb-2 line-clamp-2 min-h-10">
                 {uni.name}
               </h3>

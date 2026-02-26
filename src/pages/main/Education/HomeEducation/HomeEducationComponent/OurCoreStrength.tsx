@@ -6,7 +6,7 @@ const OurCoreStrength = () => {
 
   return (
     // Changed bg-white to bg-background
-    <section className="relative pt-36 pb-12 bg-background transition-colors duration-300 overflow-hidden">
+    <section className="relative pt-24 pb-12 transition-colors duration-300 overflow-hidden">
       {/* Subtle Background Decorative Gradient - Now uses theme primary color */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-125 bg-linear-to-b from-primary/10 to-transparent -z-10" />
 
