@@ -13,6 +13,7 @@ import HomeInstitution from "@/pages/main/Education/Institution/HomeInstitution/
 import HajjUmMainDetPack from "@/pages/main/Hajj_Umrah/HajjUmPackages/HajjUmDetPack/HajjUmMainDetPack";
 import DetInstitutionMain from "@/pages/main/Education/Institution/DetInstitution/DetInstitutionMain";
 import Upcoming from "@/components/Upcoming";
+import UmrahMainDetPack from "@/pages/main/Hajj_Umrah/HajjUmPackages/UmrahDetPack/UmrahMainDetPack";
 
 export const router = createBrowserRouter([
   {
@@ -135,6 +136,10 @@ export const router = createBrowserRouter([
             path: "packages",
             element: <HajjUmPackages />,
           },
+          {
+            path: "packages/:id",
+            element: <UmrahMainDetPack />,
+          }
         ],
       },
     ],

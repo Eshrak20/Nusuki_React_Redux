@@ -2,6 +2,7 @@ import type { HajjPackageItem, HajjPackageList } from "@/types/hajj/types.pack";
 import { Play } from "lucide-react";
 import { motion, type Variants } from "framer-motion";
 import { Link } from "react-router-dom";
+
 /* ======================================================
    Motion Configuration
 ====================================================== */
@@ -58,7 +59,8 @@ const HajjUmPackCard = ({ data }: HajjPackageList) => {
             variants={cardVariants}
             initial="initial"
             whileHover="hover"
-            className="relative flex flex-col overflow-hidden rounded-[2rem] bg-[#f2f2f2] shadow-xl transition-shadow duration-300 hover:shadow-2xl"
+            // Changed bg-[#f2f2f2] to bg-card and added border-border
+            className="relative flex flex-col overflow-hidden rounded-[2rem] bg-card border border-border shadow-xl transition-shadow duration-300 hover:shadow-2xl"
           >
             {/* Package Image */}
             <div className="relative h-96 w-full overflow-hidden rounded-b-[1.5rem]">
@@ -72,7 +74,8 @@ const HajjUmPackCard = ({ data }: HajjPackageList) => {
             {/* Content Section */}
             <div className="flex flex-col items-center px-6 pb-8 pt-6 text-center">
               {/* Title */}
-              <h3 className="text-3xl font-black tracking-tight h-12 inline-flex items-center gap-2 bg-linear-to-r from-[#1a1a1a] to-hajj-secondary bg-clip-text text-transparent">
+              {/* Changed text color to use foreground and a more subtle dark-mode friendly gradient */}
+              <h3 className="text-3xl font-black tracking-tight h-12 inline-flex items-center gap-2 bg-gradient-to-r from-foreground to-hajj-secondary bg-clip-text text-transparent">
                 {pkg.name}
               </h3>
 
@@ -80,12 +83,13 @@ const HajjUmPackCard = ({ data }: HajjPackageList) => {
               <p className="mt-2 text-lg font-bold text-hajj">{pkg.tagline}</p>
 
               {/* Pricing */}
-              <div className="mt-6 flex items-center gap-2 text-xl font-extrabold text-[#1a1a1a]">
-                <span className="font-medium text-gray-600">Begins At</span>
+              {/* Changed text-[#1a1a1a] to text-foreground and gray-600 to muted-foreground */}
+              <div className="mt-6 flex items-center gap-2 text-xl font-extrabold text-foreground">
+                <span className="font-medium text-muted-foreground">Begins At</span>
                 <span className="text-2xl">
                   {Number(pkg.price).toLocaleString()}
                 </span>
-                <span className="font-medium text-gray-600">BDT</span>
+                <span className="font-medium text-muted-foreground">BDT</span>
               </div>
 
               {/* View Details Button */}
@@ -94,6 +98,7 @@ const HajjUmPackCard = ({ data }: HajjPackageList) => {
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 transition={{ type: "spring", stiffness: 400, damping: 25 }}
+                // Standardizing button colors: text-white usually stays white on the primary brand color
                 className="mt-8 flex items-center gap-3 rounded-full bg-hajj px-8 py-3 text-lg font-bold text-white shadow-md hover:shadow-lg transition-shadow"
               >
                 <div className="flex h-8 w-8 items-center justify-center rounded-full bg-white text-hajj">
