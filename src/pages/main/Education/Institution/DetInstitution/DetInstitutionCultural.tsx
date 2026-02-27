@@ -108,7 +108,7 @@ const DetInstitutionCultural = ({ culture }: DetInstitutionCulturalProps) => {
                             whileTap={{ scale: 0.9 }}
                           >
                             <div className="absolute inset-0 rounded-full dark:bg-primary bg-primary/20 animate-ping" />
-                            <div className="relative w-20 h-20 dark:bg-[#29308f] bg-primary/20 rounded-full flex items-center justify-center shadow-2xl">
+                            <div className="relative w-20 h-20 dark:bg-[#29308f] bg-primary rounded-full flex items-center justify-center shadow-2xl">
                               <Play className="w-8 h-8 text-white ml-1" fill="white" />
                             </div>
                           </motion.button>

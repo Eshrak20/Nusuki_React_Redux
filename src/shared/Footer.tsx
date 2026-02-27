@@ -36,8 +36,8 @@ const Footer = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-12 gap-6 mb-12">
           {/* Brand */}
           <div className="lg:col-span-3 space-y-3">
-            <img src={logoWhite} alt="Logo" className="dark:hidden h-14 w-fit" />
-            <img src={logoDark} alt="Logo" className="hidden dark:block h-14 w-fit" />
+            <img src={logoWhite} alt="Logo" className="dark:hidden h-20 w-fit -ml-7" />
+            <img src={logoDark} alt="Logo" className="hidden dark:block h-20 w-fit -ml-7" />
             <div className="text-sm text-muted-foreground uppercase space-y-1">
               <p>MOCAT CERTIFICATE NO : 0013878</p>
               <p>ATAB CERTIFICATE NO : MN-00005396</p>

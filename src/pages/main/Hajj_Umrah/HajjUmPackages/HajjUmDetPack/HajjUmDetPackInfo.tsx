@@ -54,7 +54,7 @@ const HajjUmDetPackInfo = ({ pack }: Props) => {
             <div className="relative group overflow-hidden">
               <img
                 src={pack.images[0]?.image_url || pack.card_image}
-                className="w-full h-125 object-cover grayscale hover:grayscale-0 transition-all duration-1000 shadow-xl"
+                className="w-full h-125 object-cover  transition-all duration-1000 shadow-xl"
                 alt="Detail"
               />
             </div>
