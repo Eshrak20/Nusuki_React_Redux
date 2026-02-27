@@ -25,7 +25,7 @@ const Upcoming: React.FC<UpcomingProps> = ({
   return (
     <div className="relative flex min-h-[70vh] flex-col items-center justify-center overflow-hidden px-6 text-center">
       {/* Background Decorative Glow */}
-      <div className="absolute top-1/2 left-1/2 -z-10 h-[400px] w-[400px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary/10 blur-[120px] dark:bg-primary/20" />
+      <div className="absolute top-1/2 left-1/2 -z-10 h-100 w-100 -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary/10 blur-[120px] dark:bg-primary/20" />
 
       {/* Animated Icon Container */}
       <motion.div
@@ -47,7 +47,7 @@ const Upcoming: React.FC<UpcomingProps> = ({
         <h2 className="text-4xl font-extrabold tracking-tight text-foreground sm:text-5xl">
           {title}
         </h2>
-        <p className="mx-auto max-w-[500px] text-lg text-muted-foreground md:text-xl">
+        <p className="mx-auto max-w-125 text-lg text-muted-foreground md:text-xl">
           {description}
         </p>
       </motion.div>

@@ -2,6 +2,7 @@ import type { SignificanceResponse } from "@/types/hajj/types.sig";
 import type { VisaRequirementsResponse } from "../../types/hajj/types.visa";
 import { baseApi } from "./baseApi";
 import type { HajjPackageApiResponse } from "@/types/hajj/types.pack";
+import type { UmrahPackageDetailsResponse } from "@/types/umrah/types.umrah";
 
 export const umrahApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -23,6 +24,12 @@ export const umrahApi = baseApi.injectEndpoints({
         method: "GET",
       }),
     }),
+    getUmrahPackDetails: builder.query<UmrahPackageDetailsResponse, number>({
+          query: (id) => ({
+            url: `/umrah-packages/detail/${id}`,
+            method: "GET",
+          }),
+        }),
   }),
 });
 
@@ -30,4 +37,5 @@ export const {
   useGetUmrahVisaQuery,
   useGetUmrahSigQuery,
   useGetUmrahPackQuery,
+  useGetUmrahPackDetailsQuery
 } = umrahApi;

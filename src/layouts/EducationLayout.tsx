@@ -33,26 +33,29 @@ const EducationLayout = () => {
         <div
           className={`
             left-1/2 -translate-x-1/2 z-50 transition-all duration-500
-            ${isSticky 
-              ? "fixed top-0 w-full px-0 ml-56 shadow-none" 
-              : "absolute bottom-0 translate-y-1/2 w-full max-w-7xl rounded-xl shadow-2xl"}
+            ${isSticky
+              ? "fixed top-0 w-full px-0 lg:ml-56 shadow-none"
+              : "absolute bottom-0 translate-y-1/2 w-full max-w-7xl rounded-xl shadow-2xl"
+            }
             ${isVisible ? "opacity-100" : "opacity-0 pointer-events-none"}
           `}
         >
           {/* Inner container to keep content aligned */}
-          <div className={`${isSticky ? "max-w-7xl mx-auto px-4 lg:px-6" : ""} transition-all duration-500`}>
+          <div
+            className={`${isSticky ? "max-w-7xl mx-auto px-4 lg:px-6" : ""} transition-all duration-500`}
+          >
             <EduNavbar isSticky={isSticky} />
           </div>
         </div>
       </div>
 
-      <div className={`container mx-auto px-4 transition-all ${isSticky ? "pt-32" : "pt-16"}`}>
+      <div
+        className={`container mx-auto px-4 transition-all ${isSticky ? "pt-32" : "pt-16"}`}
+      >
         <Outlet />
       </div>
 
-      <footer id="main-footer">
-         {/* Footer Content */}
-      </footer>
+      <footer id="main-footer">{/* Footer Content */}</footer>
     </div>
   );
 };

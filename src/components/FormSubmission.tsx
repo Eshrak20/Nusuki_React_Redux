@@ -57,7 +57,7 @@ const FormSubmission = ({ title }: TitleProps) => {
   };
 
   return (
-    <section className="lg:py-20 -py-8 bg-gray-50/50 min-h-screen flex items-center justify-center">
+    <section className="lg:py-20 -py-8 min-h-screen flex items-center justify-center">
       <div className="w-full bg-white lg:rounded-3xl lg:shadow-xl shadow-gray-200/50 border border-gray-100 overflow-hidden">
         {/* Header Section */}
         <div className="bg-hajj p-8 lg:p-10 text-center text-white">
