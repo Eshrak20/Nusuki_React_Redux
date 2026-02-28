@@ -1,12 +1,16 @@
 import type { University } from "@/types/education/type.uni";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
+import { useState } from "react";
+import FormSubmissionModal from "@/components/FormSubmissionModal";
 
 interface HomeInstitutionCardProps {
   universities: University[];
 }
 
 const HomeInstitutionCard = ({ universities }: HomeInstitutionCardProps) => {
+  const [isOpen, setIsOpen] = useState(false);
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -59,6 +63,7 @@ const HomeInstitutionCard = ({ universities }: HomeInstitutionCardProps) => {
               </Link>
 
               <motion.button
+                onClick={() => setIsOpen(true)}
                 whileHover={{ scale: 1.03 }}
                 whileTap={{ scale: 0.97 }}
                 className="flex-1 py-2.5 px-2 bg-primary text-primary-foreground text-sm font-semibold rounded-lg hover:opacity-90 transition-opacity shadow-md flex items-center justify-center"
@@ -70,6 +75,12 @@ const HomeInstitutionCard = ({ universities }: HomeInstitutionCardProps) => {
 
         </motion.div>
       ))}
+      <FormSubmissionModal
+        open={isOpen}
+        onClose={() => setIsOpen(false)}
+        title="Apply With NUSUKI"
+
+      />
     </motion.div>
   );
 };

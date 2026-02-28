@@ -109,13 +109,15 @@ export default function Navbar() {
               {navigationLinks.map((link) => {
                 const isActive =
                   location.pathname === link.href ||
-                  link.subLinks?.some((sub) => location.pathname === sub.href);
+                  link.subLinks?.some((sub) => location.pathname.startsWith(sub.href));
 
                 return (
                   <NavigationMenuItem key={link.label}>
                     {link.subLinks ? (
                       <>
                         <NavigationMenuTrigger
+                          onPointerEnter={(e) => e.preventDefault()}
+                          onPointerMove={(e) => e.preventDefault()}
                           className={cn(
                             "bg-transparent font-medium",
                             "text-primary",
@@ -160,7 +162,7 @@ export default function Navbar() {
                             "inline-flex h-9 items-center justify-center rounded-md px-3 py-2 text-lg text-primary font-medium transition-colors",
                             "hover:text-primary hover:font-semibold",
                             location.pathname === link.href &&
-                              "text-primary font-semibold",
+                            "text-primary font-semibold",
                           )}
                         >
                           {link.label}

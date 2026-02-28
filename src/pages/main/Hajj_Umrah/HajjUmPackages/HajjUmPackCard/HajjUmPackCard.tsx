@@ -9,6 +9,7 @@ import { Link } from "react-router-dom";
 
 type Direction = "left" | "center" | "right";
 const MotionLink = motion(Link);
+
 const containerVariants: Variants = {
   hidden: {},
   visible: {
@@ -57,54 +58,62 @@ const HajjUmPackCard = ({ data }: HajjPackageList) => {
           <motion.article
             key={pkg.id}
             variants={cardVariants}
-            initial="initial"
-            whileHover="hover"
-            // Changed bg-[#f2f2f2] to bg-card and added border-border
-            className="relative flex flex-col overflow-hidden rounded-[2rem] bg-card border border-border shadow-xl transition-shadow duration-300 hover:shadow-2xl"
+            className="group relative flex flex-col overflow-hidden rounded-[2.5rem] bg-card border border-border shadow-lg transition-all duration-500 hover:shadow-2xl hover:-translate-y-2"
           >
-            {/* Package Image */}
-            <div className="relative h-96 w-full overflow-hidden rounded-b-[1.5rem]">
+            {/* Package Image Container */}
+            <div className="relative h-80 w-full overflow-hidden">
               <img
                 src={pkg.card_image}
                 alt={pkg.name}
-                className="h-full w-full object-cover"
+                className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
               />
+              {/* Subtle Overlay on Hover */}
+              <div className="absolute inset-0 bg-black/0 transition-colors duration-500 group-hover:bg-black/10" />
+              
+              {/* Floating Badge (Optional UX addition) */}
+              <div className="absolute top-4 right-6 bg-white/90 backdrop-blur-sm px-4 py-1 rounded-full text-xs font-bold text-hajj shadow-sm">
+                Available
+              </div>
             </div>
 
             {/* Content Section */}
-            <div className="flex flex-col items-center px-6 pb-8 pt-6 text-center">
-              {/* Title */}
-              {/* Changed text color to use foreground and a more subtle dark-mode friendly gradient */}
-              <h3 className="text-3xl font-black tracking-tight h-12 inline-flex items-center gap-2 bg-gradient-to-r from-foreground to-hajj-secondary bg-clip-text text-transparent">
+            <div className="flex flex-col items-center px-6 pb-10 pt-8 text-center">
+              <h3 className="text-3xl font-black tracking-tight bg-gradient-to-r from-foreground to-hajj-secondary bg-clip-text text-transparent">
                 {pkg.name}
               </h3>
 
-              {/* Tagline */}
-              <p className="mt-2 text-lg font-bold text-hajj">{pkg.tagline}</p>
+              <p className="mt-2 text-lg font-semibold text-hajj/80 uppercase tracking-wide">
+                {pkg.tagline}
+              </p>
 
               {/* Pricing */}
-              {/* Changed text-[#1a1a1a] to text-foreground and gray-600 to muted-foreground */}
-              <div className="mt-6 flex items-center gap-2 text-xl font-extrabold text-foreground">
-                <span className="font-medium text-muted-foreground">Begins At</span>
-                <span className="text-2xl">
-                  {Number(pkg.price).toLocaleString()}
+              <div className="mt-6 flex items-baseline gap-2 text-foreground">
+                <span className="text-sm font-medium text-muted-foreground uppercase tracking-tighter">Starts from</span>
+                <span className="text-3xl font-black">
+                  ৳{Number(pkg.price).toLocaleString()}
                 </span>
-                <span className="font-medium text-muted-foreground">BDT</span>
               </div>
 
-              {/* View Details Button */}
+              {/* Enhanced View Details Button */}
               <MotionLink
                 to={`${pkg.id}`}
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                transition={{ type: "spring", stiffness: 400, damping: 25 }}
-                // Standardizing button colors: text-white usually stays white on the primary brand color
-                className="mt-8 flex items-center gap-3 rounded-full bg-hajj px-8 py-3 text-lg font-bold text-white shadow-md hover:shadow-lg transition-shadow"
+                whileHover="hover"
+                whileTap={{ scale: 0.95 }}
+                className="relative mt-8 flex items-center gap-3 overflow-hidden rounded-full bg-hajj px-10 py-4 text-lg font-bold text-white transition-all duration-300 hover:pr-12"
               >
-                <div className="flex h-8 w-8 items-center justify-center rounded-full bg-white text-hajj">
-                  <Play fill="currentColor" size={16} className="ml-0.5" />
-                </div>
-                View Details
+                {/* Button Shine/Slide Effect */}
+                <span className="absolute inset-0 translate-x-[-100%] bg-gradient-to-r from-transparent via-white/20 to-transparent transition-transform duration-500 group-hover:translate-x-[100%]" />
+                
+                <motion.div 
+                  variants={{
+                    hover: { scale: 1.2, rotate: [0, -10, 10, 0] }
+                  }}
+                  className="flex h-7 w-7 items-center justify-center rounded-full bg-white text-hajj shadow-inner"
+                >
+                  <Play fill="currentColor" size={12} className="ml-0.5" />
+                </motion.div>
+                
+                <span className="relative z-10">View Details</span>
               </MotionLink>
             </div>
           </motion.article>
