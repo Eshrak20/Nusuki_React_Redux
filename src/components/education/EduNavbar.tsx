@@ -11,11 +11,13 @@ import {
   Search,
 } from "lucide-react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import FormSubmissionModal from "../FormSubmissionModal";
 
 const EduNavbar = ({ isSticky }: { isSticky?: boolean }) => {
   const location = useLocation();
   const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
   const destinations = [
     { name: "USA", code: "us" },
@@ -75,6 +77,7 @@ const EduNavbar = ({ isSticky }: { isSticky?: boolean }) => {
       ${isSticky ? "rounded-none h-20" : "rounded-xl border border-border h-20 lg:h-24"}
     `}
     >
+
       <div
         className={`max-w-6xl mx-auto flex items-center ${isSticky ? "lg:space-x-32" : "justify-between"}  h-full`}
       >
@@ -123,7 +126,9 @@ const EduNavbar = ({ isSticky }: { isSticky?: boolean }) => {
                         return (
                           <Link
                             key={dest.name}
-                            to={`/destinations/${dest.name.toLowerCase().replace(" ", "-")}`}
+                            to={`/education/destinations/${dest.name
+                              .toLowerCase()
+                              .replace(/\s+/g, "-")}`}
                             className={`flex items-center py-1 space-x-3 text-[15px] font-medium transition-all hover:translate-x-1
                 ${isActive ? "text-primary font-bold" : "text-foreground hover:text-primary hover:font-bold"}`}
                           >
@@ -154,7 +159,7 @@ const EduNavbar = ({ isSticky }: { isSticky?: boolean }) => {
           ))}
         </div>
 
-        <button className="hidden lg:flex items-center space-x-2 bg-primary text-primary-foreground pl-1 lg:pl-2 pr-4 lg:pr-6 py-1.5 lg:py-2 rounded-full font-bold hover:brightness-110 transition-all cursor-pointer text-sm lg:text-base">
+        <button onClick={() => setIsOpen(true)} className="hidden lg:flex items-center space-x-2 bg-primary text-primary-foreground pl-1 lg:pl-2 pr-4 lg:pr-6 py-1.5 lg:py-2 rounded-full font-bold hover:brightness-110 transition-all cursor-pointer text-sm lg:text-base">
           <div className="bg-red-600 rounded-full p-1.5 lg:p-2 flex items-center justify-center">
             <Video
               className="w-4 h-4 lg:w-4.5 lg:h-4.5"
@@ -163,7 +168,14 @@ const EduNavbar = ({ isSticky }: { isSticky?: boolean }) => {
             />
           </div>
           <span>Avail Free Counselling</span>
+
         </button>
+        <FormSubmissionModal
+          open={isOpen}
+          onClose={() => setIsOpen(false)}
+          title="Book Free Study Abroad Counselling"
+        // type="education"
+        />
       </div>
 
       {/* Mobile Menu */}

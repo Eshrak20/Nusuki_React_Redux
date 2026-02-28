@@ -3,8 +3,12 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/componen
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { GraduationCap, Award, DollarSign, BookOpen } from "lucide-react";
+import { useState } from "react";
+import FormSubmissionModal from "@/components/FormSubmissionModal";
 
 const DetInstitutionScholarships = ({ scholarships }: DetInstitutionScholarshipsProps) => {
+  const [isOpen, setIsOpen] = useState(false);
+
   if (!scholarships || !scholarships.scholarshipsCard || scholarships.scholarshipsCard.length === 0) {
     return null;
   }
@@ -26,9 +30,9 @@ const DetInstitutionScholarships = ({ scholarships }: DetInstitutionScholarships
   // Helper function to parse scholarship details
   const parseDetail = (detail: string) => {
     const [label, value] = detail.split(':');
-    return { 
-      label: label.trim(), 
-      value: value?.trim() || '' 
+    return {
+      label: label.trim(),
+      value: value?.trim() || ''
     };
   };
 
@@ -39,8 +43,8 @@ const DetInstitutionScholarships = ({ scholarships }: DetInstitutionScholarships
         <div className="flex items-center gap-4 mb-8">
           <div className="p-3 rounded-xl bg-primary dark:bg-primary/10">
             {scholarships.iconImage ? (
-              <img 
-                src={scholarships.iconImage.imageUrl} 
+              <img
+                src={scholarships.iconImage.imageUrl}
                 alt={scholarships.iconImage.imageAltTag || "Scholarships"}
                 className="w-8 h-8"
               />
@@ -58,7 +62,7 @@ const DetInstitutionScholarships = ({ scholarships }: DetInstitutionScholarships
 
         {/* Description */}
         <div className="mb-12 max-w-3xl">
-          <div 
+          <div
             className="text-muted-foreground prose prose-headings:text-foreground prose-p:text-muted-foreground"
             dangerouslySetInnerHTML={{ __html: scholarships.description }}
           />
@@ -76,12 +80,12 @@ const DetInstitutionScholarships = ({ scholarships }: DetInstitutionScholarships
                   {scholarship.name}
                 </CardTitle>
               </CardHeader>
-              
+
               <CardContent className="space-y-4">
                 {scholarship.detail.map((detail, index) => {
                   const { label, value } = parseDetail(detail);
                   const Icon = getDetailIcon(label);
-                  
+
                   return (
                     <div key={index} className="flex items-start gap-3">
                       <div className="mt-1">
@@ -97,7 +101,11 @@ const DetInstitutionScholarships = ({ scholarships }: DetInstitutionScholarships
               </CardContent>
 
               <CardFooter className="pt-4">
-                <Button className="w-full" size="lg">
+                <Button
+                  className="w-full"
+                  size="lg"
+                  onClick={() => setIsOpen(true)}
+                >
                   Apply Now
                 </Button>
               </CardFooter>
@@ -120,6 +128,12 @@ const DetInstitutionScholarships = ({ scholarships }: DetInstitutionScholarships
           </div>
         </div>
       </div>
+      <FormSubmissionModal
+        open={isOpen}
+        onClose={() => setIsOpen(false)}
+        title="Apply with NUSUKI"
+        type="education"
+      />
     </section>
   );
 };

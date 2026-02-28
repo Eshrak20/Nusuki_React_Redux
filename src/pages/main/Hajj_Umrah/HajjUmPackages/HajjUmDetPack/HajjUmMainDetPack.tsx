@@ -16,7 +16,10 @@ import HajjUmDetIncludedServices from "./HajjUmDetIncludedServices";
 const HajjUmMainDetPack = () => {
   const [isGalleryOpen, setIsGalleryOpen] = useState(false);
   const [galleryKey, setGalleryKey] = useState(0);
-
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth",
+  });
   const handleOpenGallery = useCallback(() => {
     setIsGalleryOpen(true);
     // Increment key to force GalleryPreview to remount with fresh state
@@ -35,7 +38,6 @@ const HajjUmMainDetPack = () => {
     setIsGalleryOpen(false);
   }, []);
 
-  // Handle loading/error states with conditional rendering, not early returns
   if (isLoading) {
     return <div>Loading...</div>;
   }

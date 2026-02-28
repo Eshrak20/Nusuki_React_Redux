@@ -10,11 +10,11 @@ import { useGetUmrahVisaQuery } from "../../../../redux/api/umrahApi";
 import ReqList from "./ReqList/ReqList";
 import SideImages from "../../../../components/SideImages";
 import AboBanHajjUmrah from "../../../../components/AboBanHajjUmrah";
-import FormSubmission from "@/components/FormSubmission";
 import AboBanHajjUmrahSkeleton from "@/components/skeletons/AboBanHajjUmrahSkeleton";
 import ReqListSkeleton from "@/components/skeletons/ReqListSkeleton";
 import SideImagesSkeleton from "@/components/skeletons/SideImagesSkeleton";
 import FormSubmissionSkeleton from "@/components/skeletons/FormSubmissionSkeleton";
+import FormSubmission from "@/components/FormSubmission";
 
 const VisaRequirements = () => {
   window.scrollTo({

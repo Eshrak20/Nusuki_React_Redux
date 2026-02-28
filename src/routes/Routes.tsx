@@ -43,6 +43,23 @@ export const router = createBrowserRouter([
             path: "institution/:id",
             element: <DetInstitutionMain />,
           },
+          {
+            path: "destinations",
+            element: <Upcoming title="Destinations Section Upcoming" />,
+
+          },
+          {
+            path: "destinations/:country",
+            element: <Upcoming title="Destinations Section Upcoming" />,
+          },
+          {
+            path: "courses",
+            element: <Upcoming title="Courses Section Upcoming" />,
+          },
+          {
+            path: "tests",
+            element: <Upcoming title="Tests Section Upcoming" />,
+          },
         ],
       },
       {

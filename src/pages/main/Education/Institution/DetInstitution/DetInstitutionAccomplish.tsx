@@ -1,13 +1,11 @@
+import FormSubmissionModal from "@/components/FormSubmissionModal";
 import type { DetInstitutionAccomplishProps } from "@/types/education/type.uniDet";
+import { useState } from "react";
 
 const DetInstitutionAccomplish = ({ accomplish }: DetInstitutionAccomplishProps) => {
+  const [isOpen, setIsOpen] = useState(false);
 
   if (!accomplish) return null;
-
-  const handleBookClick = () => {
-    // console.log("Book is clicked");
-  };
-
   return (
     <section className="relative py-16 overflow-hidden">
       {/* Background with gradient */}
@@ -27,7 +25,7 @@ const DetInstitutionAccomplish = ({ accomplish }: DetInstitutionAccomplishProps)
 
         {accomplish.button && (
           <button
-            onClick={handleBookClick}
+            onClick={() => setIsOpen(true)}
             className={`
               px-8 py-4 rounded-lg font-semibold text-lg 
               transition-all duration-300 
@@ -51,6 +49,11 @@ const DetInstitutionAccomplish = ({ accomplish }: DetInstitutionAccomplishProps)
           </button>
         )}
       </div>
+      <FormSubmissionModal
+        open={isOpen}
+        onClose={() => setIsOpen(false)}
+        title="Book Free Counselling"
+      />
     </section>
   );
 };

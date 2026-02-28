@@ -16,7 +16,7 @@ const Faq = ({ faqs }: FaqProps) => {
 
       <div className="container mx-auto px-4 max-w-4xl relative z-10">
         {/* Section Title */}
-        <h2 className="mb-12 md:mb-16 text-center  text-5xl md:text-5xl font-bold text-accent">
+        <h2 className="mb-12 md:mb-16 text-center  text-white  text-5xl md:text-5xl font-bold text-accent">
           Most Common Questions
         </h2>
 

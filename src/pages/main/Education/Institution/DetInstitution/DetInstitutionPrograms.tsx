@@ -24,6 +24,7 @@ interface Props {
 
 const DetInstitutionPrograms = ({ programs }: Props) => {
   if (!programs) return null;
+  console.log("programs",programs)
 
   // Logic for filtering remains the same
   const mastersPrograms = programs.filter(p => 

@@ -67,7 +67,7 @@ const HajjUmPackages = () => {
       <div className="max-w-350 mx-auto py-10 px-4">
         <AboBanHajjUmrah
           title={`Our ${isHajjPack ? "Hajj" : "Umrah"} Packages`}
-          description="Choose the package that best suits your spiritual journey, comfort, and budget."
+          description={`Explore our carefully designed ${isHajjPack ? "Hajj" : "Umrah"} packages crafted to provide you with a smooth, comfortable, and spiritually enriching journey. From visa processing and premium accommodation to guided rituals and transportation, every detail is thoughtfully arranged to ensure peace of mind. Choose the package that aligns with your spiritual goals, preferred comfort level, and budget, and let us support you in making this sacred journey truly memorable and hassle-free.`}
         />
 
         {/* ===== FIRST ROW ===== */}
@@ -81,6 +81,7 @@ const HajjUmPackages = () => {
 
         <Faq faqs={faqData} />
 
+        <CommonAbout title={isHajjPack ? "Hajj" : "Umrah"} img={AboutImage} />
         <div>
           <FormSubmission
             title={
@@ -91,7 +92,6 @@ const HajjUmPackages = () => {
           />
         </div>
 
-        <CommonAbout title={isHajjPack ? "Hajj" : "Umrah"} img={AboutImage} />
       </div>
     </>
   );
