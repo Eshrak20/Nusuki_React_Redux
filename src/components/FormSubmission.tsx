@@ -113,11 +113,10 @@ const FormSubmission = ({ title }: TitleProps) => {
                     render={({ field }) => (
                       <FormItem className="relative">
                         <div
-                          className={`group flex items-center border-b-2 transition-all duration-300 ${
-                            focusedField === item.name
+                          className={`group flex items-center border-b-2 transition-all duration-300 ${focusedField === item.name
                               ? "border-hajj"
                               : "border-gray-200"
-                          }`}
+                            }`}
                         >
                           <item.icon
                             size={18}
@@ -125,11 +124,10 @@ const FormSubmission = ({ title }: TitleProps) => {
                           />
                           <div className="relative flex-1">
                             <label
-                              className={`absolute left-0 transition-all duration-300 pointer-events-none ${
-                                field.value || focusedField === item.name
+                              className={`absolute left-0 transition-all duration-300 pointer-events-none ${field.value || focusedField === item.name
                                   ? "-top-5 text-[10px] font-bold text-hajj uppercase tracking-tighter"
                                   : "top-2 text-gray-400 text-sm"
-                              }`}
+                                }`}
                             >
                               {item.label}
                             </label>
@@ -157,11 +155,10 @@ const FormSubmission = ({ title }: TitleProps) => {
                   render={({ field }) => (
                     <FormItem className="md:col-span-2 relative mt-4">
                       <div
-                        className={`group flex items-start border-b-2 transition-all duration-300 ${
-                          focusedField === "description"
+                        className={`group flex items-start border-b-2 transition-all duration-300 ${focusedField === "description"
                             ? "border-hajj"
                             : "border-gray-200"
-                        }`}
+                          }`}
                       >
                         <MessageSquare
                           size={18}
@@ -169,11 +166,10 @@ const FormSubmission = ({ title }: TitleProps) => {
                         />
                         <div className="relative flex-1">
                           <label
-                            className={`absolute left-0 transition-all duration-300 pointer-events-none ${
-                              field.value || focusedField === "description"
+                            className={`absolute left-0 transition-all duration-300 pointer-events-none ${field.value || focusedField === "description"
                                 ? "-top-5 text-[10px] font-bold text-hajj uppercase tracking-tighter"
                                 : "top-2 text-gray-400 text-sm"
-                            }`}
+                              }`}
                           >
                             Your Message
                           </label>

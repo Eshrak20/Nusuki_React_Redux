@@ -186,7 +186,7 @@ export default function Navbar() {
               </Link>
               <Link to="/signup">
                 <Button
-                  className={`bg-primary ${location.pathname.startsWith("/hajj") || location.pathname.startsWith("/umrah") ? "bg-hajj" : ""} rounded-full font-medium text-primary-foreground hover:opacity-90 transition-opacity`}
+                  className={`bg-primary ${location.pathname.startsWith("/hajj") || location.pathname.startsWith("/umrah") ? "bg-hajj hover:bg-hajj/90" : ""} rounded-full font-medium text-primary-foreground hover:opacity-90 transition-opacity`}
                 >
                   Sign Up
                 </Button>

@@ -75,7 +75,7 @@ const HajjUmPackCard = ({ data }: HajjPackageList) => {
             <div className="flex flex-col items-center px-6 pb-8 pt-6 text-center">
               {/* Title */}
               {/* Changed text color to use foreground and a more subtle dark-mode friendly gradient */}
-              <h3 className="text-3xl font-black tracking-tight h-12 inline-flex items-center gap-2 bg-gradient-to-r from-foreground to-hajj-secondary bg-clip-text text-transparent">
+              <h3 className="text-3xl font-black tracking-tight h-12 inline-flex items-center gap-2 bg-linear-to-r from-foreground to-hajj-secondary bg-clip-text text-transparent">
                 {pkg.name}
               </h3>
 

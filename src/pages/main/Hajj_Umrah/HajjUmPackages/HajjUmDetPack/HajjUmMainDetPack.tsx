@@ -63,7 +63,7 @@ const HajjUmMainDetPack = () => {
       <HajjUmDetPackAcc accommodations={pack.package_accommodations} />
       <HajjUmDetPackItinerary itineraries={pack.package_itineraries} />
       <HajjUmDetIncludedServices />
-      <HajjUmDetPackageSighting sight={pack.package_sight_seeings}/>
+      <HajjUmDetPackageSighting sight={pack.package_sight_seeings} />
       <HajjUmDetCancel />
     </div>
   );
