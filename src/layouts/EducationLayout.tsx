@@ -35,7 +35,7 @@ const EducationLayout = () => {
             left-1/2 -translate-x-1/2 z-50 transition-all duration-500
             ${isSticky
               ? "fixed top-0 w-full px-0 lg:ml-56 shadow-none"
-              : "absolute bottom-0 translate-y-1/2 w-full max-w-7xl rounded-xl shadow-2xl"
+              : "absolute bottom-0 translate-y-1/2 w-full max-w-7xl rounded-xl lg:shadow-2xl"
             }
             ${isVisible ? "opacity-100" : "opacity-0 pointer-events-none"}
           `}

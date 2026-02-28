@@ -6,18 +6,18 @@ const OurCoreStrength = () => {
 
   return (
     // Changed bg-white to bg-background
-    <section className="relative pt-24 pb-12 transition-colors duration-300 overflow-hidden">
+    <section className="relative pt-10 lg:pt-24 pb-2 lg:pb-12 transition-colors duration-300 overflow-hidden">
       {/* Subtle Background Decorative Gradient - Now uses theme primary color */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-125 bg-linear-to-b from-primary/10 to-transparent -z-10" />
 
       <div className="max-w-7xl mx-auto px-6">
         {/* Header Section */}
-        <div className="text-center mb-16">
+        <div className="text-center -mb-10 lg:mb-16">
           <EduTitle name="Our Core Strengths" />
         </div>
 
         {/* Core Strengths Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-24">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12 lg:mb-24">
           {ourCoreStrengthData.map((item, index) => (
             <div
               key={index}
@@ -26,12 +26,12 @@ const OurCoreStrength = () => {
             >
               <div className="flex flex-col items-center text-center">
                 {/* Number/Stat - Uses text-primary (auto-swaps in dark mode) */}
-                <span className="text-5xl font-extrabold mb-4 text-primary tracking-tight">
+                <span className="text-2xl lg:text-5xl font-extrabold mb-2 lg:mb-4 text-primary tracking-tight">
                   {item.value}
                 </span>
 
                 {/* Title */}
-                <h3 className="text-xl font-bold text-primary mb-3 group-hover:scale-105 transition-transform duration-300">
+                <h3 className="text-lg lg:text-xl font-bold text-primary mb-2 lg:mb-3 group-hover:scale-105 transition-transform duration-300">
                   {item.title}
                 </h3>
 
@@ -51,7 +51,7 @@ const OurCoreStrength = () => {
         <div className="">
           <div className="flex flex-col md:flex-row md:items-center justify-between mb-2 lg:mb-8 gap-6">
             <div className="flex-1">
-              <h2 className="text-primary text-3xl md:text-4xl font-bold tracking-tight mb-2">
+              <h2 className="text-primary text-2xl md:text-4xl font-bold tracking-tight mb-2">
                 Your Study Abroad Steps
               </h2>
             </div>
