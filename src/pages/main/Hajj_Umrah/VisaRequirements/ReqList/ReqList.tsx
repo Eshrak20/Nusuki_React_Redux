@@ -4,7 +4,7 @@ const ReqList = ({ title, requirements, note }: ReqListProps) => {
   return (
     <div className="max-w-4xl space-y-5 lg:space-y-10">
       {/* Header Section */}
-      <header className="space-y-2">
+      <header className="lg:mt-3 mt-7 mb-8 space-y-2">
         <h2 className="text-xl font-extrabold tracking-tight text-hajj lg:text-4xl">
           {title}
         </h2>

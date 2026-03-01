@@ -51,11 +51,10 @@ const UmrahDetBanner = ({ pack }: Props) => {
         <img
           src={pack.card_image}
           alt={pack.name}
-          className={`absolute inset-0 w-full h-full object-cover transition-all duration-1000 ease-in-out ${
-            loaded
-              ? "opacity-100 blur-0 scale-100"
-              : "opacity-0 blur-xl scale-110"
-          }`}
+          className={`absolute inset-0 w-full h-full object-cover transition-all duration-1000 ease-in-out ${loaded
+            ? "opacity-100 blur-0 scale-100"
+            : "opacity-0 blur-xl scale-110"
+            }`}
           onLoad={() => setLoaded(true)}
           style={{ objectPosition: "center 40%" }}
         />
@@ -163,7 +162,7 @@ const UmrahDetBanner = ({ pack }: Props) => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 2 }}
-        className="absolute bottom-10 left-1/2 -translate-x-1/2 z-30 flex flex-col items-center gap-2"
+        className="hidden absolute bottom-10 left-1/2 -translate-x-1/2 z-30 lg:flex flex-col items-center gap-2"
       >
         <span className="text-[10px] text-white/40 tracking-[0.3em] uppercase">
           Explore Details

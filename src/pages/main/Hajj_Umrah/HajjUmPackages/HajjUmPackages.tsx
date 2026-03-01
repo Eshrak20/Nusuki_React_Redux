@@ -43,28 +43,11 @@ const HajjUmPackages = () => {
     ? (hajjResponse?.data.data ?? [])
     : (umrahResponse?.data.data ?? []);
 
-  // if (packages.length === 0) {
-  //   return (
-  //     <div className="py-48 text-center text-gray-500">
-  //       No packages available right now.
-  //     </div>
-  //   );
-  // }
-
-  /* ================= LOGIC ================= */
-
-  // // First 3 items
-  // const firstRowPackages = packages?.slice(0, 6);
-
-  // // Remaining
-  // const remainingPackages = packages?.slice(3);
-
-
   return (
     <>
       <HajjUmrahBanner title={bannerTitle} />
 
-      <div className="max-w-350 mx-auto py-10 px-4">
+      <div className="max-w-350 mx-auto py-6 lg:py-10 px-4">
         <AboBanHajjUmrah
           title={`Our ${isHajjPack ? "Hajj" : "Umrah"} Packages`}
           description={`Explore our carefully designed ${isHajjPack ? "Hajj" : "Umrah"} packages crafted to provide you with a smooth, comfortable, and spiritually enriching journey. From visa processing and premium accommodation to guided rituals and transportation, every detail is thoughtfully arranged to ensure peace of mind. Choose the package that aligns with your spiritual goals, preferred comfort level, and budget, and let us support you in making this sacred journey truly memorable and hassle-free.`}
@@ -91,7 +74,6 @@ const HajjUmPackages = () => {
             }
           />
         </div>
-
       </div>
     </>
   );

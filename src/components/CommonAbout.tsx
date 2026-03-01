@@ -1,4 +1,3 @@
-
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
@@ -6,27 +5,27 @@ import { highlights } from "@/data/commonAboData";
 
 const CommonAbout = ({ title, img }: { title: string; img: string }) => {
   return (
-    <section className="relative overflow-hidden py-20">
-      <div className="absolute -top-32 -right-32 h-96 w-96 rounded-full  blur-3xl" />
+    <section className="relative overflow-hidden pt-16 b-12 lg:py-20">
+      <div className="absolute -top-32 -right-32 h-96 w-96 rounded-full blur-3xl" />
 
       <div className="container mx-auto px-6 md:px-10">
-        <div className="mb-16 text-center">
-          <Badge variant="secondary" className="mb-4 px-4 py-1 text-sm">
+        <div className="mb-10 lg:mb-20 text-center">
+          <Badge className="hidden bg-hajj/90 lg:block mx-auto mb-7 px-4 py-1 text-sm">
             About Nusuki
           </Badge>
 
-          <h2 className="text-4xl font-extrabold tracking-tight text-foreground md:text-5xl">
-            Why Choose Nusuki for <span className="text-hajj">{title}</span>?
+          <h2 className="text-3xl font-extrabold tracking-tight text-foreground md:text-5xl">
+            Why Choose Nusuki for <span className="text-hajj">{title}</span> ?
           </h2>
 
-          <Separator className="mx-auto mt-6 h-1 w-24 bg-hajj" />
+          <Separator className="mx-auto lg:hidden block mt-6 h-1 w-24 bg-hajj" />
         </div>
 
         <div className="flex flex-col gap-16 lg:flex-row lg:items-center">
           <div className="w-full space-y-10 lg:w-[60%]">
             <div className="space-y-6">
               <p className="text-xl font-semibold leading-relaxed text-foreground">
-                {title} is more than a journey — it’s a sacred spiritual
+                {title} is more than a journey — it's a sacred spiritual
                 transformation.
               </p>
 
@@ -45,7 +44,7 @@ const CommonAbout = ({ title, img }: { title: string; img: string }) => {
                     key={index}
                     className="
                       group cursor-pointer
-                      h-[72px]
+                      h-18
                       border border-muted/40
                       bg-background
                       transition-all duration-300
@@ -76,7 +75,7 @@ const CommonAbout = ({ title, img }: { title: string; img: string }) => {
             </Card>
           </div>
 
-          <div className="relative w-full lg:w-1/2 flex items-center justify-center p-4">
+          <div className="relative w-full hidden lg:w-1/2 lg:flex items-center justify-center p-4">
             <div className="relative w-full max-w-md lg:max-w-lg group">
               {/* Decorative Background Element - Adjusted for subtle depth */}
               <div className="absolute -bottom-4 -right-4 -z-10 h-full w-full rounded-3xl bg-hajj/5 transition-transform duration-500 group-hover:translate-x-2 group-hover:translate-y-2 lg:-bottom-8 lg:-right-8" />

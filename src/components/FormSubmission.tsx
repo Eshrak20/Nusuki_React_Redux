@@ -65,7 +65,7 @@ const FormSubmission = ({ title }: TitleProps) => {
   return (
     <section className="py-16 min-h-screen flex items-center justify-center from-muted/40 via-background to-muted/40 dark:from-background dark:via-muted/30 dark:to-background transition-colors">
 
-      <div className="w-full max-w-5xl rounded-3xl overflow-hidden border border-border bg-white/70 dark:bg-card/70 backdrop-blur-xl shadow-2xl dark:shadow-black/40 transition-all">
+      <div className="w-full max-w-5xl lg:rounded-3xl overflow-hidden border border-border bg-white/70 dark:bg-card/70 backdrop-blur-xl lg:shadow-2xl lg:dark:shadow-black/40 transition-all">
 
         {/* Header */}
         <div className="bg-linear-to-r from-hajj via-hajj/90 to-hajj/70 dark:from-hajj dark:via-hajj/80 dark:to-hajj/60 p-10 text-center text-white relative overflow-hidden">
@@ -73,7 +73,7 @@ const FormSubmission = ({ title }: TitleProps) => {
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            className="inline-block px-4 py-1.5 rounded-full bg-white/20 backdrop-blur-md text-[10px] font-bold uppercase tracking-[0.2em] mb-4"
+            className="lg:inline-block hidden px-4 py-1.5 rounded-full bg-white/20 backdrop-blur-md text-[10px] font-bold uppercase tracking-[0.2em] mb-4"
           >
             Contact Inquiry
           </motion.div>
@@ -82,7 +82,7 @@ const FormSubmission = ({ title }: TitleProps) => {
             {title}
           </h2>
 
-          <p className="text-white/80 mt-3 text-sm max-w-md mx-auto">
+          <p className="text-white/80 lg:block hidden mt-3 text-sm max-w-md mx-auto">
             Fill out the form below and our team will get back to you within 24 hours.
           </p>
         </div>
@@ -210,7 +210,7 @@ const FormSubmission = ({ title }: TitleProps) => {
                       whileTap={{ scale: 0.97 }}
                       type="submit"
                       disabled={isLoading}
-                      className="w-full md:w-auto px-14 py-4 bg-hajj text-white rounded-2xl font-bold tracking-widest text-xs flex items-center justify-center gap-3 shadow-xl shadow-hajj/30 hover:shadow-hajj/50 hover:brightness-110 transition-all disabled:opacity-50"
+                      className="w-full md:w-auto px-14 py-4 bg-hajj text-white rounded-2xl font-bold tracking-widest text-xs flex items-center justify-center gap-3 lg:shadow-xl lg:shadow-hajj/30 hover:shadow-hajj/50 hover:brightness-110 transition-all disabled:opacity-50"
                     >
                       {isLoading ? "SENDING..." : "SEND MESSAGE"}
                       <Send size={16} />
