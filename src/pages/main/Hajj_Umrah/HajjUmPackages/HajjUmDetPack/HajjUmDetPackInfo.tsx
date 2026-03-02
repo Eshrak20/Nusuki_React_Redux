@@ -41,7 +41,7 @@ const HajjUmDetPackInfo = ({ pack }: Props) => {
     <div className="bg-background overflow-x-hidden">
       {/* --- SECTION 1: THE SPECS & SECONDARY GALLERY --- */}
       {/* Added a subtle gradient background: from background to a hint of hajj color */}
-      <section className="w-full py-20 lg:py-32 px-8 lg:px-24 bg-linear-to-br from-background via-background to-hajj/10 dark:to-hajj/20">
+      <section className="w-full py-3 lg:py-32 px-8 lg:px-24 bg-linear-to-br from-background via-background to-hajj/10 dark:to-hajj/20">
         <div className="flex flex-col lg:flex-row-reverse items-start gap-20">
           {/* STAGGERED IMAGE BOX (Kept as is) */}
           <motion.div
@@ -49,28 +49,28 @@ const HajjUmDetPackInfo = ({ pack }: Props) => {
             whileInView={{ y: 0, opacity: 1 }}
             transition={{ duration: 1.2 }}
             viewport={{ once: true }}
-            className="w-full lg:w-[40%] space-y-8"
+            className="w-full hidden lg:block lg:w-[40%] space-y-8"
           >
             <div className="relative group overflow-hidden">
               <img
                 src={pack.images[0]?.image_url || pack.card_image}
-                className="w-full h-125 object-cover  transition-all duration-1000 shadow-xl"
+                className="w-full h-125 object-cover transition-all duration-1000 shadow-xl"
                 alt="Detail"
               />
             </div>
           </motion.div>
 
           {/* BEAUTIFIED SPEC GRID */}
-          <div className="w-full lg:w-[55%]">
+          <div className="w-full mb-9 lg:-mb-12 lg:w-[55%]">
             <motion.div
               variants={fadeInUp}
               initial="hidden"
               whileInView="visible"
-              className="space-y-12"
+              className="space-y-8 lg:space-y-12"
             >
               {/* Header Section */}
               <div className="space-y-2">
-                <h2 className="text-5xl font-light text-foreground tracking-tight">
+                <h2 className="text-4xl lg:text-5xl lg:mb-4 font-light text-foreground tracking-tight">
                   {pack.name}
                 </h2>
                 <p className="text-hajj text-lg font-medium tracking-wide">
@@ -79,7 +79,7 @@ const HajjUmDetPackInfo = ({ pack }: Props) => {
               </div>
 
               {/* Detail List */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-10 border-t border-border pt-12">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-8 lg:gap-y-10 border-t border-border pt-10 pb-4 lg:pb-2 lg:pt-12">
                 <DetailItem
                   icon={<Building2 size={16} />}
                   label="Company Name"
@@ -103,11 +103,11 @@ const HajjUmDetPackInfo = ({ pack }: Props) => {
               </div>
 
               {/* Experience Section */}
-              <div className="bg-hajj/5 dark:bg-hajj/20 p-8 rounded-2xl border border-hajj/10">
+              <div className="bg-hajj/5 dark:bg-hajj/20 p-6 lg:p-8 rounded-2xl border border-hajj/10">
                 <p className="text-hajj flex items-center gap-2 mb-4 uppercase tracking-[0.2em] text-[10px] font-bold">
                   <Quote size={14} /> The Experience
                 </p>
-                <p className="text-xl text-foreground/80 italic leading-relaxed">
+                <p className="lg:text-xl text-foreground/80 italic leading-relaxed">
                   "This package covers all logistics, from visa processing to
                   luxury accommodation near the Haram, ensuring your focus
                   remains solely on your Ibadah."
@@ -169,7 +169,7 @@ const DetailItem = ({
     {value && (
       <p
         className={`
-      ${isPrimary ? "text-3xl font-medium" : "text-2xl font-light"} 
+      ${isPrimary ? "text-2xl lg:text-3xl font-medium" : "text-xl lg:text-2xl font-light"} 
       text-foreground tracking-tight transition-all duration-300 group-hover:translate-x-1
     `}
       >

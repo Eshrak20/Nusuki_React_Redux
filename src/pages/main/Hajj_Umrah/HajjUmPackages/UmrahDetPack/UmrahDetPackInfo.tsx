@@ -49,7 +49,7 @@ const UmrahDetPackInfo = ({ pack }: Props) => {
             whileInView={{ y: 0, opacity: 1 }}
             transition={{ duration: 1.2 }}
             viewport={{ once: true }}
-            className="w-full lg:w-[40%] space-y-8"
+            className="w-full hidden lg:block lg:w-[40%] space-y-8"
           >
             <div className="relative group overflow-hidden">
               <img

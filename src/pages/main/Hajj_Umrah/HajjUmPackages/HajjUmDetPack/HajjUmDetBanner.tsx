@@ -26,7 +26,7 @@ const HajjUmDetBanner = ({ pack }: Props) => {
 
   return (
     <motion.section
-      className="relative w-full h-[80vh] md:h-screen overflow-hidden pointer-events-none bg-neutral-950"
+      className="relative w-full h-[50vh] md:h-screen overflow-hidden pointer-events-none bg-neutral-950"
       style={{ opacity }}
     >
       {/* 1. Sophisticated Overlays */}
@@ -51,7 +51,7 @@ const HajjUmDetBanner = ({ pack }: Props) => {
         <img
           src={pack.card_image}
           alt={pack.name}
-          className={`absolute inset-0 w-full h-full object-cover transition-all duration-1000 ease-in-out ${
+          className={`absolute inset-0 w-full h-full lg:object-cover transition-all duration-1000 ease-in-out ${
             loaded
               ? "opacity-100 blur-0 scale-100"
               : "opacity-0 blur-xl scale-110"
@@ -75,7 +75,7 @@ const HajjUmDetBanner = ({ pack }: Props) => {
       />
 
       {/* 4. Content Container */}
-      <div className="relative z-30 h-full flex flex-col justify-center items-center text-center px-6">
+      <div className="relative z-30 h-full mt-6 lg:mt-0 flex flex-col justify-center items-center text-center px-6">
         {/* Status Badge */}
         {pack.status && (
           <motion.div
@@ -97,7 +97,7 @@ const HajjUmDetBanner = ({ pack }: Props) => {
         )}
 
         {/* Animated Main Title */}
-        <h1 className="flex flex-wrap justify-center gap-x-3 md:gap-x-6 text-5xl md:text-7xl lg:text-8xl  font-bold text-white mb-6">
+        <h1 className="flex flex-wrap justify-center gap-x-3 md:gap-x-6 text-xl md:text-7xl lg:text-8xl font-bold text-white mb-3 lg:mb-12">
           {titleChars.map((char, index) => (
             <motion.span
               key={index}
@@ -130,7 +130,7 @@ const HajjUmDetBanner = ({ pack }: Props) => {
           initial={{ scaleX: 0 }}
           animate={{ scaleX: 1 }}
           transition={{ duration: 1.5, delay: 1, ease: "easeInOut" }}
-          className="h-px bg-linear-to-r from-transparent via-gold-500/50 to-transparent mt-10 w-full max-w-md"
+          className="h-px bg-linear-to-r from-transparent via-hajj-secondary to-transparent mt-10 w-full max-w-md"
           style={{ backgroundColor: "rgba(212, 175, 55, 0.3)" }}
         />
       </div>
@@ -163,7 +163,7 @@ const HajjUmDetBanner = ({ pack }: Props) => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 2 }}
-        className="absolute bottom-10 left-1/2 -translate-x-1/2 z-30 flex flex-col items-center gap-2"
+        className="hidden absolute bottom-10 left-1/2 -translate-x-1/2 z-30 lg:flex flex-col items-center gap-2"
       >
         <span className="text-[10px] text-white/40 tracking-[0.3em] uppercase">
           Explore Details
