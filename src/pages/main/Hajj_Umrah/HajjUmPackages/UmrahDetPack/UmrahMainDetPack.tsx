@@ -1,22 +1,28 @@
-
-import HajjUmDetPackAcc from "./UmrahDetPackAcc";
-import HajjUmDetPackImg from "./UmrahDetPackImg";
-import HajjUmDetPackInfo from "./UmrahDetPackInfo";
-import HajjUmDetPackItinerary from "./UmrahDetPackItinerary";
-import HajjUmDetPackOverView from "./UmrahDetPackOverView";
-import HajjUmDetBanner from "./UmrahDetBanner";
 import { useParams } from "react-router-dom";
 import GalleryPreview from "@/components/GalleryPreview";
-import { useState, useMemo, useCallback } from "react";
-import HajjUmDetCancel from "./UmrahDetCancel";
-import HajjUmDetPackageServices from "./UmrahDetPackageServices";
-import HajjUmDetPackageSighting from "./UmrahDetPackageSighting";
-import HajjUmDetIncludedServices from "./UmrahDetIncludedServices";
+import { useState, useMemo, useCallback, useEffect } from "react";
 import { useGetUmrahPackDetailsQuery } from "@/redux/api/umrahApi";
+import UmrahDetBanner from "./UmrahDetBanner";
+import UmrahDetPackInfo from "./UmrahDetPackInfo";
+import UmrahDetPackOverView from "./UmrahDetPackOverView";
+import UmrahDetPackImg from "./UmrahDetPackImg";
+import UmrahDetPackageServices from "./UmrahDetPackageServices";
+import UmrahDetPackAcc from "./UmrahDetPackAcc";
+import UmrahDetPackItinerary from "./UmrahDetPackItinerary";
+import UmrahDetIncludedServices from "./UmrahDetIncludedServices";
+import UmrahDetPackageSighting from "./UmrahDetPackageSighting";
+import UmrahDetCancel from "./UmrahDetCancel";
 
 const UmrahMainDetPack = () => {
   const [isGalleryOpen, setIsGalleryOpen] = useState(false);
   const [galleryKey, setGalleryKey] = useState(0);
+
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  }, []);
 
   const handleOpenGallery = useCallback(() => {
     setIsGalleryOpen(true);
@@ -50,22 +56,22 @@ const UmrahMainDetPack = () => {
 
   return (
     <div className="space-y-10">
-      <HajjUmDetBanner pack={pack} />
-      <HajjUmDetPackInfo pack={pack} />
-      <HajjUmDetPackOverView overview={pack.overview} />
-      <HajjUmDetPackImg images={pack.images} onSeeAll={handleOpenGallery} />
+      <UmrahDetBanner pack={pack} />
+      <UmrahDetPackInfo pack={pack} />
+      <UmrahDetPackOverView overview={pack.overview} />
+      <UmrahDetPackImg images={pack.images} onSeeAll={handleOpenGallery} />
       <GalleryPreview
         key={galleryKey}
         gallery={galleryImages}
         open={isGalleryOpen}
         onClose={handleCloseGallery}
       />
-      <HajjUmDetPackageServices services={pack.package_services} />
-      <HajjUmDetPackAcc accommodations={pack.package_accommodations} />
-      <HajjUmDetPackItinerary itineraries={pack.package_itineraries} />
-      <HajjUmDetIncludedServices />
-      <HajjUmDetPackageSighting sight={pack.package_sight_seeings} />
-      <HajjUmDetCancel />
+      <UmrahDetPackageServices services={pack.package_services} />
+      <UmrahDetPackAcc accommodations={pack.package_accommodations} />
+      <UmrahDetPackItinerary itineraries={pack.package_itineraries} />
+      <UmrahDetIncludedServices />
+      <UmrahDetPackageSighting sight={pack.package_sight_seeings} />
+      <UmrahDetCancel />
     </div>
   );
 };

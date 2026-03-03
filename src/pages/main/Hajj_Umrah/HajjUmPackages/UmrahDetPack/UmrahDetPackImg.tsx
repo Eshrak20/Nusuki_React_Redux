@@ -15,7 +15,7 @@ const UmrahDetPackImg = ({ images, onSeeAll }: Props) => {
   return (
     <section className="px-8 lg:px-24">
       {/* overflow-hidden on the grid prevents any child from bleeding outside */}
-      <div className="grid grid-cols-3 gap-4 h-160 overflow-hidden">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 h-auto lg:h-160 overflow-hidden">
         {/* Column 1 — single tall image */}
         {leftImg && (
           <motion.div
@@ -84,9 +84,9 @@ const UmrahDetPackImg = ({ images, onSeeAll }: Props) => {
             {/* Updated Button */}
             <button
               onClick={onSeeAll}
-              className="absolute bottom-4 right-4 flex items-center gap-2 bg-hajj text-white font-semibold text-sm px-4 py-2 rounded-lg shadow-md transition-all duration-300 ease-in-out dark:bg-green-700 hover:scale-105 hover:shadow-lg active:scale-95"
+              className="absolute hidden bottom-4 right-4 lg:flex items-center gap-2 bg-hajj text-white font-semibold text-sm px-4 py-2 rounded-lg shadow-md transition-all duration-300 ease-in-out dark:bg-green-700 hover:scale-105 hover:shadow-lg active:scale-95"
             >
-              See all images
+              View All Images
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1"
@@ -104,6 +104,11 @@ const UmrahDetPackImg = ({ images, onSeeAll }: Props) => {
             </button>
           </motion.div>
         )}
+      </div>
+      <div className="mt-4 md:hidden text-center">
+        <button onClick={onSeeAll} className="text-hajj font-bold text-sm underline">
+          View All Images
+        </button>
       </div>
     </section>
   );

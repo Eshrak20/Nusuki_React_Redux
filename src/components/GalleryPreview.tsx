@@ -18,9 +18,18 @@ const GalleryPreview = ({
 }: GalleryProps) => {
   const [index, setIndex] = useState(0);
   const [internalOpen, setInternalOpen] = useState(false);
-  const initialIndexSetRef = useRef(false);
+  
+  // Ref to store scroll position before opening
+  const scrollPosRef = useRef(0);
 
   const isOpen = externalOpen !== undefined ? externalOpen : internalOpen;
+
+  // Capture scroll position right before the lightbox opens
+  useEffect(() => {
+    if (isOpen) {
+      scrollPosRef.current = window.scrollY;
+    }
+  }, [isOpen]);
 
   const slides = useMemo(
     () =>
@@ -37,25 +46,13 @@ const GalleryPreview = ({
     } else {
       setInternalOpen(false);
     }
-    // Reset the ref when closing
-    initialIndexSetRef.current = false;
+
+    // Optional: Force the browser to stay at the captured position 
+    // after the Lightbox cleanup cycle completes
+    setTimeout(() => {
+      window.scrollTo(0, scrollPosRef.current);
+    }, 0);
   }, [onClose]);
-
-  const handleView = useCallback(({ index: newIndex }: { index: number }) => {
-    setIndex(newIndex);
-  }, []);
-
-  // Use a ref to track if we've set the initial index
-  useEffect(() => {
-    if (isOpen && !initialIndexSetRef.current) {
-      // Use a microtask to avoid the lint warning
-      // This still happens synchronously but bypasses the lint rule
-      Promise.resolve().then(() => {
-        setIndex(0);
-      });
-      initialIndexSetRef.current = true;
-    }
-  }, [isOpen]);
 
   return (
     <Lightbox
@@ -64,10 +61,18 @@ const GalleryPreview = ({
       index={index}
       slides={slides}
       plugins={[Zoom, Captions]}
-      on={{
-        view: handleView,
+      /* Setting portal to document.body and disabling 
+         automatic scroll-to-top behavior 
+      */
+      portal={{ root: typeof document !== 'undefined' ? document.body : undefined }}
+      controller={{ 
+        closeOnBackdropClick: true,
+        // This prevents the library from adding styles that might jump the scroll
+        focus: false 
       }}
-      controller={{ closeOnBackdropClick: true }}
+      on={{
+        view: ({ index: newIndex }) => setIndex(newIndex),
+      }}
       carousel={{
         finite: false,
         preload: 3,

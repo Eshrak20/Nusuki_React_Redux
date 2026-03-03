@@ -17,7 +17,7 @@ const UmrahDetPackItinerary = ({ itineraries }: Props) => {
   }
 
   return (
-    <section className="py-8 max-w-425 mx-auto">
+    <section className="py-8 max-w-425 px-6 lg:px-0 mx-auto">
       <div className="mb-8">
         <h2 className="text-2xl mb-2 font-semibold tracking-tight text-hajj">
           Your itinerary
@@ -26,10 +26,10 @@ const UmrahDetPackItinerary = ({ itineraries }: Props) => {
       </div>
 
       {/* Grid Layout matches Accommodation grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-10">
         {itineraries.map((item) => (
-          <Card 
-            key={item.id} 
+          <Card
+            key={item.id}
             className="overflow-hidden border-border bg-card flex flex-col shadow-sm"
           >
             {/* Top: Image Slider Section */}
@@ -42,7 +42,7 @@ const UmrahDetPackItinerary = ({ itineraries }: Props) => {
               <h3 className="font-bold text-foreground text-lg leading-tight mb-2">
                 {item.itinerary.name}
               </h3>
-              
+
               <p className="text-xs text-muted-foreground uppercase font-medium tracking-wide mb-4">
                 Your itinerary in {item.itinerary.location}
               </p>
@@ -61,7 +61,7 @@ const UmrahDetPackItinerary = ({ itineraries }: Props) => {
               </div>
 
               {/* Location Button */}
-              <button className="flex items-center justify-center gap-2 w-fit bg-hajj text-white px-5 py-2.5 rounded-lg text-sm font-semibold hover:opacity-90 transition-all shadow-sm active:scale-95">
+              <button className="hidden flex items-center justify-center gap-2 w-fit bg-hajj text-white px-5 py-2.5 rounded-lg text-sm font-semibold hover:opacity-90 transition-all shadow-sm active:scale-95">
                 <MapPin className="w-4 h-4" />
                 Location
               </button>

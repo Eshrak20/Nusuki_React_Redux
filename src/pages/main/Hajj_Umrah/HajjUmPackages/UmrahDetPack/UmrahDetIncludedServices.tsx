@@ -1,5 +1,6 @@
 import { Car, Train, MapPin, Clock } from "lucide-react";
 import serviceImg from "@/assets/Images/service.jpeg";
+
 const UmrahDetIncludedServices = () => {
     const transports = [
         {
@@ -28,13 +29,13 @@ const UmrahDetIncludedServices = () => {
     ];
 
     return (
-        <div className="max-w-425 mx-auto space-y-8 mb-20 bg-background text-foreground">
+        <div className="max-w-425 mx-auto px-6 lg:px-0 space-y-8 mb-12 lg:mb-20 bg-background text-foreground">
             {/* Header */}
             <div className="space-y-1">
-                <h2 className="text-3xl font-bold tracking-tight text-foreground">
+                <h2 className="text-2xl lg:text-3xl font-bold tracking-tight text-foreground">
                     Included services
                 </h2>
-                <p className="text-muted-foreground">Included To Package</p>
+                <p className="text-muted-foreground text-sm lg:text-base">Included To Package</p>
             </div>
 
             {/* Grid for Transport Cards */}
@@ -44,7 +45,7 @@ const UmrahDetIncludedServices = () => {
                         key={index}
                         className="p-6 rounded-xl border border-border bg-card hover:shadow-md transition-shadow space-y-4"
                     >
-                        <div className="w-10 h-10 rounded-full bg-emerald-50 dark:bg-emerald-950/30 flex items-center justify-center">
+                        <div className="w-10 h-10 hidden rounded-full bg-emerald-50 dark:bg-emerald-950/30 lg:flex items-center justify-center">
                             {item.icon}
                         </div>
                         <div className="space-y-2">
@@ -70,7 +71,7 @@ const UmrahDetIncludedServices = () => {
             </div>
 
             {/* Personal Assistant Card */}
-            <div className="max-w-xs">
+            <div className="lg:max-w-xs max-w-425 mx-auto lg:mx-0">
                 <div className="rounded-xl border border-border bg-card overflow-hidden hover:shadow-md transition-shadow">
                     <div className="relative w-full">
                         <img

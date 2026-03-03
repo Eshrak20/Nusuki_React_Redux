@@ -51,11 +51,10 @@ const HajjUmDetBanner = ({ pack }: Props) => {
         <img
           src={pack.card_image}
           alt={pack.name}
-          className={`absolute inset-0 w-full h-full lg:object-cover transition-all duration-1000 ease-in-out ${
-            loaded
+          className={`absolute inset-0 w-full h-full lg:object-cover transition-all duration-1000 ease-in-out ${loaded
               ? "opacity-100 blur-0 scale-100"
               : "opacity-0 blur-xl scale-110"
-          }`}
+            }`}
           onLoad={() => setLoaded(true)}
           style={{ objectPosition: "center 40%" }}
         />

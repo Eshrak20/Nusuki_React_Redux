@@ -18,7 +18,7 @@ interface ContactCardProps {
 
 const HajjUmDetCancel = () => {
   return (
-    <div className="max-w-425 mx-auto space-y-8 mb-20 bg-background text-foreground">
+    <div className="max-w-425 lg:mx-auto mx-6 space-y-8 mb-20 bg-background text-foreground">
       <h2 className="text-2xl font-bold text-hajj">Cancellation Policy</h2>
 
       {/* Blue Alert Banner */}

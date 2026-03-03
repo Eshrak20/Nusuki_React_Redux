@@ -7,7 +7,7 @@ import HajjUmDetPackOverView from "./HajjUmDetPackOverView";
 import HajjUmDetBanner from "./HajjUmDetBanner";
 import { useParams } from "react-router-dom";
 import GalleryPreview from "@/components/GalleryPreview";
-import { useState, useMemo, useCallback } from "react";
+import { useState, useMemo, useCallback, useEffect } from "react";
 import HajjUmDetCancel from "./HajjUmDetCancel";
 import HajjUmDetPackageServices from "./HajjUmDetPackageServices";
 import HajjUmDetPackageSighting from "./HajjUmDetPackageSighting";
@@ -16,10 +16,14 @@ import HajjUmDetIncludedServices from "./HajjUmDetIncludedServices";
 const HajjUmMainDetPack = () => {
   const [isGalleryOpen, setIsGalleryOpen] = useState(false);
   const [galleryKey, setGalleryKey] = useState(0);
-  window.scrollTo({
-    top: 0,
-    behavior: "smooth",
-  });
+
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  }, []);
+
   const handleOpenGallery = useCallback(() => {
     setIsGalleryOpen(true);
     // Increment key to force GalleryPreview to remount with fresh state

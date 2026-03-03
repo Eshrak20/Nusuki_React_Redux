@@ -9,7 +9,7 @@ const HajjUmDetPackageServices = ({
   services,
 }: HajjUmDetPackageServicesProps) => {
   return (
-    <div className="w-full max-w-425 mx-auto space-y-8 mb-20 bg-background text-foreground p-6 rounded-lg border border-border/50">
+    <div className="w-full max-w-425 mx-auto space-y-8 -mb-8 lg:mb-20 bg-background text-foreground p-6 rounded-lg border border-border/50">
       {/* Title */}
       <h2 className="text-2xl font-bold mb-6 text-foreground">
         Package Services
@@ -35,7 +35,7 @@ const HajjUmDetPackageServices = ({
             <h3 className="font-bold text-lg text-foreground border-b border-border pb-2">
               {group.category}
             </h3>
-            
+
             <ul className="space-y-3">
               {group.services.map((service) => (
                 <li
