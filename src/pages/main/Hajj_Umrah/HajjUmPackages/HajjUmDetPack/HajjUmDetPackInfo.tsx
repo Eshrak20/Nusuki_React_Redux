@@ -82,7 +82,7 @@ const HajjUmDetPackInfo = ({ pack }: Props) => {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-8 lg:gap-y-10 border-t border-border pt-10 pb-4 lg:pb-2 lg:pt-12">
                 <DetailItem
                   icon={<Building2 size={16} />}
-                  label="Company Name"
+                  label="Organizer"
                   value={pack.company_name}
                 />
                 <DetailItem
@@ -90,15 +90,15 @@ const HajjUmDetPackInfo = ({ pack }: Props) => {
                   label="PRICE PER PERSON"
                   value={formatCurrency(pack.price)}
                 />
+                  <DetailItem
+                    icon={<Tag size={16} />}
+                    label="CATEGORY"
+                    value={pack.package_type}
+                  />
                 <DetailItem
                   icon={<BadgeCheck size={16} />}
-                  label="TYPE EX:"
+                  label="Flight type"
                   value={pack.flight_type}
-                />
-                <DetailItem
-                  icon={<Tag size={16} />}
-                  label="CATEGORY"
-                  value={pack.package_type}
                 />
               </div>
 

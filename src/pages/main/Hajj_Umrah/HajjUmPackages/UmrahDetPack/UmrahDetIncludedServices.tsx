@@ -29,7 +29,7 @@ const UmrahDetIncludedServices = () => {
     ];
 
     return (
-        <div className="max-w-425 mx-auto px-6 lg:px-0 space-y-8 mb-12 lg:mb-20 bg-background text-foreground">
+        <div className="w-full mx-8 lg:mx-24 px-6 lg:px-0 space-y-8 mb-12 lg:mb-20 bg-background text-foreground">
             {/* Header */}
             <div className="space-y-1">
                 <h2 className="text-2xl lg:text-3xl font-bold tracking-tight text-foreground">

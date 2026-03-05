@@ -9,7 +9,8 @@ const HajjUmDetPackageServices = ({
   services,
 }: HajjUmDetPackageServicesProps) => {
   return (
-    <div className="w-full max-w-425 mx-auto space-y-8 -mb-8 lg:mb-20 bg-background text-foreground p-6 rounded-lg border border-border/50">
+    <div className="bg-background overflow-x-hidden">
+      <div className="w-full space-y-8 mx-8 lg:mx-24 -mb-8 lg:mb-2 lg:mt-6 text-foreground p-6 rounded-lg border border-border/50">
       {/* Title */}
       <h2 className="text-2xl font-bold mb-6 text-foreground">
         Package Services
@@ -56,6 +57,7 @@ const HajjUmDetPackageServices = ({
           </div>
         ))}
       </div>
+    </div>
     </div>
   );
 };

@@ -11,7 +11,7 @@ const HajjUmDetPackAcc = ({ accommodations }: Props) => {
   if (!accommodations?.length) return null;
 
   return (
-    <section className="max-w-425 mx-auto px-6 lg:px-0 mt-20 mb-14 lg:my-20">
+    <section className="mx-8 lg:mx-24 px-6 lg:px-0 mt-20 mb-14 lg:my-20">
       <div className="space-y-6">
         <div className="space-y-1">
           <h2 className="text-2xl font-semibold tracking-tight text-hajj">

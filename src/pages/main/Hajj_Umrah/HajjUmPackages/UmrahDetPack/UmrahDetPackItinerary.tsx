@@ -17,7 +17,7 @@ const UmrahDetPackItinerary = ({ itineraries }: Props) => {
   }
 
   return (
-    <section className="py-8 max-w-425 px-6 lg:px-0 mx-auto">
+    <section className="py-8 mx-8 lg:mx-24 px-6 lg:px-0">
       <div className="mb-8">
         <h2 className="text-2xl mb-2 font-semibold tracking-tight text-hajj">
           Your itinerary

@@ -9,7 +9,7 @@ const UmrahDetPackageSighting = ({
   sight,
 }: HajjUmDetPackageSightingProps) => {
   return (
-    <div className="w-full max-w-425 mx-auto space-y-8 mb-12 lg:mb-20 bg-background text-foreground p-6 rounded-lg border border-border/50">
+    <div className="mx-8 lg:mx-24 space-y-8 mb-12 lg:mb-20 bg-background text-foreground p-6 rounded-lg border border-border/50">
       {/* Title */}
       <h2 className="text-2xl font-bold mb-6 text-foreground">
         Sightseeing
