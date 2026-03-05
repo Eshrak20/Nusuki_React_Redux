@@ -61,7 +61,7 @@ const HajjUmDetPackItinerary = ({ itineraries }: Props) => {
               </div>
 
               {/* Location Button */}
-              <button className="hidden flex items-center justify-center gap-2 w-fit bg-hajj text-white px-5 py-2.5 rounded-lg text-sm font-semibold hover:opacity-90 transition-all shadow-sm active:scale-95">
+              <button className="hidden items-center justify-center gap-2 w-fit bg-hajj text-white px-5 py-2.5 rounded-lg text-sm font-semibold hover:opacity-90 transition-all shadow-sm active:scale-95">
                 <MapPin className="w-4 h-4" />
                 Location
               </button>
