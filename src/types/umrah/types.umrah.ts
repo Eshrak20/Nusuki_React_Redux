@@ -93,7 +93,7 @@ export interface UmrahPackageDetails {
   tagline: string;
   price: string;
   company_name: string;
-  per_person_price: string;
+  flight_type: string;
   overview: string;
   date: string;
   num_of_nights: string;

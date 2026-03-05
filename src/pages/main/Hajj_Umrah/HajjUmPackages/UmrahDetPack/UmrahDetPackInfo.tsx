@@ -87,13 +87,13 @@ const UmrahDetPackInfo = ({ pack }: Props) => {
                 />
                 <DetailItem
                   icon={<DollarSign size={16} />}
-                  label="TOTAL INVESTMENT"
+                  label="PRICE PER PERSON"
                   value={formatCurrency(pack.price)}
                 />
                 <DetailItem
                   icon={<BadgeCheck size={16} />}
-                  label="PER Person"
-                  value={formatCurrency(pack.per_person_price)}
+                  label="TYPE EX:"
+                  value={pack.flight_type}
                 />
                 <DetailItem
                   icon={<Tag size={16} />}

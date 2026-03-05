@@ -14,6 +14,7 @@ import HajjUmMainDetPack from "@/pages/main/Hajj_Umrah/HajjUmPackages/HajjUmDetP
 import DetInstitutionMain from "@/pages/main/Education/Institution/DetInstitution/DetInstitutionMain";
 import Upcoming from "@/components/Upcoming";
 import UmrahMainDetPack from "@/pages/main/Hajj_Umrah/HajjUmPackages/UmrahDetPack/UmrahMainDetPack";
+import HomeCourse from "@/pages/main/Education/Course/HomeCourse/HomeCourse";
 
 export const router = createBrowserRouter([
   {
@@ -54,7 +55,7 @@ export const router = createBrowserRouter([
           },
           {
             path: "courses",
-            element: <Upcoming title="Courses Section Upcoming" />,
+            element: <HomeCourse />,
           },
           {
             path: "tests",
