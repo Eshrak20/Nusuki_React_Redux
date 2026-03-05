@@ -5,11 +5,10 @@ interface HomeCourseCardProps {
 }
 
 const HomeCourseCard = ({ courses }: HomeCourseCardProps) => {
-    console.log(courses);
 
     return (
         <div>
-
+            {courses?.length}
         </div>
     );
 };
