@@ -1,12 +1,15 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { baseApi } from "./api/baseApi";
 import universityFilterReducer from "./features/universityFilterSlice";
+import courseFilterReducer from "./features/courseFilterSlice";
 
 export const store = configureStore({
   reducer: {
     universityFilter: universityFilterReducer,
+    courseFilter: courseFilterReducer, 
     [baseApi.reducerPath]: baseApi.reducer,
   },
+
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(baseApi.middleware),
 });

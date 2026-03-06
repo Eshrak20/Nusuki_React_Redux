@@ -7,6 +7,7 @@ import type { RootState } from "@/redux/store";
 import { setPage } from "@/redux/features/universityFilterSlice";
 import EduPagination from "@/components/education/EduPagination";
 import HomeInstitutionCardSkeleton from "@/components/skeletons/HomeInstitutionCardSkeleton";
+import EduSearch from "@/components/education/EduSearch";
 
 const HomeInstitution = () => {
   
@@ -41,7 +42,7 @@ const HomeInstitution = () => {
 
         {/* First Search Bar */}
         <div className="w-full md:w-1/2 order-1 md:order-2">
-          <HomeInstitutionSearch />
+          <EduSearch placeholder="universities" />
         </div>
 
         {/* Second Search Bar */}
