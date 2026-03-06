@@ -4,9 +4,14 @@ import { baseApi } from "../baseApi";
 export const educationApi = baseApi.injectEndpoints({
     endpoints: (builder) => ({
         getCourses: builder.query<CourseApiResponse, CourseQueryParams | void>({
-            query: () => ({
+            query: ({ page = 1, keyword = "", country = "" }) => ({
                 url: "/courses",
                 method: "GET",
+                params: {
+                    page,
+                    keyword,
+                    country,
+                }
             }),
         }),
         getCoursesDetails: builder.query<Course, { id: string }>({

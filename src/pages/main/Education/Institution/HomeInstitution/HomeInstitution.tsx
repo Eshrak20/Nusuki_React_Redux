@@ -27,7 +27,7 @@ const HomeInstitution = () => {
   });
 
   const universities = data?.data?.data ?? [];
-  const pagination = data?.data;
+  const pagination = data?.data; 
 
   return (
     <div className="pt-32 pb-3 max-w-7xl mx-auto min-h-screen">
@@ -52,7 +52,6 @@ const HomeInstitution = () => {
 
       {/* Grid Section */}
 
-
       <div className="">
         {isLoading ? (
           <HomeInstitutionCardSkeleton />
@@ -64,7 +63,6 @@ const HomeInstitution = () => {
           </div>
         )}
       </div>
-
 
       <div className="max-w-7xl mx-auto">
         {pagination && (
