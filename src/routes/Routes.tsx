@@ -15,6 +15,7 @@ import DetInstitutionMain from "@/pages/main/Education/Institution/DetInstitutio
 import Upcoming from "@/components/Upcoming";
 import UmrahMainDetPack from "@/pages/main/Hajj_Umrah/HajjUmPackages/UmrahDetPack/UmrahMainDetPack";
 import HomeCourse from "@/pages/main/Education/Course/HomeCourse/HomeCourse";
+import DetCourseMain from "@/pages/main/Education/Course/DetCourse/CourseMain";
 
 export const router = createBrowserRouter([
   {
@@ -56,6 +57,10 @@ export const router = createBrowserRouter([
           {
             path: "courses",
             element: <HomeCourse />,
+          },
+          {
+            path: "courses/:id",
+            element: <DetCourseMain />,
           },
           {
             path: "tests",
