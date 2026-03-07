@@ -15,6 +15,12 @@ import type { UniversityBannerCardMini } from "@/types/education/type.uniDet";
 import DetInstitutionScholarships from "./DetInstitutionScholarships";
 
 const DetInstitutionMain = () => {
+
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth",
+  });
+
   const { id } = useParams<{ id: string }>();
 
   const { data, isLoading } = useGetUniversitiesDetailsQuery(

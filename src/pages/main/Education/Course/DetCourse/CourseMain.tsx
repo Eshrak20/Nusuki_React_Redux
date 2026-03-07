@@ -1,6 +1,5 @@
 import { useParams } from "react-router-dom";
 import { useGetCoursesDetailsQuery } from "@/redux/api/educationApi/courseApi";
-
 import CourseDescription from "./CourseDescription";
 import CourseEntryRequirements from "./CourseEntryRequirements";
 import CourseFees from "./CourseFees";
@@ -9,14 +8,19 @@ import CourseIntakes from "./CourseIntakes";
 import CourseOverview from "./CourseOverview";
 import CourseProvider from "./CourseProvider";
 import UniversityRanking from "./UniversityRanking";
-import CourseCommunity from "./CourseCommunity"; // New component
-import CourseFastLane from "./CourseFastLane"; // New component
+import CourseCommunity from "./CourseCommunity"; 
+import CourseFastLane from "./CourseFastLane"; 
 import CourseApplicationInfo from "./CourseApplicationInfo";
 import CourseActionPlan from "./CourseActionPlan";
 
 const CourseMain = () => {
-    const { id } = useParams<{ id: string }>();
 
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+    });
+
+    const { id } = useParams<{ id: string }>();
     const { data, isLoading } = useGetCoursesDetailsQuery(
         { id: id! },
         { skip: !id }
@@ -32,8 +36,8 @@ const CourseMain = () => {
 
     // Filter sections by heading to distribute to appropriate components
     const filterSectionsByHeading = (keywords: string[]) => {
-        return extra?.sections?.filter(section => 
-            keywords.some(keyword => 
+        return extra?.sections?.filter(section =>
+            keywords.some(keyword =>
                 section.heading?.toLowerCase().includes(keyword.toLowerCase())
             )
         ) || [];
@@ -51,18 +55,18 @@ const CourseMain = () => {
         <div className="space-y-4">
             <CourseHeader course={course} />
             <CourseOverview detail={detail} />
-            
+ 
             {/* Description - only course info sections */}
             <CourseDescription sections={descriptionSections} />
-            
+
             {/* Entry Requirements - only entry requirement sections */}
             <CourseEntryRequirements sections={entryRequirementSections} />
-            
+
             {/* Application Info - new component */}
             {applicationSections.length > 0 && (
                 <CourseApplicationInfo sections={applicationSections} />
             )}
-            
+
             {/* Career Outcomes - new component */}
             {careerSections.length > 0 && (
                 <div className="border p-4 rounded-lg">
@@ -75,26 +79,26 @@ const CourseMain = () => {
                     ))}
                 </div>
             )}
-            
+
             <CourseFees tuition={detail.tuition} />
             <CourseIntakes tables={extra?.tables || []} />
             <UniversityRanking ranking={detail.ranking} />
-            
+
             {/* Community Section - new component */}
             {communitySections.length > 0 && (
                 <CourseCommunity sections={communitySections} />
             )}
-            
+
             {/* Action Plan Section - new component */}
             {actionPlanSections.length > 0 && (
                 <CourseActionPlan sections={actionPlanSections} />
             )}
-            
+
             {/* FastLane Section - new component */}
             {fastLaneSections.length > 0 && (
                 <CourseFastLane sections={fastLaneSections} />
             )}
-            
+
             <CourseProvider provider={extra?.jsonld?.[0]?.provider} />
         </div>
     );

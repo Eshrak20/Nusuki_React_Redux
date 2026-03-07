@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { motion, type Variants } from "framer-motion";
 import type { CourseDetailJson } from "@/types/education/type.course";
 import { Card, CardContent } from "@/components/ui/card";
 import { Calendar, Trophy, Wallet, ArrowUpRight } from "lucide-react";
@@ -17,7 +17,7 @@ const CourseOverview = ({ detail }: CourseOverviewProps) => {
     }
   };
 
-  const item = {
+  const item: Variants = {
     hidden: { y: 20, opacity: 0 },
     show: { y: 0, opacity: 1, transition: { type: "spring", stiffness: 100 } }
   };
@@ -31,13 +31,13 @@ const CourseOverview = ({ detail }: CourseOverviewProps) => {
     },
     {
       label: "Entry Score",
-      value: `${detail.entry_score.test} ${detail.entry_score.score}`,
+      value: `${detail.entry_score.test === null ? " " : detail.entry_score.test} ${detail?.entry_score?.score === null ? " " : detail.entry_score.score}`,
       icon: <Trophy className="w-5 h-5 text-yellow-500" />,
       gradient: "from-yellow-500/10 to-transparent",
     },
     {
       label: "Tuition Fee",
-      value: detail.tuition.raw,
+      value: `${detail.tuition.currency} ${detail.tuition.amount}`,
       icon: <Wallet className="w-5 h-5 text-emerald-500" />,
       gradient: "from-emerald-500/10 to-transparent",
     },
@@ -50,7 +50,7 @@ const CourseOverview = ({ detail }: CourseOverviewProps) => {
         <div className="h-px flex-1 bg-border ml-4" />
       </div>
 
-      <motion.div 
+      <motion.div
         variants={container}
         initial="hidden"
         whileInView="show"
@@ -61,8 +61,8 @@ const CourseOverview = ({ detail }: CourseOverviewProps) => {
           <motion.div key={idx} variants={item}>
             <Card className="relative overflow-hidden group hover:border-primary/50 transition-colors duration-300">
               {/* Subtle background gradient glow */}
-              <div className={`absolute inset-0 bg-gradient-to-br ${stat.gradient} opacity-50`} />
-              
+              <div className={`absolute inset-0 bg-linear-to-br ${stat.gradient} opacity-50`} />
+
               <CardContent className="p-6 relative z-10">
                 <div className="flex justify-between items-start mb-4">
                   <div className="p-2 rounded-lg bg-background border shadow-sm group-hover:scale-110 transition-transform duration-300">
@@ -70,12 +70,12 @@ const CourseOverview = ({ detail }: CourseOverviewProps) => {
                   </div>
                   <ArrowUpRight className="w-4 h-4 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity" />
                 </div>
-                
+
                 <div className="space-y-1">
                   <p className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
-                    {stat.label}
+                    {stat.label} 
                   </p>
-                  <p className="text-lg font-bold text-foreground">
+                   <p className="text-lg h-7 font-bold text-foreground">
                     {stat.value}
                   </p>
                 </div>

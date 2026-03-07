@@ -1,8 +1,4 @@
-interface Section {
-    heading?: string;
-    level?: number;
-    text?: string;
-}
+import type { Section } from "@/types/education/type.course";
 
 interface CourseApplicationInfoProps {
     sections: Section[];

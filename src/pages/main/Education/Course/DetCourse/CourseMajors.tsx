@@ -1,6 +1,4 @@
-"use client";
-
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
@@ -49,7 +47,7 @@ const CourseMajors = ({ description }: CourseMajorsProps) => {
 
       <CardContent className="space-y-4">
         {/* Animated Description */}
-        <div className="min-h-[3rem]">
+        <div className="min-h-12">
           <p className="text-sm text-muted-foreground leading-relaxed italic">
             {displayedText}
             <span className="ml-1 inline-block h-4 w-1 animate-pulse bg-primary" />

@@ -1,10 +1,5 @@
+import type { Section } from "@/types/education/type.course";
 import { Zap, CheckCircle, Clock, Send, Award } from "lucide-react";
-
-interface Section {
-    heading?: string;
-    level?: number;
-    text?: string;
-}
 
 interface CourseFastLaneProps {
     sections: Section[];
@@ -13,16 +8,8 @@ interface CourseFastLaneProps {
 const CourseFastLane = ({ sections }: CourseFastLaneProps) => {
     if (!sections || sections.length === 0) return null;
 
-    // Parse steps from the section text if available
-    const extractSteps = (text: string) => {
-        const steps = text.match(/\d+\s+[^.]+\./g);
-        return steps || [];
-    };
-
-    const steps = sections[0]?.text ? extractSteps(sections[0].text) : [];
-
     return (
-        <div className="border border-gray-200 rounded-lg p-6 bg-gradient-to-r from-amber-50 to-orange-50">
+        <div className="border border-gray-200 rounded-lg p-6 bg-linear-to-r from-amber-50 to-orange-50">
             <div className="flex items-center gap-2 mb-4">
                 <Zap className="w-6 h-6 text-amber-600" />
                 <h2 className="text-2xl font-bold text-gray-900">IDP FastLane</h2>

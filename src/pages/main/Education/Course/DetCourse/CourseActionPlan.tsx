@@ -1,10 +1,5 @@
+import type { Section } from "@/types/education/type.course";
 import { CheckCircle, Target, FileText, ChevronRight } from "lucide-react";
-
-interface Section {
-    heading?: string;
-    level?: number;
-    text?: string;
-}
 
 interface CourseActionPlanProps {
     sections: Section[];

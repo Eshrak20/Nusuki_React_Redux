@@ -36,6 +36,7 @@ export interface CourseApiResponse {
 export interface CourseQueryParams {
   page?: number;
   keyword?: string;
+  study_level?: string;
   country?: string;
   city?: string;
   university?: string;
@@ -134,7 +135,7 @@ export interface Location {
 }
 
 export interface Section {
-  heading: string;
+  heading: string; 
   level: number;
   text: string;
 }

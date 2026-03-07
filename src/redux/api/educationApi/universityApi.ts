@@ -16,11 +16,11 @@ export const educationApi = baseApi.injectEndpoints({
             }),
         }),
         getUniversitiesDetails: builder.query<UniversityDetailsResponse, { id: string }>({
-                query: ({ id }) => ({
-                    url: `/universities/${id}`,
-                    method: "GET",
-                }),
+            query: ({ id }) => ({
+                url: `/universities/${id}`,
+                method: "GET",
             }),
+        }),
     }),
 });
 

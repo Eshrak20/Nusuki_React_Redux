@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import type { Section } from "@/types/education/type.course";
 import { Button } from "@/components/ui/button";
 import { ChevronDown, BookOpen, Sparkles } from "lucide-react";
@@ -23,7 +23,7 @@ const CourseDescription = ({ sections }: CourseDescriptionProps) => {
       className="relative mt-8 group"
     >
       {/* Decorative Background Element */}
-      <div className="absolute -left-4 top-0 bottom-0 w-1 bg-gradient-to-b from-primary via-primary/20 to-transparent rounded-full opacity-50 group-hover:opacity-100 transition-opacity" />
+      <div className="absolute -left-4 top-0 bottom-0 w-1 bg-linear-to-b from-primary via-primary/20 to-transparent rounded-full opacity-50 group-hover:opacity-100 transition-opacity" />
 
       <div className="space-y-4 pl-2">
         {/* Heading with Icon */}
@@ -49,7 +49,7 @@ const CourseDescription = ({ sections }: CourseDescriptionProps) => {
 
             {/* Fade Overlay when collapsed */}
             {!isExpanded && (
-              <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-background to-transparent z-10" />
+              <div className="absolute bottom-0 left-0 right-0 h-24 bg-linear-to-t from-background to-transparent z-10" />
             )}
           </motion.div>
 

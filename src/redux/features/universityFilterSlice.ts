@@ -19,7 +19,7 @@ const universityFilterSlice = createSlice({name: "universityFilter",initialState
       state.keyword = action.payload;
       state.page = 1;
     },
-    setCountryUni: (state, action: PayloadAction<string>) => {
+    setCountry: (state, action: PayloadAction<string>) => {
       state.country = action.payload;
       state.page = 1;
     },
@@ -29,6 +29,6 @@ const universityFilterSlice = createSlice({name: "universityFilter",initialState
   },
 });
 
-export const { setSearchUni, setCountryUni, setPageUni } = universityFilterSlice.actions;
+export const { setSearchUni, setCountry, setPageUni } = universityFilterSlice.actions;
   
 export default universityFilterSlice.reducer;

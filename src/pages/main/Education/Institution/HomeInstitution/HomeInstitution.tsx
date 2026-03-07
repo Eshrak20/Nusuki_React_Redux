@@ -1,6 +1,6 @@
 import { useGetUniversitiesQuery } from "@/redux/api/educationApi/universityApi";
 import HomeInstitutionCard from "./HomeInstitutionCard";
-import HomeInstitutionCountrySearch from "./HomeInstitutionCountrySearch";
+import EduFilter from "@/components/education/EduFilter"
 import { useSelector, useDispatch } from "react-redux";
 import type { RootState } from "@/redux/store";
 import { setPageUni } from "@/redux/features/universityFilterSlice";
@@ -39,14 +39,14 @@ const HomeInstitution = () => {
           <span className="text-foreground font-semibold">{country || "All Countries"}</span>
         </p>
 
-        {/* First Search Bar */}
+        {/* First Search Bar */} 
         <div className="w-full md:w-1/2 order-1 md:order-2">
           <EduSearch placeholder="universities" />
         </div>
 
         {/* Second Search Bar */}
         <div className="w-full md:w-1/4 order-2 md:order-3">
-          <HomeInstitutionCountrySearch />
+          <EduFilter />
         </div>
       </div>
 
