@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { setCountry } from "@/redux/features/universityFilterSlice";
+import { setCountryUni } from "@/redux/features/universityFilterSlice";
 import type { RootState } from "@/redux/store";
 import { ChevronDown } from "lucide-react";
 import { useState } from "react";
@@ -61,7 +61,7 @@ const HomeInstitutionCountrySearch = () => {
   const { country } = useSelector((state: RootState) => state.universityFilter);
 
   const handleSelect = (val: string) => {
-    dispatch(setCountry(val));
+    dispatch(setCountryUni(val));
     setIsOpen(false);
   };
 

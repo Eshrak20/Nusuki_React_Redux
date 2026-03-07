@@ -1,21 +1,27 @@
 import { useDispatch, useSelector } from "react-redux";
-import { setSearch } from "@/redux/features/universityFilterSlice";
+import { setSearchUni } from "@/redux/features/universityFilterSlice";
 import type { RootState } from "@/redux/store";
 import { useState, useRef } from "react";
 import { X, GraduationCap } from "lucide-react";
 import { useLocation } from "react-router-dom";
+import { setSearchCourse } from "@/redux/features/courseFilterSlice";
 
-const EduSearch = ({placeholder}) => {
+interface EduSearchProps {
+    placeholder: string;
+}
+
+const EduSearch = ({ placeholder }: EduSearchProps) => {
     const location = useLocation();
     const dispatch = useDispatch();
     const keyword = useSelector((state: RootState) => {
-        if (location.pathname.startsWith("/education/universities")) {
+        if (location.pathname.startsWith("/education/institution")) {
             return state.universityFilter.keyword;
         }
         else if (location.pathname.startsWith("/education/courses")) {
             return state.courseFilter.keyword;
         }
     });
+    const setSearch = location.pathname.startsWith("/education/institution") ? setSearchUni : setSearchCourse
     const [isFocused, setIsFocused] = useState(false);
     const [isHovered, setIsHovered] = useState(false);
     const inputRef = useRef<HTMLInputElement>(null);
@@ -62,7 +68,7 @@ const EduSearch = ({placeholder}) => {
                     <input
                         ref={inputRef}
                         type="text"
-                        placeholder="Search Courses"
+                        placeholder={`Search ${placeholder}`}
                         value={keyword}
                         onChange={(e) => dispatch(setSearch(e.target.value))}
                         onFocus={() => setIsFocused(true)}

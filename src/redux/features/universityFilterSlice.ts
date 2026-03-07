@@ -15,20 +15,20 @@ const initialState: UniversityFilterState = {
 
 const universityFilterSlice = createSlice({name: "universityFilter",initialState,
   reducers: {
-    setSearch: (state, action: PayloadAction<string>) => {
+    setSearchUni: (state, action: PayloadAction<string>) => {
       state.keyword = action.payload;
       state.page = 1;
     },
-    setCountry: (state, action: PayloadAction<string>) => {
+    setCountryUni: (state, action: PayloadAction<string>) => {
       state.country = action.payload;
       state.page = 1;
     },
-    setPage: (state, action: PayloadAction<number>) => {
+    setPageUni: (state, action: PayloadAction<number>) => {
       state.page = action.payload;
     },
   },
 });
 
-export const { setSearch, setCountry, setPage } = universityFilterSlice.actions;
+export const { setSearchUni, setCountryUni, setPageUni } = universityFilterSlice.actions;
   
 export default universityFilterSlice.reducer;
