@@ -3,27 +3,33 @@ import HomeCourseCard from "./HomeCourseCard";
 import { useDispatch, useSelector } from "react-redux";
 import type { RootState } from "@/redux/store";
 import EduPagination from "@/components/education/EduPagination";
-import { setPage } from "@/redux/features/courseFilterSlice";
+import { setPageCourse } from "@/redux/features/courseFilterSlice";
+import EduSearch from "@/components/education/EduSearch";
 
 
 const HomeCourse = () => {
 
-        const dispatch = useDispatch();
-      const { keyword, page } = useSelector(
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+    });
+
+    const dispatch = useDispatch();
+    const { keyword, page } = useSelector(
         (state: RootState) => state.courseFilter,
-      );
+    );
 
     const { data, isLoading } = useGetCoursesQuery({
-    page,
-    keyword,
-  });
+        page,
+        keyword,
+    });
 
     const courses = data?.data?.data ?? [];
     const pagination = data?.data;
     return (
         <div className="max-w-7xl mx-auto">
             <div className="mt-10 lg:mt-20">
-                {/* <HomeCourseSearch /> */}
+                <EduSearch placeholder="courses" />
             </div>
             {isLoading ? (
                 // <HomeInstitutionCardSkeleton /> 
@@ -44,7 +50,7 @@ const HomeCourse = () => {
                         current_page: pagination.current_page,
                         last_page: pagination.last_page,
                     }}
-                    onPageChange={(newPage: number) => dispatch(setPage(newPage))}
+                    onPageChange={(newPage: number) => dispatch(setPageCourse(newPage))}
                 />
             )}
         </div>

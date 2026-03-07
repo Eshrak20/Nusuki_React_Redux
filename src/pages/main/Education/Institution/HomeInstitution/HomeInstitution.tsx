@@ -1,12 +1,12 @@
 import { useGetUniversitiesQuery } from "@/redux/api/educationApi/universityApi";
 import HomeInstitutionCard from "./HomeInstitutionCard";
-import HomeInstitutionSearch from "./HomeInstitutionSearch";
 import HomeInstitutionCountrySearch from "./HomeInstitutionCountrySearch";
 import { useSelector, useDispatch } from "react-redux";
 import type { RootState } from "@/redux/store";
-import { setPage } from "@/redux/features/universityFilterSlice";
+import { setPageUni } from "@/redux/features/universityFilterSlice";
 import EduPagination from "@/components/education/EduPagination";
 import HomeInstitutionCardSkeleton from "@/components/skeletons/HomeInstitutionCardSkeleton";
+import EduSearch from "@/components/education/EduSearch";
 
 const HomeInstitution = () => {
   
@@ -41,7 +41,7 @@ const HomeInstitution = () => {
 
         {/* First Search Bar */}
         <div className="w-full md:w-1/2 order-1 md:order-2">
-          <HomeInstitutionSearch />
+          <EduSearch placeholder="universities" />
         </div>
 
         {/* Second Search Bar */}
@@ -71,7 +71,7 @@ const HomeInstitution = () => {
               current_page: pagination.current_page,
               last_page: pagination.last_page,
             }}
-            onPageChange={(newPage: number) => dispatch(setPage(newPage))}
+            onPageChange={(newPage: number) => dispatch(setPageUni(newPage))}
           />
         )}
       </div>
