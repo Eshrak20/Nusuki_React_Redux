@@ -1,4 +1,4 @@
-import type { Course, CourseApiResponse, CourseQueryParams } from "@/types/education/type.course";
+import type { Course, CourseApiResponse, CourseDetailsApiResponse, CourseQueryParams } from "@/types/education/type.course";
 import { baseApi } from "../baseApi";
 
 export const educationApi = baseApi.injectEndpoints({
@@ -14,7 +14,7 @@ export const educationApi = baseApi.injectEndpoints({
                 }
             }),
         }),
-        getCoursesDetails: builder.query<Course, { id: string }>({
+        getCoursesDetails: builder.query<CourseDetailsApiResponse, { id: string }>({
                 query: ({ id }) => ({
                     url: `/courses/${id}`,
                     method: "GET",
