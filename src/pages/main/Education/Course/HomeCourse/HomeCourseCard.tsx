@@ -91,16 +91,14 @@ const HomeCourseCard = ({ courses }: HomeCourseCardProps) => {
                             >
                                 View details
                             </MotionLink>
-                            {index === 0 && (
-                                <motion.button
-                                    onClick={() => setIsOpen(true)}
-                                    whileHover={{ scale: 1.02 }}
-                                    whileTap={{ scale: 0.98 }}
-                                    className="w-full bg-primary text-primary-foreground font-semibold py-2.5 px-4 rounded-lg hover:opacity-90 transition-opacity shadow-sm text-center flex items-center justify-center"
-                                >
-                                    Apply Now
-                                </motion.button>
-                            )}
+                            <motion.button
+                                onClick={() => setIsOpen(true)}
+                                whileHover={{ scale: 1.02 }}
+                                whileTap={{ scale: 0.98 }}
+                                className="w-full bg-primary text-primary-foreground font-semibold py-2.5 px-4 rounded-lg hover:opacity-90 transition-opacity shadow-sm text-center flex items-center justify-center"
+                            >
+                                Apply Now
+                            </motion.button>
                         </div>
                     </div>
                 </motion.div>

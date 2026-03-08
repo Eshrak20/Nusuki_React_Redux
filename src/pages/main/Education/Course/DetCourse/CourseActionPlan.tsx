@@ -1,65 +1,129 @@
+import { motion } from "framer-motion";
+import { useState } from "react";
 import type { Section } from "@/types/education/type.course";
-import { CheckCircle, Target, FileText, ChevronRight } from "lucide-react";
+import { CheckCircle, Target, FileText, ChevronRight, Sparkles, Flag } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
+import FormSubmissionModal from "@/components/FormSubmissionModal";
 
 interface CourseActionPlanProps {
-    sections: Section[];
+  sections: Section[];
 }
 
 const CourseActionPlan = ({ sections }: CourseActionPlanProps) => {
-    if (!sections || sections.length === 0) return null;
+  const [isOpen, setIsOpen] = useState(false);
+  const [modalTitle, setModalTitle] = useState("");
 
-    // Map section headings to action steps
-    const getStepIcon = (heading: string) => {
-        if (heading.toLowerCase().includes('shortlist')) return <Target className="w-5 h-5" />;
-        if (heading.toLowerCase().includes('eligibility')) return <CheckCircle className="w-5 h-5" />;
-        if (heading.toLowerCase().includes('apply')) return <FileText className="w-5 h-5" />;
-        return <ChevronRight className="w-5 h-5" />;
-    };
+  if (!sections || sections.length === 0) return null;
 
-    const getStepColor = (index: number) => {
-        const colors = [
-            'bg-blue-100 text-blue-600 border-blue-200',
-            'bg-green-100 text-green-600 border-green-200',
-            'bg-purple-100 text-purple-600 border-purple-200',
-        ];
-        return colors[index % colors.length];
-    };
+  const getStepIcon = (heading: string) => {
+    const h = heading.toLowerCase();
+    if (h.includes("shortlist")) return <Target className="w-5 h-5" />;
+    if (h.includes("eligibility")) return <CheckCircle className="w-5 h-5" />;
+    if (h.includes("apply")) return <FileText className="w-5 h-5" />;
+    return <Flag className="w-5 h-5" />;
+  };
 
-    return (
-        <div className="border border-gray-200 rounded-lg p-6 bg-white">
-            <h2 className="text-2xl font-bold text-gray-900 mb-6">Your Action Plan</h2>
-            
-            <div className="space-y-4">
-                {sections.map((section, index) => (
-                    <div 
-                        key={index} 
-                        className={`border rounded-lg p-4 ${getStepColor(index)}`}
-                    >
-                        <div className="flex items-start gap-3">
-                            <div className="mt-1">
-                                {getStepIcon(section.heading || '')}
-                            </div>
-                            <div className="flex-1">
-                                {section.heading && (
-                                    <h3 className="font-semibold text-gray-800 mb-1">
-                                        Step {index + 1}: {section.heading}
-                                    </h3>
-                                )}
-                                {section.text && (
-                                    <p className="text-gray-600 text-sm mb-3">
-                                        {section.text}
-                                    </p>
-                                )}
-                                <button className="text-sm font-medium text-gray-700 hover:text-gray-900 flex items-center gap-1">
-                                    Get Started <ChevronRight className="w-4 h-4" />
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                ))}
+  const handleGetStarted = (heading: string) => {
+    setModalTitle(`Get Started with "${heading}"`);
+    setIsOpen(true);
+  };
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      className="relative mt-12 group"
+    >
+      <div className="space-y-8 pl-4">
+        {/* Section Header */}
+        <div className="flex items-center gap-4">
+          <div className="p-2.5 rounded-xl bg-primary/10 text-primary ring-1 ring-primary/20">
+            <Target className="w-6 h-6" />
+          </div>
+
+          <div>
+            <h2 className="text-3xl font-extrabold text-foreground">
+              Your Action Plan
+            </h2>
+            <div className="flex items-center gap-2 text-primary/60 text-xs uppercase tracking-widest mt-1">
+              <Sparkles className="w-3 h-3" />
+              Your journey starts here
             </div>
+          </div>
         </div>
-    );
+
+        {/* Steps */}
+        <div className="relative space-y-6">
+          {sections.map((section, index) => (
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ delay: index * 0.1 }}
+              viewport={{ once: true }}
+              className="relative flex gap-6 group/step"
+            >
+              {/* Connector */}
+              {index !== sections.length - 1 && (
+                <div className="absolute left-6 top-12 -bottom-6 w-0.5 bg-border/40 group-hover/step:bg-primary/20 transition-colors" />
+              )}
+
+              {/* Step Icon */}
+              <div className="relative z-10 shrink-0 w-12 h-12 rounded-full bg-white dark:bg-card border-2 border-primary/20 flex items-center justify-center text-primary font-bold shadow-sm group-hover/step:border-primary group-hover/step:bg-primary group-hover/step:text-white transition-all duration-300">
+                {getStepIcon(section.heading || "")}
+              </div>
+
+              {/* Step Card */}
+              <div
+                className={cn(
+                  "flex-1 p-6 rounded-3xl border transition-all duration-300",
+                  "bg-white dark:bg-card border-border/60 hover:border-primary/30 shadow-sm",
+                  "group-hover/step:shadow-md"
+                )}
+              >
+                {section.heading && (
+                  <h3 className="text-xl font-bold text-foreground mb-2 flex items-center gap-3">
+                    <span className="text-primary/40 text-sm font-mono tracking-tighter">
+                      0{index + 1}
+                    </span>
+                    {section.heading}
+                  </h3>
+                )}
+
+                {section.text && (
+                  <p className="text-lg leading-[1.7] text-muted-foreground/90 mb-4">
+                    {section.text}
+                  </p>
+                )}
+
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="p-0 h-auto font-bold text-primary hover:bg-transparent group/btn"
+                  onClick={() => handleGetStarted(section.heading || "Action Plan")}
+                >
+                  Get Started
+                  <ChevronRight className="ml-1 w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
+                </Button>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+
+      {/* Modal */}
+      <FormSubmissionModal
+        open={isOpen}
+        onClose={() => setIsOpen(false)}
+        title={modalTitle}
+      />
+
+      {/* Hover layer */}
+      <div className="absolute inset-0 -m-6 border border-transparent group-hover:border-border group-hover:bg-muted/5 rounded-[2.5rem] transition-all duration-500 -z-10" />
+    </motion.div>
+  );
 };
 
 export default CourseActionPlan;
