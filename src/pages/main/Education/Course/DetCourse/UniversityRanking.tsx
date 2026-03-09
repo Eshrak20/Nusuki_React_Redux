@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import type { Ranking } from "@/types/education/type.course";
-import { Trophy, Globe, Award, ExternalLink } from "lucide-react";
+import { Trophy, Globe } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface UniversityRankingProps {
