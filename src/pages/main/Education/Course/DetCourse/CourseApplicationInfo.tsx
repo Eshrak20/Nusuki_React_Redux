@@ -34,14 +34,14 @@ const CourseApplicationInfo = ({ sections }: CourseApplicationInfoProps) => {
         {/* Section Header */}
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-4">
-            <div className="p-2.5 rounded-xl bg-primary/10 text-primary shadow-sm ring-1 ring-primary/20 dark:bg-primary/20 dark:ring-primary/30">
+            <div className="hidden lg:block p-2.5 rounded-xl bg-primary/10 text-primary shadow-sm ring-1 ring-primary/20 dark:bg-primary/20 dark:ring-primary/30">
               <Info className="w-6 h-6" />
             </div>
             <div>
-              <h2 className="text-3xl font-extrabold tracking-tight text-foreground/90">
+              <h2 className="text-3xl font-extrabold mb-3 lg:mb-0 tracking-tight text-foreground/90">
                 Application Information
               </h2>
-              <div className="flex items-center gap-2 text-primary/60 text-xs font-medium uppercase tracking-widest mt-1">
+              <div className="hidden lg:flex items-center gap-2 text-primary/60 text-xs font-medium uppercase tracking-widest mt-1">
                 <Calendar className="w-3 h-3" />
                 Deadlines & Procedures
               </div>
@@ -68,13 +68,13 @@ const CourseApplicationInfo = ({ sections }: CourseApplicationInfoProps) => {
               )}
             >
               {/* Subtle Icon Indicator for each section */}
-              <div className="absolute top-6 right-6 opacity-10">
-                <FileText className="w-12 h-12" />
+              <div className="absolute top-3 right-4 lg:top-6 lg:right-6 opacity-10">
+                <FileText className="w-10 h-10 lg:w-12 lg:h-12" />
               </div>
 
               {section.heading && (
                 <h3 className="text-xl font-bold text-foreground mb-3 flex items-center gap-2">
-                  <div className="w-1.5 h-6 bg-primary rounded-full" />
+                  <div className="hidden lg:block w-1.5 h-6 bg-primary rounded-full" />
                   {section.heading}
                 </h3>
               )}
@@ -101,8 +101,6 @@ const CourseApplicationInfo = ({ sections }: CourseApplicationInfoProps) => {
         </div>
       </div>
 
-      {/* Hover Background Layer */}
-      <div className="absolute inset-0 -m-6 border border-transparent group-hover:border-border group-hover:bg-muted/5 rounded-[2.5rem] transition-all duration-500 -z-10" />
     </motion.div>
   );
 };

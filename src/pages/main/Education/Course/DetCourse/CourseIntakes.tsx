@@ -40,7 +40,7 @@ const CourseIntakes = ({ tables }: CourseIntakesProps) => {
 
         {/* Header */}
         <div className="flex items-center gap-4">
-          <div className="p-2.5 rounded-xl bg-primary/10 text-primary ring-1 ring-primary/20">
+          <div className="hidden lg:block p-2.5 rounded-xl bg-primary/10 text-primary ring-1 ring-primary/20">
             <CalendarDays className="w-6 h-6" />
           </div>
 
@@ -86,13 +86,13 @@ const CourseIntakes = ({ tables }: CourseIntakesProps) => {
               </div>
 
               <div className="flex items-center gap-2">
-                <div className="px-3 py-1 rounded-full bg-primary/10 border border-primary/20">
+                <div className="px-3 pb-1 rounded-full bg-primary/10 border border-primary/20">
                   <span className="text-[10px] font-bold text-primary uppercase">
                     Open
                   </span>
                 </div>
 
-                <ArrowRight className="w-4 h-4 text-muted-foreground group-hover/item:text-primary group-hover/item:translate-x-1 transition-all" />
+                <ArrowRight className="hidden lg:block w-4 h-4 text-muted-foreground group-hover/item:text-primary group-hover/item:translate-x-1 transition-all" />
               </div>
             </motion.div>
           ))}
@@ -100,9 +100,11 @@ const CourseIntakes = ({ tables }: CourseIntakesProps) => {
 
         {/* Trust Banner */}
         <div className="flex items-center gap-3 bg-muted/30 rounded-2xl p-4 border border-border/40">
-          <div className="p-1.5 rounded-full bg-primary/10 text-primary">
+          <div className="hidden lg:block p-1.5 rounded-full bg-primary/10 text-primary">
             <CheckCircle2 className="w-4 h-4" />
           </div>
+
+          <div className="block lg:hidden w-3 h-2 rounded-full bg-primary animate-pulse" />
 
           <p className="text-sm font-medium text-muted-foreground">
             Applications are currently being accepted for the above dates. We recommend applying at least 4 months in advance.
@@ -118,8 +120,6 @@ const CourseIntakes = ({ tables }: CourseIntakesProps) => {
         title="Apply for Your Preferred Intake"
       />
 
-      {/* Hover Layer */}
-      <div className="absolute inset-0 -m-6 border border-transparent group-hover:border-border group-hover:bg-muted/5 rounded-[2.5rem] transition-all duration-500 -z-10" />
     </motion.div>
   );
 };

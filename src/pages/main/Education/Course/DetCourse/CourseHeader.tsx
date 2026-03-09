@@ -35,7 +35,7 @@ const CourseHeader = ({ course }: CourseHeaderProps) => {
 
   return (
     <Card
-      className="relative overflow-hidden border-none shadow-2xl dark:shadow-primary/10 rounded-[2.5rem]"
+      className="relative overflow-hidden border-none lg:shadow-2xl dark:shadow-primary/10 rounded-none -mx-8 lg:mx-0 lg:rounded-[2.5rem]"
       style={{
         backgroundImage: `url(${course.logo})`,
         backgroundSize: 'cover',
@@ -45,7 +45,7 @@ const CourseHeader = ({ course }: CourseHeaderProps) => {
       {/* THE GLASSY OVERLAY: Re-implemented with backdrop-blur and linear gradients */}
       <div className="absolute inset-0 bg-background/80 dark:bg-background/90 backdrop-blur-[2px] bg-linear-to-br from-background/90 via-background/80 to-primary/20" />
       <CardContent className="relative z-10 p-8 md:p-14">
-        <div className="flex flex-col lg:flex-row items-center lg:items-end gap-10 lg:gap-14">
+        <div className="flex flex-col lg:flex-row items-center gap-10 lg:gap-14">
 
           {/* Logo Container with Glow */}
           <motion.div
@@ -57,7 +57,7 @@ const CourseHeader = ({ course }: CourseHeaderProps) => {
           >
             <div className="absolute -inset-2 bg-primary/30 rounded-[2.5rem] blur-2xl opacity-0 group-hover:opacity-100 transition duration-500" />
 
-            <div className="relative flex items-center justify-center bg-white border border-white/20 w-40 h-40 md:w-52 md:h-52 rounded-[2.5rem] p-8 shadow-2xl overflow-hidden">
+            <div className="relative flex items-center justify-center bg-white border border-white/20 w-40 h-40 md:w-52 md:h-52 rounded-4xl shadow-2xl overflow-hidden">
               <img
                 src={course.logo}
                 alt={course.university}
@@ -133,7 +133,7 @@ const CourseHeader = ({ course }: CourseHeaderProps) => {
                   whileHover={{ scale: 1.05, y: -2 }}
                   whileTap={{ scale: 0.97 }}
                   transition={{ type: "spring", stiffness: 400, damping: 17 }}
-                  className="group relative inline-flex items-center gap-5 px-14 py-7 bg-primary text-primary-foreground rounded-full overflow-hidden shadow-2xl hover:shadow-primary/30 hover:shadow-2xl"
+                  className="group relative inline-flex items-center gap-5 px-7 lg:px-14 py-7 bg-primary text-primary-foreground rounded-full overflow-hidden shadow-2xl hover:shadow-primary/30 hover:shadow-2xl"
                 >
                   {/* Multiple gradient layers for depth */}
                   <span className="absolute inset-0 bg-linear-to-r from-transparent via-primary-foreground/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
@@ -144,17 +144,17 @@ const CourseHeader = ({ course }: CourseHeaderProps) => {
 
                   <span className="relative z-10 flex items-center gap-4">
                     <span className="flex flex-col items-start">
-                      <span className="text-xs font-light tracking-[0.5em] text-primary-foreground/70 mb-1 group-hover:text-primary-foreground/90 transition-colors duration-500">
+                      <span className="text-xs hidden lg:block font-light tracking-[0.5em] text-primary-foreground/70 mb-1 group-hover:text-primary-foreground/90 transition-colors duration-500">
                         LIMITED SPOTS
                       </span>
-                      <span className="font-black tracking-[0.3em] text-xl flex items-center gap-3">
+                      <span className="font-black tracking-[0.3em] text-lg lg:text-xl flex items-center gap-3">
                         APPLY NOW
-                        <span className="w-8 h-0.5 bg-primary-foreground/50 group-hover:w-12 group-hover:bg-primary-foreground transition-all duration-500" />
+                        <span className="w-8 h-0.5 hidden lg:block bg-primary-foreground/50 group-hover:w-12 group-hover:bg-primary-foreground transition-all duration-500" />
                       </span>
                     </span>
 
                     {/* Animated mouse click icon */}
-                    <span className="relative">
+                    <span className="relative hidden lg:block">
                       <span className="absolute inset-0 rounded-full bg-primary-foreground/30 animate-ping opacity-0 group-hover:opacity-100"
                         style={{ animationDuration: '1.5s' }} />
                       <MousePointerClick

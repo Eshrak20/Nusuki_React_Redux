@@ -50,11 +50,9 @@ const CourseMain = () => {
 
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 mt-8 items-start">
 
-
-
                 {/* RIGHT SIDE: SCROLLABLE CONTENT (8 Columns) */}
                 <main className="lg:col-span-8 order-1 lg:order-2 space-y-10">
-                    <CourseOverview detail={detail} />
+                    <CourseOverview detail={detail} /> 
 
                     <div className="space-y-12">
                         <CourseDescription sections={descriptionSections} />

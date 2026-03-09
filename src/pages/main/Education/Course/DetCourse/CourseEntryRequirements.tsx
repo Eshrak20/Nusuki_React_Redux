@@ -37,16 +37,16 @@ const CourseEntryRequirements = ({ sections }: CourseEntryRequirementsProps) => 
 
         {/* Header */}
         <div className="flex items-center gap-4">
-          <div className="p-2.5 rounded-xl bg-primary/10 text-primary shadow-sm ring-1 ring-primary/20">
+          <div className="p-2.5 hidden lg:block rounded-xl bg-primary/10 text-primary shadow-sm ring-1 ring-primary/20">
             <ClipboardCheck className="w-6 h-6" />
           </div>
 
           <div>
-            <h2 className="text-3xl font-extrabold tracking-tight text-foreground">
+            <h2 className="text-[26px] -mb-4 lg:mb-0 lg:text-3xl font-extrabold tracking-tight text-foreground">
               {entry.heading}
             </h2>
 
-            <div className="flex items-center gap-2 text-primary/70 text-xs font-medium uppercase tracking-widest mt-1">
+            <div className="hidden lg:flex items-center gap-2 text-primary/70 text-xs font-medium uppercase tracking-widest mt-1">
               <ShieldCheck className="w-3 h-3" />
               Admission Criteria
             </div>
@@ -59,7 +59,7 @@ const CourseEntryRequirements = ({ sections }: CourseEntryRequirementsProps) => 
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
-          className="bg-background border border-border rounded-3xl p-8 shadow-sm group-hover:border-primary/40 transition-colors duration-500"
+          className="bg-background -ml-11.5 -mr-7 lg:mx-0 lg:rounded-3xl pl-11 pr-9 py-4 lg:p-8 lg:shadow-sm transition-colors duration-500"
         >
           <div className="text-lg leading-[1.8] text-muted-foreground font-normal tracking-wide">
             {entry.text
@@ -71,7 +71,7 @@ const CourseEntryRequirements = ({ sections }: CourseEntryRequirementsProps) => 
                   key={idx}
                   className="flex items-start gap-4 mb-5 last:mb-0"
                 >
-                  <div className="mt-2 text-primary shrink-0">
+                  <div className="hidden lg:block mt-2 text-primary shrink-0">
                     <ArrowRight className="w-4 h-4" />
                   </div>
 
@@ -91,8 +91,6 @@ const CourseEntryRequirements = ({ sections }: CourseEntryRequirementsProps) => 
 
       </div>
 
-      {/* Glow */}
-      <div className="absolute inset-0 -m-6 border border-transparent group-hover:border-border group-hover:bg-muted/5 rounded-[2rem] transition-all duration-500 -z-10" />
     </motion.div>
   );
 };

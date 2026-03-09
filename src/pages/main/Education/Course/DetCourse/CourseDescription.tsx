@@ -47,7 +47,7 @@ const CourseDescription = ({ sections }: CourseDescriptionProps) => {
               <h2 className="text-3xl font-extrabold tracking-tight text-foreground/90">
                 {courseInfo.heading}
               </h2>
-              <div className="flex items-center gap-2 text-primary/60 text-xs font-medium uppercase tracking-widest mt-1">
+              <div className="hidden lg:flex items-center gap-2 text-primary/60 text-xs font-medium uppercase tracking-widest mt-1">
                 <AlignLeft className="w-3 h-3" />
                 Detailed Overview
               </div>
@@ -111,16 +111,14 @@ const CourseDescription = ({ sections }: CourseDescriptionProps) => {
             </Button>
             
             {!isExpanded && (
-               <span className="text-xs text-muted-foreground animate-pulse font-medium">
+               <span className="hidden lg:block text-xs text-muted-foreground animate-pulse font-medium">
                   Click to reveal hidden insights...
                </span>
             )}
           </div>
         </div>
       </div>
-
-      {/* Background card hover effect */}
-      <div className="absolute inset-0 -m-6 border border-transparent group-hover:border-border group-hover:bg-muted/5 rounded-[2rem] transition-all duration-500 -z-10" />
+      
     </motion.div>
   );
 };
