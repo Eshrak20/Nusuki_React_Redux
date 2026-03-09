@@ -26,13 +26,13 @@ const CourseProvider = ({ provider }: CourseProviderProps) => {
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      className="relative mt-16 group"
+      className="relative mt-16 mb-3 lg:mb-8 group"
     >
       <div className="space-y-6 pl-4">
         {/* Section Header */}
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-4">
-            <div className="p-2.5 rounded-xl bg-primary/10 text-primary shadow-sm ring-1 ring-primary/20 dark:bg-primary/20 dark:ring-primary/30">
+            <div className="hidden lg:block p-2.5 rounded-xl bg-primary/10 text-primary shadow-sm ring-1 ring-primary/20 dark:bg-primary/20 dark:ring-primary/30">
               <School className="w-6 h-6" />
             </div>
             <div>
@@ -50,7 +50,7 @@ const CourseProvider = ({ provider }: CourseProviderProps) => {
         {/* Provider Profile Card */}
         <div
           className={cn(
-            "relative overflow-hidden rounded-[2.5rem] border border-border bg-card shadow-sm transition-all duration-500",
+            "relative overflow-hidden -mx-8 lg:mx-0 lg:rounded-[2.5rem] lg:border border-border bg-card lg:shadow-sm transition-all duration-500",
             "group-hover:border-primary/30 group-hover:shadow-lg group-hover:shadow-primary/5"
           )}
         >
@@ -58,11 +58,11 @@ const CourseProvider = ({ provider }: CourseProviderProps) => {
             {/* Logo Section */}
             <div className="relative shrink-0">
               <div className="absolute -inset-2 bg-primary/5 rounded-full blur-xl" />
-              <div className="relative w-24 h-24 rounded-2xl bg-white p-4 shadow-sm ring-1 ring-border group-hover:ring-primary/20 transition-all duration-500 flex items-center justify-center">
+              <div className="relative w-24 h-24 rounded-2xl bg-white shadow-sm ring-1 ring-border group-hover:ring-primary/20 transition-all duration-500 flex items-center justify-center">
                 <img
                   src={provider.logo}
                   alt={provider.name}
-                  className="w-full h-full object-contain"
+                  className="w-full h-full rounded-2xl object-cover"
                 />
               </div>
             </div>
@@ -101,8 +101,8 @@ const CourseProvider = ({ provider }: CourseProviderProps) => {
           </div>
 
           {/* Bottom Accreditation Banner */}
-          <div className="bg-muted/30 dark:bg-muted/10 px-8 py-3 border-t border-border/40">
-            <p className="text-[10px] text-center md:text-left text-muted-foreground font-bold uppercase tracking-[0.2em]">
+          <div className="bg-muted/80 dark:bg-muted/10 px-8 py-3 border-t border-border/40">
+            <p className="lg:pl-4 text-[10px] text-center md:text-left text-muted-foreground font-bold uppercase tracking-[0.2em]">
               Academic Excellence Since Founding
             </p>
           </div>
@@ -116,8 +116,6 @@ const CourseProvider = ({ provider }: CourseProviderProps) => {
         title={modalTitle}
       />
 
-      {/* Card Shadow Layer */}
-      <div className="absolute inset-0 -m-6 border border-transparent group-hover:border-border group-hover:bg-muted/5 rounded-[2.5rem] transition-all duration-500 -z-10" />
     </motion.div>
   );
 };

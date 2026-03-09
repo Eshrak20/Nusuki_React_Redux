@@ -31,7 +31,7 @@ const CourseFastLane = ({ sections }: CourseFastLaneProps) => {
         {/* Section Header */}
         <div className="flex items-center justify-between flex-wrap gap-4">
           <div className="flex items-center gap-4">
-            <div className="p-2.5 rounded-xl bg-primary/10 text-primary shadow-sm ring-1 ring-primary/20 dark:bg-primary/20 dark:ring-primary/30">
+            <div className="hidden lg:block p-2.5 rounded-xl bg-primary/10 text-primary shadow-sm ring-1 ring-primary/20 dark:bg-primary/20 dark:ring-primary/30">
               <Zap className="w-6 h-6 animate-pulse" />
             </div>
             <div>
@@ -43,13 +43,13 @@ const CourseFastLane = ({ sections }: CourseFastLaneProps) => {
               </div>
             </div>
           </div>
-          <div className="px-4 py-1 rounded-full bg-secondary text-secondary-foreground border border-border text-[10px] font-bold uppercase tracking-tighter">
+          <div className="hidden lg:block px-4 py-1 rounded-full bg-secondary text-secondary-foreground border border-border text-[10px] font-bold uppercase tracking-tighter">
             Instant Decision
           </div>
         </div>
 
         {/* Main Content Card */}
-        <div className="relative overflow-hidden p-8 rounded-[2.5rem] border border-border bg-accent/30 dark:bg-card/50">
+        <div className="relative overflow-hidden lg:mx-0 -mx-8 p-8 lg:rounded-[2.5rem] lg:border border-border bg-accent/30 dark:bg-card/50">
           {sections.map((section, index) => (
             <div key={index} className="space-y-8">
               {/* Text */}
@@ -70,7 +70,7 @@ const CourseFastLane = ({ sections }: CourseFastLaneProps) => {
                   className="rounded-full px-10 py-7 bg-primary text-primary-foreground font-bold shadow-lg shadow-primary/20 transition-all hover:scale-105 active:scale-95 group/btn"
                   onClick={() => handleEligibilityClick(section.heading || "FastLane")}
                 >
-                  <Send className="mr-2 w-5 h-5 transition-transform group-hover/btn:-translate-y-1 group-hover/btn:translate-x-1" />
+                  <Send className="hidden lg:block mr-2 w-5 h-5 transition-transform group-hover/btn:-translate-y-1 group-hover/btn:translate-x-1" />
                   Check Your Eligibility Now
                   <ArrowRight className="ml-2 w-5 h-5" />
                 </Button>
@@ -90,8 +90,6 @@ const CourseFastLane = ({ sections }: CourseFastLaneProps) => {
         </div>
       </div>
 
-      {/* Card Shadow Layer */}
-      <div className="absolute inset-0 -m-6 border border-transparent group-hover:border-border group-hover:bg-muted/5 rounded-[2.5rem] transition-all duration-500 -z-10" />
     </motion.div>
   );
 };

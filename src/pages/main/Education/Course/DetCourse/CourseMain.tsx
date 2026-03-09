@@ -44,7 +44,7 @@ const CourseMain = () => {
     const fastLaneSections = filterSectionsByHeading(['How does IDP FastLane work']);
 
     return (
-        <div className="mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="lg:mx-auto -mx-3 px-4 sm:px-6 lg:px-8 py-8">
             {/* Full Width Header */}
             <CourseHeader course={course} />
 
@@ -103,7 +103,7 @@ const CourseMain = () => {
                         {/* Decorative background glow */}
                         <div className="absolute -inset-1 bg-linear-to-r from-primary/10 to-primary/10 rounded-[2.5rem] blur-2xl opacity-75 group-hover:opacity-100 transition duration-1000"></div>
 
-                        <div className="relative rounded-md overflow-hidden">
+                        <div className="relative -ml-6 -mr-7.5 lg:rounded-md overflow-hidden">
                             {/* We pass a custom title to the form */}
                             <EduFormSubmission title="Enquire for this Course" />
                         </div>
