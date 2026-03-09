@@ -71,11 +71,11 @@ const HomeCourseCard = ({ courses }: HomeCourseCardProps) => {
                             </div>
 
                             {/* Logo */}
-                            <div className="w-16 h-16 shrink-0 bg-white rounded-md border border-muted dark:border-muted-dark p-1 flex items-center justify-center shadow-sm">
+                            <div className="w-16 h-16 shrink-0 bg-white rounded-2xl border border-muted dark:border-muted-dark flex items-center justify-center shadow-sm">
                                 <img
                                     src={course.logo}
                                     alt={`${course.university} logo`}
-                                    className="max-w-full max-h-full object-contain"
+                                    className="max-w-full rounded-lg max-h-full object-contain"
                                 />
                             </div>
                         </div>

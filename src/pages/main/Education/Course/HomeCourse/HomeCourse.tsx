@@ -6,6 +6,7 @@ import EduPagination from "@/components/education/EduPagination";
 import { setPageCourse } from "@/redux/features/courseFilterSlice";
 import EduSearch from "@/components/education/EduSearch";
 import EduFilter from "@/components/education/EduFilter"
+import HomeCourseCardSkeleton from "@/components/skeletons/HomeCourseCardSkeleton";
 
 
 const HomeCourse = () => {
@@ -48,10 +49,7 @@ const HomeCourse = () => {
                 </div>
             </div>
             {isLoading ? (
-                // <HomeInstitutionCardSkeleton /> 
-                <p>
-                    Loading.......
-                </p>
+                <HomeCourseCardSkeleton />
             ) : courses.length > 0 ? (
                 <HomeCourseCard courses={courses} />
             ) : (

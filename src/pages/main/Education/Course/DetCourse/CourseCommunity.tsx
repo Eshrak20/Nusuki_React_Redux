@@ -11,6 +11,7 @@ interface CourseCommunityProps {
 }
 
 const CourseCommunity = ({ sections }: CourseCommunityProps) => {
+  
   const [isOpen, setIsOpen] = useState(false);
 
   if (!sections || sections.length === 0) return null;
@@ -38,12 +39,12 @@ const CourseCommunity = ({ sections }: CourseCommunityProps) => {
       <div className="space-y-6 pl-4">
         {/* Header */}
         <div className="flex items-center gap-4">
-          <div className="p-2.5 rounded-xl bg-primary/10 text-primary ring-1 ring-primary/20">
+          <div className="hidden lg:block p-2.5 rounded-xl bg-primary/10 text-primary ring-1 ring-primary/20">
             <Users className="w-6 h-6" />
           </div>
 
           <div>
-            <h2 className="text-3xl font-bold text-foreground">
+            <h2 className="text-[26px] lg:text-3xl font-bold text-foreground">
               Study Abroad Community
             </h2>
 
@@ -67,7 +68,7 @@ const CourseCommunity = ({ sections }: CourseCommunityProps) => {
               key={index}
               variants={itemVariants}
               className={cn(
-                "relative overflow-hidden p-8 rounded-3xl border",
+                "relative overflow-hidden p-6 lg:p-8 rounded-3xl border",
                 "bg-primary/5 border-border hover:border-primary/30",
                 "shadow-sm transition-all duration-300"
               )}
@@ -95,7 +96,7 @@ const CourseCommunity = ({ sections }: CourseCommunityProps) => {
                     onClick={() => setIsOpen(true)}
                     className="rounded-full px-7 py-6 font-semibold group/btn"
                   >
-                    <Globe className="mr-2 w-4 h-4 transition-transform group-hover/btn:rotate-12" />
+                    <Globe className="hidden lg:block mr-2 w-4 h-4 transition-transform group-hover/btn:rotate-12" />
                     Explore Community
                     <ArrowRight className="ml-2 w-4 h-4 transition-transform group-hover/btn:translate-x-1" />
                   </Button>
@@ -118,8 +119,6 @@ const CourseCommunity = ({ sections }: CourseCommunityProps) => {
         title="Get Guidance From Our Study Abroad Community"
       />
 
-      {/* Hover layer */}
-      <div className="absolute inset-0 -m-6 border border-transparent group-hover:border-border group-hover:bg-muted/5 rounded-[2.5rem] transition-all duration-500 -z-10" />
     </motion.div>
   );
 };

@@ -15,13 +15,13 @@ const UniversityRanking = ({ ranking }: UniversityRankingProps) => {
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      className="mt-12"
+      className="mt-12 ml-4"
     >
       <div className="space-y-6">
 
         {/* Header */}
         <div className="flex items-center gap-4">
-          <div className="p-3 rounded-xl bg-primary/10 text-primary ring-1 ring-primary/20">
+          <div className="hidden lg:block p-3 rounded-xl bg-primary/10 text-primary ring-1 ring-primary/20">
             <Trophy className="w-6 h-6" />
           </div>
 
@@ -41,14 +41,14 @@ const UniversityRanking = ({ ranking }: UniversityRankingProps) => {
         <div
           className={cn(
             "rounded-3xl border bg-card border-border",
-            "shadow-sm hover:shadow-md transition-all duration-300",
+            "lg:shadow-sm hover:shadow-md transition-all duration-300",
             "hover:border-primary/30"
           )}
         >
           <div className="p-8 flex flex-col md:flex-row items-center justify-between gap-8">
 
             {/* Rank Section */}
-            <div className="flex items-center gap-5">
+            <div className="flex flex-col lg:flex-row items-center gap-5">
               <div className="flex items-center justify-center w-20 h-20 rounded-2xl bg-primary/10 border border-primary/20">
                 <div className="text-center">
                   <p className="text-[10px] font-semibold text-primary/70 uppercase">
@@ -62,7 +62,7 @@ const UniversityRanking = ({ ranking }: UniversityRankingProps) => {
               </div>
 
               <div>
-                <p className="text-xl font-semibold text-foreground">
+                <p className="text-xl lg:text-left text-center font-semibold text-foreground">
                   Top Global University
                 </p>
 
@@ -73,7 +73,7 @@ const UniversityRanking = ({ ranking }: UniversityRankingProps) => {
             </div>
 
             {/* Source - Highlighted Big */}
-            <div className="flex items-center">
+            <div className="hidden lg:flex items-center">
               <span className="text-3xl font-black text-primary tracking-tight">
                 {ranking.source}
               </span>

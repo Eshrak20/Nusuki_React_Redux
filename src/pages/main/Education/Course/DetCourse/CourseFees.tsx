@@ -15,20 +15,20 @@ const CourseFees = ({ tuition }: CourseFeesProps) => {
       initial={{ opacity: 0, y: 25 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      className="mt-14"
+      className="mt-14 ml-3"
     >
       {/* Header */}
       <div className="flex items-center gap-4 mb-6">
-        <div className="p-3 rounded-xl bg-primary/10 text-primary ring-1 ring-primary/20">
+        <div className="hidden lg:block p-3 rounded-xl bg-primary/10 text-primary ring-1 ring-primary/20">
           <Banknote className="w-6 h-6" />
         </div>
 
         <div>
-          <h2 className="text-2xl md:text-3xl font-bold text-foreground">
+          <h2 className="text-3xl font-bold text-foreground">
             Tuition & Fees
           </h2>
 
-          <div className="flex items-center gap-2 text-xs text-muted-foreground uppercase tracking-wider mt-1">
+          <div className="hidden lg:flex items-center gap-2 text-xs text-muted-foreground uppercase tracking-wider mt-1">
             <Coins className="w-3 h-3" />
             Investment in your future
           </div>
@@ -39,7 +39,7 @@ const CourseFees = ({ tuition }: CourseFeesProps) => {
       <div
         className={cn(
           "relative overflow-hidden rounded-3xl border bg-card",
-          "border-border shadow-sm transition-all duration-300",
+          "border-border lg:shadow-sm transition-all duration-300",
           "hover:shadow-md hover:border-primary/30"
         )}
       >

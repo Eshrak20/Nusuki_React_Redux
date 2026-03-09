@@ -39,7 +39,7 @@ const CourseActionPlan = ({ sections }: CourseActionPlanProps) => {
       <div className="space-y-8 pl-4">
         {/* Section Header */}
         <div className="flex items-center gap-4">
-          <div className="p-2.5 rounded-xl bg-primary/10 text-primary ring-1 ring-primary/20">
+          <div className="hidden lg:block p-2.5 rounded-xl bg-primary/10 text-primary ring-1 ring-primary/20">
             <Target className="w-6 h-6" />
           </div>
 
@@ -67,11 +67,11 @@ const CourseActionPlan = ({ sections }: CourseActionPlanProps) => {
             >
               {/* Connector */}
               {index !== sections.length - 1 && (
-                <div className="absolute left-6 top-12 -bottom-6 w-0.5 bg-border/40 group-hover/step:bg-primary/20 transition-colors" />
+                <div className="absolute hidden lg:block left-6 top-12 -bottom-6 w-0.5 bg-border/40 group-hover/step:bg-primary/20 transition-colors" />
               )}
 
               {/* Step Icon */}
-              <div className="relative z-10 shrink-0 w-12 h-12 rounded-full bg-white dark:bg-card border-2 border-primary/20 flex items-center justify-center text-primary font-bold shadow-sm group-hover/step:border-primary group-hover/step:bg-primary group-hover/step:text-white transition-all duration-300">
+              <div className="relative z-10 shrink-0 w-12 h-12 rounded-full bg-white dark:bg-card border-2 border-primary/20 hidden lg:flex items-center justify-center text-primary font-bold shadow-sm group-hover/step:border-primary group-hover/step:bg-primary group-hover/step:text-white transition-all duration-300">
                 {getStepIcon(section.heading || "")}
               </div>
 
@@ -85,7 +85,7 @@ const CourseActionPlan = ({ sections }: CourseActionPlanProps) => {
               >
                 {section.heading && (
                   <h3 className="text-xl font-bold text-foreground mb-2 flex items-center gap-3">
-                    <span className="text-primary/40 text-sm font-mono tracking-tighter">
+                    <span className="hidden lg:block text-primary/40 text-sm font-mono tracking-tighter">
                       0{index + 1}
                     </span>
                     {section.heading}
@@ -101,7 +101,7 @@ const CourseActionPlan = ({ sections }: CourseActionPlanProps) => {
                 <Button
                   variant="ghost"
                   size="sm"
-                  className="p-0 h-auto font-bold text-primary hover:bg-transparent group/btn"
+                  className="p-0 -ml-2 lg:ml-0 h-auto font-bold text-primary hover:bg-transparent group/btn"
                   onClick={() => handleGetStarted(section.heading || "Action Plan")}
                 >
                   Get Started
@@ -120,8 +120,6 @@ const CourseActionPlan = ({ sections }: CourseActionPlanProps) => {
         title={modalTitle}
       />
 
-      {/* Hover layer */}
-      <div className="absolute inset-0 -m-6 border border-transparent group-hover:border-border group-hover:bg-muted/5 rounded-[2.5rem] transition-all duration-500 -z-10" />
     </motion.div>
   );
 };
