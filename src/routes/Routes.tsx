@@ -16,6 +16,7 @@ import Upcoming from "@/components/Upcoming";
 import UmrahMainDetPack from "@/pages/main/Hajj_Umrah/HajjUmPackages/UmrahDetPack/UmrahMainDetPack";
 import HomeCourse from "@/pages/main/Education/Course/HomeCourse/HomeCourse";
 import DetCourseMain from "@/pages/main/Education/Course/DetCourse/CourseMain";
+import HomeVisa from "@/pages/main/Visa/HomeVisa/HomeVisa";
 
 export const router = createBrowserRouter([
   {
@@ -74,8 +75,8 @@ export const router = createBrowserRouter([
         children: [
           {
             index: true,
-            // element: <Visa />,
-            element: <Upcoming title="Visa Section Upcoming" />,
+            element: <HomeVisa />,
+            // element: <Upcoming title="Visa Section Upcoming" />,
           },
         ],
       },

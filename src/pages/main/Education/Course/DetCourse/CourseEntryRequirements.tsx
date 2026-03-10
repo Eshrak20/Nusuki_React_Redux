@@ -75,7 +75,7 @@ const CourseEntryRequirements = ({ sections }: CourseEntryRequirementsProps) => 
                     <ArrowRight className="w-4 h-4" />
                   </div>
 
-                  <p className="whitespace-pre-line">{line.trim()}</p>
+                  <p className="whitespace-pre-line">{line}</p>
                 </motion.div>
               ))}
           </div>
