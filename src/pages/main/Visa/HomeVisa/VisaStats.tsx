@@ -31,8 +31,8 @@ const VisaStats = () => {
   };
 
   return (
-    <section className="w-full bg-background py-12 shadow-sm">
-      <div className="max-w-7xl mx-auto px-4">
+    <section className="w-full bg-background py-8 shadow-sm">
+      <div className="max-w-5xl mx-auto px-4">
         <motion.div
           className="grid grid-cols-2 gap-x-0 gap-y-7 lg:flex lg:justify-between lg:gap-2"
           variants={containerVariants}
@@ -46,7 +46,7 @@ const VisaStats = () => {
               variants={itemVariants}
               className="flex flex-col items-center justify-center text-center"
             >
-              <h3 className="mb-2 text-4xl font-bold tracking-tight text-primary lg:text-5xl">
+              <h3 className="mb-2 text-3xl font-bold tracking-tight text-primary lg:text-4xl">
                 {stat.value}
               </h3>
               <p className="text-sm font-medium text-muted-foreground lg:text-base">

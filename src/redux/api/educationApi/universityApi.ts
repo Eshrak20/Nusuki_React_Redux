@@ -7,7 +7,7 @@ export const educationApi = baseApi.injectEndpoints({
         getUniversities: builder.query<UniversityApiResponse, UniversityQueryParams>({
             query: ({ page = 1, keyword = "", country = "" }) => ({
                 url: "/universities",
-                method: "GET",
+                method: "GET", 
                 params: {
                     page,
                     keyword,

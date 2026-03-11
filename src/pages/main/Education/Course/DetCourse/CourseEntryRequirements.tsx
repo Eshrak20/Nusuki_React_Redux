@@ -69,13 +69,15 @@ const CourseEntryRequirements = ({ sections }: CourseEntryRequirementsProps) => 
                 <motion.div
                   variants={itemVariants}
                   key={idx}
-                  className="flex items-start gap-4 mb-5 last:mb-0"
+                  // Added w-full to ensure the flex row respects the parent's bounds
+                  className="flex w-full items-start gap-4 mb-5 last:mb-0"
                 >
                   <div className="hidden lg:block mt-2 text-primary shrink-0">
                     <ArrowRight className="w-4 h-4" />
                   </div>
 
-                  <p className="whitespace-pre-line">{line}</p>
+                  {/* Added flex-1, min-w-0, and break-words here */}
+                  <p className="whitespace-pre-line flex-1 min-w-0 wrap-break-word">{line}</p>
                 </motion.div>
               ))}
           </div>

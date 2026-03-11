@@ -2,9 +2,11 @@ import { Link, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { MenuIcon, ChevronDown, ArrowUp } from "lucide-react";
-
 import logoWhite from "../assets/reactAssets/Logo/whiteLogo.png";
 import logoDark from "../assets/reactAssets/Logo/darkLogo.png";
+import logoEduLight from "../assets/reactAssets/Logo/eduLight.jpeg"
+import logoEduDark from "../assets/reactAssets/Logo/eduDark.jpeg"
+
 
 import { Button } from "@/components/ui/button";
 import {
@@ -92,12 +94,12 @@ export default function Navbar() {
           {/* Logo */}
           <Link to="/" className="flex h-12 w-56 items-center">
             <img
-              src={logoWhite}
+              src={location.pathname.startsWith("/education") ? logoEduLight : logoWhite }
               alt="Logo"
               className="dark:hidden object-contain"
             />
             <img
-              src={logoDark}
+              src={location.pathname.startsWith("/education") ? logoEduDark : logoDark }
               alt="Logo"
               className="hidden dark:block object-contain"
             />
