@@ -14,7 +14,6 @@ const stats: StatItem[] = [
 ];
 
 const VisaStats = () => {
-  // Framer Motion variants for a clean, staggered fade-in
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {

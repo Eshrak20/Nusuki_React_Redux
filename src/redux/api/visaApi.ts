@@ -7,7 +7,7 @@ import { baseApi } from "./baseApi";
 
 export const visaApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    // 2. Updated to use VisaQueryParams instead of void
+
     getVisas: builder.query<VisaApiResponse, VisaQueryParams>({
       query: ({
         page = 1,
@@ -24,9 +24,7 @@ export const visaApi = baseApi.injectEndpoints({
       }),
     }),
 
-    // 3. Removed the extra 'void' type argument and updated the return type
     getVisaDetails: builder.query<VisaDetailsApiResponse, string>({
-      // We can just pass the string directly instead of an object { id: string }
       query: (id) => ({
         url: `/visas/${id}`,
         method: "GET",

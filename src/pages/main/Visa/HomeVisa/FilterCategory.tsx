@@ -30,7 +30,6 @@ const FilterCategory = () => {
                 return (
                     <button
                         key={filter.id}
-                        // 2. Dispatch the action when a category is clicked
                         onClick={() => dispatch(setVisaCategory(filter.id))}
                         className={cn(
                             "inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-medium transition-all whitespace-nowrap border shadow-sm",
@@ -53,11 +52,8 @@ const FilterCategory = () => {
                         exit={{ opacity: 0, scale: 0.8, width: 0 }}
                         transition={{ duration: 0.2 }}
                         onClick={() => dispatch(setVisaCategory("All"))}
-                        // 1. Added justify-center
-                        // 2. Changed px-8 to px-3 for a balanced mobile circle button
                         className="inline-flex items-center justify-center gap-2 px-15 lg:px-5 py-2.5 rounded-full text-sm font-medium transition-all whitespace-nowrap bg-destructive text-white hover:bg-destructive/90 shadow-sm overflow-hidden"
                     >
-                        {/* 3. Removed the "lg:" prefix so the icon has a consistent size everywhere */}
                         <X className="w-4 h-4 shrink-0" />
 
                         <span>Clear Filter</span>

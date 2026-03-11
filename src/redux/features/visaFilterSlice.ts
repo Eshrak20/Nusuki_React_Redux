@@ -18,11 +18,11 @@ const visaFilterSlice = createSlice({
   reducers: {
     setSearchVisa: (state, action: PayloadAction<string>) => {
       state.country = action.payload;
-      state.page = 1; // Reset to page 1 on new search
+      state.page = 1;
     },
     setVisaCategory: (state, action: PayloadAction<string>) => {
       state.visa_category = action.payload;
-      state.page = 1; // Reset to page 1 on category change
+      state.page = 1; 
     },
     setPageVisa: (state, action: PayloadAction<number>) => {
       state.page = action.payload;
