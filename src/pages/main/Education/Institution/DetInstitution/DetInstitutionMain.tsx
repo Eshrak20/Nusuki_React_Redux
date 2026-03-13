@@ -31,7 +31,7 @@ const DetInstitutionMain = () => {
   if (!id) return <div>ID not found</div>;
   if (isLoading) return <div>Loading...</div>;
 
-  const university = data?.data;
+  const university = data?.data; 
   const detail = university?.detail_json;
 
   // ✅ Prepare mini banner card data

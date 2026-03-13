@@ -67,7 +67,7 @@ const CountryVisaCard = ({ visas }: CountryVisaCardProps) => {
                         </div>
 
                         <Link
-                            to={`/visas/${visa.id}`}
+                            to={`${visa.id}`}
                             className="bg-primary text-primary-foreground hover:bg-primary/90 px-5 py-2.5 rounded-lg text-sm font-semibold transition-colors"
                         >
                             View Details
