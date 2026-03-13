@@ -11,7 +11,7 @@ const Banner = ({ details }: DetBannerProps) => {
     };
 
     return (
-        <section className="relative overflow-hidden bg-primary py-10 lg:py-15">
+        <section className="relative overflow-hidden bg-primary py-10 lg:pb-12 lg:pt-14">
             {/* Background Gradient matching the HelpDesk component */}
             <div className="absolute inset-0 z-0 bg-linear-to-r from-transparent to-black/40 mix-blend-multiply" />
 
@@ -43,7 +43,7 @@ const Banner = ({ details }: DetBannerProps) => {
                 {/* Headings */}
                 <motion.h1
                     initial="hidden" animate="visible" variants={fadeUp} transition={{ delay: 0.2 }}
-                    className="mb-3 text-4xl font-bold tracking-tight text-primary-foreground lg:text-5xl"
+                    className="mb-3 text-4xl font-bold tracking-tight text-primary-foreground lg:text-[42px]"
                 >
                     {details.country}
                 </motion.h1>

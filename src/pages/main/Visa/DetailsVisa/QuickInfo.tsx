@@ -30,13 +30,13 @@ const QuickInfo = ({ details }: QuickInfoProps) => {
     ];
 
     return (
-        <section className="py-8">
+        <section className="">
             <div className="container mx-auto px-4">
                 <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
                     {infoCards.map((card, index) => (
                         <div
                             key={index}
-                            className="flex flex-col items-center justify-center rounded-2xl bg-white p-8 shadow-sm transition-transform hover:scale-[1.02]"
+                            className="flex flex-col items-center justify-center rounded-2xl bg-white p-4 shadow-sm transition-transform hover:scale-[1.02]"
                         >
                             {/* Icon Circle */}
                             <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-primary">

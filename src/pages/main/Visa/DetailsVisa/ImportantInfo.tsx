@@ -11,7 +11,7 @@ const ImportantInfo = ({ details }: ImportantInfoProps) => {
 
     return (
         <div className="mx-auto max-w-7xl p-4">
-            <div className="flex items-center gap-5 rounded-2xl border border-primary p-5 bg-primary/10 shadow-sm md:p-6">
+            <div className="flex items-center gap-5 rounded-2xl border border-primary p-5 bg-primary/10 shadow-sm">
 
                 {/* Orange Warning Icon Circle */}
                 <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-primary text-white">
