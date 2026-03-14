@@ -1,4 +1,28 @@
-// The base Visa object based on the data array items
+// Sub-types for the detailed view
+export interface VisaRequirement {
+  id: number;
+  visa_id: string;
+  requirement_name: string;
+  type: string;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface VisaProcess {
+  id: number;
+  visa_id: string;
+  step_title: string;
+  description: string;
+  sort_order: string;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface DetBannerProps {
+  details: VisaDetails;
+}
+
+// The base Visa object (used for list views/cards)
 export interface Visa {
   id: number;
   country: string;
@@ -14,6 +38,14 @@ export interface Visa {
   updated_at: string;
   country_flag_url: string;
 }
+
+// The detailed Visa object (used for the single details page)
+export interface VisaDetails extends Visa {
+  requirements: VisaRequirement[];
+  processes: VisaProcess[];
+}
+
+
 export interface CountryVisaCardProps {
   visas: Visa[];
 }
@@ -31,24 +63,25 @@ export interface PaginatedVisas extends PaginationMeta {
   data: Visa[];
 }
 
-// The top-level API response
+// The top-level API response for the list of visas
 export interface VisaApiResponse {
-  code?: number; // Optional since it wasn't in the raw JSON, but was in your example
+  code?: number;
   success: boolean;
   message: string;
   data: PaginatedVisas;
 }
 
-// Similar query params tailored for visas
+// Query params tailored for filtering visas
 export interface VisaQueryParams {
   page?: number;
   country?: string;
   visa_category?: string;
 }
 
+// The API response for a single visa detail page
 export interface VisaDetailsApiResponse {
-  code?: number; 
+  code?: number;
   success: boolean;
   message: string;
-  data: Visa; // Notice this is a single Visa object, not PaginatedVisas
+  data: VisaDetails; // Now properly includes requirements and processes
 }

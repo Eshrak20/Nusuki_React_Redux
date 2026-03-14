@@ -79,7 +79,7 @@ const VisaBanner = () => {
           <motion.div variants={fadeInUp}>
             <Badge 
               variant="secondary" 
-              className="mb-3 border-none bg-primary-foreground/10 px-4 py-1.5 text-primary-foreground backdrop-blur-md"
+              className="mb-3 border-none dark:bg-primary bg-primary-foreground/10 px-4 py-1.5 text-primary-foreground backdrop-blur-md"
             >
               <span className="mr-1"><MdStickyNote2/></span> Hassle-Free Processing
             </Badge>
@@ -111,14 +111,14 @@ const VisaBanner = () => {
                 onChange={(e) => setSearchTerm(e.target.value)}
                 onKeyDown={handleKeyDown} // Trigger search on Enter
                 placeholder="Search by country name..."
-                className="h-12 w-full rounded-full border-none bg-background/95 px-8 pr-16 text-foreground shadow-2xl backdrop-blur-sm ring-1 ring-white/20 transition-all focus-visible:ring-2 focus-visible:ring-primary-foreground lg:h-14"
+                className="h-12 w-full rounded-full border-none bg-background/95 px-8 pr-1 dark:bg-primary text-foreground shadow-2xl backdrop-blur-sm ring-1 ring-white/20 transition-all focus-visible:ring-2 focus-visible:ring-primary-foreground lg:h-14"
               />
               <Button 
                 onClick={handleSearch} // Trigger search on click
                 size="icon" 
-                className="absolute right-3 lg:h-10 lg:w-10 rounded-full bg-primary text-primary-foreground shadow-lg transition-transform hover:scale-105 active:scale-95"
+                className="absolute right-3 lg:h-10 lg:w-10 rounded-full bg-primary dark:bg-black text-primary-foreground shadow-lg transition-transform hover:scale-105 active:scale-95"
               >
-                <Search className="h-6 w-6" />
+                <Search className="dark:text-white h-6 w-6" />
               </Button>
             </div>
           </motion.div>
