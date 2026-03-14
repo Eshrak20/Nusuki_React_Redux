@@ -37,13 +37,13 @@ const Banner = ({ details }: DetBannerProps) => {
                     transition={{ duration: 0.5, delay: 0.1 }}
                     src={details.country_flag_url}
                     alt={`${details.country} Flag`}
-                    className="mb-6 h-16 w-24 rounded object-cover shadow-lg"
+                    className="mb-4 lg:mb-6 h-14 w-22 lg:h-16 lg:w-24 rounded object-cover shadow-lg"
                 />
 
                 {/* Headings */}
                 <motion.h1
                     initial="hidden" animate="visible" variants={fadeUp} transition={{ delay: 0.2 }}
-                    className="mb-3 text-4xl font-bold tracking-tight text-primary-foreground lg:text-[42px]"
+                    className="mb-3 text-3xl font-bold tracking-tight text-primary-foreground lg:text-[42px]"
                 >
                     {details.country}
                 </motion.h1>
@@ -61,13 +61,13 @@ const Banner = ({ details }: DetBannerProps) => {
                     className="flex flex-wrap items-center justify-center gap-4"
                 >
                     {/* Processing Time Pill */}
-                    <div className="flex items-center gap-2 rounded-full bg-primary-foreground/10 px-5 py-2.5 text-sm font-medium text-primary-foreground backdrop-blur-md ring-1 ring-primary-foreground/20">
+                    <div className="flex items-center dark:bg-primary gap-2 rounded-full bg-primary-foreground/10 px-5 py-2.5 text-sm font-medium text-primary-foreground backdrop-blur-md ring-1 ring-primary-foreground/20">
                         <Clock className="h-4 w-4 text-primary-foreground/80" />
                         <span>{details.processing_time}</span>
                     </div>
 
                     {/* Validity Pill */}
-                    <div className="flex items-center gap-2 rounded-full bg-primary-foreground/10 px-5 py-2.5 text-sm font-medium text-primary-foreground backdrop-blur-md ring-1 ring-primary-foreground/20">
+                    <div className="flex items-center dark:bg-primary gap-2 rounded-full bg-primary-foreground/10 px-5 py-2.5 text-sm font-medium text-primary-foreground backdrop-blur-md ring-1 ring-primary-foreground/20">
                         <Calendar className="h-4 w-4 text-primary-foreground/80" />
                         <span>{details.visa_validity} Validity</span>
                     </div>

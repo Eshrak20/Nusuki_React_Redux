@@ -34,13 +34,13 @@ const HelpDesk = () => {
 
                 <div className="flex flex-col items-center justify-center gap-4 lg:pb-7 sm:flex-row sm:gap-6">
                     {/* Call Now Button */}
-                    <button
-
+                    <a
+                        href="tel:+88096100000000"
                         className="h-14 flex items-center justify-center w-full rounded-full bg-primary-foreground px-10 text-base font-semibold text-primary shadow-lg hover:bg-primary-foreground/90 sm:w-auto"
                     >
                         <Phone className="mr-2 h-5 w-5 fill-current" />
                         <span>Call Now</span>
-                    </button>
+                    </a>
 
                     {/* WhatsApp button */}
                     <button

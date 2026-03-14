@@ -14,7 +14,7 @@ interface VisaActionCardProps {
     details: VisaDetails;
 }
 
-const VisaActionCard = ({ details }: VisaActionCardProps) => {
+const ActionCard = ({ details }: VisaActionCardProps) => {
     const [isOpen, setIsOpen] = useState(false);
     // Format the service fee with commas (e.g., 6500 -> 6,500)
     const formattedFee = Number(details.service_fee).toLocaleString('en-IN');
@@ -28,20 +28,20 @@ const VisaActionCard = ({ details }: VisaActionCardProps) => {
     ];
 
     return (
-        <div className="rounded-2xl border border-gray-100 bg-white p-6 md:p-8 shadow-sm mb-5">
+        <div className="mb-5 mt-5 rounded-2xl border border-border bg-card p-6 text-card-foreground shadow-sm md:p-8">
 
             {/* Pricing Header */}
             <div className="mb-6 text-center">
-                <p className="mb-1 text-sm font-medium text-slate-500">
+                <p className="mb-1 text-sm font-medium text-muted-foreground">
                     Service Fee Starting From
                 </p>
-                <div className="flex items-center justify-center text-[#2A43A3]">
+                <div className="flex items-center justify-center text-primary">
                     {/* Taka Symbol (৳) + Price */}
                     <span className="text-4xl font-extrabold tracking-tight md:text-5xl">
                         ৳{formattedFee}
                     </span>
                 </div>
-                <p className="mt-1 text-sm font-medium text-slate-500">
+                <p className="mt-1 text-sm font-medium text-muted-foreground">
                     per person
                 </p>
             </div>
@@ -51,7 +51,7 @@ const VisaActionCard = ({ details }: VisaActionCardProps) => {
                 {includedFeatures.map((feature, index) => (
                     <div key={index} className="flex items-start gap-3">
                         <Check className="mt-0.5 h-5 w-5 shrink-0 text-emerald-500" strokeWidth={2.5} />
-                        <span className="text-sm font-medium text-slate-600">
+                        <span className="text-sm font-medium">
                             {feature}
                         </span>
                     </div>
@@ -64,14 +64,14 @@ const VisaActionCard = ({ details }: VisaActionCardProps) => {
                 <Dialog open={isOpen} onOpenChange={setIsOpen}>
                     <DialogTrigger asChild>
                         {/* Your clean button inserted here */}
-                        <button className="flex w-full items-center justify-center gap-2 rounded-xl bg-primary px-4 py-3.5 text-base font-bold text-white shadow-sm transition-colors hover:opacity-90">
+                        <button className="flex w-full items-center justify-center gap-2 rounded-xl bg-primary px-4 py-3.5 text-base font-bold text-primary-foreground shadow-sm transition-colors hover:opacity-90">
                             <Send className="h-5 w-5" />
                             Apply Now
                         </button>
                     </DialogTrigger>
 
                     {/* The exact modal content from your example */}
-                    <DialogContent className="sm:max-w-120 p-0 overflow-hidden border-none rounded-[2rem] bg-background/95 backdrop-blur-2xl shadow-2xl">
+                    <DialogContent className="sm:max-w-120 overflow-hidden rounded-[2rem] border-none bg-background/95 p-0 shadow-2xl backdrop-blur-2xl">
                         <DialogHeader className="hidden">
                             <DialogTitle>Application Form</DialogTitle>
                         </DialogHeader>
@@ -83,7 +83,7 @@ const VisaActionCard = ({ details }: VisaActionCardProps) => {
                 </Dialog>
 
                 {/* WhatsApp Button */}
-                <button className="flex w-full items-center justify-center gap-2 rounded-xl bg-[#22C55E] px-4 py-3.5 text-base font-bold text-white transition-colors hover:bg-green-600 shadow-sm">
+                <button className="flex w-full items-center justify-center gap-2 rounded-xl bg-[#22C55E] px-4 py-3.5 text-base font-bold text-white shadow-sm transition-colors hover:bg-[#22C55E]/90">
                     {/* Custom WhatsApp SVG Icon to match your design perfectly */}
                     <svg
                         viewBox="0 0 24 24"
@@ -106,4 +106,4 @@ const VisaActionCard = ({ details }: VisaActionCardProps) => {
     );
 };
 
-export default VisaActionCard;
+export default ActionCard;

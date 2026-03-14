@@ -1,44 +1,95 @@
 import type { CountryVisaCardProps } from "@/types/visa/types.visa";
 import { Clock, CalendarDays } from "lucide-react";
-import { Link } from "react-router-dom"; 
+import { Link } from "react-router-dom";
+import { motion, type Variants } from "framer-motion";
+
+/* ======================================================
+   Motion Configuration
+====================================================== */
+
+const MotionLink = motion(Link);
+
+const containerVariants: Variants = {
+    hidden: {},
+    visible: {
+        transition: {
+            staggerChildren: 0.1,
+            delayChildren: 0.05,
+        },
+    },
+};
+
+const cardVariants: Variants = {
+    hidden: { 
+        opacity: 0, 
+        y: 40, 
+        scale: 0.96 
+    },
+    visible: {
+        opacity: 1,
+        y: 0,
+        scale: 1,
+        transition: {
+            type: "spring",
+            stiffness: 90,
+            damping: 18,
+        },
+    },
+};
+
+/* ======================================================
+   Main Component
+====================================================== */
 
 const CountryVisaCard = ({ visas }: CountryVisaCardProps) => {
     return (
-        <div className="grid grid-cols-1 mx-6 lg:mx-0 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <motion.div 
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: "some" }}
+            className="grid grid-cols-1 mx-6 lg:mx-0 sm:grid-cols-2 lg:grid-cols-4 gap-6"
+        >
             {visas.map((visa) => (
-                <div
+                <motion.div
                     key={visa.id}
-                    className="bg-card text-card-foreground rounded-2xl shadow-sm border overflow-hidden flex flex-col transition-shadow hover:shadow-md"
+                    variants={cardVariants}
+                    // UPDATED: Added transition-all, duration-300, shadow-2xl, translate-y, and scale
+                    className="bg-card text-card-foreground rounded-2xl lg:shadow-lg border overflow-hidden flex flex-col transition-all duration-300 ease-out hover:shadow-2xl hover:-translate-y-2 hover:scale-[1.02] group/card"
                 >
                     {/* Top Section / Header */}
-                    <div className="relative h-30 flex flex-col items-center justify-center overflow-hidden">
-                        {/* Background Image: Removed blur and scale to keep it sharp and accurate */}
+                    <div className="relative h-32 flex flex-col items-center justify-center overflow-hidden">
+                        
+                        {/* Background Flag: Zoom effect triggers on card hover */}
                         <img
                             src={visa.country_flag_url}
-                            alt={`${visa.country} background`}
-                            className="absolute inset-0 w-full h-full object-cover"
+                            alt=""
+                            className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover/card:scale-110"
                         />
-                        {/* Dark Overlay: Changed to a simple bg-black/40 to let the flag show clearly */}
-                        <div className="absolute inset-0 bg-black/20" />
 
-                        {/* Content over background */}
-                        <div className="relative z-10 flex flex-col items-center gap-2 mt-1">
-                            {/* Adjusted flag width slightly to match standard proportions */}
-                            <div className="w-13 h-8.5 rounded-sm overflow-hidden shadow-sm">
+                        {/* Simple Dark Overlay */}
+                        <div className="absolute inset-0 bg-black/50" />
+
+                        {/* Foreground Content */}
+                        <div className="relative z-10 flex flex-col items-center gap-2">
+                            {/* Sharp Foreground Flag */}
+                            <div className="w-14 h-9 overflow-hidden rounded-[2px] shadow-lg border border-white/20 bg-white">
                                 <img
                                     src={visa.country_flag_url}
                                     alt={`${visa.country} flag`}
                                     className="w-full h-full object-cover"
                                 />
                             </div>
-                            <h3 className="text-white font-bold text-[15px] tracking-wide">
+
+                            {/* Sharp Typography */}
+                            <h3 className="text-white font-bold text-[16px] tracking-wide drop-shadow-md">
                                 {visa.country}
                             </h3>
                         </div>
                     </div>
 
                     {/* Middle Section / Body */}
-                    <div className="p-5 flex flex-col gap-3 grow">
+                    <div className="p-5 flex flex-col gap-3 grow bg-card relative z-20">
                         <h4 className="font-bold text-lg text-foreground">{visa.country}</h4>
 
                         <div className="space-y-2.5 text-[15px] text-muted-foreground">
@@ -53,29 +104,32 @@ const CountryVisaCard = ({ visas }: CountryVisaCardProps) => {
                         </div>
                     </div>
 
-                    {/* Added the subtle divider line from your image */}
-                    <div className="border-t mx-5 opacity-50" />
+                    <div className="border-t mx-5 opacity-50 relative z-20" />
 
                     {/* Bottom Section / Footer */}
-                    <div className="px-5 py-4 mt-auto flex items-end justify-between">
+                    <div className="px-5 py-4 mt-auto flex items-end justify-between bg-card relative z-20">
                         <div className="flex flex-col">
                             <span className="text-[13px] text-muted-foreground mb-0.5">From</span>
-                            {/* Made the price slightly larger and bolder to match the design */}
-                            <span className="text-[22px] leading-none font-extrabold text-primary">
+                            <span className="text-[19px] leading-none font-extrabold text-primary">
                                 ৳{Number(visa.service_fee).toLocaleString()}
                             </span>
                         </div>
 
-                        <Link
+                        {/* Button */}
+                        <MotionLink
                             to={`${visa.id}`}
-                            className="bg-primary text-primary-foreground hover:bg-primary/90 px-5 py-2.5 rounded-lg text-sm font-semibold transition-colors"
+                            whileTap={{ scale: 0.95 }}
+                            className="relative overflow-hidden bg-primary text-primary-foreground px-5 py-2.5 rounded-lg text-sm font-semibold transition-colors hover:bg-primary/90"
                         >
-                            View Details
-                        </Link>
+                            {/* The Glossy Shine Element */}
+                            <span className="absolute inset-0 -translate-x-[150%] bg-linear-to-r from-transparent via-white/30 to-transparent transition-transform duration-700 ease-in-out group-hover/card:translate-x-[150%]" />
+                            
+                            <span className="relative z-10">View Details</span>
+                        </MotionLink>
                     </div>
-                </div>
+                </motion.div>
             ))}
-        </div>
+        </motion.div>
     );
 };
 

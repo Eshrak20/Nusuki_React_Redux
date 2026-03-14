@@ -36,9 +36,9 @@ const DetVisaMain = () => {
             <div className="mt-19">
                 <Banner details={details} />
             </div>
-            <div className="max-w-7xl mx-auto px-4 py-10">
+            <div className="max-w-7xl mx-auto px-4 py-6 lg:py-10">
                 {/* Grid: 1 col on mobile, 3 cols on desktop */}
-                <div className="grid grid-cols-1 gap-5 lg:grid-cols-3">
+                <div className="grid grid-cols-1 gap-5 -px-5 lg:px-0 lg:grid-cols-3">
 
                     {/* Left Side (Takes up 2/3 width) */}
                     <div className="lg:col-span-2 space-y-4">

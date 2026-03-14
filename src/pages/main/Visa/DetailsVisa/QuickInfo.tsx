@@ -30,24 +30,24 @@ const QuickInfo = ({ details }: QuickInfoProps) => {
     ];
 
     return (
-        <section className="">
-            <div className="container mx-auto px-4">
+        <section className="py-6">
+            <div className="container mx-auto lg:px-4">
                 <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
                     {infoCards.map((card, index) => (
                         <div
                             key={index}
-                            className="flex flex-col items-center justify-center rounded-2xl bg-white p-4 shadow-sm transition-transform hover:scale-[1.02]"
+                            className="flex flex-col items-center justify-center rounded-2xl bg-card border border-border p-6 shadow-sm transition-transform hover:scale-[1.02]"
                         >
                             {/* Icon Circle */}
                             <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-primary">
-                                <card.icon className="h-7 w-7 text-white" />
+                                <card.icon className="h-7 w-7 text-primary-foreground" />
                             </div>
 
                             {/* Text Content */}
-                            <h3 className="mb-2 text-lg font-bold text-slate-800">
+                            <h3 className="mb-2 text-lg font-bold text-card-foreground">
                                 {card.title}
                             </h3>
-                            <p className="text-sm font-medium text-slate-500">
+                            <p className="text-sm font-medium text-center text-muted-foreground">
                                 {card.value}
                             </p>
                         </div>
