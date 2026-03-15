@@ -18,6 +18,7 @@ import HomeCourse from "@/pages/main/Education/Course/HomeCourse/HomeCourse";
 import DetCourseMain from "@/pages/main/Education/Course/DetCourse/CourseMain";
 import HomeVisa from "@/pages/main/Visa/HomeVisa/HomeVisa";
 import DetVisaMain from "@/pages/main/Visa/DetailsVisa/DetVisaMain";
+import DestinationMain from "@/pages/main/Education/Destination/DestinationMain";
 
 export const router = createBrowserRouter([
   {
@@ -47,14 +48,10 @@ export const router = createBrowserRouter([
             path: "institution/:id",
             element: <DetInstitutionMain />,
           },
-          {
-            path: "destinations",
-            element: <Upcoming title="Destinations Section Upcoming" />,
 
-          },
           {
             path: "destinations/:country",
-            element: <Upcoming title="Destinations Section Upcoming" />,
+            element: <DestinationMain />,
           },
           {
             path: "courses",

@@ -20,14 +20,11 @@ const EduNavbar = ({ isSticky }: { isSticky?: boolean }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const destinations = [
-    { name: "USA", code: "us" },
-    { name: "Ireland", code: "ie" },
-    { name: "Europe", code: "eu" },
-    { name: "Canada", code: "ca" },
+    { name: "USA", code: "usa" },
     { name: "Australia", code: "au" },
-    { name: "Asia", code: "as" },
-    { name: "United Kingdom", code: "gb" },
     { name: "New Zealand", code: "nz" },
+    { name: "Canada", code: "ca" },
+    { name: "United Kingdom", code: "gb" },
   ];
 
   const navItems = [
@@ -41,7 +38,7 @@ const EduNavbar = ({ isSticky }: { isSticky?: boolean }) => {
       name: "Destinations",
       icon: <MapPin size={22} />,
       hasSubmenu: true,
-      path: "/education/destinations",
+      path: "/education/destinations/usa",
     },
     {
       name: "Find Institution",
@@ -126,7 +123,7 @@ const EduNavbar = ({ isSticky }: { isSticky?: boolean }) => {
                         return (
                           <Link
                             key={dest.name}
-                            to={`/education/destinations/${dest.name
+                            to={`/education/destinations/${dest.code
                               .toLowerCase()
                               .replace(/\s+/g, "-")}`}
                             className={`flex items-center py-1 space-x-3 text-[15px] font-medium transition-all hover:translate-x-1
