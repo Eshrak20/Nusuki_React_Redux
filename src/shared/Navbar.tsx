@@ -4,7 +4,9 @@ import { motion } from "framer-motion";
 import { MenuIcon, ChevronDown, ArrowUp } from "lucide-react";
 import logoWhite from "../assets/reactAssets/Logo/whiteLogo.png";
 import logoDark from "../assets/reactAssets/Logo/darkLogo.png";
-import logoEduLight from "../assets/reactAssets/Logo/eduLight.jpeg"
+// import logoEduLight from "../assets/reactAssets/Logo/eduLight.jpeg"
+import logoEduLight from "../assets/reactAssets/Logo/eduLight (Edited).jpeg"
+// import logoEduDark from "../assets/reactAssets/Logo/eduDark (Copy).jpeg"
 import logoEduDark from "../assets/reactAssets/Logo/eduDark.jpeg"
 
 
