@@ -18,7 +18,7 @@ import DestFAQs from "./DestFAQs";
 const DestinationMain = () => {
 
   window.scrollTo({
-    top: 0,
+    top: 425,
     behavior: "smooth",
   });
 
@@ -42,6 +42,8 @@ const DestinationMain = () => {
         <DestAcademicIntake intake={destination.academic_intake} />
         <DestProgramsDuration programs={destination.programs_duration} />
         <DestPopularPrograms programs={destination.popular_programs} />
+
+        {/* I am staring from here @Eshrak */}
         <DestTopUniversities universities={destination.top_universities} />
         <DestStudyCost cost={destination.study_cost} />
         <DestTopCities cities={destination.top_cities} />
