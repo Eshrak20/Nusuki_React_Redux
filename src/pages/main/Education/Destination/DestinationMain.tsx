@@ -24,23 +24,25 @@ const DestinationMain = () => {
   if (!data?.data) return <div>No data found</div>;
 
   const destination = data?.data;
-  
+
   return (
     <div>
       <DestHero hero={destination.hero} />
-      <DestOnPageNav navItems={destination.on_page_nav} />
-      <DestOverview overview={destination.overview} />
-      <DestKeyFacts facts={destination.key_facts} />
-      <DestAdmissionRequirements requirements={destination.admission_requirements} />
-      <DestAcademicIntake intake={destination.academic_intake} />
-      <DestProgramsDuration programs={destination.programs_duration} />
-      <DestPopularPrograms programs={destination.popular_programs} />
-      <DestTopUniversities universities={destination.top_universities} />
-      <DestStudyCost cost={destination.study_cost} />
-      <DestTopCities cities={destination.top_cities} />
-      <DestWorkOpportunities opportunities={destination.work_opportunities} />
-      <DestArticles articles={destination.articles} />
-      <DestFAQs faqs={destination.faqs} />
+      <div className="max-w-7xl mx-auto">
+        <DestOnPageNav navItems={destination.on_page_nav} />
+        <DestOverview overview={destination.overview} />
+        <DestKeyFacts facts={destination.key_facts} />
+        <DestAdmissionRequirements requirements={destination.admission_requirements} />
+        <DestAcademicIntake intake={destination.academic_intake} />
+        <DestProgramsDuration programs={destination.programs_duration} />
+        <DestPopularPrograms programs={destination.popular_programs} />
+        <DestTopUniversities universities={destination.top_universities} />
+        <DestStudyCost cost={destination.study_cost} />
+        <DestTopCities cities={destination.top_cities} />
+        <DestWorkOpportunities opportunities={destination.work_opportunities} />
+        <DestArticles articles={destination.articles} />
+        <DestFAQs faqs={destination.faqs} />
+      </div>
     </div>
   );
 };

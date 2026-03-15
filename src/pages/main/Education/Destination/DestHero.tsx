@@ -31,7 +31,7 @@ const DestHero = ({ hero }: Props) => {
         {/* Call to Action Button */}
         <a
           href={hero.cta_url}
-          className="group flex items-center justify-between gap-4 bg-primary-foreground text-primary pl-6 pr-2 py-2 rounded-full hover:opacity-90 transition-all duration-300 shadow-xl hover:shadow-2xl hover:scale-[1.02] cursor-pointer"
+          className="group flex items-center justify-between gap-4 bg-primary-foreground text-primary pl-6 pr-2 py-2 rounded-full hover:opacity-90 transition-all duration-300 shadow-xl hover:shadow-2xl hover:scale-[1.02] cursor-pointer dark:bg-white dark:text-black"
         >
           {/* Setting max-w helps the text wrap into two lines like "Get started for \n free" 
             if the string is long enough, replicating the image's layout.
@@ -41,8 +41,8 @@ const DestHero = ({ hero }: Props) => {
           </span>
 
           {/* Inner Circle Icon with Inverted Shadcn Colors */}
-          <div className="bg-primary text-primary-foreground p-3 rounded-full flex items-center justify-center transition-transform duration-300 group-hover:translate-x-1">
-            <ChevronRight size={20} strokeWidth={3} />
+          <div className="bg-primary text-primary-foreground p-3 rounded-full dark:bg-black flex items-center justify-center transition-transform duration-300 group-hover:translate-x-1">
+            <ChevronRight className="dark:text-white" size={20} strokeWidth={3} />
           </div>
         </a>
       </div>
