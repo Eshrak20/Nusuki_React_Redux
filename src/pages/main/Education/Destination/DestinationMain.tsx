@@ -16,6 +16,12 @@ import DestArticles from "./DestArticles";
 import DestFAQs from "./DestFAQs";
 
 const DestinationMain = () => {
+
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth",
+  });
+
   const { country } = useParams<{ country: string }>();
 
   const { data, isLoading } = useGetCountriesQuery({ country });
@@ -28,7 +34,7 @@ const DestinationMain = () => {
   return (
     <div>
       <DestHero hero={destination.hero} />
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-7xl mx-auto space-y-20">
         <DestOnPageNav navItems={destination.on_page_nav} />
         <DestOverview overview={destination.overview} />
         <DestKeyFacts facts={destination.key_facts} />

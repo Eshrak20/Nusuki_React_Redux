@@ -12,14 +12,14 @@ const DestAdmissionRequirements = ({
   if (!requirements || requirements.length === 0) return null;
 
   return (
-    <section id={id} className="w-full my-16 scroll-mt-32">
+    <section id={id} className="w-full scroll-mt-32">
       {/* Title */}
       <h2 className="text-3xl md:text-4xl font-bold text-center text-foreground mb-10 tracking-tight">
         {title}
       </h2>
 
       {/* Grid Layout for Pills */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 pb-4 lg:grid-cols-3 gap-4 md:gap-6">
         {requirements.map((req, i) => (
 
           /* Pill Container */

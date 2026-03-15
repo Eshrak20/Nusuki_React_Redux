@@ -66,7 +66,7 @@ const DestOnPageNav = ({ navItems }: Props) => {
   if (!navItems || navItems.length === 0) return null;
 
   return (
-    <div className="w-full sticky top-20 lg:top-24 z-40 bg-background/80 backdrop-blur-md py-4 my-2 transition-all">
+    <div className="w-full sticky top-20 lg:top-24 z-40 bg-background/80 backdrop-blur-md mb-11 pt-4 transition-all">
       <nav className="flex items-center p-1.5 md:p-2 bg-card border border-border rounded-full shadow-sm overflow-x-auto w-full [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
         <ul className="flex items-center gap-2 w-max px-1">
           {navItems.map((item, i) => {

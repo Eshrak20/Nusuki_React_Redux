@@ -1,22 +1,21 @@
 import type { KeyFactsCategory } from "@/types/education/type.country";
-import { 
-  Building, 
-  Landmark, 
-  Users, 
-  Clock, 
-  Briefcase, 
-  MapPin, 
-  TrendingUp, 
-  Languages, 
-  ThermometerSun 
+import {
+  Building,
+  Landmark,
+  Users,
+  Clock,
+  Briefcase,
+  MapPin,
+  TrendingUp,
+  Languages,
+  ThermometerSun
 } from "lucide-react";
 
 interface Props {
   facts: KeyFactsCategory[];
-  title?: string; // Added an optional title prop to match the image's header
+  title?: string; 
 }
 
-// Helper function to determine the best icon based on the fact's text content
 const getDynamicIcon = (label: string, value: string, category: string) => {
   const textToSearch = `${label} ${value} ${category}`.toLowerCase();
 
@@ -36,17 +35,20 @@ const getDynamicIcon = (label: string, value: string, category: string) => {
 };
 
 const DestKeyFacts = ({ facts, title = "Key Facts About Studying Abroad" }: Props) => {
+  
   if (!facts || facts.length === 0) return null;
 
   return (
-    <section className="w-full mt-20 mb-12">
+    <section className="w-full">
       {/* Optional Title Section (Based on your image) */}
-      <h2 className="text-3xl md:text-4xl font-bold text-center text-foreground mb-8 tracking-tight">
-        {title}
-      </h2>
+      <div>
+        <h2 className="text-3xl md:text-4xl font-bold text-center text-foreground mb-8 tracking-tight">
+          {title}
+        </h2>
+      </div>
 
       {/* Main Grey Background Container */}
-      <div className="rounded-[2rem] md:rounded-[3rem] py-8">
+      <div className="rounded-[2rem] md:rounded-[3rem] py-6">
 
         {/* Columns Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">

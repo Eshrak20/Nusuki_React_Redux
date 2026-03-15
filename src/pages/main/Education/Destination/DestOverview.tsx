@@ -4,10 +4,11 @@ interface Props {
   overview: OverviewSection;
 }
 
-const DestOverview = ({ overview }: Props) => {
+const DestOverview = ({ overview,
+ }: Props) => {
 
   return (
-    <section className="w-full bg-muted/30 dark:bg-muted/10 rounded-[2rem] p-6 md:p-10 lg:p-14 my-8">
+    <section id="overview" className="w-full bg-muted/30 dark:bg-muted/10 rounded-[2rem] p-12">
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-start">
 
         {/* Left Column: Text Content (Takes up 7 out of 12 columns on desktop) */}
@@ -21,7 +22,7 @@ const DestOverview = ({ overview }: Props) => {
               </h2>
               {overview?.paragraphs?.[0] && (
                 <p className="text-base text-foreground/80 leading-relaxed">
-                  {overview.paragraphs[0]}
+                  {overview.paragraphs[0]} 
                 </p>
               )}
             </div>
