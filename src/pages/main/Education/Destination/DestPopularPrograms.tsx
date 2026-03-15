@@ -2,16 +2,16 @@ interface Props {
   programs: string[];
   title?: string;
   description?: string;
-  id?: string; // Used to link with the navbar
+  id?: string; 
 }
 
 const DestPopularPrograms = ({
   programs,
   title = "Popular programs to study",
   description = "The UK offers a diverse range of programs across various fields, making it an attractive destination for international students. Some of the most popular and prestigious programs include:",
-  id = "progrms" // Make sure this matches your navbar href!
+  id = "progrms" 
 }: Props) => {
-  
+
   if (!programs || programs.length === 0) return null;
 
   return (
@@ -31,7 +31,7 @@ const DestPopularPrograms = ({
       {/* Badges/Pills Container */}
       <div className="flex flex-wrap gap-3 md:gap-4">
         {programs.map((program, i) => (
-          /* Upgraded Interactive Badge */
+          
           <div
             key={i}
             className="group inline-flex items-center space-x-3 bg-card border border-border/60 shadow-sm hover:shadow-md hover:border-primary/60 hover:-translate-y-0.5 transition-all duration-300 rounded-full py-2.5 px-5 md:px-6 cursor-default"

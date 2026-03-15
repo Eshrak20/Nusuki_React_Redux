@@ -17,12 +17,7 @@ const DestOnPageNav = ({ navItems }: Props) => {
 
   useEffect(() => {
     const handleScroll = () => {
-      // The combined height of your two sticky navbars is roughly 180px.
-      // We set the activation line slightly below that so it triggers right as the section comes into view.
-      const activationLine = 250; 
-
-      // By reversing the array, we check from the bottom of the page upwards.
-      // The first section whose top has crossed the activation line is our active section!
+      const activationLine = 250;
       const currentItem = [...navItems].reverse().find((item) => {
         const targetId = generateHref(item.text);
         const element = document.querySelector(targetId);
@@ -39,7 +34,6 @@ const DestOnPageNav = ({ navItems }: Props) => {
       }
     };
 
-    // Run once on mount to set initial state, and then attach to scroll
     handleScroll();
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
@@ -51,7 +45,6 @@ const DestOnPageNav = ({ navItems }: Props) => {
 
     const element = document.querySelector(targetId);
     if (element) {
-      // Keeps the section title perfectly visible below both navbars when clicked
       const offset = 180; 
       const elementPosition = element.getBoundingClientRect().top;
       const offsetPosition = elementPosition + window.scrollY - offset;
