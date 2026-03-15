@@ -1,7 +1,7 @@
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import type { CityItem } from "@/types/education/type.country";
-import { MapPin, ArrowRight } from "lucide-react";
+import { MapPin } from "lucide-react";
 
 interface Props {
   cities: CityItem[];
@@ -31,29 +31,29 @@ const DestTopCities = ({ cities, id = "cities" }: Props) => {
         initial={{ opacity: 0, y: 20 }}
         animate={isInView ? { opacity: 1, y: 0 } : {}}
         transition={{ duration: 0.6 }}
-        className="text-center mb-12 max-w-4xl mx-auto"
+        className="text-center mb-14 max-w-4xl mx-auto"
       >
         <motion.div
           initial={{ scale: 0.95 }}
           animate={isInView ? { scale: 1 } : {}}
           transition={{ duration: 0.5, delay: 0.2 }}
-          className="inline-flex items-center justify-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 text-primary mb-6"
+          className="inline-flex items-center justify-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 text-primary mb-4"
         >
           <MapPin className="w-4 h-4" />
           <span className="text-sm font-semibold tracking-wide uppercase">Top Destinations</span>
         </motion.div>
 
-        <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-foreground mb-4">
+        <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight text-foreground mb-6">
           Top Cities for Your Journey
         </h2>
-
-        <p className="text-base md:text-lg text-foreground/80 leading-relaxed">
+        
+        <p className="text-foreground/70 leading-relaxed max-w-2xl mx-auto">
           Discover vibrant cities with world-class education, rich culture, and endless opportunities.
         </p>
       </motion.div>
 
       {/* Cities Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
         {cities.map((city, i) => (
           <motion.div
             key={i}
@@ -61,47 +61,32 @@ const DestTopCities = ({ cities, id = "cities" }: Props) => {
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.5, delay: i * 0.15 }}
             whileHover={{ y: -8 }}
-            className="group relative flex flex-col overflow-hidden rounded-[2rem] bg-card border border-border shadow-sm hover:shadow-xl transition-all duration-300"
+            /* CHANGED HERE: aspect-[4/3] for mobile, aspect-[3/2] for desktop to make them significantly shorter */
+            className="group relative flex flex-col justify-end overflow-hidden rounded-[24px] shadow-md hover:shadow-2xl transition-all duration-500 aspect-4/3 lg:aspect-3/3"
           >
-            {/* Number Badge (e.g., "001") */}
-            {city.number && (
-              <div className="absolute top-4 right-4 z-20">
-                <div className="bg-background/80 backdrop-blur-md text-foreground text-xs font-bold px-3 py-1 rounded-full shadow-sm border border-border/50">
-                  {city.number}
-                </div>
-              </div>
-            )}
+            {/* Full Cover Image */}
+            <motion.img
+              src={city.image}
+              alt={city.city}
+              className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-110 z-0"
+            />
 
-            {/* Image Container */}
-            <div className="relative aspect-[4/3] overflow-hidden">
-              {/* Gradient Overlay for text readability */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent z-10 opacity-70 group-hover:opacity-90 transition-opacity duration-300" />
+            {/* Heavy Gradient Overlay for Text Readability - adjusted slightly to match the shorter height */}
+            <div className="absolute inset-0 bg-linear-to-t from-black/95 via-black/50 to-transparent z-10 opacity-80 group-hover:opacity-100 transition-opacity duration-500" />
 
-              <motion.img
-                src={city.image}
-                alt={city.city}
-                className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
-              />
-
-              {/* City Name positioned over the image */}
-              <div className="absolute bottom-4 left-6 z-20">
-                <h3 className="text-2xl md:text-3xl font-bold text-white drop-shadow-md">
+            {/* Bottom Content: City Name & Description */}
+            <div className="relative z-20 p-5 md:p-6 flex flex-col gap-2 transition-transform duration-500 group-hover:-translate-y-1">
+              {/* City Name */}
+              <div className="flex items-center gap-2">
+                <h3 className="text-2xl md:text-3xl font-bold text-white tracking-tight drop-shadow-lg">
                   {city.city}
                 </h3>
               </div>
-            </div>
-
-            {/* Content Container */}
-            <div className="flex flex-col p-6 flex-grow bg-card">
-              <p className="text-muted-foreground text-[15px] leading-relaxed line-clamp-3 mb-6">
+              
+              {/* Description */}
+              <p className="text-white/80 text-sm leading-relaxed line-clamp-2 md:line-clamp-3 drop-shadow-md">
                 {city.description}
               </p>
-
-              {/* Explore Link */}
-              <div className="mt-auto pt-4 border-t border-border/50 flex items-center justify-between text-primary font-semibold text-sm group-hover:text-primary/80 transition-colors cursor-pointer">
-                <span>Explore {city.city}</span>
-                <ArrowRight className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" />
-              </div>
             </div>
 
           </motion.div>

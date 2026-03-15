@@ -2,7 +2,7 @@ import type { AcademicIntake } from "@/types/education/type.country";
 
 interface Props {
   intake: AcademicIntake;
-  id?: string; // Added to link with the navbar
+  id?: string; 
 }
 
 const DestAcademicIntake = ({ intake, id = "intake" }: Props) => {
@@ -52,7 +52,7 @@ const DestAcademicIntake = ({ intake, id = "intake" }: Props) => {
                   <td
                     key={cellIndex}
                     className={`py-5 px-6 md:px-8 ${cellIndex === 0
-                        ? "text-foreground font-medium" // Highlight the first column slightly
+                        ? "text-foreground font-medium" 
                         : "text-foreground/80"
                       }`}
                   >
