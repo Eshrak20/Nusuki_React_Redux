@@ -36,12 +36,12 @@ const DestinationMain = () => {
       <DestHero hero={destination.hero} />
       <div className="max-w-7xl mx-auto space-y-20">
         <DestOnPageNav navItems={destination.on_page_nav} />
-        {/* <DestOverview overview={destination.overview} />
+        <DestOverview overview={destination.overview} />
         <DestKeyFacts facts={destination.key_facts} />
         <DestAdmissionRequirements requirements={destination.admission_requirements} />
         <DestAcademicIntake intake={destination.academic_intake} />
         <DestProgramsDuration programs={destination.programs_duration} />
-        <DestPopularPrograms programs={destination.popular_programs} /> */}
+        <DestPopularPrograms programs={destination.popular_programs} />
 
         {/* I am staring from here @Eshrak */}
         <DestTopUniversities universities={destination.top_universities} />
