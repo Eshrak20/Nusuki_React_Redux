@@ -44,7 +44,7 @@ const CourseMain = () => {
     const fastLaneSections = filterSectionsByHeading(['How does IDP FastLane work']);
 
     return (
-        <div className="lg:mx-auto -mx-3 px-4 sm:px-6 lg:px-8 py-8">
+        <div className="container lg:mx-auto -mx-3 px-4 sm:px-6 lg:px-8 py-8">
             {/* Full Width Header */}
             <CourseHeader course={course} />
 

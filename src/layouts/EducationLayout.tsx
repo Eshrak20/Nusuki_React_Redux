@@ -50,7 +50,7 @@ const EducationLayout = () => {
       </div>
 
       <div
-        className={`container mx-auto px-4 transition-all ${isSticky ? "pt-32" : "pt-16"}`}
+        className={`transition-all ${isSticky ? "pt-32" : "pt-16"}`}
       >
         <Outlet />
       </div>

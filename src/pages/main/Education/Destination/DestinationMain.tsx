@@ -23,8 +23,8 @@ const DestinationMain = () => {
   if (isLoading) return <div>Loading...</div>;
   if (!data?.data) return <div>No data found</div>;
 
-  const destination = data.data;
-
+  const destination = data?.data;
+  
   return (
     <div>
       <DestHero hero={destination.hero} />

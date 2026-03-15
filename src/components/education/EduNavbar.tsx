@@ -20,7 +20,7 @@ const EduNavbar = ({ isSticky }: { isSticky?: boolean }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const destinations = [
-    { name: "USA", code: "usa" },
+    { name: "USA", code: "us" },
     { name: "Australia", code: "au" },
     { name: "New Zealand", code: "nz" },
     { name: "Canada", code: "ca" },
