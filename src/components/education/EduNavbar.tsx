@@ -9,6 +9,7 @@ import {
   Menu,
   X,
   Search,
+  ChevronDown, // Added ChevronDown for the dropdown icon
 } from "lucide-react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import FormSubmissionModal from "../FormSubmissionModal";
@@ -18,6 +19,9 @@ const EduNavbar = ({ isSticky }: { isSticky?: boolean }) => {
   const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  
+  // State to track the active mobile dropdown
+  const [openMobileSubmenu, setOpenMobileSubmenu] = useState<string | null>(null);
 
   const destinations = [
     { name: "USA", code: "us" },
@@ -70,11 +74,10 @@ const EduNavbar = ({ isSticky }: { isSticky?: boolean }) => {
   return (
     <nav
       className={`
-      bg-card px-4 lg:px-6 py-3 transition-all duration-500 relative
+      bg-card px-4 lg:px-6 py-3 transition-all duration-500 relative z-50
       ${isSticky ? "rounded-none h-20" : "rounded-xl border border-border h-20 lg:h-24"}
     `}
     >
-
       <div
         className={`max-w-6xl mx-auto flex items-center ${isSticky ? "lg:space-x-32" : "justify-between"}  h-full`}
       >
@@ -85,6 +88,7 @@ const EduNavbar = ({ isSticky }: { isSticky?: boolean }) => {
           {isMenuOpen ? <X size={28} /> : <Menu size={28} />}
         </button>
 
+        {/* Desktop Menu */}
         <div className="hidden lg:flex items-center lg:space-x-10 h-full">
           {navItems.map((item) => (
             <div
@@ -106,7 +110,6 @@ const EduNavbar = ({ isSticky }: { isSticky?: boolean }) => {
               )}
 
               {/* MEGA SUBMENU (Hover Trigger) */}
-
               {item.hasSubmenu && (
                 <div
                   className="absolute top-full -left-12.5 w-175 z-50 pt-4 
@@ -165,37 +168,93 @@ const EduNavbar = ({ isSticky }: { isSticky?: boolean }) => {
             />
           </div>
           <span>Avail Free Counselling</span>
-
         </button>
         <FormSubmissionModal
           open={isOpen}
           onClose={() => setIsOpen(false)}
           title="Book Free Study Abroad Counselling"
-        // type="education"
         />
       </div>
 
       {/* Mobile Menu */}
       <div
         className={`lg:hidden absolute top-full left-0 w-full bg-card border-t border-border shadow-2xl z-50 rounded-b-xl overflow-hidden transition-all duration-300 ease-in-out ${isMenuOpen
-          ? "max-h-screen opacity-100 py-4 px-4"
+          ? "max-h-screen opacity-100 py-4 px-4 overflow-y-auto"
           : "max-h-0 opacity-0"
           }`}
       >
         <div className="flex flex-col space-y-4">
           {navItems.map((item) => (
             <div key={item.name} className="flex flex-col">
-              <Link
-                to={item.path}
-                onClick={() => setIsMenuOpen(false)}
-                className={`flex items-center space-x-2 text-[16px] font-medium ${activeTab === item.name
-                  ? "text-primary font-bold"
-                  : "text-foreground/70 hover:font-bold"
+              
+              {item.hasSubmenu ? (
+                /* Interactive Dropdown for Mobile */
+                <>
+                  <button
+                    onClick={() => setOpenMobileSubmenu(openMobileSubmenu === item.name ? null : item.name)}
+                    className={`flex items-center justify-between w-full text-left space-x-2 text-[16px] font-medium transition-colors ${
+                      activeTab === item.name
+                        ? "text-primary font-bold"
+                        : "text-foreground/70 hover:font-bold"
+                    }`}
+                  >
+                    <div className="flex items-center space-x-2">
+                      {item.icon}
+                      <span>{item.name}</span>
+                    </div>
+                    <ChevronDown
+                      size={18}
+                      className={`transition-transform duration-300 ${
+                        openMobileSubmenu === item.name ? "rotate-180 text-primary" : ""
+                      }`}
+                    />
+                  </button>
+
+                  {/* Submenu Drawer Content */}
+                  <div
+                    className={`overflow-hidden transition-all duration-300 ease-in-out ${
+                      openMobileSubmenu === item.name ? "max-h-96 mt-3 opacity-100" : "max-h-0 opacity-0"
+                    }`}
+                  >
+                    <div className="flex flex-col space-y-4 ml-4 pl-4 border-l border-border/60">
+                      {destinations.map((dest) => {
+                         const isActive = location.pathname.includes(dest.name.toLowerCase().replace(" ", "-"));
+                         return (
+                          <Link
+                            key={dest.code}
+                            to={`/education/destinations/${dest.code.toLowerCase().replace(/\s+/g, "-")}`}
+                            onClick={() => setIsMenuOpen(false)}
+                            className={`flex items-center space-x-3 text-[15px] transition-colors ${
+                              isActive ? "text-primary font-bold" : "text-foreground/80 font-medium"
+                            }`}
+                          >
+                            <img
+                              src={`https://flagcdn.com/w40/${dest.code.toLowerCase()}.png`}
+                              alt={dest.name}
+                              className="w-6 h-auto aspect-3/2 rounded-[2px] object-cover shadow-sm border border-border/50"
+                            />
+                            <span>{dest.name}</span>
+                          </Link>
+                         )
+                      })}
+                    </div>
+                  </div>
+                </>
+              ) : (
+                /* Standard Mobile Link */
+                <Link
+                  to={item.path}
+                  onClick={() => setIsMenuOpen(false)}
+                  className={`flex items-center space-x-2 text-[16px] font-medium transition-colors ${
+                    activeTab === item.name
+                      ? "text-primary font-bold"
+                      : "text-foreground/70 hover:font-bold"
                   }`}
-              >
-                {item.icon}
-                <span>{item.name}</span>
-              </Link>
+                >
+                  {item.icon}
+                  <span>{item.name}</span>
+                </Link>
+              )}
             </div>
           ))}
         </div>
