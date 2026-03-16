@@ -16,7 +16,7 @@ const DestAcademicIntake = ({ intake, id = "intake" }: Props) => {
           {intake.title}
         </h2>
         {intake.description && (
-          <p className="text-base md:text-lg text-foreground/80 leading-relaxed">
+          <p className="text-base text-foreground/70 leading-relaxed">
             {intake.description}
           </p>
         )}

@@ -14,6 +14,7 @@ import DestTopCities from "./DestTopCities";
 import DestWorkOpportunities from "./DestWorkOpportunities";
 import DestArticles from "./DestArticles";
 import DestFAQs from "./DestFAQs";
+import DetFreeCounselling from "./DetFreeCouncelling";
 
 const DestinationMain = () => {
 
@@ -50,6 +51,7 @@ const DestinationMain = () => {
         <DestWorkOpportunities opportunities={destination.work_opportunities} />
         <DestArticles articles={destination.articles} />
         <DestFAQs faqs={destination.faqs} />
+        <DetFreeCounselling />
       </div>
     </div>
   );

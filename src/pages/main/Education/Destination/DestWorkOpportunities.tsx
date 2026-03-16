@@ -16,7 +16,7 @@ const DestWorkOpportunities = ({ opportunities, id = "work-opportunities" }: Pro
         <h2 className="text-3xl md:text-4xl font-extrabold text-foreground tracking-tight">
           Work Opportunities & Pathways
         </h2>
-        <p className="text-lg text-muted-foreground">
+        <p className="text-foreground/70">
           Explore your options for working while you study and building your career after graduation.
         </p>
       </div>

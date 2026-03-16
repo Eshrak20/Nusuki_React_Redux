@@ -16,7 +16,7 @@ const DestProgramsDuration = ({ programs, id = "programs" }: Props) => {
           {programs.title}
         </h2>
         {programs.description && (
-          <p className="text-base md:text-lg text-foreground/80 leading-relaxed">
+          <p className="text-base text-foreground/70 leading-relaxed">
             {programs.description}
           </p>
         )}

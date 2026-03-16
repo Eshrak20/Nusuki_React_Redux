@@ -1,3 +1,5 @@
+import { useLocation } from "react-router-dom";
+
 interface Props {
   programs: string[];
   title?: string;
@@ -7,23 +9,31 @@ interface Props {
 
 const DestPopularPrograms = ({
   programs,
-  title = "Popular programs to study",
-  description = "The UK offers a diverse range of programs across various fields, making it an attractive destination for international students. Some of the most popular and prestigious programs include:",
+  title = "Popular programs to study ",
+  description = " offers a diverse range of programs across various fields, making it an attractive destination for international students. Some of the most popular and prestigious programs include:",
   id = "progrms" 
 }: Props) => {
+
+   const location = useLocation();
+  const countryName = location.pathname.endsWith("/us") ? "USA" :
+                location.pathname.endsWith("/au") ? "Australia" :
+                location.pathname.endsWith("/nz") ? "New Zealand" :
+                location.pathname.endsWith("/ca") ? "Canada" :
+                location.pathname.endsWith("/gb") ? "UK" :
+                "Abroad";
 
   if (!programs || programs.length === 0) return null;
 
   return (
     <section id={id} className="w-full scroll-mt-40">
       {/* Header Section */}
-      <div className="max-w-4xl mb-8 space-y-4 text-center mx-auto">
+      <div className="max-w-4xl mb-9 space-y-4 text-center mx-auto">
         <h2 className="text-3xl md:text-4xl font-bold text-foreground tracking-tight">
-          {title}
+          {title} in {countryName}
         </h2>
         {description && (
-          <p className="text-base md:text-lg text-foreground/80 leading-relaxed">
-            {description}
+          <p className="text-base text-foreground/70 leading-relaxed">
+            {countryName} {description}
           </p>
         )}
       </div>

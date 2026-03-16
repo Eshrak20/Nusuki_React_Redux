@@ -1,3 +1,5 @@
+import { useLocation } from "react-router-dom";
+
 interface Props {
   requirements: string[];
   title?: string;
@@ -6,16 +8,24 @@ interface Props {
 
 const DestAdmissionRequirements = ({
   requirements,
-  title = "Requirements to Study Abroad",
+  title = "Requirements to Study ",
   id = "admissions-requrements" // Make sure this matches your navbar data's href!
 }: Props) => {
+
+   const location = useLocation();
+    const countryName = location.pathname.endsWith("/us") ? "USA" :
+                  location.pathname.endsWith("/au") ? "Australia" :
+                  location.pathname.endsWith("/nz") ? "New Zealand" :
+                  location.pathname.endsWith("/ca") ? "Canada" :
+                  location.pathname.endsWith("/gb") ? "UK" :
+                  "Abroad";
   if (!requirements || requirements.length === 0) return null;
 
   return (
     <section id={id} className="w-full scroll-mt-32">
       {/* Title */}
       <h2 className="text-3xl md:text-4xl font-bold text-center text-foreground mb-10 tracking-tight">
-        {title}
+        {title} in {countryName}
       </h2>
 
       {/* Grid Layout for Pills */}

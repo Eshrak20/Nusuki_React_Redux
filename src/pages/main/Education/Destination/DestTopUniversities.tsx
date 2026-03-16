@@ -3,6 +3,7 @@ import { useRef, useState, useEffect } from "react";
 import Lottie from "lottie-react";
 import HandTap from "@/assets/Lottie/Handtap.json";
 import type { UniversityItem } from "@/types/education/type.country";
+import { useLocation } from "react-router-dom";
 
 interface Props {
   universities: UniversityItem[];
@@ -10,6 +11,14 @@ interface Props {
 }
 
 const DestTopUniversities = ({ universities, id = "universities" }: Props) => {
+  const location = useLocation();
+  const countryName = location.pathname.endsWith("/us") ? "in USA" :
+    location.pathname.endsWith("/au") ? "in Australia" :
+      location.pathname.endsWith("/nz") ? "in New Zealand" :
+        location.pathname.endsWith("/ca") ? "in Canada" :
+          location.pathname.endsWith("/gb") ? "in UK" :
+            "";
+
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true });
 
@@ -40,7 +49,7 @@ const DestTopUniversities = ({ universities, id = "universities" }: Props) => {
 
   return (
     <section
-    id={id}
+      id={id}
       ref={ref}
       className="relative max-w-7xl mx-auto"
     >
@@ -48,10 +57,10 @@ const DestTopUniversities = ({ universities, id = "universities" }: Props) => {
       {/* Header */}
       <div className="text-center mb-14">
         <h2 className="text-3xl md:text-4xl font-extrabold text-foreground">
-          Top Universities
+          Top Universities {countryName}
         </h2>
-        <p className="text-muted-foreground mt-3 max-w-2xl mx-auto">
-          Explore some of the most prestigious institutions for your study abroad journey.
+        <p className="text-muted-foreground mt-4 max-w-2xl mx-auto">
+          Explore some of the most prestigious institutions for your study {countryName} journey.
         </p>
       </div>
 

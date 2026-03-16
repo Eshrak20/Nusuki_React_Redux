@@ -2,6 +2,7 @@ import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import type { CityItem } from "@/types/education/type.country";
 import { MapPin } from "lucide-react";
+import { useLocation } from "react-router-dom";
 
 interface Props {
   cities: CityItem[];
@@ -9,6 +10,15 @@ interface Props {
 }
 
 const DestTopCities = ({ cities, id = "cities" }: Props) => {
+
+  const location = useLocation();
+  const countryName = location.pathname.endsWith("/us") ? "in USA" :
+    location.pathname.endsWith("/au") ? "in Australia" :
+      location.pathname.endsWith("/nz") ? "in New Zealand" :
+        location.pathname.endsWith("/ca") ? "in Canada" :
+          location.pathname.endsWith("/gb") ? "in UK" :
+            "";
+            
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
@@ -43,8 +53,8 @@ const DestTopCities = ({ cities, id = "cities" }: Props) => {
           <span className="text-sm font-semibold tracking-wide uppercase">Top Destinations</span>
         </motion.div>
 
-        <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight text-foreground mb-6">
-          Top Cities for Your Journey
+        <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight text-foreground mb-4">
+          Top Cities for Your Journey {countryName}
         </h2>
         
         <p className="text-foreground/70 leading-relaxed max-w-2xl mx-auto">

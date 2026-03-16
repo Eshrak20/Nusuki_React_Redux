@@ -10,6 +10,7 @@ import {
   Languages,
   ThermometerSun
 } from "lucide-react";
+import { useLocation } from "react-router";
 
 interface Props {
   facts: KeyFactsCategory[];
@@ -34,7 +35,15 @@ const getDynamicIcon = (label: string, value: string, category: string) => {
   return <Building {...iconProps} />;
 };
 
-const DestKeyFacts = ({ facts, title = "Key Facts About Studying Abroad" }: Props) => {
+const DestKeyFacts = ({ facts, title = "Key Facts About Studying" }: Props) => {
+
+  const location = useLocation();
+  const countryName = location.pathname.endsWith("/us") ? "USA" :
+                location.pathname.endsWith("/au") ? "Australia" :
+                location.pathname.endsWith("/nz") ? "New Zealand" :
+                location.pathname.endsWith("/ca") ? "Canada" :
+                location.pathname.endsWith("/gb") ? "UK" :
+                "Abroad";
   
   if (!facts || facts.length === 0) return null;
 
@@ -43,7 +52,7 @@ const DestKeyFacts = ({ facts, title = "Key Facts About Studying Abroad" }: Prop
       {/* Optional Title Section (Based on your image) */}
       <div>
         <h2 className="text-3xl md:text-4xl font-bold text-center text-foreground mb-8 tracking-tight">
-          {title}
+          {title} in {countryName}
         </h2>
       </div>
 

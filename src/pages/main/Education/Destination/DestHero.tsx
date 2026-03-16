@@ -31,6 +31,7 @@ const DestHero = ({ hero }: Props) => {
         {/* Call to Action Button */}
         <a
           href={hero.cta_url}
+          target='blank'
           className="group flex items-center justify-between gap-4 bg-primary-foreground text-primary pl-6 pr-2 py-2 rounded-full hover:opacity-90 transition-all duration-300 shadow-xl hover:shadow-2xl hover:scale-[1.02] cursor-pointer dark:bg-white dark:text-black"
         >
           {/* Setting max-w helps the text wrap into two lines like "Get started for \n free" 
