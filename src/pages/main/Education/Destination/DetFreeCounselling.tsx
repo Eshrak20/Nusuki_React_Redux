@@ -23,7 +23,7 @@ const DetFreeCounselling = () => {
     return (
         <section className="w-full my-20">
             {/* Banner Container */}
-            <div className="relative w-full rounded-[2rem] overflow-hidden bg-primary dark:bg-muted/10 py-16 px-6 md:px-12 flex flex-col items-center justify-center shadow-xl">
+            <div className="relative w-full rounded-[2rem] overflow-hidden bg-primary dark:bg-card py-16 px-6 md:px-12 flex flex-col items-center justify-center shadow-xl">
 
                 {/* Dark gradient overlay for the background (Left to Right) */}
                 <div className="absolute inset-0 z-0 bg-linear-to-r from-transparent to-black/40 mix-blend-multiply" />
@@ -45,7 +45,7 @@ const DetFreeCounselling = () => {
                                 </span>
                                 
                                 {/* Inner Circle Icon */}
-                                <div className="bg-primary text-primary-foreground dark:bg-muted dark:text-gray-300 p-2 md:p-3 rounded-full flex items-center justify-center transition-transform duration-300 group-hover:translate-x-1">
+                                <div className="bg-primary text-primary-foreground dark:bg-card dark:text-gray-300 p-2 md:p-3 rounded-full flex items-center justify-center transition-transform duration-300 group-hover:translate-x-1">
                                     <ChevronRight size={20} strokeWidth={3} />
                                 </div>
                             </button>
