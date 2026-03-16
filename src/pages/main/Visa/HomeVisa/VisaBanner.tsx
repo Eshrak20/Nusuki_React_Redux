@@ -6,39 +6,31 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import visaBanner from "../../../../assets/Images/visaBanner.jpg";
 import { MdStickyNote2 } from "react-icons/md";
-
-// 1. Import Redux hooks and your action
 import { useDispatch, useSelector } from "react-redux";
-import { setSearchVisa } from "@/redux/features/visaFilterSlice"; // Adjust path if needed
-import type { RootState } from "@/redux/store"; // Adjust path if needed
+import { setSearchVisa } from "@/redux/features/visaFilterSlice"; 
+import type { RootState } from "@/redux/store";
 
 const VisaBanner = () => {
   const dispatch = useDispatch();
-  
-  // 2. Pull the current Country from Redux (in case they navigate back, it remembers the search)
+
   const currentCountry = useSelector((state: RootState) => state.visaFilter.country);
   
-  // 3. Local state for the input field
   const [searchTerm, setSearchTerm] = useState(currentCountry || "");
 
-  // Keep local state in sync if Redux state is cleared elsewhere
   useEffect(() => {
     setSearchTerm(currentCountry);
   }, [currentCountry]);
 
-  // 4. Function to trigger the Redux update
   const handleSearch = () => {
     dispatch(setSearchVisa(searchTerm));
   };
 
-  // 5. Function to allow pressing "Enter" to search
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
       handleSearch();
     }
   };
 
-  // Animation Variants
   const fadeInUp = {
     hidden: { opacity: 0, y: 20 },
     visible: { opacity: 1, y: 0, transition: { duration: 0.6 } }
@@ -109,12 +101,12 @@ const VisaBanner = () => {
                 type="text"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                onKeyDown={handleKeyDown} // Trigger search on Enter
+                onKeyDown={handleKeyDown} 
                 placeholder="Search by country name..."
                 className="h-12 w-full rounded-full border-none bg-background/95 px-8 pr-1 dark:bg-primary text-foreground shadow-2xl backdrop-blur-sm ring-1 ring-white/20 transition-all focus-visible:ring-2 focus-visible:ring-primary-foreground lg:h-14"
               />
               <Button 
-                onClick={handleSearch} // Trigger search on click
+                onClick={handleSearch} 
                 size="icon" 
                 className="absolute right-3 lg:h-10 lg:w-10 rounded-full bg-primary dark:bg-black text-primary-foreground shadow-lg transition-transform hover:scale-105 active:scale-95"
               >

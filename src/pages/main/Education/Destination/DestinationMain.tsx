@@ -14,7 +14,9 @@ import DestTopCities from "./DestTopCities";
 import DestWorkOpportunities from "./DestWorkOpportunities";
 import DestArticles from "./DestArticles";
 import DestFAQs from "./DestFAQs";
-import DetFreeCounselling from "./DetFreeCouncelling";
+import DetFreeCounselling from "./DetFreeCounselling";
+import DestHeroSkeleton from "@/components/skeletons/DestHeroSkeleton";
+import DestPageNavSkeleton from "@/components/skeletons/DestPageNavSkeleton";
 
 const DestinationMain = () => {
 
@@ -24,10 +26,18 @@ const DestinationMain = () => {
   });
 
   const { country } = useParams<{ country: string }>();
-
   const { data, isLoading } = useGetCountriesQuery({ country });
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) {
+    return (
+      <div>
+        <DestHeroSkeleton />
+        <div className="max-w-7xl mx-auto space-y-20">
+          <DestPageNavSkeleton />
+        </div>
+      </div>
+    );
+  }
   if (!data?.data) return <div>No data found</div>;
 
   const destination = data?.data;
@@ -43,8 +53,6 @@ const DestinationMain = () => {
         <DestAcademicIntake intake={destination.academic_intake} />
         <DestProgramsDuration programs={destination.programs_duration} />
         <DestPopularPrograms programs={destination.popular_programs} />
-
-        {/* I am staring from here @Eshrak */}
         <DestTopUniversities universities={destination.top_universities} />
         <DestStudyCost cost={destination.study_cost} />
         <DestTopCities cities={destination.top_cities} />

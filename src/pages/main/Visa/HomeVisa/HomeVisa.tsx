@@ -32,7 +32,6 @@ const HomeVisa = () => {
         <>
             <div className="mt-22">
                 <VisaBanner />
-
                 <VisaStats />
                 <FilterCategory />
                 <div className="max-w-7xl mx-auto">

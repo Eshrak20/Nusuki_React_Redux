@@ -1,11 +1,12 @@
 import type { OverviewSection } from "@/types/education/type.country";
+import StudyAbroadForm from "./StudyAbroadForm";
 
 interface Props {
   overview: OverviewSection;
 }
 
 const DestOverview = ({ overview,
- }: Props) => {
+}: Props) => {
 
   return (
     <section id="overview" className="w-full bg-muted/30 dark:bg-muted/10 rounded-[2rem] p-12">
@@ -22,7 +23,7 @@ const DestOverview = ({ overview,
               </h2>
               {overview?.paragraphs?.[0] && (
                 <p className="text-base text-foreground/80 leading-relaxed">
-                  {overview.paragraphs[0]} 
+                  {overview.paragraphs[0]}
                 </p>
               )}
             </div>
@@ -68,21 +69,7 @@ const DestOverview = ({ overview,
               Book your free consultation with certified counsellors
             </h3>
           </div>
-
-          {/* TODO: Drop your Form Component here! 
-            <StudyAbroadForm />
-          */}
-          <div className="flex flex-col space-y-4 animate-pulse">
-            <div className="h-12 bg-muted rounded-full w-full"></div>
-            <div className="h-12 bg-muted rounded-full w-full"></div>
-            <div className="h-12 bg-muted rounded-full w-full"></div>
-            <div className="grid grid-cols-2 gap-4">
-              <div className="h-12 bg-muted rounded-full w-full"></div>
-              <div className="h-12 bg-muted rounded-full w-full"></div>
-            </div>
-            <div className="h-12 bg-primary/20 rounded-full w-full mt-4"></div>
-          </div>
-
+          <StudyAbroadForm />
         </div>
 
       </div>

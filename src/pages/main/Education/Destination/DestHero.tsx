@@ -1,11 +1,24 @@
+import EduFormSubmission from "@/components/education/EduFormSubmission";
+import { motion } from "framer-motion";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import type { HeroSection } from "@/types/education/type.country";
-import { ChevronRight } from "lucide-react";
+import { MousePointerClick } from "lucide-react";
+import { useState } from "react";
+import { useLocation } from "react-router-dom";
 
 interface Props {
   hero: HeroSection;
 }
 
 const DestHero = ({ hero }: Props) => {
+  const location = useLocation();
+  const countryName = location.pathname.endsWith("/us") ? "USA" :
+    location.pathname.endsWith("/au") ? "Australia" :
+      location.pathname.endsWith("/nz") ? "New Zealand" :
+        location.pathname.endsWith("/ca") ? "Canada" :
+          location.pathname.endsWith("/gb") ? "UK" :
+            "";
+  const [isOpen, setIsOpen] = useState(false);
   return (
     <section className="relative w-full overflow-hidden min-h-100 md:min-h-100 flex items-center lg:shadow-lg mb-4">
       {/* Background Image */}
@@ -29,23 +42,63 @@ const DestHero = ({ hero }: Props) => {
         </h1>
 
         {/* Call to Action Button */}
-        <a
-          href={hero.cta_url}
-          target='blank'
-          className="group flex items-center justify-between gap-4 bg-primary-foreground text-primary pl-6 pr-2 py-2 rounded-full hover:opacity-90 transition-all duration-300 shadow-xl hover:shadow-2xl hover:scale-[1.02] cursor-pointer dark:bg-white dark:text-black"
-        >
-          {/* Setting max-w helps the text wrap into two lines like "Get started for \n free" 
-            if the string is long enough, replicating the image's layout.
-          */}
-          <span className="text-sm md:text-base font-semibold leading-tight text-left max-w-30">
-            {hero.cta_text}
-          </span>
+        <div className="shrink-0 pt-4 lg:pt-0">
+          <Dialog open={isOpen} onOpenChange={setIsOpen}>
+            <DialogTrigger asChild>
+              <motion.button
+                whileHover={{ scale: 1.05, y: -2 }}
+                whileTap={{ scale: 0.97 }}
+                transition={{ type: "spring", stiffness: 400, damping: 17 }}
+                className="group relative inline-flex items-center gap-5 px-7 lg:px-14 py-7 bg-primary text-primary-foreground rounded-full overflow-hidden shadow-2xl hover:shadow-primary/30 hover:shadow-2xl"
+              >
+                {/* Multiple gradient layers for depth */}
+                <span className="absolute inset-0 bg-linear-to-r from-transparent via-primary-foreground/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+                <span className="absolute inset-0 bg-linear-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
 
-          {/* Inner Circle Icon with Inverted Shadcn Colors */}
-          <div className="bg-primary text-primary-foreground p-3 rounded-full dark:bg-black flex items-center justify-center transition-transform duration-300 group-hover:translate-x-1">
-            <ChevronRight className="dark:text-white" size={20} strokeWidth={3} />
-          </div>
-        </a>
+                {/* Glowing ring effect */}
+                <span className="absolute -inset-0.5 bg-linear-to-r from-primary via-primary/80 to-primary/60 rounded-full opacity-0 group-hover:opacity-75 blur-xl transition-opacity duration-700 -z-10" />
+
+                <span className="relative z-10 flex items-center gap-4">
+                  <span className="flex flex-col items-start">
+                    <span className="text-xs hidden lg:block font-light tracking-[0.5em] text-primary-foreground/70 mb-1 group-hover:text-primary-foreground/90 transition-colors duration-500">
+                      LIMITED SPOTS
+                    </span>
+                    <span className="font-black tracking-[0.3em] text-lg lg:text-xl flex items-center gap-3">
+                      APPLY NOW
+                      <span className="w-8 h-0.5 hidden lg:block bg-primary-foreground/50 group-hover:w-12 group-hover:bg-primary-foreground transition-all duration-500" />
+                    </span>
+                  </span>
+
+                  {/* Animated mouse click icon */}
+                  <span className="relative hidden lg:block">
+                    <span className="absolute inset-0 rounded-full bg-primary-foreground/30 animate-ping opacity-0 group-hover:opacity-100"
+                      style={{ animationDuration: '1.5s' }} />
+                    <MousePointerClick
+                      size={24}
+                      className="relative transition-all duration-500 group-hover:rotate-12 group-hover:scale-110 group-hover:translate-x-1 group-hover:-translate-y-1"
+                    />
+                  </span>
+                </span>
+
+                {/* Bottom shine line */}
+                <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-0.5 bg-linear-to-r from-transparent via-primary-foreground to-transparent group-hover:w-full transition-all duration-700 delay-300" />
+
+                {/* Corner accents */}
+                <span className="absolute top-2 left-2 w-2 h-2 border-t-2 border-l-2 border-primary-foreground/30 rounded-tl-lg opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+                <span className="absolute bottom-2 right-2 w-2 h-2 border-b-2 border-r-2 border-primary-foreground/30 rounded-br-lg opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+              </motion.button>
+            </DialogTrigger>
+
+            <DialogContent className="sm:max-w-120 p-0 overflow-hidden border-none rounded-[2rem] bg-background/95 backdrop-blur-2xl shadow-2xl">
+              <DialogHeader className="hidden">
+                <DialogTitle>Application Form</DialogTitle>
+              </DialogHeader>
+              <div className="max-h-[85vh] overflow-y-auto">
+                <EduFormSubmission title={`Apply for ${countryName}`} />
+              </div>
+            </DialogContent>
+          </Dialog>
+        </div>
       </div>
     </section>
   );
