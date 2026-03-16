@@ -89,7 +89,9 @@ const DestTopUniversities = ({ universities, id = "universities" }: Props) => {
                 bg-card
                 border
                 rounded-xl
-                p-6
+                px-6
+                pt-6
+                pb-3
                 flex
                 flex-col
                 items-center
@@ -114,12 +116,15 @@ const DestTopUniversities = ({ universities, id = "universities" }: Props) => {
                 />
               </div>
 
-              {/* Title: Only rendered if title exists, reducing card height contextually */}
-              {u.name && (
-                <p className="mt-4 text-sm font-semibold text-foreground group-hover:text-primary transition-colors line-clamp-2 leading-tight">
-                  {u.name}
-                </p>
-              )}
+              {/* Name */}
+             {
+              u?.name && (
+                 <p className="text-sm h-10.5 font-semibold text-foreground group-hover:text-primary transition-colors line-clamp-2">
+                {u.name}
+              </p>
+              ) 
+             }
+
             </motion.a>
           </div>
         ))}
