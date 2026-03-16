@@ -38,7 +38,7 @@ const EduNavbar = ({ isSticky }: { isSticky?: boolean }) => {
       name: "Destinations",
       icon: <MapPin size={22} />,
       hasSubmenu: true,
-      path: "/education/destinations/usa",
+      path: "/education/destinations/us",
     },
     {
       name: "Find Institution",
