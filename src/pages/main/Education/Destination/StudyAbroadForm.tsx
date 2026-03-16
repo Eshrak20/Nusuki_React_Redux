@@ -240,7 +240,7 @@ const StudyAbroadForm = () => {
                         control={control}
                         render={({ field }) => (
                             <CustomSelect
-                                placeholder="Interested level of study"
+                                placeholder="Interested level"
                                 dropdownTitle="Level of study"
                                 value={field.value}
                                 onChange={field.onChange}
@@ -296,7 +296,7 @@ const StudyAbroadForm = () => {
                 }`}>
                     <input
                         type="text"
-                        placeholder="Academic Qualification (Exp: HSC: GPA-4, City College, 2024)"
+                        placeholder="Academic Qualification"
                         className="w-full bg-transparent outline-none text-sm text-foreground placeholder:text-muted-foreground"
                         {...register("qualification")}
                     />
