@@ -87,24 +87,7 @@ const DestTopUniversities = ({ universities, id = "universities" }: Props) => {
               whileHover={{ y: -6, scale: 1.03 }}
               transition={{ type: "spring", stiffness: 300 }}
               className={`
-                group
-                bg-card
-                border
-                rounded-xl
-                px-6
-                pt-6
-                pb-3
-                flex
-                flex-col
-                items-center
-                justify-center
-                text-center
-                shadow-sm
-                hover:shadow-xl
-                transition
-                duration-300
-                cursor-pointer
-                ${activeIndex === i ? "border-primary shadow-lg ring-2 ring-primary/40" : "border-border"}
+                group bg-card border rounded-xl px-6 pt-6 pb-3 flex flex-col items-center justify-center text-center shadow-sm hover:shadow-xl transition duration-300 cursor-pointer ${activeIndex === i ? "border-primary shadow-lg ring-2 ring-primary/40" : "border-border"}
               `}
             >
               {/* Logo */}
@@ -118,13 +101,13 @@ const DestTopUniversities = ({ universities, id = "universities" }: Props) => {
               </div>
 
               {/* Name */}
-             {
-              u?.name && (
-                 <p className="text-sm h-10.5 font-semibold text-foreground group-hover:text-primary transition-colors line-clamp-2">
-                {u.name}
-              </p>
-              ) 
-             }
+              {
+                u?.name && (
+                  <p className="text-sm h-10.5 font-semibold text-foreground group-hover:text-primary transition-colors line-clamp-2">
+                    {u.name}
+                  </p>
+                )
+              }
 
             </motion.a>
 
