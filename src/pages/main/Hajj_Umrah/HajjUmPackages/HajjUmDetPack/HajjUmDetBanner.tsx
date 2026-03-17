@@ -6,7 +6,7 @@ interface PackData {
   name: string;
   tagline: string;
   card_image: string;
-  status?: string; // Optional: e.g., "Booking Open" or "Limited Seats"
+  status?: string;
 }
 
 interface Props {

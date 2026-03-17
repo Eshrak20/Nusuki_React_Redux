@@ -1,12 +1,9 @@
 import { useMatch } from "react-router-dom";
-
 import HajjUmrahBanner from "@/components/HajjUmrahBanner";
 import AboBanHajjUmrah from "@/components/AboBanHajjUmrah";
 import AboutImage from "@/assets/reactAssets/Hajj_Umrah/about.jpg";
-
 import { useGetHajjPackQuery } from "@/redux/api/hajjApi";
 import { useGetUmrahPackQuery } from "@/redux/api/umrahApi";
-
 import HajjUmPackCard from "./HajjUmPackCard/HajjUmPackCard";
 import Faq from "@/components/Faq";
 import FormSubmission from "@/components/FormSubmission";
@@ -36,7 +33,7 @@ const HajjUmPackages = () => {
   );
 
   /* ---------------- BANNER TITLE ---------------- */
-  const bannerTitle = isHajjPack ? "Hajj Packages 2026" : "Umrah Packages";
+  const bannerTitle = isHajjPack ? "Hajj Packages" : "Umrah Packages";
 
   /* ---------------- SAFE DATA EXTRACTION ---------------- */
   const packages = isHajjPack

@@ -12,6 +12,7 @@ import HajjUmDetCancel from "./HajjUmDetCancel";
 import HajjUmDetPackageServices from "./HajjUmDetPackageServices";
 import HajjUmDetPackageSighting from "./HajjUmDetPackageSighting";
 import HajjUmDetIncludedServices from "./HajjUmDetIncludedServices";
+import HajjUmDetBannerSkeleton from "@/components/skeletons/HajjUmDetBannerSkeleton";
 
 const HajjUmMainDetPack = () => {
   const [isGalleryOpen, setIsGalleryOpen] = useState(false);
@@ -43,7 +44,7 @@ const HajjUmMainDetPack = () => {
   }, []);
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <HajjUmDetBannerSkeleton />;
   }
 
   if (isError || !data?.data) {

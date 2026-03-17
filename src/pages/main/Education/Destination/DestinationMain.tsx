@@ -38,6 +38,7 @@ const DestinationMain = () => {
       </div>
     );
   }
+  
   if (!data?.data) return <div>No data found</div>;
 
   const destination = data?.data;

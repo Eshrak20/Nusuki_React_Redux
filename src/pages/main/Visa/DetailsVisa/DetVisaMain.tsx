@@ -8,6 +8,10 @@ import ImportantInfo from "./ImportantInfo";
 import VisaActionCard from "./ActionCard";
 import NeedAssistance from "./NeedAssistance";
 import OfficeHours from "./OfficeHours";
+import DetVisaBannerSkeleton from "@/components/skeletons/DetVisaBannerSkeleton";
+import DetVisaQuickInfoSkeleton from "@/components/skeletons/DetVisaQuickInfoSkeleton";
+import DetVisaRequirementsSkeleton from "@/components/skeletons/DetVisaRequirementsSkeleton";
+import DetVisaActionCardSkeleton from "@/components/skeletons/DetVisaActionCardSkeleton";
 
 const DetVisaMain = () => {
 
@@ -25,10 +29,28 @@ const DetVisaMain = () => {
 
     const details = data?.data;
 
-    if (isLoading) return <div>Loading........</div>
+    if (isLoading) {
+        return (
+            <div className="pt-19">
+                <DetVisaBannerSkeleton />
+                <div className="max-w-7xl mx-auto px-4 py-6 lg:py-10">
+                    <div className="grid grid-cols-1 gap-5 -px-5 lg:px-0 lg:grid-cols-3">
+                        <div className="lg:col-span-2 space-y-4">
+                            <DetVisaQuickInfoSkeleton />
+                            <DetVisaRequirementsSkeleton />
+                        </div>
+                        <div className="lg:col-span-1">
+                            <DetVisaActionCardSkeleton />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        );
+    }
 
     if (isError || !details) {
-        return <div>Visa details not found.</div>;
+        return <div className="flex justify-center text-3xl items-center h-175">Visa details not found.</div>;
     }
 
     return (
