@@ -7,7 +7,7 @@ import logoDark from "../assets/reactAssets/Logo/darkLogo.png";
 // import logoEduLight from "../assets/reactAssets/Logo/eduLight.jpeg"
 import logoEduLight from "../assets/reactAssets/Logo/eduLight (Edited).jpeg"
 // import logoEduDark from "../assets/reactAssets/Logo/eduDark (Copy).jpeg"
-import logoEduDark from "../assets/reactAssets/Logo/eduDark.jpeg"
+import logoEduDark from "../assets/reactAssets/Logo/eduDark1.png"
 
 import { Button } from "@/components/ui/button";
 import {

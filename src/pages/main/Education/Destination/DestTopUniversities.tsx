@@ -12,6 +12,8 @@ interface Props {
 
 const DestTopUniversities = ({ universities, id = "universities" }: Props) => {
   const location = useLocation();
+  
+  // Mapping country names based on URL path
   const countryName = location.pathname.endsWith("/us") ? "in USA" :
     location.pathname.endsWith("/au") ? "in Australia" :
       location.pathname.endsWith("/nz") ? "in New Zealand" :
@@ -29,17 +31,14 @@ const DestTopUniversities = ({ universities, id = "universities" }: Props) => {
     if (!isInView || universities.length === 0) return;
 
     const interval = setInterval(() => {
-
-      // pick random card
+      // Pick a random card to highlight
       const randomIndex = Math.floor(Math.random() * universities.length);
       setActiveIndex(randomIndex);
-
       setShowTap(true);
 
       setTimeout(() => {
         setShowTap(false);
       }, 1000);
-
     }, 3000);
 
     return () => clearInterval(interval);
@@ -51,9 +50,8 @@ const DestTopUniversities = ({ universities, id = "universities" }: Props) => {
     <section
       id={id}
       ref={ref}
-      className="relative max-w-7xl mx-auto"
+      className="relative max-w-7xl mx-auto py-12 px-4"
     >
-
       {/* Header */}
       <div className="text-center mb-14">
         <h2 className="text-3xl md:text-4xl font-extrabold text-foreground">
@@ -64,17 +62,17 @@ const DestTopUniversities = ({ universities, id = "universities" }: Props) => {
         </p>
       </div>
 
-      {/* Cards */}
+      {/* Cards Grid */}
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6">
         {universities.map((u, i) => (
           <div key={i} className="relative">
-
+            
             {/* Tap animation above active card */}
             {showTap && activeIndex === i && (
               <motion.div
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                className="absolute -top-3 left-1/2 -translate-x-1/2 w-16 pointer-events-none"
+                initial={{ opacity: 0, scale: 0.8, y: 10 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                className="absolute -top-6 left-1/2 -translate-x-1/2 w-16 z-10 pointer-events-none"
               >
                 <Lottie animationData={HandTap} loop />
               </motion.div>
@@ -90,13 +88,13 @@ const DestTopUniversities = ({ universities, id = "universities" }: Props) => {
                 group bg-card border rounded-xl px-6 pt-6 pb-3 flex flex-col items-center justify-center text-center shadow-sm hover:shadow-xl transition duration-300 cursor-pointer ${activeIndex === i ? "border-primary shadow-lg ring-2 ring-primary/40" : "border-border"}
               `}
             >
-              {/* Logo */}
-              <div className="h-16 flex items-center justify-center mb-4">
+              {/* Logo Container */}
+              <div className="flex items-center justify-center h-16 w-full">
                 <img
                   src={u.image}
-                  alt={u.name}
+                  alt={u.name || "University Logo"}
                   loading="lazy"
-                  className="max-h-14 object-contain transition duration-300 group-hover:scale-110"
+                  className="max-h-14 w-auto object-contain transition duration-300 group-hover:scale-110"
                 />
               </div>
 
@@ -110,7 +108,6 @@ const DestTopUniversities = ({ universities, id = "universities" }: Props) => {
               }
 
             </motion.a>
-
           </div>
         ))}
       </div>
