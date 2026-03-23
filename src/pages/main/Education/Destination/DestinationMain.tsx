@@ -27,7 +27,7 @@ const DestinationMain = () => {
 
   const { country } = useParams<{ country: string }>();
   const { data, isLoading } = useGetCountriesQuery({ country });
-
+  
   if (isLoading) {
     return (
       <div>

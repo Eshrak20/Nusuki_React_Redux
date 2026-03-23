@@ -12,7 +12,7 @@ interface Props {
 
 const DestTopUniversities = ({ universities, id = "universities" }: Props) => {
   const location = useLocation();
-  
+
   // Mapping country names based on URL path
   const countryName = location.pathname.endsWith("/us") ? "in USA" :
     location.pathname.endsWith("/au") ? "in Australia" :
@@ -66,7 +66,7 @@ const DestTopUniversities = ({ universities, id = "universities" }: Props) => {
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6">
         {universities.map((u, i) => (
           <div key={i} className="relative">
-            
+
             {/* Tap animation above active card */}
             {showTap && activeIndex === i && (
               <motion.div

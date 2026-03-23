@@ -19,6 +19,7 @@ import DetCourseMain from "@/pages/main/Education/Course/DetCourse/CourseMain";
 import HomeVisa from "@/pages/main/Visa/HomeVisa/HomeVisa";
 import DetVisaMain from "@/pages/main/Visa/DetailsVisa/DetVisaMain";
 import DestinationMain from "@/pages/main/Education/Destination/DestinationMain";
+import HomeTest from "@/pages/main/Education/Test/HomeTest/HomeTest";
 
 export const router = createBrowserRouter([
   {
@@ -63,7 +64,7 @@ export const router = createBrowserRouter([
           },
           {
             path: "tests",
-            element: <Upcoming title="Tests Section Upcoming" />,
+            element: <HomeTest />,
           },
         ],
       },

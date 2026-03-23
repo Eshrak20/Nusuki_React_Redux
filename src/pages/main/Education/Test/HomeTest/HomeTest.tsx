@@ -1,0 +1,92 @@
+import { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import type { RootState } from "@/redux/store";
+import { useGetTestsQuery } from "@/redux/api/educationApi/testApi";
+import { setPage } from "@/redux/features/testFilterSlice"; 
+import EduFilter from "@/components/education/EduFilter";
+import EduPagination from "@/components/education/EduPagination";
+import EduSearch from "@/components/education/EduSearch";
+import HomeTestCardSkeleton from "@/components/skeletons/HomeTestCardSkeleton";
+import HomeTestCard from "./HomeTestCard";
+
+
+const HomeTest = () => {
+  const dispatch = useDispatch();
+
+  // Smooth scroll to top on mount
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  }, []);
+  
+  const { size, examType, page } = useSelector(
+    (state: RootState) => state.testFilter
+  );
+
+  // Fetch paginated test data
+  const { data, isLoading } = useGetTestsQuery({
+    page,
+    examType, 
+    size,
+  });
+  
+  const tests = data?.data?.data ?? [];
+  const pagination = data?.data;
+
+  return (
+    <div className="pt-32 pb-3 max-w-7xl mx-auto min-h-screen">
+      {/* Search and Filter Header */}
+      <div className="flex flex-col md:flex-row items-center justify-between mb-7 gap-6 md:gap-10 pl-2">
+        {/* Showing Results Info */}
+        <p className="text-foreground/80 text-sm font-medium order-3 md:order-1 whitespace-nowrap mr-auto">
+          Showing Results for:{" "}
+          <span className="text-foreground font-semibold">
+            {examType || "All Exams"}
+          </span>
+        </p>
+
+        {/* Search Bar */}
+        <div className="w-full md:w-1/2 order-1 md:order-2">
+          <EduSearch placeholder="test preparations (IELTS, PTE...)" />
+        </div>
+
+        {/* Filter Dropdown */}
+        <div className="w-full md:w-1/4 order-2 md:order-3">
+          <EduFilter />
+        </div>
+      </div>
+
+      {/* Grid Section */}
+      <div className="mb-10">
+        {isLoading ? (
+          <HomeTestCardSkeleton />
+        ) : tests.length > 0 ? (
+          // Passing the tests array to your card list component
+          <HomeTestCard tests={tests} />
+        ) : (
+          <div className="text-center py-20 text-muted-foreground">
+            No test preparations found matching your criteria.
+          </div>
+        )}
+      </div>
+
+      {/* Pagination Section */}
+      <div className="max-w-7xl mx-auto">
+        {pagination && pagination.last_page > 1 && (
+          <EduPagination
+            pagination={{
+              current_page: pagination.current_page,
+              last_page: pagination.last_page,
+            }}
+            // FIXED: Changed setPageTest to setPage to match your import
+            onPageChange={(newPage: number) => dispatch(setPage(newPage))}
+          />
+        )}
+      </div>
+    </div>
+  );
+};
+
+export default HomeTest;

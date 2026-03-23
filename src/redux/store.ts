@@ -3,12 +3,14 @@ import { baseApi } from "./api/baseApi";
 import universityFilterReducer from "./features/universityFilterSlice";
 import courseFilterReducer from "./features/courseFilterSlice";
 import visaFilterReducer from "./features/visaFilterSlice";
+import testFilterReducer from "./features/testFilterSlice";
 
 export const store = configureStore({
   reducer: {
     universityFilter: universityFilterReducer,
     courseFilter: courseFilterReducer, 
     visaFilter: visaFilterReducer,
+    testFilter: testFilterReducer,
     [baseApi.reducerPath]: baseApi.reducer,
   },
 
