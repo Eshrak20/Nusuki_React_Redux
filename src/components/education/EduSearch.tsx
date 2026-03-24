@@ -5,6 +5,7 @@ import { useState, useRef } from "react";
 import { X, GraduationCap } from "lucide-react";
 import { useLocation } from "react-router-dom";
 import { setSearchCourse } from "@/redux/features/courseFilterSlice";
+import { setExamType } from "@/redux/features/testFilterSlice";
 
 interface EduSearchProps {
     placeholder: string;
@@ -13,21 +14,33 @@ interface EduSearchProps {
 const EduSearch = ({ placeholder }: EduSearchProps) => {
     const location = useLocation();
     const dispatch = useDispatch();
+
+    const isInstitution = location.pathname.startsWith("/education/institution");
+    const isCourse = location.pathname.startsWith("/education/courses");
+    const isTest = location.pathname.startsWith("/education/tests");
+
     const keyword = useSelector((state: RootState) => {
-        if (location.pathname.startsWith("/education/institution")) {
-            return state.universityFilter.keyword;
-        }
-        else if (location.pathname.startsWith("/education/courses")) {
-            return state.courseFilter.keyword;
-        }
+        if (isInstitution) return state.universityFilter.keyword;
+        if (isCourse) return state.courseFilter.keyword;
+        if (isTest) return state.testFilter.examType;
+        return "";
     });
-    const setSearch = location.pathname.startsWith("/education/institution") ? setSearchUni : setSearchCourse
+
+    const getSearchAction = () => {
+        if (isInstitution) return setSearchUni;
+        if (isCourse) return setSearchCourse;
+        if (isTest) return setExamType;
+        return (val: string) => ({ type: "NOP", payload: val });
+    };
+
+    const searchAction = getSearchAction();
+
     const [isFocused, setIsFocused] = useState(false);
     const [isHovered, setIsHovered] = useState(false);
     const inputRef = useRef<HTMLInputElement>(null);
 
     const clearSearch = () => {
-        dispatch(setSearch(""));
+        dispatch(searchAction(""));
         inputRef.current?.focus();
     };
 
@@ -70,7 +83,7 @@ const EduSearch = ({ placeholder }: EduSearchProps) => {
                         type="text"
                         placeholder={`Search ${placeholder}`}
                         value={keyword}
-                        onChange={(e) => dispatch(setSearch(e.target.value))}
+                        onChange={(e) => dispatch(searchAction(e.target.value))}
                         onFocus={() => setIsFocused(true)}
                         onBlur={() => setIsFocused(false)}
                         className="w-full py-5 px-4 text-lg bg-transparent focus:outline-none

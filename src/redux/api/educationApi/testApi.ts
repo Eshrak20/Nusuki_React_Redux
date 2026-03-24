@@ -1,22 +1,25 @@
-import type { 
-    TestPreparationsApiResponse, 
-    TestDetailsApiResponse, 
+import type {
+    TestPreparationsApiResponse,
+    TestDetailsApiResponse,
     TestPreparationQueryParams,
-    ExpertsApiResponse 
-} from "@/types/education/type.tests"; // 👈 Update this path to match your file structure
+    ExpertsApiResponse
+} from "@/types/education/type.tests";
 import { baseApi } from "../baseApi";
 
 export const educationApi = baseApi.injectEndpoints({
     endpoints: (builder) => ({
         // 1. Fetch the paginated list of tests
-        getTests: builder.query<TestPreparationsApiResponse, TestPreparationQueryParams | void>({
-            query: (params) => ({
+        getTests: builder.query<TestPreparationsApiResponse, TestPreparationQueryParams>({
+            query: ({ page = 1, examType = ""}) => ({
                 url: "/test-preparations",
                 method: "GET",
-                params: params ? params : undefined,
+                params: {
+                    page,
+                    examType,
+                }
             }),
         }),
-        
+
         // 2. Fetch the deep details of a single test by ID
         getTestsDetails: builder.query<TestDetailsApiResponse, { id: string | number }>({
             query: ({ id }) => ({
@@ -24,7 +27,7 @@ export const educationApi = baseApi.injectEndpoints({
                 method: "GET",
             }),
         }),
-        
+
         // 3. Fetch the list of experts
         getExperts: builder.query<ExpertsApiResponse, void>({
             query: () => ({
@@ -36,8 +39,8 @@ export const educationApi = baseApi.injectEndpoints({
     overrideExisting: false, // Optional: useful if you are hot-reloading
 });
 
-export const { 
-    useGetTestsQuery, 
-    useGetTestsDetailsQuery, 
-    useGetExpertsQuery 
+export const {
+    useGetTestsQuery,
+    useGetTestsDetailsQuery,
+    useGetExpertsQuery
 } = educationApi;

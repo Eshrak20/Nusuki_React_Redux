@@ -1,14 +1,13 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import type { RootState } from "@/redux/store";
 import { useGetTestsQuery } from "@/redux/api/educationApi/testApi";
-import { setPage } from "@/redux/features/testFilterSlice"; 
+import { setPage } from "@/redux/features/testFilterSlice";
 import EduFilter from "@/components/education/EduFilter";
 import EduPagination from "@/components/education/EduPagination";
 import EduSearch from "@/components/education/EduSearch";
 import HomeTestCardSkeleton from "@/components/skeletons/HomeTestCardSkeleton";
 import HomeTestCard from "./HomeTestCard";
-
 
 const HomeTest = () => {
   const dispatch = useDispatch();
@@ -20,23 +19,39 @@ const HomeTest = () => {
       behavior: "smooth",
     });
   }, []);
-  
-  const { size, examType, page } = useSelector(
+
+  const { examType, page } = useSelector(
     (state: RootState) => state.testFilter
   );
 
-  // Fetch paginated test data
-  const { data, isLoading } = useGetTestsQuery({
+  const [debouncedExamType, setDebouncedExamType] = useState(examType);
+
+  // ONLY ONE useEffect for debouncing
+  useEffect(() => {
+    // If examType is empty (cleared), delay is 0. Otherwise, wait 500ms.
+    const delay = examType ? 500 : 0;
+
+    const handler = setTimeout(() => {
+      setDebouncedExamType(examType);
+    }, delay);
+
+    return () => clearTimeout(handler);
+  }, [examType]);
+
+  // Grab isFetching as well to track background loading
+  const { data, isLoading, isFetching } = useGetTestsQuery({
     page,
-    examType, 
-    size,
+    examType: debouncedExamType,
   });
-  
+
   const tests = data?.data?.data ?? [];
   const pagination = data?.data;
 
+  // Use a combined loading state for the initial load OR when a search is actively fetching
+  const showSkeleton = isLoading || (isFetching && tests.length === 0);
+
   return (
-    <div className="pt-32 pb-3 max-w-7xl mx-auto min-h-screen">
+    <div className="lg:pt-16 pb-3 max-w-7xl mx-auto min-h-screen">
       {/* Search and Filter Header */}
       <div className="flex flex-col md:flex-row items-center justify-between mb-7 gap-6 md:gap-10 pl-2">
         {/* Showing Results Info */}
@@ -59,11 +74,11 @@ const HomeTest = () => {
       </div>
 
       {/* Grid Section */}
-      <div className="mb-10">
-        {isLoading ? (
+      {/* Added transition-opacity so the grid subtly fades while new data fetches, preventing jarring visual glitches */}
+      <div className={`mb-10 transition-opacity duration-300`}>
+        {showSkeleton ? (
           <HomeTestCardSkeleton />
         ) : tests.length > 0 ? (
-          // Passing the tests array to your card list component
           <HomeTestCard tests={tests} />
         ) : (
           <div className="text-center py-20 text-muted-foreground">
@@ -80,7 +95,6 @@ const HomeTest = () => {
               current_page: pagination.current_page,
               last_page: pagination.last_page,
             }}
-            // FIXED: Changed setPageTest to setPage to match your import
             onPageChange={(newPage: number) => dispatch(setPage(newPage))}
           />
         )}

@@ -9,7 +9,7 @@ export interface TestFilterState {
 
 const initialState: TestFilterState = {
   page: 1,
-  size: 10, // Default page size, adjust as needed
+  size: 10, 
   examType: "",
 };
 
@@ -19,11 +19,11 @@ const testFilterSlice = createSlice({
   reducers: {
     setExamType: (state, action: PayloadAction<string>) => {
       state.examType = action.payload;
-      state.page = 1; // Reset to first page when filtering changes
+      state.page = 1; 
     },
     setSize: (state, action: PayloadAction<number>) => {
       state.size = action.payload;
-      state.page = 1; // Reset to first page when page size changes
+      state.page = 1;
     },
     setPage: (state, action: PayloadAction<number>) => {
       state.page = action.payload;
