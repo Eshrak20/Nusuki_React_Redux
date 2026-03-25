@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import type { RootState } from "@/redux/store";
 import { useGetTestsQuery } from "@/redux/api/educationApi/testApi";
@@ -24,31 +24,15 @@ const HomeTest = () => {
     (state: RootState) => state.testFilter
   );
 
-  const [debouncedExamType, setDebouncedExamType] = useState(examType);
-
-  // ONLY ONE useEffect for debouncing
-  useEffect(() => {
-    // If examType is empty (cleared), delay is 0. Otherwise, wait 500ms.
-    const delay = examType ? 500 : 0;
-
-    const handler = setTimeout(() => {
-      setDebouncedExamType(examType);
-    }, delay);
-
-    return () => clearTimeout(handler);
-  }, [examType]);
 
   // Grab isFetching as well to track background loading
-  const { data, isLoading, isFetching } = useGetTestsQuery({
+  const { data, isLoading } = useGetTestsQuery({
     page,
-    examType: debouncedExamType,
+    examType,
   });
 
   const tests = data?.data?.data ?? [];
   const pagination = data?.data;
-
-  // Use a combined loading state for the initial load OR when a search is actively fetching
-  const showSkeleton = isLoading || (isFetching && tests.length === 0);
 
   return (
     <div className="lg:pt-16 pb-3 max-w-7xl mx-auto min-h-screen">
@@ -76,11 +60,12 @@ const HomeTest = () => {
       {/* Grid Section */}
       {/* Added transition-opacity so the grid subtly fades while new data fetches, preventing jarring visual glitches */}
       <div className={`mb-10 transition-opacity duration-300`}>
-        {showSkeleton ? (
+        {isLoading ? (
           <HomeTestCardSkeleton />
         ) : tests.length > 0 ? (
-          <HomeTestCard tests={tests} />
-        ) : (
+          <div>
+            <HomeTestCard key={examType} tests={tests} />
+          </div>) : (
           <div className="text-center py-20 text-muted-foreground">
             No test preparations found matching your criteria.
           </div>
