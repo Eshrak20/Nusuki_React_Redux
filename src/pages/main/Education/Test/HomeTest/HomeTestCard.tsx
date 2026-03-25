@@ -1,5 +1,5 @@
 import type { TestPreparation } from "@/types/education/type.tests";
-import { motion, type Variants } from "framer-motion"; 
+import { motion, type Variants } from "framer-motion";
 
 interface HomeTestCardProps {
     tests: TestPreparation[];
@@ -16,7 +16,7 @@ const formatDate = (dateString: string) => {
 };
 
 const HomeTestCard = ({ tests }: HomeTestCardProps) => {
-    
+
     const containerVariants: Variants = {
         hidden: { opacity: 0 },
         visible: {
@@ -32,9 +32,9 @@ const HomeTestCard = ({ tests }: HomeTestCardProps) => {
         visible: {
             opacity: 1,
             y: 0,
-            transition: { 
-                duration: 0.5, 
-                ease: "easeOut" 
+            transition: {
+                duration: 0.5,
+                ease: "easeOut"
             }
         },
     };
@@ -42,9 +42,6 @@ const HomeTestCard = ({ tests }: HomeTestCardProps) => {
     return (
         <motion.div
             variants={containerVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: false, amount: 0.05 }}
             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 p-4 max-w-7xl mx-auto"
         >
             {tests.map((test) => (
@@ -56,7 +53,7 @@ const HomeTestCard = ({ tests }: HomeTestCardProps) => {
                         scale: 1.02,
                         transition: { duration: 0.3 }
                     }}
-                    className="group bg-white rounded-2xl p-8 flex flex-col items-center justify-between border border-gray-100 shadow-[0_10px_40px_-15px_rgba(0,0,0,0.1)] hover:shadow-[0_20px_50px_-10px_rgba(var(--primary-rgb),0.15)] transition-all duration-300 relative overflow-hidden"
+                    className="group bg-card text-card-foreground rounded-2xl p-8 flex flex-col items-center justify-between border border-border shadow-sm hover:shadow-md dark:shadow-none dark:hover:shadow-[0_10px_30px_-10px_rgba(var(--primary),0.2)] transition-all duration-300 relative overflow-hidden"
                 >
                     <div className="flex flex-col items-center w-full relative z-10">
                         <div className="h-16 flex items-center justify-center mb-6">
@@ -73,7 +70,7 @@ const HomeTestCard = ({ tests }: HomeTestCardProps) => {
                             {test.testDesc}
                         </h3>
 
-                        <div className="flex flex-col items-center space-y-2.5 text-[15px] font-medium text-gray-800">
+                        <div className="flex flex-col items-center space-y-2.5 text-[15px] font-medium text-muted-foreground dark:text-gray-300">
                             <p className="hover:text-primary transition-colors">Date: {formatDate(test.date)}</p>
                             <p className="hover:text-primary transition-colors">Time: {test.time}</p>
                             <p className="hover:text-primary transition-colors">Duration : {test.duration}</p>
@@ -103,13 +100,13 @@ const HomeTestCard = ({ tests }: HomeTestCardProps) => {
 
                         <motion.button
                             whileTap={{ scale: 0.95 }}
-                            className="bg-primary text-white px-10 py-2.5 rounded-lg shadow-md shadow-primary/20 hover:shadow-lg hover:shadow-primary/40 hover:brightness-110 transition-all font-semibold w-max"
+                            className="bg-primary text-primary-foreground px-10 py-2.5 rounded-lg shadow-md shadow-primary/20 hover:shadow-lg hover:shadow-primary/40 hover:brightness-110 transition-all font-semibold w-max"
                         >
                             Enroll Now
                         </motion.button>
                     </div>
 
-                    <div className="absolute inset-0 bg-linear-to-b from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+                    <div className="absolute inset-0 bg-linear-to-b from-primary/5 dark:from-primary/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
                 </motion.div>
             ))}
         </motion.div>

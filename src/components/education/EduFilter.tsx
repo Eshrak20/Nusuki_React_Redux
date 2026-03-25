@@ -7,11 +7,13 @@ import { countries } from "../../data/education/countries"
 import { degrees } from "../../data/education/degrees"
 import { useLocation } from "react-router-dom";
 import { setDegree } from "@/redux/features/courseFilterSlice";
+import { setExamType } from "@/redux/features/testFilterSlice";
+import { exams } from "@/data/education/exams";
 
-const HomeInstitutionCountrySearch = () => {
+const EduFilter = () => {
     const location = useLocation();
-    const options = location.pathname.startsWith("/education/institution") ? countries : degrees;
-    const setOption = location.pathname.startsWith("/education/institution") ? setCountry : setDegree;
+    const options = location.pathname.startsWith("/education/institution") ? countries : location.pathname.startsWith("/education/courses") ? degrees : exams;
+    const setOption = location.pathname.startsWith("/education/institution") ? setCountry : location.pathname.startsWith("/education/courses") ? setDegree : setExamType;
     const [isOpen, setIsOpen] = useState(false);
     const dispatch = useDispatch();
     const { option } = useSelector((state: RootState) => {
@@ -20,6 +22,9 @@ const HomeInstitutionCountrySearch = () => {
         }
         else if (location.pathname.startsWith("/education/courses")) {
             return { option: state.courseFilter.study_level };
+        }
+        else if (location.pathname.startsWith("/education/tests")) {
+            return { option: state.testFilter.examType };
         }
         return { option: "" };
     });
@@ -43,7 +48,7 @@ const HomeInstitutionCountrySearch = () => {
                 className="relative flex items-center justify-between w-full bg-background border border-border py-2.5 px-4 rounded-lg cursor-pointer text-sm shadow-sm text-foreground hover:bg-accent hover:text-accent-foreground transition-colors"
             >
                 <span className={option ? "text-primary font-medium" : "text-muted-foreground"}>
-                    {option || `All ${location.pathname.startsWith("/education/institution") ? "Countries" : "Degrees"}`}
+                    {option || `All ${location.pathname.startsWith("/education/institution") ? "Countries" : location.pathname.startsWith("/education/courses") ? "Degrees" : "Exams"}`}
                 </span>
                 <ChevronDown
                     className={`h-4 w-4 text-gray-400 transition-transform dark:text-gray-300 ${isOpen ? "rotate-180" : ""}`}
@@ -61,7 +66,7 @@ const HomeInstitutionCountrySearch = () => {
                             onClick={() => handleSelect("")}
                             className="px-4 py-2 text-sm text-foreground hover:bg-accent hover:text-accent-foreground cursor-pointer transition-colors"
                         >
-                            All {location.pathname.startsWith("/education/institution") ? "Countries" : "Degrees"}
+                            All {location.pathname.startsWith("/education/institution") ? "Countries" : location.pathname.startsWith("/education/courses") ? "Degrees" : "Exams"}
                         </li>
                         {options.map((c) => (
                             <li
@@ -81,4 +86,4 @@ const HomeInstitutionCountrySearch = () => {
     );
 };
 
-export default HomeInstitutionCountrySearch;
+export default EduFilter;

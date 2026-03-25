@@ -1,38 +1,39 @@
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import type { RootState } from "@/redux/store";
-import { useGetTestsQuery } from "@/redux/api/educationApi/testApi";
+import { useGetExpertsQuery, useGetTestsQuery } from "@/redux/api/educationApi/testApi";
 import { setPage } from "@/redux/features/testFilterSlice";
 import EduFilter from "@/components/education/EduFilter";
 import EduPagination from "@/components/education/EduPagination";
 import EduSearch from "@/components/education/EduSearch";
 import HomeTestCardSkeleton from "@/components/skeletons/HomeTestCardSkeleton";
 import HomeTestCard from "./HomeTestCard";
+import OurExpertTeam from "./OurExpertTeam";
 
 const HomeTest = () => {
   const dispatch = useDispatch();
-
-  // Smooth scroll to top on mount
-  useEffect(() => {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
-  }, []);
 
   const { examType, page } = useSelector(
     (state: RootState) => state.testFilter
   );
 
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  }, [examType, page]);
 
-  // Grab isFetching as well to track background loading
   const { data, isLoading } = useGetTestsQuery({
     page,
     examType,
   });
 
+  const { data: expertsData, isLoading: expertsLoading } = useGetExpertsQuery();
+
   const tests = data?.data?.data ?? [];
   const pagination = data?.data;
+  const experts = expertsData?.data
 
   return (
     <div className="lg:pt-16 pb-3 max-w-7xl mx-auto min-h-screen">
@@ -65,7 +66,8 @@ const HomeTest = () => {
         ) : tests.length > 0 ? (
           <div>
             <HomeTestCard key={examType} tests={tests} />
-          </div>) : (
+          </div>
+        ) : (
           <div className="text-center py-20 text-muted-foreground">
             No test preparations found matching your criteria.
           </div>
@@ -73,7 +75,7 @@ const HomeTest = () => {
       </div>
 
       {/* Pagination Section */}
-      <div className="max-w-7xl mx-auto">
+      <div key={examType} className="max-w-7xl mx-auto">
         {pagination && pagination.last_page > 1 && (
           <EduPagination
             pagination={{
@@ -83,6 +85,17 @@ const HomeTest = () => {
             onPageChange={(newPage: number) => dispatch(setPage(newPage))}
           />
         )}
+      </div>
+
+      <div className={`mb-10 transition-opacity duration-300`}>
+        {expertsLoading ? (
+          <HomeTestCardSkeleton />
+        ) : (
+          <div>
+            <OurExpertTeam experts={experts} />
+          </div>
+        )
+        }
       </div>
     </div>
   );

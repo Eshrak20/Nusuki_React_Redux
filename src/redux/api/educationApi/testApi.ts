@@ -8,7 +8,6 @@ import { baseApi } from "../baseApi";
 
 export const educationApi = baseApi.injectEndpoints({
     endpoints: (builder) => ({
-        // 1. Fetch the paginated list of tests
         getTests: builder.query<TestPreparationsApiResponse, TestPreparationQueryParams>({
             query: ({ page = 1, examType = ""}) => ({
                 url: "/test-preparations",
@@ -20,15 +19,13 @@ export const educationApi = baseApi.injectEndpoints({
             }),
         }),
 
-        // 2. Fetch the deep details of a single test by ID
-        getTestsDetails: builder.query<TestDetailsApiResponse, { id: string | number }>({
+        getTestsDetails: builder.query<TestDetailsApiResponse, { id: string }>({
             query: ({ id }) => ({
                 url: `/test-preparations/${id}`,
                 method: "GET",
             }),
         }),
 
-        // 3. Fetch the list of experts
         getExperts: builder.query<ExpertsApiResponse, void>({
             query: () => ({
                 url: `/our-expert-teams`,
@@ -36,7 +33,6 @@ export const educationApi = baseApi.injectEndpoints({
             }),
         }),
     }),
-    overrideExisting: false, // Optional: useful if you are hot-reloading
 });
 
 export const {
