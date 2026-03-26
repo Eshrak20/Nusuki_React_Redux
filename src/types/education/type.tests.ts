@@ -92,8 +92,8 @@ export interface TestDetailContent {
   page_title: string;
   hero: Hero;
   about_exam: AboutExam;
-  exam_structure: Record<string, string>; // Dynamic key-value pairs
-  other_details: Record<string, string>;  // Dynamic key-value pairs
+  exam_structure: ExamStructure; // Dynamic key-value pairs
+  other_details: OtherDetails;  // Dynamic key-value pairs
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   prep_benefits: any[];
   upcoming_batches: UpcomingBatch[];
@@ -118,6 +118,20 @@ export interface AboutExam {
   paragraphs: string[];
 }
 
+export interface ExamStructure {
+  // We use an index signature because the keys are dynamic strings (e.g., "1. Reading Section")
+  [key: string]: string | undefined;
+
+  // You can also explicitly define known common keys for better intellisense:
+  "1. Reading Section"?: string;
+  "2. Listening Section"?: string;
+  "3. Speaking Section"?: string;
+  "4. Writing Section"?: string;
+  "Nature of Exam"?: string;
+  "Total Scores"?: string;
+  "Total Time"?: string;
+}
+
 export interface UpcomingBatch {
   title: string;
   raw_lines: string[];
@@ -132,6 +146,19 @@ export interface Offering {
   price: string;
   extra_text: string;
   features: string[];
+}
+
+export interface OtherDetails {
+  // Explicitly defined based on your IELTS data
+  "Website"?: string;
+  "Registration"?: string;
+  "Test Fees"?: string;
+  "Score Validity"?: string;
+  "Score Reporting"?: string;
+  "Additional Test Score Reporting Fees"?: string;
+
+  // Index signature to allow for dynamic keys from different exams
+  [key: string]: string | undefined;
 }
 
 export interface Faq {
