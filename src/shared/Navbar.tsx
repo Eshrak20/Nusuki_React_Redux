@@ -95,12 +95,12 @@ export default function Navbar() {
           {/* Logo */}
           <Link to="/" className="flex h-12 w-56 items-center">
             <img
-              src={location.pathname.startsWith("/education") ? logoEduLight : logoWhite }
+              src={location.pathname.startsWith("/education") ? logoEduLight : logoWhite}
               alt="Logo"
               className="dark:hidden object-contain"
             />
             <img
-              src={location.pathname.startsWith("/education") ? logoEduDark : logoDark }
+              src={location.pathname.startsWith("/education") ? logoEduDark : logoDark}
               alt="Logo"
               className="hidden dark:block object-contain"
             />

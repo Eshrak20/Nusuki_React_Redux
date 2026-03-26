@@ -9,7 +9,7 @@ import { baseApi } from "../baseApi";
 export const educationApi = baseApi.injectEndpoints({
     endpoints: (builder) => ({
         getTests: builder.query<TestPreparationsApiResponse, TestPreparationQueryParams>({
-            query: ({ page = 1, examType = ""}) => ({
+            query: ({ page = 1, examType = "" }) => ({
                 url: "/test-preparations",
                 method: "GET",
                 params: {

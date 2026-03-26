@@ -12,12 +12,12 @@ const initialState: TestFilterState = {
 };
 
 const testFilterSlice = createSlice({
-  name: "testFilter", 
+  name: "testFilter",
   initialState,
   reducers: {
     setExamType: (state, action: PayloadAction<string>) => {
       state.examType = action.payload;
-      state.page = 1; 
+      state.page = 1;
     },
     setPage: (state, action: PayloadAction<number>) => {
       state.page = action.payload;

@@ -48,8 +48,8 @@ const OurExpertTeam = ({ experts = [] }: ExpertsProps) => {
                 <motion.div
                     className="flex cursor-grab active:cursor-grabbing"
                     drag="x"
-                    dragConstraints={containerRef} 
-                    dragElastic={0} 
+                    dragConstraints={containerRef}
+                    dragElastic={0}
                     onDragEnd={handleDragEnd}
                     animate={{ x: `-${(activePage * 100) / totalPages}%` }}
                     transition={{
@@ -91,9 +91,8 @@ const OurExpertTeam = ({ experts = [] }: ExpertsProps) => {
                         <button
                             key={index}
                             onClick={() => setCurrentPage(index)}
-                            className={`h-2.5 rounded-full transition-all duration-500 ${
-                                activePage === index ? "w-10 bg-primary" : "w-2.5 bg-primary/20"
-                            }`}
+                            className={`h-2.5 rounded-full transition-all duration-500 ${activePage === index ? "w-10 bg-primary" : "w-2.5 bg-primary/20"
+                                }`}
                         />
                     ))}
                 </div>
