@@ -1,6 +1,7 @@
 import type { TestPreparation } from "@/types/education/type.tests";
 import EduTestCmnBtn from "@/components/education/EduTestCmnBtn"
 import { motion, type Variants } from "framer-motion";
+import { Link } from "react-router-dom";
 
 interface HomeTestCardProps {
     tests: TestPreparation[];
@@ -57,7 +58,7 @@ const HomeTestCard = ({ tests }: HomeTestCardProps) => {
                     className="group bg-card text-card-foreground rounded-2xl p-8 flex flex-col items-center justify-between border border-border shadow-sm hover:shadow-md dark:shadow-none dark:hover:shadow-[0_10px_30px_-10px_rgba(var(--primary),0.2)] transition-all duration-300 relative overflow-hidden"
                 >
                     <div className="flex flex-col items-center w-full relative z-10">
-                        <div className="h-16 flex items-center justify-center mb-6">
+                        <div className="h-16 flex items-center justify-center mb-3 lg:mb-6">
                             <motion.img
                                 src={test.image}
                                 alt={test.examType}
@@ -67,11 +68,11 @@ const HomeTestCard = ({ tests }: HomeTestCardProps) => {
                             />
                         </div>
 
-                        <h3 className="text-primary font-medium text-base mb-8 opacity-80 group-hover:opacity-100 transition-opacity text-center">
+                        <h3 className="text-primary font-bold lg:font-medium text-base mb-5 lg:mb-8 opacity-80 group-hover:opacity-100 transition-opacity text-center">
                             {test.testDesc}
                         </h3>
 
-                        <div className="flex flex-col items-center space-y-2.5 text-[15px] font-medium text-muted-foreground dark:text-gray-300">
+                        <div className="flex flex-col items-center space-y-1 lg:space-y-2.5 text-[15px] font-medium text-muted-foreground dark:text-gray-300">
                             <p className="hover:text-primary transition-colors">Date: {formatDate(test.date)}</p>
                             <p className="hover:text-primary transition-colors">Time: {test.time}</p>
                             <p className="hover:text-primary transition-colors">Duration : {test.duration}</p>
@@ -79,8 +80,8 @@ const HomeTestCard = ({ tests }: HomeTestCardProps) => {
                         </div>
                     </div>
 
-                    <div className="flex flex-col items-center mt-8 space-y-5 w-full relative z-10">
-                        <button className="text-primary font-semibold text-sm flex items-center gap-1 hover:gap-2 transition-all duration-300">
+                    <div className="flex flex-col items-center mt-6 lg:mt-8 space-y-5 w-full relative z-10">
+                        <Link to={`/education/tests/${test.id}`} className="text-primary font-semibold text-sm flex items-center gap-1 hover:gap-2 transition-all duration-300">
                             View More
                             <motion.svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -97,16 +98,10 @@ const HomeTestCard = ({ tests }: HomeTestCardProps) => {
                             >
                                 <path d="m9 18 6-6-6-6" />
                             </motion.svg>
-                        </button>
+                        </Link>
 
                         <EduTestCmnBtn title="Enroll Now"/>
 
-                        {/* <motion.button
-                            whileTap={{ scale: 0.95 }}
-                            className="bg-primary text-primary-foreground px-10 py-2.5 rounded-lg shadow-md shadow-primary/20 hover:shadow-lg hover:shadow-primary/40 hover:brightness-110 transition-all font-semibold w-max"
-                        >
-                            Enroll Now
-                        </motion.button> */}
                     </div>
 
                     <div className="absolute inset-0 bg-linear-to-b from-primary/5 dark:from-primary/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
