@@ -20,6 +20,7 @@ import HomeVisa from "@/pages/main/Visa/HomeVisa/HomeVisa";
 import DetVisaMain from "@/pages/main/Visa/DetailsVisa/DetVisaMain";
 import DestinationMain from "@/pages/main/Education/Destination/DestinationMain";
 import HomeTest from "@/pages/main/Education/Test/HomeTest/HomeTest";
+import DetailTestMain from "@/pages/main/Education/Test/DetailTest/DetailTestMain";
 
 export const router = createBrowserRouter([
   {
@@ -65,6 +66,10 @@ export const router = createBrowserRouter([
           {
             path: "tests",
             element: <HomeTest />,
+          },
+          {
+            path: "tests/:id",
+            element: <DetailTestMain />,
           },
         ],
       },
