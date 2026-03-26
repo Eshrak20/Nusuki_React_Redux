@@ -7,8 +7,9 @@ import EduFilter from "@/components/education/EduFilter";
 import EduPagination from "@/components/education/EduPagination";
 import EduSearch from "@/components/education/EduSearch";
 import HomeTestCardSkeleton from "@/components/skeletons/HomeTestCardSkeleton";
-import HomeTestCard from "./HomeTestCard";
-import OurExpertTeam from "./OurExpertTeam";
+import HomeTestCard from "./HomeTestComponents/HomeTestCard";
+import OurExpertTeam from "./HomeTestComponents/OurExpertTeam";
+import TestBanner from "./HomeTestComponents/TestBanner";
 
 const HomeTest = () => {
   const dispatch = useDispatch();
@@ -36,16 +37,23 @@ const HomeTest = () => {
   const experts = expertsData?.data
 
   return (
-    <div className="lg:pt-16 pb-3 max-w-7xl mx-auto min-h-screen">
+    <>
+    <div>
+      <TestBanner />
+    </div>
+    <div className="lg:pt-16 pt-10 pb-3 max-w-7xl mx-auto min-h-screen">
+      
       {/* Search and Filter Header */}
-      <div className="flex flex-col md:flex-row items-center justify-between mb-7 gap-6 md:gap-10 pl-2">
+      <div className="flex flex-col md:flex-row items-center justify-between mb-7 gap-6 md:gap-10 pl-2 lg:px-5">
         {/* Showing Results Info */}
-        <p className="text-foreground/80 text-sm font-medium order-3 md:order-1 whitespace-nowrap mr-auto">
+        <div className="order-3 md:order-1">
+          <p className="text-foreground/80 text-sm font-medium  whitespace-nowrap mr-auto">
           Showing Results for:{" "}
           <span className="text-foreground font-semibold">
             {examType || "All Exams"}
           </span>
         </p>
+        </div>
 
         {/* Search Bar */}
         <div className="w-full md:w-1/2 order-1 md:order-2">
@@ -98,6 +106,7 @@ const HomeTest = () => {
         }
       </div>
     </div>
+    </>
   );
 };
 

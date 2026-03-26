@@ -1,4 +1,5 @@
 import type { TestPreparation } from "@/types/education/type.tests";
+import EduTestCmnBtn from "@/components/education/EduTestCmnBtn"
 import { motion, type Variants } from "framer-motion";
 
 interface HomeTestCardProps {
@@ -98,12 +99,14 @@ const HomeTestCard = ({ tests }: HomeTestCardProps) => {
                             </motion.svg>
                         </button>
 
-                        <motion.button
+                        <EduTestCmnBtn title="Enroll Now"/>
+
+                        {/* <motion.button
                             whileTap={{ scale: 0.95 }}
                             className="bg-primary text-primary-foreground px-10 py-2.5 rounded-lg shadow-md shadow-primary/20 hover:shadow-lg hover:shadow-primary/40 hover:brightness-110 transition-all font-semibold w-max"
                         >
                             Enroll Now
-                        </motion.button>
+                        </motion.button> */}
                     </div>
 
                     <div className="absolute inset-0 bg-linear-to-b from-primary/5 dark:from-primary/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />

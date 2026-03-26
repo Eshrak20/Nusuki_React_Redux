@@ -10,7 +10,7 @@ const EduBanner = () => {
 
       <div className="relative z-20 text-white mb-12">
         <h1 className="text-3xl lg:text-5xl font-extrabold mb-3">Welcome to Nusuki Education!</h1>
-        <p className="text-xl opacity-90">Book flights, Visa & holiday packages at the best prices</p>
+        <p className="text-lg lg:text-xl opacity-90">Choose your destination, find your dream institution and get abroad courses & tests at the best price</p>
       </div>
     </div>
   );

@@ -35,7 +35,7 @@ const EduFilter = () => {
     };
 
     return (
-        <div className="relative w-full">
+        <div className="relative w-8/9 mx-auto lg:w-full">
             <div
                 className={`absolute -inset-1 bg-linear-to-r from-primary/10 via-primary/10 to-primary/10
       rounded-lg opacity-75 blur-xl transition-all duration-700
