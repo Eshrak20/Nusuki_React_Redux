@@ -39,10 +39,10 @@ const DetTestOfferings = ({ offerings }: OfferingProps) => {
                             </div>
 
                             {/* Features List */}
-                            <div className="p-8 flex-grow space-y-4">
+                            <div className="p-8 grow space-y-4">
                                 {offering.features.map((feature, idx) => (
                                     <div key={idx} className="flex items-start gap-3 group">
-                                        <div className="mt-1 flex-shrink-0">
+                                        <div className="mt-1 shrink-0">
                                             <CheckCircle2 className="w-5 h-5 text-primary opacity-80 group-hover:opacity-100 transition-opacity" />
                                         </div>
                                         <p className="text-sm md:text-base text-muted-foreground leading-relaxed">
