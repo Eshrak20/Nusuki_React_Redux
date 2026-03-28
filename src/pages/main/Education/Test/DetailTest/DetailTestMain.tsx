@@ -20,8 +20,8 @@ const DetailTestMain = () => {
     }
 
     const testData = data?.data;
-    const detail = testData?.detail_json; // Contains batch, date, time, etc.
-    const extra = detail?.detail_json; // Contains about_exam, exam_structure, hero, etc.
+    const detail = testData?.detail_json; 
+    const extra = detail?.detail_json; 
 
     const heroContent = extra?.hero;
     const aboutExam = extra?.about_exam;

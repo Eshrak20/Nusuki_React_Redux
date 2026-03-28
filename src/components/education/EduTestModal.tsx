@@ -15,7 +15,6 @@ interface FormFieldItem {
     name: keyof ContactFormValues;
     label: string;
     icon: React.ElementType;
-    placeholder?: string;
     isMobile?: boolean;
 }
 
@@ -36,16 +35,37 @@ const EduTestModal = ({ open, onClose }: EduTestModalProps) => {
     const form = useForm<ContactFormValues>({
         resolver: zodResolver(contactSchema),
         defaultValues: {
-            name: "", email: "", phone: "",
-            subject: "Demo Session Request",
-            description: "Enquiry from Test Prep Modal"
+            name: "",
+            email: "",
+            phone: "",
+            city: "",
+            office: "",
+            destination: "",
+            coaching: "",
+            loan: "",
+            subject: "Test Session Request",
+            description: ""
         },
     });
 
     const onSubmit = async (values: ContactFormValues) => {
         try {
-            await postContactInfo(values).unwrap();
+            // Combine specific fields into the description string
+            const combinedDescription = [
+                `Destination: ${values.destination || "N/A"}`,
+                `Looking for coaching : ${values.coaching || "N/A"}`,
+                `Looking for study loan : ${values.loan || "N/A"}`
+            ].join("\n");
+
+            // Create the final payload for the backend
+            const finalPayload = {
+                ...values,
+                description: combinedDescription
+            };
+
+            await postContactInfo(finalPayload).unwrap();
             setIsSuccess(true);
+            
             setTimeout(() => {
                 setIsSuccess(false);
                 form.reset();
@@ -59,22 +79,20 @@ const EduTestModal = ({ open, onClose }: EduTestModalProps) => {
 
     const fields: FormFieldItem[] = [
         { name: "name", label: "Student Full Name", icon: User },
-        { name: "city" as keyof ContactFormValues, label: "Student City", icon: MapPin },
+        { name: "city", label: "Student City", icon: MapPin },
         { name: "email", label: "Student Email", icon: Mail },
-        { name: "office" as keyof ContactFormValues, label: "Nearest Office", icon: Globe },
+        { name: "office", label: "Nearest Office", icon: Globe },
         { name: "phone", label: "Student Mobile", icon: Phone, isMobile: true },
-        { name: "destination" as keyof ContactFormValues, label: "Preferred Destination", icon: GraduationCap },
-        { name: "coaching" as keyof ContactFormValues, label: "Looking for Coaching?", icon: BookOpen },
-        { name: "loan" as keyof ContactFormValues, label: "Looking for Education Loan?", icon: Banknote },
+        { name: "destination", label: "Preferred Destination", icon: GraduationCap },
+        { name: "coaching", label: "Looking for Coaching?", icon: BookOpen },
+        { name: "loan", label: "Looking for Education Loan?", icon: Banknote },
     ];
 
     return (
         <Dialog open={open} onOpenChange={onClose}>
             <DialogContent className="p-0 overflow-hidden w-[95vw] sm:w-full max-w-4xl border-none bg-transparent shadow-none custom-close-hidden">
-                {/* Added max-h-[95dvh] and overflow-y-auto so mobile users can scroll the form */}
                 <div className="w-full max-h-[95dvh] bg-card flex flex-col overflow-y-auto rounded-2xl border shadow-2xl relative">
-
-                    {/* Custom X Close Button */}
+                    
                     <button
                         onClick={onClose}
                         className="absolute right-3 top-3 md:right-4 md:top-4 p-2 rounded-full hover:bg-muted transition-colors z-50 group bg-background/50 md:bg-transparent backdrop-blur-sm md:backdrop-blur-none"
@@ -82,9 +100,7 @@ const EduTestModal = ({ open, onClose }: EduTestModalProps) => {
                         <X className="h-5 w-5 text-muted-foreground group-hover:text-foreground" />
                     </button>
 
-                    {/* Header */}
                     <div className="p-6 md:p-8 border-b text-center bg-muted/20 shrink-0">
-                        {/* Added pr-8 on mobile to prevent text overlapping the close button */}
                         <h2 className="text-xl md:text-3xl font-bold text-foreground tracking-tight pr-7 md:pr-0">
                             Start Your Exam Prep Now – Enquire for Free Demo Session!
                         </h2>
@@ -96,7 +112,6 @@ const EduTestModal = ({ open, onClose }: EduTestModalProps) => {
                     <div className="p-5 md:p-10">
                         <Form {...form}>
                             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 md:space-y-8">
-                                {/* Adjusted gap-y for mobile */}
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-8 md:gap-y-10">
                                     {fields.map((item) => (
                                         <FormField
@@ -111,20 +126,20 @@ const EduTestModal = ({ open, onClose }: EduTestModalProps) => {
                                                                 {item.label} <span className="text-destructive">*</span>
                                                             </label>
 
-                                                            <div className="flex items-center gap-2 mt-4 md:mt-5">
-                                                                {/* Country Prefix for Mobile field as seen in image */}
+                                                            <div className="flex items-center gap-2 mt-2">
                                                                 {item.isMobile && (
-                                                                    <div className="flex items-center gap-1 pr-2 border-r text-sm font-semibold text-muted-foreground">
-                                                                        <span className="text-lg">🇮🇳</span> +91
+                                                                    <div className="flex mt-3 items-center gap-1 pr-2 border-r text-sm font-semibold text-muted-foreground">
+                                                                        <span className="text-lg">BD</span> +880
                                                                     </div>
                                                                 )}
 
                                                                 <FormControl>
                                                                     <input
                                                                         {...field}
+                                                                        value={field.value ?? ""}
                                                                         onFocus={() => setFocusedField(item.name)}
                                                                         onBlur={() => setFocusedField(null)}
-                                                                        className="w-full py-2 bg-transparent outline-none text-foreground text-sm md:text-base font-medium placeholder:opacity-0 focus:placeholder:opacity-50"
+                                                                        className="w-full pb-2 bg-transparent outline-none text-foreground text-sm md:text-base font-medium placeholder:opacity-0 focus:placeholder:opacity-50"
                                                                         placeholder={item.label}
                                                                     />
                                                                 </FormControl>
@@ -139,7 +154,6 @@ const EduTestModal = ({ open, onClose }: EduTestModalProps) => {
                                     ))}
                                 </div>
 
-                                {/* Submit Button Section */}
                                 <div className="pt-6 md:pt-8 flex justify-center pb-4 md:pb-0">
                                     <AnimatePresence mode="wait">
                                         {isSuccess ? (

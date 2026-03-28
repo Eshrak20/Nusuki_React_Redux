@@ -44,6 +44,9 @@ const DetTestUpcomingBatches = ({ batches = [] }: DetTestUpcomingBatchesProps) =
         visible: { opacity: 1, y: 0 }
     };
 
+    // Check if we have fewer batches than what can fit on the screen
+    const isUnderfilled = batches.length < itemsPerPage;
+
     return (
         <div className="w-full max-w-7xl mx-auto py-6 lg:py-10 overflow-hidden" ref={containerRef}>
             <h2 className="text-3xl md:text-4xl font-bold text-center text-foreground mb-12">
@@ -52,13 +55,15 @@ const DetTestUpcomingBatches = ({ batches = [] }: DetTestUpcomingBatchesProps) =
 
             <div className="relative overflow-visible px-4">
                 <motion.div
-                    className="flex cursor-grab active:cursor-grabbing"
-                    drag="x"
-                    // Use the ref for constraints just like the Expert Team component
+                    // Conditionally add justify-center to center 1 or 2 items
+                    className={`flex ${isUnderfilled ? "justify-center" : ""} ${
+                        totalPages > 1 ? "cursor-grab active:cursor-grabbing" : ""
+                    }`}
+                    // Disable drag if all items fit on one page
+                    drag={totalPages > 1 ? "x" : false}
                     dragConstraints={containerRef}
                     dragElastic={0.1}
                     onDragEnd={handleDragEnd}
-                    // This math ensures the shift is relative to the multiplied width
                     animate={{ x: `-${(activePage * 100) / totalPages}%` }}
                     transition={{
                         type: "spring",
@@ -70,7 +75,6 @@ const DetTestUpcomingBatches = ({ batches = [] }: DetTestUpcomingBatchesProps) =
                     {batches.map((batch, index) => (
                         <div
                             key={index}
-                            // Exact same width logic as the Expert Team component
                             style={{ width: `${100 / (totalPages * itemsPerPage)}%` }}
                             className="shrink-0 p-4"
                         >
