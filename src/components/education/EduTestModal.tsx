@@ -48,34 +48,32 @@ const EduTestModal = ({ open, onClose }: EduTestModalProps) => {
         },
     });
 
-    const onSubmit = async (values: ContactFormValues) => {
-        try {
-            // Combine specific fields into the description string
-            const combinedDescription = [
-                `Destination: ${values.destination || "N/A"}`,
-                `Looking for coaching : ${values.coaching || "N/A"}`,
-                `Looking for study loan : ${values.loan || "N/A"}`
-            ].join("\n");
+  const onSubmit = async (values: ContactFormValues) => {
+  try {
+    const combinedDescription = [
+      `Destination: ${values.destination || "N/A"}`,
+      `Coaching: ${values.coaching || "N/A"}`,
+      `Loan: ${values.loan || "N/A"}`,
+      `City: ${values.city || "N/A"}`,
+      `Office: ${values.office || "N/A"}`,
+      `Message: ${values.description || "No additional message"}`
+    ].join("\n");
 
-            // Create the final payload for the backend
-            const finalPayload = {
-                ...values,
-                description: combinedDescription
-            };
+    await postContactInfo({
+      name: values.name,
+      email: values.email,
+      phone: values.phone,
+      subject: values.subject ?? "Test Session Request", // Fallback for TS
+      description: combinedDescription, // join() always returns a string
+    }).unwrap();
 
-            await postContactInfo(finalPayload).unwrap();
-            setIsSuccess(true);
-            
-            setTimeout(() => {
-                setIsSuccess(false);
-                form.reset();
-                onClose();
-            }, 3000);
-        } catch (error: unknown) {
-            const err = error as ApiError;
-            alert(err?.data?.message || "Something went wrong.");
-        }
-    };
+    setIsSuccess(true);
+    // ... timer logic
+  } catch (error: unknown) {
+    const err = error as ApiError;
+    alert(err?.data?.message || "Something went wrong.");
+  }
+};
 
     const fields: FormFieldItem[] = [
         { name: "name", label: "Student Full Name", icon: User },

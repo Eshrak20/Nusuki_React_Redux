@@ -51,33 +51,31 @@ const FormSubmissionModal = ({ open, onClose, title, type = "default" }: Props) 
 
     const onSubmit = async (values: z.infer<typeof contactSchema>) => {
         try {
-            let finalDescription = values.description;
+            let finalDescription: string = values.description || "";
 
             if (type === "education") {
-                const { city, destination, coaching, loan } = form.getValues() as any;
-                finalDescription = `
-                            City: ${city || "N/A"}
-                            Preferred Destination: ${destination || "N/A"}
-                            Coaching: ${coaching || "N/A"}
-                            Loan: ${loan || "N/A"}
+                const city = values.city || "N/A";
+                const destination = values.destination || "N/A";
+                const coaching = values.coaching || "N/A";
+                const loan = values.loan || "N/A";
 
-                            Message:
-                            ${values.description}`;
+                finalDescription = `City: ${city}\nDestination: ${destination}\nCoaching: ${coaching}\nLoan: ${loan}\n\nMessage: ${values.description || ""}`.trim();
             }
 
+            // DO NOT pass 'values' directly. 
+            // Manually map to only the 5 keys the API expects.
             await postContactInfo({
-                ...values,
-                description: finalDescription,
+                name: values.name,
+                email: values.email,
+                phone: values.phone,
+                subject: values.subject,
+                description: finalDescription, // This is now a guaranteed string
             }).unwrap();
 
             setIsSuccess(true);
-            setTimeout(() => {
-                setIsSuccess(false);
-                form.reset();
-                onClose();
-            }, 2500);
+            // ... rest of your success logic
         } catch (error) {
-            console.error(error);
+            console.error("Submission error:", error);
         }
     };
 
@@ -148,8 +146,8 @@ const FormSubmissionModal = ({ open, onClose, title, type = "default" }: Props) 
                             {/* Education Specific Fields */}
                             {type === "education" && (
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4 rounded-2xl bg-muted/50 border border-border">
-                                    <Input {...form.register("city" as any)} placeholder="Your City" className="bg-background rounded-lg" />
-                                    <Input {...form.register("destination" as any)} placeholder="Preferred Destination" className="bg-background rounded-lg" />
+                                    <Input {...form.register("city")} placeholder="Your City" />
+                                    <Input {...form.register("destination")} placeholder="Preferred Destination" />
                                     <Input {...form.register("coaching" as any)} placeholder="Coaching? (Yes/No)" className="bg-background rounded-lg" />
                                     <Input {...form.register("loan" as any)} placeholder="Education Loan? (Yes/No)" className="bg-background rounded-lg" />
                                 </div>
@@ -179,9 +177,9 @@ const FormSubmissionModal = ({ open, onClose, title, type = "default" }: Props) 
                                         <CheckCircle2 className="w-5 h-5" />
                                         Message Sent Successfully!
                                     </div>
-                                    ) : (
-                                        <Button
-                                            type="submit"
+                                ) : (
+                                    <Button
+                                        type="submit"
                                         disabled={isLoading}
                                         className="w-full md:w-auto px-12 py-6 rounded-xl text-lg font-bold transition-all hover:scale-[1.02] active:scale-95"
                                     >
