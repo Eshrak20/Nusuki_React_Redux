@@ -56,7 +56,6 @@ const EduTestModal = ({ open, onClose }: EduTestModalProps) => {
       `Loan: ${values.loan || "N/A"}`,
       `City: ${values.city || "N/A"}`,
       `Office: ${values.office || "N/A"}`,
-      `Message: ${values.description || "No additional message"}`
     ].join("\n");
 
     await postContactInfo({

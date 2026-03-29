@@ -1,5 +1,5 @@
 import EduTitle from "@/components/education/EduTitle";
-import image from "../../../../../assets/reactAssets/Education/image.png";
+import image from "../../../../../assets/reactAssets/Education/home-education.jpg";
 import { ourCoreStrengthData } from "@/data/education/ourCoreStrengthData";
 
 const OurCoreStrength = () => {
