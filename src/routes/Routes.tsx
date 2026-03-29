@@ -21,6 +21,7 @@ import DetVisaMain from "@/pages/main/Visa/DetailsVisa/DetVisaMain";
 import DestinationMain from "@/pages/main/Education/Destination/DestinationMain";
 import HomeTest from "@/pages/main/Education/Test/HomeTest/HomeTest";
 import DetailTestMain from "@/pages/main/Education/Test/DetailTest/DetailTestMain";
+import FlightHome from "@/pages/main/Flight/FlightHome/FlightHome";
 
 export const router = createBrowserRouter([
   {
@@ -31,8 +32,8 @@ export const router = createBrowserRouter([
       {
         index: true,
         // element: <Flight />,
-        element: <Upcoming title="Flight Section Upcoming" />,
-
+        // element: <Upcoming title="Flight Section Upcoming" />,
+        element: <FlightHome />,
       },
       {
         path: "education",
@@ -83,8 +84,8 @@ export const router = createBrowserRouter([
           },
           {
             path: ":id",
-            element: <DetVisaMain />
-          }
+            element: <DetVisaMain />,
+          },
         ],
       },
       {
@@ -95,7 +96,6 @@ export const router = createBrowserRouter([
             index: true,
             // element: <Hotel />,
             element: <Upcoming title="Hotel Section Upcoming" />,
-
           },
         ],
       },
@@ -107,7 +107,6 @@ export const router = createBrowserRouter([
             index: true,
             // element: <Holiday />,
             element: <Upcoming title="Holiday Section Upcoming" />,
-
           },
         ],
       },
@@ -147,7 +146,7 @@ export const router = createBrowserRouter([
           {
             path: "packages/:id",
             element: <HajjUmMainDetPack />,
-          }
+          },
         ],
       },
       {
@@ -170,7 +169,7 @@ export const router = createBrowserRouter([
           {
             path: "packages/:id",
             element: <UmrahMainDetPack />,
-          }
+          },
         ],
       },
     ],
