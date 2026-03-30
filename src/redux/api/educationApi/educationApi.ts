@@ -1,7 +1,7 @@
-import { baseApi } from "../baseApi";
+import { laravelApi } from "../laravelApi";
 import type { DestinationApiResponse, DestinationQueryParams } from "@/types/education/type.country";
 
-export const destinationApi = baseApi.injectEndpoints({
+export const destinationApi = laravelApi.injectEndpoints({
     endpoints: (builder) => ({
         getCountries: builder.query<DestinationApiResponse, DestinationQueryParams>({
             query: ({ country = "" }) => ({

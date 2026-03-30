@@ -1,7 +1,7 @@
 import type { ApiResponse } from "@/types/types.common";
-import { baseApi } from "../baseApi";
+import { laravelApi } from "../laravelApi";
 import type { Pagination, Promotion } from "@/types/flight/flightHome.types";
-export const flightPromoApi = baseApi.injectEndpoints({
+export const flightPromoApi = laravelApi.injectEndpoints({
     endpoints: (builder) => ({
         flightPromoLists: builder.query<ApiResponse<Pagination<Promotion>>, void>({
             query: () => ({
@@ -10,8 +10,8 @@ export const flightPromoApi = baseApi.injectEndpoints({
             }),
         }),
         flightPromoDetails: builder.query<ApiResponse<Promotion>, number>({
-            query: ({ id }) => ({
-                url: "/promotions/id",
+            query: ( id ) => ({
+                url: `/promotions/${id}`,
                 method: "GET",
             }),
         }),

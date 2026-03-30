@@ -1,8 +1,8 @@
 import type { UniversityApiResponse, UniversityQueryParams } from "@/types/education/type.uni";
-import { baseApi } from "../baseApi";
+import { laravelApi } from "../laravelApi";
 import type { UniversityDetailsResponse } from "@/types/education/type.uniDet";
 
-export const educationApi = baseApi.injectEndpoints({
+export const educationApi = laravelApi.injectEndpoints({
     endpoints: (builder) => ({
         getUniversities: builder.query<UniversityApiResponse, UniversityQueryParams>({
             query: ({ page = 1, keyword = "", country = "" }) => ({

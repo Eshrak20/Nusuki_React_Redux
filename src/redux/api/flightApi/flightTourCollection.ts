@@ -1,7 +1,7 @@
 import type { ApiResponse } from "@/types/types.common";
-import { baseApi } from "../baseApi";
+import { laravelApi } from "../laravelApi";
 import type { Pagination, TourCollection } from "@/types/flight/flightHome.types";
-export const flightTourCollectionApi = baseApi.injectEndpoints({
+export const flightTourCollectionApi = laravelApi.injectEndpoints({
     endpoints: (builder) => ({
         flightTourCollectionLists: builder.query<ApiResponse<Pagination<TourCollection>>, void>({
             query: () => ({
@@ -10,8 +10,8 @@ export const flightTourCollectionApi = baseApi.injectEndpoints({
             }),
         }),
         flightTourCollectionDetails: builder.query<ApiResponse<TourCollection>, number>({
-            query: ({ id }) => ({
-                url: "/tour-collections/id",
+            query: (id) => ({
+                url: `/tour-collections/${id}`,
                 method: "GET",
             }),
         }),

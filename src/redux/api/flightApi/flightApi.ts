@@ -1,9 +1,9 @@
-// import { baseApi } from "./baseApi";
+// import { laravelApi } from "./laravelApi";
 // import { env } from "../../config/env";
 // import { mockFlightOffersResponse } from "../../mock/flight/flightOffers.mock";
 // import type { FlightOffersResponse } from "../../types/types.flight";
 
-// export const flightApi = baseApi.injectEndpoints({
+// export const flightApi = laravelApi.injectEndpoints({
 //   endpoints: (builder) => ({
 //     getExclusiveFlightOffers: builder.query<FlightOffersResponse, void>({
 //       queryFn: async (_arg, _api, _extraOptions, baseQuery) => {

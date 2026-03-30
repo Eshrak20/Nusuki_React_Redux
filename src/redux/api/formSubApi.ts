@@ -1,7 +1,7 @@
 import type { ContactFormData } from "@/types/types.form";
-import { baseApi } from "./baseApi";
+import { laravelApi } from "./laravelApi";
 
-export const formSubApi = baseApi.injectEndpoints({
+export const formSubApi = laravelApi.injectEndpoints({
   endpoints: (builder) => ({
     postContactInfo: builder.mutation<{ message: string }, ContactFormData>({
       query: (formData) => ({
