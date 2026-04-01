@@ -88,7 +88,7 @@ export interface TourPackage {
 
 
 
-// Pagination Wrapper
+//! Pagination Wrapper 
 export interface Pagination<T> {
   current_page: number;
   per_page: number;
@@ -97,7 +97,7 @@ export interface Pagination<T> {
   data: T[];
 }
 
-// API Response Wrapper (Generic)
+//! API Response Wrapper (Generic) 
 export interface ApiResponse<T> {
   success: boolean;
   message: string;

@@ -1,6 +1,5 @@
-import type { ApiResponse } from "@/types/types.common";
 import { laravelApi } from "../laravelApi";
-import type { Pagination, Promotion } from "@/types/flight/flightHome.types";
+import type { ApiResponse, Pagination, Promotion } from "@/types/flight/flightHome.types";
 export const flightPromoApi = laravelApi.injectEndpoints({
     endpoints: (builder) => ({
         flightPromoLists: builder.query<ApiResponse<Pagination<Promotion>>, void>({

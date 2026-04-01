@@ -22,6 +22,7 @@ import DestinationMain from "@/pages/main/Education/Destination/DestinationMain"
 import HomeTest from "@/pages/main/Education/Test/HomeTest/HomeTest";
 import DetailTestMain from "@/pages/main/Education/Test/DetailTest/DetailTestMain";
 import FlightHome from "@/pages/main/Flight/FlightHome/FlightHome";
+import ShopHome from "@/pages/main/Shop/ShopHome/ShopHome";
 
 export const router = createBrowserRouter([
   {
@@ -117,7 +118,8 @@ export const router = createBrowserRouter([
           {
             index: true,
             // element: <Holiday />,
-            element: <Upcoming title="Shop Section Upcoming" />,
+            // element: <Upcoming title="Shop Section Upcoming" />,
+            element: <ShopHome />,
           },
         ],
       },
