@@ -1,9 +1,9 @@
 import type { SignificanceResponse } from "@/types/hajj/types.sig";
 import type { VisaRequirementsResponse } from "../../types/hajj/types.visa";
-import { baseApi } from "./baseApi";
+import { laravelApi } from "./laravelApi";
 import type { HajjPackageApiResponse, HajjPackageDetailsResponse } from "@/types/hajj/types.pack";
 
-export const hajjApi = baseApi.injectEndpoints({
+export const hajjApi = laravelApi.injectEndpoints({
   endpoints: (builder) => ({
     getHajjVisa: builder.query<VisaRequirementsResponse, void>({
       query: () => ({

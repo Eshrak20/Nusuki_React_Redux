@@ -4,9 +4,9 @@ import type {
     TestPreparationQueryParams,
     ExpertsApiResponse
 } from "@/types/education/type.tests";
-import { baseApi } from "../baseApi";
+import { laravelApi } from "../laravelApi";
 
-export const educationApi = baseApi.injectEndpoints({
+export const educationApi = laravelApi.injectEndpoints({
     endpoints: (builder) => ({
         getTests: builder.query<TestPreparationsApiResponse, TestPreparationQueryParams>({
             query: ({ page = 1, examType = "" }) => ({

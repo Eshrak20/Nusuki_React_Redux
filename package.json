@@ -35,7 +35,7 @@
     "react-swiper": "^0.1.5",
     "react-toastify": "^11.0.5",
     "slick-carousel": "^1.8.1",
-    "swiper": "^12.1.0",
+    "swiper": "^12.1.3",
     "tailwind-merge": "^3.4.0",
     "tailwindcss": "^4.1.18",
     "yet-another-react-lightbox": "^3.29.1",

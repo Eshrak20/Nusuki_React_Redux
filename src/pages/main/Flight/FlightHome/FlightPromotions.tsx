@@ -1,0 +1,137 @@
+import { useState, useEffect, useRef } from "react";
+import { motion, type PanInfo } from "framer-motion";
+import { useFlightPromoListsQuery } from "@/redux/api/flightApi/flightPromo";
+
+const FlightPromotions = () => {
+  const { data, isLoading, error } = useFlightPromoListsQuery();
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  const [itemsPerPage, setItemsPerPage] = useState(3);
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 768) setItemsPerPage(1);
+      else if (window.innerWidth < 1024) setItemsPerPage(2);
+      else setItemsPerPage(3);
+    };
+
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  if (isLoading) return <div className="py-16 text-center text-muted-foreground">Loading promotions...</div>;
+  if (error) return <div className="py-16 text-center text-destructive">Failed to load promotions.</div>;
+
+  const promotions = data?.data?.data || [];
+  if (!promotions || promotions.length === 0) return null;
+
+  const maxIndex = Math.max(0, promotions.length - itemsPerPage);
+  const activeIndex = Math.max(0, Math.min(currentIndex, maxIndex));
+
+  const handleDragEnd = (_event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
+    const swipeThreshold = 50;
+    const velocityThreshold = 500;
+
+    if (info.offset.x < -swipeThreshold || info.velocity.x < -velocityThreshold) {
+      setCurrentIndex((prev) => Math.min(prev + 1, maxIndex));
+    } else if (info.offset.x > swipeThreshold || info.velocity.x > velocityThreshold) {
+      setCurrentIndex((prev) => Math.max(prev - 1, 0));
+    }
+  };
+
+  return (
+    <div className="w-full px-4 overflow-hidden" ref={containerRef}>
+      <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-8">
+        Exclusive Offers
+      </h2>
+
+      <div className="relative">
+        <motion.div
+          className="flex cursor-grab active:cursor-grabbing"
+          drag="x"
+          dragConstraints={containerRef}
+          dragElastic={0.05}
+          onDragEnd={handleDragEnd}
+          // Improved calculation to prevent side-card peeking
+          animate={{ x: `-${activeIndex * (100 / itemsPerPage)}%` }}
+          transition={{
+            type: "spring",
+            stiffness: 200,
+            damping: 25,
+          }}
+          style={{
+            width: `${(promotions.length / itemsPerPage) * 100}%`,
+            display: 'flex'
+          }}
+        >
+          {promotions.map((promo) => (
+            <div
+              key={promo.id}
+              style={{ width: `${100 / promotions.length}%` }}
+              className="shrink-0 px-2 flex flex-col"
+            >
+              {/* Card Container */}
+              <div className="relative aspect-16/10 group overflow-hidden rounded-2xl bg-muted border border-border/50">
+                {/* Base Image - Shows by default */}
+                <img
+                  src={promo.image_url}
+                  alt={promo.title}
+                  className="w-full h-full object-cover pointer-events-none select-none transition-transform duration-700 group-hover:scale-110"
+                  draggable="false"
+                />
+
+                {/* Hover Overlay - Vertically Centered */}
+                <div className="absolute inset-0 bg-primary/75 dark:bg-black/75 backdrop-blur-[2px] opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-center items-center text-center p-6">
+                  <motion.div
+                    initial={{ y: 20 }}
+                    className="transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 flex flex-col items-center"
+                  >
+                    <h3 className="font-bold text-xl text-white mb-2 line-clamp-1">
+                      {promo.title}
+                    </h3>
+                    <p className="text-sm font-medium text-white/90 mb-3 line-clamp-1">
+                      {promo.subtitle}
+                    </p>
+                    <p className="text-xs text-gray-300 mb-5 line-clamp-3">
+                      {promo.description}
+                    </p>
+
+                    <a
+                      href={promo.link_url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center text-sm font-bold text-primary-foreground hover:underline px-5 py-2.5 rounded-full transition-colors"
+                    >
+                      View Details
+                    </a>
+                  </motion.div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </motion.div>
+      </div>
+
+      {/* Pagination Dots */}
+      {maxIndex > 0 && (
+        <div className="flex justify-center items-center gap-2 mt-8">
+          {Array.from({ length: maxIndex + 1 }).map((_, index) => (
+            <button
+              key={index}
+              onClick={() => setCurrentIndex(index)}
+              className={`h-1.5 rounded-full transition-all duration-300 ${activeIndex === index
+                  ? "w-10 bg-primary"
+                  : "w-2 bg-primary/20 hover:bg-primary/40"
+                }`}
+              aria-label={`Go to slide ${index + 1}`}
+            />
+          ))}
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default FlightPromotions;

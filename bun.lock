@@ -30,7 +30,7 @@
         "react-swiper": "^0.1.5",
         "react-toastify": "^11.0.5",
         "slick-carousel": "^1.8.1",
-        "swiper": "^12.1.0",
+        "swiper": "^12.1.3",
         "tailwind-merge": "^3.4.0",
         "tailwindcss": "^4.1.18",
         "yet-another-react-lightbox": "^3.29.1",
@@ -1072,7 +1072,7 @@
 
     "supports-preserve-symlinks-flag": ["supports-preserve-symlinks-flag@1.0.0", "", {}, "sha512-ot0WnXS9fgdkgIcePe6RHNk1WA8+muPa6cSjeR3V8K27q9BB1rTE3R1p7Hv0z1ZyAc8s6Vvv8DIyWf681MAt0w=="],
 
-    "swiper": ["swiper@12.1.0", "", {}, "sha512-BD4CpAOOyEvZ2f0CDx362ea+vmOwukVcmbsQx+0BhRIaBUz8wvcCd//E7RFmvBZCrfyqXCHUVqmgUwts6ywlxw=="],
+    "swiper": ["swiper@12.1.3", "", {}, "sha512-XcWlVmkHFICI4fuoJKgbp8PscDcS4i7pBH8nwJRBi3dpQvhCySwsWRYm4bOf/BzKVWkHOYaFw7qz9uBSrY3oug=="],
 
     "tailwind-merge": ["tailwind-merge@3.4.0", "", {}, "sha512-uSaO4gnW+b3Y2aWoWfFpX62vn2sR3skfhbjsEnaBI81WD1wBLlHZe5sWf0AqjksNdYTbGBEd0UasQMT3SNV15g=="],
 

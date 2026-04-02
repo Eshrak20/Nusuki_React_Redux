@@ -3,9 +3,9 @@ import type {
   VisaQueryParams,
   VisaDetailsApiResponse
 } from "@/types/visa/types.visa";
-import { baseApi } from "./baseApi";
+import { laravelApi } from "./laravelApi";
 
-export const visaApi = baseApi.injectEndpoints({
+export const visaApi = laravelApi.injectEndpoints({
   endpoints: (builder) => ({
 
     getVisas: builder.query<VisaApiResponse, VisaQueryParams>({
