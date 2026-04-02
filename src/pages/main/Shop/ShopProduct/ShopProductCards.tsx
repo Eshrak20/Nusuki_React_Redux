@@ -21,11 +21,11 @@ const ShopProductCards = ({ products }: { products: Product[] }) => {
             transition={{ duration: 0.5, delay: index * 0.1 }}
           >
             <Link
-              to={`/products/${product.id}`}
+              to={`/shop/products/${product.id}`}
               className="group block relative bg-white dark:bg-gray-900 rounded-[2.5rem] overflow-hidden border border-gray-100 dark:border-gray-800 shadow-sm hover:shadow-2xl transition-all duration-500"
             >
               {/* Product Image */}
-              <div className="relative aspect-[4/5] overflow-hidden bg-gray-50">
+              <div className="relative aspect-4/5 overflow-hidden bg-gray-50">
                 <img
                   src={product.image}
                   alt={product.title}
