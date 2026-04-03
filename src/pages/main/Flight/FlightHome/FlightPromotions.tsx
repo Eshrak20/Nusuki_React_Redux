@@ -3,7 +3,7 @@ import { motion, type PanInfo } from "framer-motion";
 import { useFlightPromoListsQuery } from "@/redux/api/flightApi/flightPromo";
 
 const FlightPromotions = () => {
-  const { data, isLoading, error } = useFlightPromoListsQuery();
+  const { data } = useFlightPromoListsQuery();
   const containerRef = useRef<HTMLDivElement>(null);
 
   const [itemsPerPage, setItemsPerPage] = useState(3);
@@ -20,9 +20,6 @@ const FlightPromotions = () => {
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
-
-  if (isLoading) return <div className="py-16 text-center text-muted-foreground">Loading promotions...</div>;
-  if (error) return <div className="py-16 text-center text-destructive">Failed to load promotions.</div>;
 
   const promotions = data?.data?.data || [];
   if (!promotions || promotions.length === 0) return null;
@@ -122,8 +119,8 @@ const FlightPromotions = () => {
               key={index}
               onClick={() => setCurrentIndex(index)}
               className={`h-1.5 rounded-full transition-all duration-300 ${activeIndex === index
-                  ? "w-10 bg-primary"
-                  : "w-2 bg-primary/20 hover:bg-primary/40"
+                ? "w-10 bg-primary"
+                : "w-2 bg-primary/20 hover:bg-primary/40"
                 }`}
               aria-label={`Go to slide ${index + 1}`}
             />

@@ -10,19 +10,7 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 
 const FlightTourPackages = () => {
-  const { data, isLoading, error } = useFlightTourListsQuery();
-
-  if (isLoading) return (
-    <div className="flex justify-center py-20">
-      <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"></div>
-    </div>
-  );
-  
-  if (error) return (
-    <div className="text-center py-20 text-destructive font-medium">
-      Failed to load tour packages. Please try again later.
-    </div>
-  );
+  const { data } = useFlightTourListsQuery();
 
   const tours = data?.data?.data || [];
 
@@ -35,7 +23,7 @@ const FlightTourPackages = () => {
             Popular Tour Packages
           </h2>
           <p className="text-slate-500 dark:text-slate-400 max-w-xl">
-            Explore our most loved travel packages curated specifically for your dream vacation and unforgettable memories.
+            Plan your dream gateway and choose from uncountable tour packages at ShareTrip. Book our holiday packages for the best deals on any international trip.
           </p>
         </div>
       </div>
@@ -78,7 +66,7 @@ const FlightTourPackages = () => {
                     alt={tour.package_title}
                     className="w-full h-full object-cover transition-transform duration-700 group-hover/card:scale-110"
                   />
-                  
+
                   {/* Floating Rating Badge */}
                   <div className="absolute top-5 left-5 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md px-3 py-1.5 rounded-full flex items-center gap-1.5 shadow-md">
                     <Star size={14} className="fill-yellow-400 text-yellow-400" />
@@ -106,7 +94,7 @@ const FlightTourPackages = () => {
                       {tour.destination.name}
                     </span>
                   </div>
-                  
+
                   <h3 className="text-2xl font-bold text-slate-800 dark:text-white mb-6 line-clamp-1 group-hover/card:text-primary transition-colors">
                     {tour.package_title}
                   </h3>
@@ -129,16 +117,17 @@ const FlightTourPackages = () => {
         </Swiper>
 
         {/* Custom Navigation Buttons (Visible Default) */}
-        <button className="prev-tour absolute -left-5 md:-left-6 top-[40%] -translate-y-1/2 z-20 h-12 w-12 rounded-full bg-white/95 backdrop-blur-sm shadow-xl border border-slate-100 flex items-center justify-center text-slate-800 hover:bg-primary hover:text-white hover:scale-110 transition-all duration-300">
+        <button className="prev-tour hidden absolute -left-5 md:-left-6 top-[40%] -translate-y-1/2 z-20 h-12 w-12 rounded-full bg-white/95 backdrop-blur-sm shadow-xl border border-slate-100 lg:flex items-center justify-center text-slate-800 hover:bg-primary hover:text-white hover:scale-110 transition-all duration-300">
           <ChevronLeft size={24} />
         </button>
-        <button className="next-tour absolute -right-5 md:-right-6 top-[40%] -translate-y-1/2 z-20 h-12 w-12 rounded-full bg-white/95 backdrop-blur-sm shadow-xl border border-slate-100 flex items-center justify-center text-slate-800 hover:bg-primary hover:text-white hover:scale-110 transition-all duration-300">
+        <button className="next-tour hidden absolute -right-5 md:-right-6 top-[40%] -translate-y-1/2 z-20 h-12 w-12 rounded-full bg-white/95 backdrop-blur-sm shadow-xl border border-slate-100 lg:flex items-center justify-center text-slate-800 hover:bg-primary hover:text-white hover:scale-110 transition-all duration-300">
           <ChevronRight size={24} />
         </button>
       </div>
 
       {/* Global CSS for Bullet Points */}
-      <style dangerouslySetInnerHTML={{ __html: `
+      <style dangerouslySetInnerHTML={{
+        __html: `
         .swiper-pagination-bullet {
           width: 8px;
           height: 8px;

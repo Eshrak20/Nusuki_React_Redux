@@ -8,7 +8,7 @@ const playsoteImage =
 
 const AppSection = () => {
   return (
-    <section className="relative pt-20 pb-0 max-w-7xl mx-auto  overflow-hidden bg-white dark:bg-gray-950">
+    <section className="relative pt-20 pb-0 max-w-7xl mx-auto overflow-hidden bg-white dark:bg-gray-950">
       <div className="px-4 text-center">
         {/* Header Text */}
         <motion.div
@@ -16,7 +16,7 @@ const AppSection = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="space-y-4 mb-12"
+          className="space-y-4 mb-2"
         >
           <h2 className="text-4xl md:text-5xl font-black text-[#002365] dark:text-white">
             Your all-in-one Travel App

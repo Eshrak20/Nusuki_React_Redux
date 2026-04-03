@@ -7,14 +7,12 @@ import 'swiper/css/pagination';
 import type { TourDestination } from '@/types/flight/flightHome.types';
 
 interface destinationProps {
-    dests : TourDestination[]
+    dests: TourDestination[]
 }
 
-const FlightDestination = ({dests}:destinationProps) => {
-return (
+const FlightDestination = ({ dests }: destinationProps) => {
+    return (
         <section className="px-4 rounded-[2rem] ">
-           
-
             {/* Destination Carousel */}
             <Swiper
                 slidesPerView={4}
@@ -40,10 +38,10 @@ return (
                     <SwiperSlide key={destination.id}>
                         <div className="group relative h-95 w-full rounded-3xl overflow-hidden bg-white shadow-md transition-all duration-500 hover:shadow-xl hover:-translate-y-1">
                             {/* Image with subtle zoom on hover */}
-                            <img 
-                                src={destination.image_url} 
-                                alt={destination.name} 
-                                className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110" 
+                            <img
+                                src={destination.image_url}
+                                alt={destination.name}
+                                className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
                             />
 
                             {/* Dark overlay that intensifies on hover */}
@@ -64,9 +62,10 @@ return (
                     </SwiperSlide>
                 ))}
             </Swiper>
-            
+
             {/* Custom pagination style override */}
-            <style dangerouslySetInnerHTML={{ __html: `
+            <style dangerouslySetInnerHTML={{
+                __html: `
                 .swiper-pagination-bullet-active {
                     background: var(--primary, #3b82f6) !important;
                     width: 24px !important;
