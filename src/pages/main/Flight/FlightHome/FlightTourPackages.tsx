@@ -27,7 +27,7 @@ const FlightTourPackages = () => {
   const tours = data?.data?.data || [];
 
   return (
-    <section className="px-4 max-w-[1400px] mx-auto relative group">
+    <section className="px-4 max-w-350 mx-auto relative group">
       {/* Section Header */}
       <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
         <div>
@@ -63,7 +63,7 @@ const FlightTourPackages = () => {
           modules={[Autoplay, Navigation, Pagination]}
           className="pb-16"
         >
-          {tours.map((tour, index) => (
+          {tours.map((tour) => (
             <SwiperSlide key={tour.id}>
               <motion.div
                 initial={{ opacity: 0, scale: 0.95 }}
