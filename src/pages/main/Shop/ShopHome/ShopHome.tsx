@@ -5,7 +5,7 @@ import ShopCategory from "./ShopCategory";
 import ShopProductCards from "../ShopProduct/ShopProductCards";
 import ShopBanner from "./ShopBanner";
 import AppSection from "@/components/AppSection";
-import { useProductListsQuery } from "@/redux/api/shopApi/shopProductApi";
+import { useGetProductListsQuery } from "@/redux/api/shopApi/shopProductApi";
 
 const ShopHome = () => {
   // Aliasing destructuring to handle multiple hooks
@@ -13,7 +13,7 @@ const ShopHome = () => {
     data: productData,
     isLoading: isProductsLoading,
     isError: isProductsError,
-  } = useProductListsQuery({ type: "new" });
+  } = useGetProductListsQuery({ type: "new" });
   const {
     data: categoryData,
     isLoading: isCategoriesLoading,
