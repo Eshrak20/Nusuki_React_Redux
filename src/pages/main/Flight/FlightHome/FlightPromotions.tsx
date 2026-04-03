@@ -102,7 +102,7 @@ const FlightPromotions = () => {
                       href={promo.link_url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center text-sm font-bold text-primary-foreground hover:underline px-5 py-2.5 rounded-full transition-colors"
+                      className="inline-flex items-center text-sm font-bold text-primary-foreground dark:text-white hover:underline px-5 py-2.5 rounded-full transition-colors"
                     >
                       View Details
                     </a>

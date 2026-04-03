@@ -8,8 +8,8 @@ const playsoteImage =
 
 const AppSection = () => {
   return (
-    <section className="relative pt-20 pb-0 overflow-hidden bg-white dark:bg-gray-950">
-      <div className="max-w-7xl mx-auto px-4 text-center">
+    <section className="relative pt-20 pb-0 max-w-7xl mx-auto  overflow-hidden bg-white dark:bg-gray-950">
+      <div className="px-4 text-center">
         {/* Header Text */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}

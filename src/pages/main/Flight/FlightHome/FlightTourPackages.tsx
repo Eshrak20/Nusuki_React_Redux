@@ -27,10 +27,10 @@ const FlightTourPackages = () => {
   const tours = data?.data?.data || [];
 
   return (
-    <section className="px-4 max-w-350 mx-auto relative group">
+    <section className="px-4 max-w-350 mx-auto relative">
       {/* Section Header */}
       <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
-        <div>
+        <div className="max-w-3xl mx-auto text-center">
           <h2 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mb-2">
             Popular Tour Packages
           </h2>
@@ -40,8 +40,8 @@ const FlightTourPackages = () => {
         </div>
       </div>
 
-      {/* Swiper Container with Custom Navigation */}
-      <div className="relative">
+      {/* Swiper Container */}
+      <div className="relative group/slider">
         <Swiper
           slidesPerView={3}
           spaceBetween={30}
@@ -54,14 +54,13 @@ const FlightTourPackages = () => {
             prevEl: '.prev-tour',
             nextEl: '.next-tour',
           }}
-         
           breakpoints={{
             320: { slidesPerView: 1, spaceBetween: 20 },
             768: { slidesPerView: 2, spaceBetween: 25 },
             1280: { slidesPerView: 3, spaceBetween: 30 },
           }}
           modules={[Autoplay, Navigation, Pagination]}
-          className="pb-16"
+          className="pb-16 px-2"
         >
           {tours.map((tour) => (
             <SwiperSlide key={tour.id}>
@@ -70,14 +69,14 @@ const FlightTourPackages = () => {
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.4 }}
-                className="group bg-white dark:bg-slate-900 rounded-[2.5rem] overflow-hidden shadow-sm border border-slate-100 dark:border-slate-800 transition-all duration-500 mb-4"
+                className="group/card bg-white dark:bg-slate-900 rounded-[2.5rem] overflow-hidden shadow-sm border border-slate-100 dark:border-slate-800 transition-all duration-500 mb-4 hover:shadow-xl"
               >
                 {/* Image Container */}
                 <div className="relative h-72 overflow-hidden">
                   <img
                     src={tour.image_url}
                     alt={tour.package_title}
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover/card:scale-110"
                   />
                   
                   {/* Floating Rating Badge */}
@@ -93,7 +92,7 @@ const FlightTourPackages = () => {
 
                   {/* Featured Tag */}
                   {tour?.is_featured === "1" && (
-                    <div className="absolute bottom-5 right-5 bg-primary/95 text-white text-[10px] font-black uppercase tracking-widest px-4 py-2 rounded-2xl shadow-lg">
+                    <div className="absolute bottom-5 right-5 bg-primary/95 text-white dark:text-black text-[10px] font-black uppercase tracking-widest px-4 py-2 rounded-2xl shadow-lg">
                       Featured
                     </div>
                   )}
@@ -108,7 +107,7 @@ const FlightTourPackages = () => {
                     </span>
                   </div>
                   
-                  <h3 className="text-2xl font-bold text-slate-800 dark:text-white mb-6 line-clamp-1 group-hover:text-primary transition-colors">
+                  <h3 className="text-2xl font-bold text-slate-800 dark:text-white mb-6 line-clamp-1 group-hover/card:text-primary transition-colors">
                     {tour.package_title}
                   </h3>
 
@@ -119,7 +118,7 @@ const FlightTourPackages = () => {
                         ৳ {Number(tour.price).toLocaleString()}
                       </p>
                     </div>
-                    <button className="h-14 w-14 rounded-[1.2rem] bg-slate-50 dark:bg-slate-800 flex items-center justify-center text-slate-900 dark:text-white group-hover:bg-primary group-hover:text-white transition-all duration-300 shadow-sm group-hover:shadow-primary/30">
+                    <button className="h-14 w-14 rounded-[1.2rem] bg-slate-50 dark:bg-slate-800 flex items-center justify-center text-slate-900 dark:text-white group-hover/card:bg-primary group-hover/card:text-white transition-all duration-300 shadow-sm group-hover/card:shadow-primary/30">
                       <ArrowRight size={24} />
                     </button>
                   </div>
@@ -129,11 +128,11 @@ const FlightTourPackages = () => {
           ))}
         </Swiper>
 
-        {/* Custom Navigation Buttons (Match your image style) */}
-        <button className="prev-tour absolute left-[-20px] top-1/2 -translate-y-1/2 z-20 h-12 w-12 rounded-full bg-white/90 backdrop-blur shadow-xl border border-slate-100 flex items-center justify-center text-slate-800 hover:bg-primary hover:text-white transition-all duration-300 opacity-0 group-hover:opacity-100 group-hover:left-[-10px]">
+        {/* Custom Navigation Buttons (Visible Default) */}
+        <button className="prev-tour absolute -left-5 md:-left-6 top-[40%] -translate-y-1/2 z-20 h-12 w-12 rounded-full bg-white/95 backdrop-blur-sm shadow-xl border border-slate-100 flex items-center justify-center text-slate-800 hover:bg-primary hover:text-white hover:scale-110 transition-all duration-300">
           <ChevronLeft size={24} />
         </button>
-        <button className="next-tour absolute right-[-20px] top-1/2 -translate-y-1/2 z-20 h-12 w-12 rounded-full bg-white/90 backdrop-blur shadow-xl border border-slate-100 flex items-center justify-center text-slate-800 hover:bg-primary hover:text-white transition-all duration-300 opacity-0 group-hover:opacity-100 group-hover:right-[-10px]">
+        <button className="next-tour absolute -right-5 md:-right-6 top-[40%] -translate-y-1/2 z-20 h-12 w-12 rounded-full bg-white/95 backdrop-blur-sm shadow-xl border border-slate-100 flex items-center justify-center text-slate-800 hover:bg-primary hover:text-white hover:scale-110 transition-all duration-300">
           <ChevronRight size={24} />
         </button>
       </div>
