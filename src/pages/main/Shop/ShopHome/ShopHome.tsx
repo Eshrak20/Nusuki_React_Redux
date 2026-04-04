@@ -6,14 +6,18 @@ import ShopProductCards from "../ShopProduct/ShopProductCards";
 import ShopBanner from "./ShopBanner";
 import AppSection from "@/components/AppSection";
 import { useGetProductListsQuery } from "@/redux/api/shopApi/shopProductApi";
+import { useState } from "react";
 
 const ShopHome = () => {
+  const [offset, setOffset] = useState(0)
   // Aliasing destructuring to handle multiple hooks
   const {
     data: productData,
     isLoading: isProductsLoading,
     isError: isProductsError,
-  } = useGetProductListsQuery({ type: "new" });
+  } = useGetProductListsQuery({ type: "new", offset: offset });
+  console.log(productData);
+
   const {
     data: categoryData,
     isLoading: isCategoriesLoading,
@@ -33,16 +37,20 @@ const ShopHome = () => {
     );
 
   return (
-    <div className="mx-auto max-w-7xl px-4 py-16 flex flex-col gap-16 md:gap-20 lg:gap-24">
-      <ShopBanner />
+    <>
+      <div className="pt-12.5 pb-16 flex flex-col gap-16 md:gap-20 lg:gap-24">
+        <ShopBanner />
+      </div>
+      <div className="mx-auto max-w-7xl px-4 py-16 flex flex-col gap-16 md:gap-20 lg:gap-24">
 
-      <ShopCategory categories={categoryData?.product_categories || []} />
+        <ShopCategory categories={categoryData?.product_categories || []} />
 
-      <ShopProductCards products={productData?.products || []} />
+        <ShopProductCards offset={setOffset} products={productData?.products || []} />
 
-      <AppSection />
-      <ShopProductCards products={productData?.products || []} />
-    </div>
+        <AppSection />
+        <ShopProductCards offset={setOffset} products={productData?.products || []} />
+      </div>
+    </>
   );
 };
 

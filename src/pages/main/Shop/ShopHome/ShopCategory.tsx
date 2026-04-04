@@ -25,7 +25,7 @@ const ShopCategory = ({ categories }: { categories: ProductCategory[] }) => {
             <Link to={`/category/${category.id}`}>
               <Card className="group overflow-hidden border-none bg-secondary/10 hover:bg-white dark:hover:bg-gray-800 shadow-sm hover:shadow-xl transition-all duration-500 rounded-[2rem]">
                 <CardContent className="p-4 flex flex-col items-center">
-                  <div className="w-24 h-24 md:w-32 md:h-32 rounded-full overflow-hidden bg-muted mb-4 ring-4 ring-transparent group-hover:ring-[#ba9863]/20 transition-all duration-500">
+                  <div className="w-24 h-24 md:w-32 md:h-32 rounded-full overflow-hidden bg-muted mb-4 ring-4 ring-transparent group-hover:ring-primary/20 transition-all duration-500">
                     <img
                       src={
                         category.metadata?.Image ||
@@ -35,7 +35,7 @@ const ShopCategory = ({ categories }: { categories: ProductCategory[] }) => {
                       className="object-cover w-full h-full transition-transform duration-700 group-hover:scale-125"
                     />
                   </div>
-                  <p className="text-sm font-bold text-[#002365] dark:text-gray-200 group-hover:text-[#ba9863] transition-colors text-center">
+                  <p className="text-sm font-bold text-[#002365] dark:text-gray-200 group-hover:text-primary transition-colors text-center">
                     {category.name}
                   </p>
                 </CardContent>
