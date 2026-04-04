@@ -39,7 +39,7 @@ const ShopProductCards = ({ products }: { products: Product[] }) => {
 
                 {/* Glassmorphism Hover Button */}
                 <div className="absolute inset-0 bg-[#002365]/20 opacity-0 group-hover:opacity-100 transition-all duration-500 flex items-center justify-center backdrop-blur-[3px]">
-                  <span className="bg-[#ba9863] text-white px-8 py-3 rounded-full font-bold shadow-2xl transform translate-y-8 group-hover:translate-y-0 transition-all duration-500 flex items-center gap-2">
+                  <span className="bg-primary text-white px-8 py-3 rounded-full font-bold shadow-2xl transform translate-y-8 group-hover:translate-y-0 transition-all duration-500 flex items-center gap-2">
                     View Detail
                     <svg
                       width="20"
@@ -58,11 +58,11 @@ const ShopProductCards = ({ products }: { products: Product[] }) => {
               {/* Product Info */}
               <div className="p-6">
                 <div className="flex justify-between items-start mb-2">
-                  <span className="text-[10px] uppercase tracking-[0.2em] text-[#ba9863] font-black">
+                  <span className="text-[10px] uppercase tracking-[0.2em] text-primary font-black">
                     {product.brand || "HavenHood"}
                   </span>
                 </div>
-                <h3 className="text-xl font-bold text-[#002365] dark:text-gray-100 line-clamp-1 mb-4 group-hover:text-[#ba9863] transition-colors">
+                <h3 className="text-xl font-bold text-[#002365] dark:text-gray-100 line-clamp-1 mb-4 group-hover:text-primary transition-colors">
                   {product.title}
                 </h3>
 
@@ -76,7 +76,7 @@ const ShopProductCards = ({ products }: { products: Product[] }) => {
                     </span>
                   </div>
 
-                  <div className="h-12 w-12 rounded-2xl bg-[#002365] text-white flex items-center justify-center group-hover:bg-[#ba9863] group-hover:rotate-12 transition-all duration-500 shadow-lg">
+                  <div className="h-12 w-12 rounded-2xl bg-[#002365] text-white flex items-center justify-center group-hover:bg-primary group-hover:rotate-12 transition-all duration-500 shadow-lg">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="24"

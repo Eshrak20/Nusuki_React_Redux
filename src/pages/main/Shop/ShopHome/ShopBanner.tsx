@@ -20,7 +20,7 @@ const ShopBanner = () => {
   };
 
   return (
-    <div className="relative w-full top-10 h-[600px] overflow-hidden rounded-2xl shadow-lg">
+    <div className="relative w-full top-10 h-150 overflow-hidden mb-12 rounded-2xl shadow-lg">
       {/* Image */}
       <img
         src={`${images[current]}?auto=format&fit=crop&w=1600&q=80`}
