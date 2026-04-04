@@ -23,7 +23,7 @@ import HomeTest from "@/pages/main/Education/Test/HomeTest/HomeTest";
 import DetailTestMain from "@/pages/main/Education/Test/DetailTest/DetailTestMain";
 import FlightHome from "@/pages/main/Flight/FlightHome/FlightHome";
 import ShopHome from "@/pages/main/Shop/ShopHome/ShopHome";
-import ShopProductMain from "@/pages/main/Shop/ShopProduct/ShopProductMain";
+import ShopProductDetailsMain from "@/pages/main/Shop/ShopProductDetails/ProductDetailsMain";
 
 export const router = createBrowserRouter([
   {
@@ -122,7 +122,7 @@ export const router = createBrowserRouter([
           },
           {
             path:"products/:id",
-            element: <ShopProductMain />,
+            element: <ShopProductDetailsMain />,
           },
         ],
       },
