@@ -33,8 +33,11 @@ const ShopHome = () => {
     );
 
   return (
+    <>
+    <div className="pt-12.5 pb-16 flex flex-col gap-16 md:gap-20 lg:gap-24">
+      <ShopBanner/>
+    </div>
     <div className="mx-auto max-w-7xl px-4 py-16 flex flex-col gap-16 md:gap-20 lg:gap-24">
-      <ShopBanner />
 
       <ShopCategory categories={categoryData?.product_categories || []} />
 
@@ -43,6 +46,7 @@ const ShopHome = () => {
       <AppSection />
       <ShopProductCards products={productData?.products || []} />
     </div>
+    </>
   );
 };
 

@@ -1,68 +1,61 @@
-import { useState } from "react";
-import { ChevronLeft, ChevronRight } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay, Pagination } from "swiper/modules";
+
+// Import Swiper styles
+import "swiper/css";
+import "swiper/css/pagination";
 
 const images: string[] = [
-  "https://images.unsplash.com/photo-1505740420928-5e560c06d30e", // headphones
-  "https://images.unsplash.com/photo-1523275335684-37898b6baf30", // watch (fixed)
-  "https://images.unsplash.com/photo-1491553895911-0055eca6402d", // shoes
+  "https://images.unsplash.com/photo-1505740420928-5e560c06d30e",
+  "https://images.unsplash.com/photo-1523275335684-37898b6baf30",
+  "https://images.unsplash.com/photo-1491553895911-0055eca6402d",
 ];
 
 const ShopBanner = () => {
-  const [current, setCurrent] = useState<number>(0);
-
-  const prevSlide = () => {
-    setCurrent((prev) => (prev === 0 ? images.length - 1 : prev - 1));
-  };
-
-  const nextSlide = () => {
-    setCurrent((prev) => (prev === images.length - 1 ? 0 : prev + 1));
-  };
-
   return (
-    <div className="relative w-full top-10 h-150 overflow-hidden mb-12 rounded-2xl shadow-lg">
-      {/* Image */}
-      <img
-        src={`${images[current]}?auto=format&fit=crop&w=1600&q=80`}
-        alt="banner"
-        className="w-full h-full object-cover transition-all duration-500"
-      />
+    <div className="relative w-full top-10 h-150 overflow-hidden mb-12 rounded-b-2xl shadow-lg">
+      {/* Standard HTML style tag. 
+        We use dangerouslySetInnerHTML to avoid React escaping characters. 
+      */}
+      <style>{`
+        .swiper-pagination-bullet {
+          background: white !important;
+          opacity: 0.5 !important;
+        }
+        .swiper-pagination-bullet-active {
+          background: white !important;
+          opacity: 1 !important;
+          width: 16px !important; /* Makes the active dot wider like your image */
+          border-radius: 4px !important;
+        }
+      `}</style>
 
-      {/* Overlay */}
-      <div className="absolute inset-0 bg-black/30" />
-
-      {/* Left Button */}
-      <Button
-        variant="secondary"
-        size="icon"
-        onClick={prevSlide}
-        className="absolute left-4 top-1/2 -translate-y-1/2 rounded-full bg-white/80 hover:bg-white"
+      <Swiper
+        modules={[Autoplay, Pagination]}
+        loop={true}
+        autoplay={{
+          delay: 2500,
+          disableOnInteraction: false,
+        }}
+        pagination={{
+          clickable: true,
+        }}
+        grabCursor={true}
+        className="h-full w-full"
       >
-        <ChevronLeft />
-      </Button>
-
-      {/* Right Button */}
-      <Button
-        variant="secondary"
-        size="icon"
-        onClick={nextSlide}
-        className="absolute right-4 top-1/2 -translate-y-1/2 rounded-full bg-white/80 hover:bg-white"
-      >
-        <ChevronRight />
-      </Button>
-
-      {/* Indicators */}
-      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
-        {images.map((_, index) => (
-          <div
-            key={index}
-            onClick={() => setCurrent(index)}
-            className={`h-2 w-2 rounded-full cursor-pointer transition-all ${
-              current === index ? "bg-white w-4" : "bg-white/50"
-            }`}
-          />
+        {images.map((src, index) => (
+          <SwiperSlide key={index} className="h-full relative">
+            <img
+              src={`${src}?auto=format&fit=crop&w=1600&q=80`}
+              alt={`banner-${index}`}
+              draggable={false}
+              className="w-full h-full object-cover select-none pointer-events-none"
+            />
+            {/* Overlay */}
+            <div className="absolute inset-0 bg-black/30 pointer-events-none" />
+          </SwiperSlide>
         ))}
-      </div>
+      </Swiper>
     </div>
   );
 };
