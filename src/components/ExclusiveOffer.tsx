@@ -1,8 +1,7 @@
-
 const ExclusiveOffer = () => {
     return (
         <div>
-            This is Exclusinve offer
+            This is Exclusive offer
         </div>
     );
 };

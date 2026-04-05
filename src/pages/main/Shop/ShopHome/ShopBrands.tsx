@@ -1,4 +1,3 @@
-
 const ShopBrands = () => {
     return (
         <div>
