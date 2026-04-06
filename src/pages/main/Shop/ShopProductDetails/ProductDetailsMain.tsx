@@ -40,7 +40,7 @@ const ShopProductDetailsMain = () => {
 
           <div className="border-y border-border py-6 space-y-6">
             <ProductOptions options={product.options} />
-            <ProAddToCart productId={product.id} />
+            <ProAddToCart product={product} />
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

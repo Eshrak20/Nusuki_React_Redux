@@ -24,6 +24,8 @@ import DetailTestMain from "@/pages/main/Education/Test/DetailTest/DetailTestMai
 import FlightHome from "@/pages/main/Flight/FlightHome/FlightHome";
 import ShopHome from "@/pages/main/Shop/ShopHome/ShopHome";
 import ShopProductDetailsMain from "@/pages/main/Shop/ShopProductDetails/ProductDetailsMain";
+import ShopCartMain from "@/pages/main/Shop/ShopCart/ShopCartMain";
+import ShopCheckOutMain from "@/pages/main/Shop/ShopCheckOut/ShopCheckOutMain";
 
 export const router = createBrowserRouter([
   {
@@ -121,8 +123,16 @@ export const router = createBrowserRouter([
             element: <ShopHome />,
           },
           {
-            path:"products/:id",
+            path: "products/:id",
             element: <ShopProductDetailsMain />,
+          },
+          {
+            path: "cart",
+            element: <ShopCartMain />,
+          },
+          {
+            path: "checkout/:cartId",
+            element: <ShopCheckOutMain />,
           },
         ],
       },
