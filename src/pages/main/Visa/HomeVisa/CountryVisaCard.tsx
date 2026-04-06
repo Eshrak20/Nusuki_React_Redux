@@ -20,10 +20,10 @@ const containerVariants: Variants = {
 };
 
 const cardVariants: Variants = {
-    hidden: { 
-        opacity: 0, 
-        y: 40, 
-        scale: 0.96 
+    hidden: {
+        opacity: 0,
+        y: 40,
+        scale: 0.96
     },
     visible: {
         opacity: 1,
@@ -43,7 +43,8 @@ const cardVariants: Variants = {
 
 const CountryVisaCard = ({ visas }: CountryVisaCardProps) => {
     return (
-        <motion.div 
+        <motion.div
+            key={visas[0]?.id || 'empty-list'}
             variants={containerVariants}
             initial="hidden"
             whileInView="visible"
@@ -54,12 +55,11 @@ const CountryVisaCard = ({ visas }: CountryVisaCardProps) => {
                 <motion.div
                     key={visa.id}
                     variants={cardVariants}
-                    // UPDATED: Added transition-all, duration-300, shadow-2xl, translate-y, and scale
                     className="bg-card text-card-foreground rounded-2xl lg:shadow-lg border overflow-hidden flex flex-col transition-all duration-300 ease-out hover:shadow-2xl hover:-translate-y-2 hover:scale-[1.02] group/card"
                 >
                     {/* Top Section / Header */}
                     <div className="relative h-32 flex flex-col items-center justify-center overflow-hidden">
-                        
+
                         {/* Background Flag: Zoom effect triggers on card hover */}
                         <img
                             src={visa.country_flag_url}
@@ -73,7 +73,7 @@ const CountryVisaCard = ({ visas }: CountryVisaCardProps) => {
                         {/* Foreground Content */}
                         <div className="relative z-10 flex flex-col items-center gap-2">
                             {/* Sharp Foreground Flag */}
-                            <div className="w-14 h-9 overflow-hidden rounded-[2px] shadow-lg border border-white/20 bg-white">
+                            <div className="w-17 h-12 overflow-hidden rounded-[2px] shadow-lg border border-white/20 bg-white">
                                 <img
                                     src={visa.country_flag_url}
                                     alt={`${visa.country} flag`}
@@ -82,15 +82,15 @@ const CountryVisaCard = ({ visas }: CountryVisaCardProps) => {
                             </div>
 
                             {/* Sharp Typography */}
-                            <h3 className="text-white font-bold text-[16px] tracking-wide drop-shadow-md">
+                            {/* <h3 className="text-white font-bold text-[16px] tracking-wide drop-shadow-md">
                                 {visa.country}
-                            </h3>
+                            </h3> */}
                         </div>
                     </div>
 
                     {/* Middle Section / Body */}
                     <div className="p-5 flex flex-col gap-3 grow bg-card relative z-20">
-                        <h4 className="font-bold text-lg text-foreground">{visa.country}</h4>
+                        <h4 className="font-bold text-lg min-h-14 text-foreground">{visa.country}</h4>
 
                         <div className="space-y-2.5 text-[15px] text-muted-foreground">
                             <div className="flex items-center gap-2.5">
@@ -123,7 +123,7 @@ const CountryVisaCard = ({ visas }: CountryVisaCardProps) => {
                         >
                             {/* The Glossy Shine Element */}
                             <span className="absolute inset-0 -translate-x-[150%] bg-linear-to-r from-transparent via-white/30 to-transparent transition-transform duration-700 ease-in-out group-hover/card:translate-x-[150%]" />
-                            
+
                             <span className="relative z-10">View Details</span>
                         </MotionLink>
                     </div>

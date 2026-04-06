@@ -9,7 +9,7 @@ export interface VisaFilterState {
 const initialState: VisaFilterState = {
   page: 1,
   visa_category: "All", // Defaulting to "All" to match your FilterCategory component
-  country: ""
+  country: "" 
 };
 
 const visaFilterSlice = createSlice({

@@ -10,7 +10,7 @@ interface ShopProductCardsProps {
 }
 
 const ShopProductCards = ({ products, offset }: ShopProductCardsProps) => {
-  
+
   return (
     <section className="">
       <SectionHeader

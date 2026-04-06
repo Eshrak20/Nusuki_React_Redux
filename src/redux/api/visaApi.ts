@@ -28,7 +28,7 @@ export const visaApi = laravelApi.injectEndpoints({
       query: (id) => ({
         url: `/visas/${id}`,
         method: "GET",
-      }),
+      }), 
     }),
   }),
 });
