@@ -21,7 +21,7 @@ const FlightDestination = ({ dests }: destinationProps) => {
                 grabCursor={true}
                 loop={dests.length > 4}
                 autoplay={{
-                    delay: 3000,
+                    delay: 1600,
                     disableOnInteraction: false,
                     pauseOnMouseEnter: true,
                 }}
