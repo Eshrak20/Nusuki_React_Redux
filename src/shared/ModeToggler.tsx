@@ -16,7 +16,7 @@ export function ModeToggle() {
       variant="ghost"
       size="icon"
       onClick={toggleTheme}
-      className="relative flex items-center justify-center"
+      className="relative h-7.5 w-7.5 cursor-pointer hover:bg-primary dark:hover:bg-primary hover:text-muted flex items-center justify-center"
     >
       {theme === "light" ? (
         <Sun className="h-[1.2rem] w-[1.2rem] transition-all" />

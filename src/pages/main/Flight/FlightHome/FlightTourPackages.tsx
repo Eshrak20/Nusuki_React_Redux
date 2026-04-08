@@ -35,7 +35,7 @@ const FlightTourPackages = () => {
           spaceBetween={30}
           loop={tours.length > 3}
           autoplay={{
-            delay: 4000,
+            delay: 3000,
             disableOnInteraction: false,
           }}
           navigation={{
