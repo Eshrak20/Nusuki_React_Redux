@@ -10,6 +10,7 @@ interface ShopProductCardsProps {
 }
 
 const ShopProductCards = ({ products, offset }: ShopProductCardsProps) => {
+console.log(products);
 
   return (
     <section className="">
@@ -65,8 +66,8 @@ const ShopProductCards = ({ products, offset }: ShopProductCardsProps) => {
               {/* Product Info */}
               <div className="p-6">
                 <div className="flex justify-between items-start mb-2">
-                  <span className="text-[10px] uppercase tracking-[0.2em] text-primary font-black">
-                    {product.brand || "HavenHood"}
+                  <span className="text-[10px] h-4 uppercase tracking-[0.2em] text-primary font-black">
+                    {product.brand}
                   </span>
                 </div>
                 <h3 className="text-xl font-bold text-[#002365] dark:text-gray-100 line-clamp-1 mb-4 group-hover:text-primary transition-colors">

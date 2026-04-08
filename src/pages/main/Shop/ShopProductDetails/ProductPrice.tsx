@@ -8,12 +8,17 @@ const ProductPrice = ({ variants }: Props) => {
   const price = variants?.[0]?.prices?.[0];
 
   return (
-    <div className="flex items-baseline gap-2">
-      <span className="text-3xl font-bold text-foreground">
-        {price?.amount}
-      </span>
-      <span className="text-lg font-medium text-muted-foreground uppercase">
-        BDT
+    <div className="flex flex-col gap-1">
+      <div className="flex items-baseline gap-2">
+        <span className="text-4xl font-black text-[#002365] dark:text-white">
+          ৳{price?.amount?.toLocaleString() || "0"}
+        </span>
+        <span className="text-sm font-bold text-gray-400 dark:text-gray-500 uppercase tracking-wider">
+          BDT
+        </span>
+      </div>
+      <span className="text-xs text-gray-400 dark:text-gray-500 font-medium">
+        Taxes included. Shipping calculated at checkout.
       </span>
     </div>
   );
