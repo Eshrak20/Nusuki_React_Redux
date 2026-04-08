@@ -16,7 +16,6 @@ const ShopHome = () => {
     isLoading: isProductsLoading,
     isError: isProductsError,
   } = useGetProductListsQuery({ type: "new", offset: offset });
-  console.log(productData);
 
   const {
     data: categoryData,

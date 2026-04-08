@@ -10,7 +10,7 @@ import { ThemeProvider } from "./providers/theme.provider";
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     {/* <MainLayout/> */}
-    <ThemeProvider defaultTheme="system" storageKey="vite-ui-theme">
+    <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
       <ReduxProvider store={store}>
         <RouterProvider router={router} />
       </ReduxProvider>

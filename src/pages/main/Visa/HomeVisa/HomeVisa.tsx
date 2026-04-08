@@ -13,11 +13,6 @@ import type { RootState } from "@/redux/store";
 
 const HomeVisa = () => {
 
-    window.scrollTo({
-    top: 0,
-    behavior: "smooth",
-  });
-
     const dispatch = useDispatch()
     const { page, visa_category, country } = useSelector(
         (state: RootState) => state.visaFilter,
@@ -29,6 +24,11 @@ const HomeVisa = () => {
             country
         }
     );
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+    });
 
     const visas = data?.data?.data ?? [];
     const pagination = data?.data;

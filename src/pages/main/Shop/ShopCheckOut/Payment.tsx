@@ -3,11 +3,12 @@ import {
   useCreatePaymentSessionsMutation,
   useSetPaymentSessionMutation,
   useCompleteCartMutation,
+  useAddShippingMethodMutation,
 } from "@/redux/api/shopApi/shopCartApi";
 
 const Payment = ({ cartId }: { cartId: string | undefined }) => {
   const [loading, setLoading] = useState(false);
-
+  const [addShippingMethod] = useAddShippingMethodMutation();
   const [createPaymentSessions] = useCreatePaymentSessionsMutation();
   const [setPaymentSession] = useSetPaymentSessionMutation();
   const [completeCart] = useCompleteCartMutation();
@@ -17,6 +18,10 @@ const Payment = ({ cartId }: { cartId: string | undefined }) => {
 
     try {
       setLoading(true);
+      await addShippingMethod({
+        cartId,
+        option_id: "so_01H...", // Get this from useGetShippingOptionsQuery
+      }).unwrap();
 
       // 1️⃣ Create payment sessions
       await createPaymentSessions(cartId).unwrap();
@@ -28,14 +33,11 @@ const Payment = ({ cartId }: { cartId: string | undefined }) => {
         provider_id: "manual", // or "stripe", "sslcommerz"
       }).unwrap();
 
-      
-
       // 3️⃣ Complete cart → ORDER CREATED
       const res = await completeCart(cartId).unwrap();
 
       console.log("ORDER SUCCESS:", res);
       alert("Order placed successfully!");
-
     } catch (err) {
       console.log("Payment Error:", err);
       alert("Payment failed!");

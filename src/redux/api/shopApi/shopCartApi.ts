@@ -22,7 +22,7 @@ export const shopCartApi = medusaApi.injectEndpoints({
     }),
 
     // ✅ Add to Cart
-    addToCart: builder.mutation<any,{ cartId: string; variant_id: string; quantity: number }>({
+    addToCart: builder.mutation<any, { cartId: string; variant_id: string; quantity: number }>({
       query: ({ cartId, ...body }) => ({
         url: `/carts/${cartId}/line-items`,
         method: "POST",
@@ -32,7 +32,7 @@ export const shopCartApi = medusaApi.injectEndpoints({
     }),
 
     // ✅ Update Quantity
-    updateLineItem: builder.mutation<any,{ cartId: string; lineId: string; quantity: number }>({
+    updateLineItem: builder.mutation<any, { cartId: string; lineId: string; quantity: number }>({
       query: ({ cartId, lineId, quantity }) => ({
         url: `/carts/${cartId}/line-items/${lineId}`,
         method: "POST",
@@ -42,7 +42,7 @@ export const shopCartApi = medusaApi.injectEndpoints({
     }),
 
     // ✅ Remove Item
-    removeLineItem: builder.mutation<any,{ cartId: string; lineId: string }>({
+    removeLineItem: builder.mutation<any, { cartId: string; lineId: string }>({
       query: ({ cartId, lineId }) => ({
         url: `/carts/${cartId}/line-items/${lineId}`,
         method: "DELETE",
@@ -51,25 +51,29 @@ export const shopCartApi = medusaApi.injectEndpoints({
     }),
 
     // ✅ Add Shipping Address
-    setShippingAddress: builder.mutation<any,{ cartId: string; address: any }>({
-      query: ({ cartId, address }) => ({
+    setShippingAddress: builder.mutation<any, { cartId: string; data: any }>({
+      query: ({ cartId, data }) => ({
         url: `/carts/${cartId}`,
         method: "POST",
-        body: {
-          shipping_address: address,
-        },
+        body: data, // This can send email, shipping_address, etc.
       }),
+      invalidatesTags: ["Cart"],
     }),
 
     // ✅ Add Shipping Method
-    addShippingMethod: builder.mutation<any,{ cartId: string; option_id: string }>({
+    addShippingMethod: builder.mutation<any, { cartId: string; option_id: string }>({
       query: ({ cartId, option_id }) => ({
         url: `/carts/${cartId}/shipping-methods`,
         method: "POST",
         body: { option_id },
       }),
     }),
-
+    getShippingOptions: builder.query<any, string>({
+      query: (cartId) => ({
+        url: `/shipping-options/${cartId}`,
+        method: "GET",
+      }),
+    }),
     // ✅ Create Payment Session
     createPaymentSessions: builder.mutation<any, string>({
       query: (cartId) => ({
@@ -79,7 +83,7 @@ export const shopCartApi = medusaApi.injectEndpoints({
     }),
 
     // ✅ Select Payment Provider
-    setPaymentSession: builder.mutation<any,{ cartId: string; provider_id: string }>({
+    setPaymentSession: builder.mutation<any, { cartId: string; provider_id: string }>({
       query: ({ cartId, provider_id }) => ({
         url: `/carts/${cartId}/payment-session`,
         method: "POST",
@@ -106,6 +110,7 @@ export const {
   useRemoveLineItemMutation,
   useSetShippingAddressMutation,
   useAddShippingMethodMutation,
+  useGetShippingOptionsQuery,
   useCreatePaymentSessionsMutation,
   useSetPaymentSessionMutation,
   useCompleteCartMutation,
