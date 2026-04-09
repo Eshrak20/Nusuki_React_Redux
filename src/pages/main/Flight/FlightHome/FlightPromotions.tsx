@@ -7,7 +7,7 @@ const FlightPromotions = () => {
   const containerRef = useRef<HTMLDivElement>(null);
 
   const [itemsPerPage, setItemsPerPage] = useState(3);
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const [currentPage, setCurrentPage] = useState(0);
 
   useEffect(() => {
     const handleResize = () => {
@@ -24,54 +24,53 @@ const FlightPromotions = () => {
   const promotions = data?.data?.data || [];
   if (!promotions || promotions.length === 0) return null;
 
-  const maxIndex = Math.max(0, promotions.length - itemsPerPage);
-  const activeIndex = Math.max(0, Math.min(currentIndex, maxIndex));
+  // Calculate total pages based on items per page
+  const totalPages = Math.ceil(promotions.length / itemsPerPage);
+  const activePage = Math.max(0, Math.min(currentPage, totalPages - 1));
 
   const handleDragEnd = (_event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
     const swipeThreshold = 50;
     const velocityThreshold = 500;
 
     if (info.offset.x < -swipeThreshold || info.velocity.x < -velocityThreshold) {
-      setCurrentIndex((prev) => Math.min(prev + 1, maxIndex));
+      setCurrentPage((prev) => Math.min(prev + 1, totalPages - 1));
     } else if (info.offset.x > swipeThreshold || info.velocity.x > velocityThreshold) {
-      setCurrentIndex((prev) => Math.max(prev - 1, 0));
+      setCurrentPage((prev) => Math.max(prev - 1, 0));
     }
   };
 
   return (
     <div className="w-full px-4 overflow-hidden" ref={containerRef}>
-      <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-8">
+      <h2 className="text-3xl md:text-4xl mt-20 lg:mt-0 text-center lg:text-left font-bold text-foreground mb-8">
         Exclusive Offers
       </h2>
 
-      <div className="relative">
+      <div className="relative overflow-visible">
         <motion.div
           className="flex cursor-grab active:cursor-grabbing"
           drag="x"
           dragConstraints={containerRef}
-          dragElastic={0.05}
+          dragElastic={0}
           onDragEnd={handleDragEnd}
-          // Improved calculation to prevent side-card peeking
-          animate={{ x: `-${activeIndex * (100 / itemsPerPage)}%` }}
+          // The "activePage * 100" moves one full container width per page
+          // Dividing by totalPages is necessary because the width is multiplied by totalPages
+          animate={{ x: `-${(activePage * 100) / totalPages}%` }}
           transition={{
             type: "spring",
-            stiffness: 200,
-            damping: 25,
+            stiffness: 120,
+            damping: 30,
           }}
-          style={{
-            width: `${(promotions.length / itemsPerPage) * 100}%`,
-            display: 'flex'
-          }}
+          style={{ width: `${totalPages * 100}%` }}
         >
           {promotions.map((promo) => (
             <div
               key={promo.id}
-              style={{ width: `${100 / promotions.length}%` }}
+              // Width must be relative to the entire expanded width (totalPages * 100)
+              style={{ width: `${100 / (totalPages * itemsPerPage)}%` }}
               className="shrink-0 px-2 flex flex-col"
             >
               {/* Card Container */}
               <div className="relative aspect-16/10 group overflow-hidden rounded-2xl bg-muted border border-border/50">
-                {/* Base Image - Shows by default */}
                 <img
                   src={promo.image_url}
                   alt={promo.title}
@@ -79,31 +78,19 @@ const FlightPromotions = () => {
                   draggable="false"
                 />
 
-                {/* Hover Overlay - Vertically Centered */}
+                {/* Hover Overlay */}
                 <div className="absolute inset-0 bg-primary/75 dark:bg-black/75 backdrop-blur-[2px] opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-center items-center text-center p-6">
-                  <motion.div
-                    initial={{ y: 20 }}
-                    className="transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 flex flex-col items-center"
-                  >
-                    <h3 className="font-bold text-xl text-white mb-2 line-clamp-1">
-                      {promo.title}
-                    </h3>
-                    <p className="text-sm font-medium text-white/90 mb-3 line-clamp-1">
-                      {promo.subtitle}
-                    </p>
-                    <p className="text-xs text-gray-300 mb-5 line-clamp-3">
-                      {promo.description}
-                    </p>
-
+                   <div className="transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 flex flex-col items-center">
+                    <h3 className="font-bold text-xl text-white mb-2 line-clamp-1">{promo.title}</h3>
+                    <p className="text-sm font-medium text-white/90 mb-3 line-clamp-1">{promo.subtitle}</p>
+                    <p className="text-xs text-gray-300 mb-5 line-clamp-3">{promo.description}</p>
                     <a
                       href={promo.link_url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center text-sm font-bold text-primary-foreground dark:text-white hover:underline px-5 py-2.5 rounded-full transition-colors"
+                      className="inline-flex items-center text-sm font-bold text-primary-foreground dark:text-white hover:underline px-5 py-2.5 rounded-full"
                     >
                       View Details
                     </a>
-                  </motion.div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -112,17 +99,15 @@ const FlightPromotions = () => {
       </div>
 
       {/* Pagination Dots */}
-      {maxIndex > 0 && (
-        <div className="flex justify-center items-center gap-2 mt-8">
-          {Array.from({ length: maxIndex + 1 }).map((_, index) => (
+      {totalPages > 1 && (
+        <div className="flex justify-center items-center gap-3 mt-8">
+          {Array.from({ length: totalPages }).map((_, index) => (
             <button
               key={index}
-              onClick={() => setCurrentIndex(index)}
-              className={`h-1.5 rounded-full transition-all duration-300 ${activeIndex === index
-                ? "w-10 bg-primary"
-                : "w-2 bg-primary/20 hover:bg-primary/40"
-                }`}
-              aria-label={`Go to slide ${index + 1}`}
+              onClick={() => setCurrentPage(index)}
+              className={`h-2 rounded-full transition-all duration-500 ${
+                activePage === index ? "w-10 bg-primary" : "w-2 bg-primary/20"
+              }`}
             />
           ))}
         </div>

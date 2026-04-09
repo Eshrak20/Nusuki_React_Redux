@@ -25,7 +25,7 @@ const FlightHome = () => {
       </section>
 
       {/* Hero / Destination */}
-      <section className="max-w-7xl mx-auto px-4 py-12 md:py-16">
+      <section className="max-w-7xl mx-auto px-4 py-10 md:py-16">
         {/* Header Section */}
         <div className="max-w-3xl mx-auto text-center mb-12">
           <h2 className="text-3xl lg:text-4xl font-bold text-slate-900 dark:text-white mb-4 tracking-tight">
@@ -43,13 +43,13 @@ const FlightHome = () => {
       </section>
 
       {/* Tour Packages with soft background */}
-      <section className="py-12 md:py-16">
+      <section className="py-6 md:pb-16">
         <div className="max-w-7xl mx-auto px-4">
           <FlightTourPackages />
         </div>
       </section>
 
-      <section className="max-w-7xl mx-auto px-4">
+      <section className="max-w-7xl mx-auto mt-5 lg:mt-0 px-4">
         {/* Header Section */}
         <div className="max-w-3xl mx-auto text-center mb-12">
           <h2 className="text-3xl lg:text-4xl font-bold text-slate-900 dark:text-white mb-4 tracking-tight">
@@ -62,7 +62,7 @@ const FlightHome = () => {
         <FlightDestination dests={dreamDests} />
       </section>
 
-      <section className="pt-16 md:pt-20 lg:pt-24">
+      <section className=" md:pt-20 lg:pt-24">
         <AppSection />
       </section>
     </div>

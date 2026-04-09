@@ -13,7 +13,7 @@ const DestOverview = ({ overview }: Props) => {
     (overview?.paragraphs && overview.paragraphs.length > 0);
 
   return (
-    <section id="overview" className="w-full bg-muted/30 dark:bg-muted/10 rounded-[2rem] p-12">
+    <section id="overview" className="w-full bg-muted/30 dark:bg-muted/10 rounded-[2rem] py-9 px-7 lg:p-12">
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-start">
 
         {/* Left Column: Text Content (Only renders if there is actual content) */}
@@ -63,7 +63,7 @@ const DestOverview = ({ overview }: Props) => {
         )}
           
         {/* Right Column: Form Placeholder (Spans 5 columns if data exists, otherwise spans all 12) */}
-        <div className={`${hasOverviewData ? 'lg:col-span-5' : 'lg:col-span-12'} bg-card border border-border rounded-[1.5rem] p-6 md:p-8 shadow-sm`}>
+        <div className={`${hasOverviewData ? 'lg:col-span-5' : 'lg:col-span-12'} bg-card lg:border border-border lg:rounded-[1.5rem] -mx-6 p-6 md:p-8 lg:shadow-sm`}>
           <div className="text-center mb-6">
             <h3 className="text-xl md:text-2xl font-bold text-foreground leading-tight">
               Book your free consultation with certified counsellors

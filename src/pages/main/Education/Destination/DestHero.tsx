@@ -20,7 +20,7 @@ const DestHero = ({ hero }: Props) => {
             "";
   const [isOpen, setIsOpen] = useState(false);
   return (
-    <section className="relative w-full overflow-hidden min-h-100 md:min-h-100 flex items-center lg:shadow-lg mb-4">
+    <section className="relative w-full overflow-hidden min-h-80 md:min-h-100 flex items-center lg:shadow-lg mb-4">
       {/* Background Image */}
       <img
         src={hero.background_image}
@@ -37,7 +37,7 @@ const DestHero = ({ hero }: Props) => {
       {/* Content Container */}
       <div className="relative z-10 flex flex-col items-start px-8 md:px-16 lg:px-64 w-full md:w-3/4 lg:w-1/2">
         {/* Title */}
-        <h1 className="text-5xl md:text-7xl lg:text-[80px] font-bold text-white leading-tight tracking-tight mb-8">
+        <h1 className="text-4xl md:text-7xl ml-3 lg:ml-0 lg:text-[80px] font-bold text-white leading-tight tracking-tight mb-5 lg:mb-8">
           {hero.title}
         </h1>
 

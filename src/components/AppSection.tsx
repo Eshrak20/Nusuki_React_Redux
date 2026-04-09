@@ -18,10 +18,10 @@ const AppSection = () => {
           transition={{ duration: 0.6 }}
           className="space-y-4 mb-2"
         >
-          <h2 className="text-4xl md:text-5xl font-black text-[#002365] dark:text-white">
+          <h2 className="text-3xl md:text-5xl font-black text-[#002365] dark:text-white">
             Your all-in-one Travel App
           </h2>
-          <p className="text-gray-500 dark:text-gray-400 max-w-2xl mx-auto text-sm md:text-base leading-relaxed">
+          <p className="text-gray-500 dark:text-gray-400 max-w-2xl mx-auto mb-7 text-sm md:text-base leading-relaxed">
             Get flights, hotels, holidays and visa assistance in just a few
             taps. Enjoy real-time flight updates, schedules, travel info, play
             games, win trip coins and much more.
@@ -34,7 +34,7 @@ const AppSection = () => {
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ delay: 0.3 }}
-          className="flex flex-wrap items-center justify-center gap-6 mb-16"
+          className="flex flex-wrap items-center justify-center gap-6 mb-12 lg:mb-16"
         >
           <a href="#" className="hover:scale-105 transition-transform">
             <img src={appStore} alt="App Store" className="h-12 w-auto" />
@@ -59,7 +59,7 @@ const AppSection = () => {
 
         {/* Overlay Gradient */}
         <div
-          className="absolute inset-x-0 bottom-0 h-40 
+          className="absolute hidden lg:block inset-x-0 bottom-0 h-40 
     bg-linear-to-t 
     from-white dark:from-gray-950 
     via-white/70 dark:via-gray-950/70 

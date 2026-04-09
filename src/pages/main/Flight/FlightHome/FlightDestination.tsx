@@ -12,7 +12,7 @@ interface destinationProps {
 
 const FlightDestination = ({ dests }: destinationProps) => {
     return (
-        <section className="px-4 rounded-[2rem] ">
+        <section className="rounded-[2rem] ">
             {/* Destination Carousel */}
             <Swiper
                 slidesPerView={4}

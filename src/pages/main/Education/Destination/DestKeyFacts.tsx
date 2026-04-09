@@ -51,7 +51,7 @@ const DestKeyFacts = ({ facts, title = "Key Facts About Studying" }: Props) => {
     <section className="w-full">
       {/* Optional Title Section (Based on your image) */}
       <div>
-        <h2 className="text-3xl md:text-4xl font-bold text-center text-foreground mb-8 tracking-tight">
+        <h2 className="text-3xl md:text-4xl mx-4 font-bold text-center text-foreground mb-5 lg:mb-8 tracking-tight">
           {title} in {countryName}
         </h2>
       </div>

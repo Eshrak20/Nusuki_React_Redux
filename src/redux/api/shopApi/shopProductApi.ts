@@ -37,8 +37,6 @@ export const shopProductApi = medusaApi.injectEndpoints({
             },
         }),
 
-
-
         getProductDetails: builder.query<ProductResponse, string>({
             query: (productId) => ({
                 url: `/products/${productId}`,

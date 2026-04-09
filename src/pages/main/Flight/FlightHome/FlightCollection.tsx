@@ -14,7 +14,7 @@ const FlightCollection = () => {
     const collections: TourCollection[] = data?.data?.data || [];
 
     return (
-        <section className="relative py-16 px-4 overflow-hidden">
+        <section className="relative py-8 lg:py-16 px-2 overflow-hidden">
             {/* Minimalist Side Header */}
             <div className="flex flex-col md:flex-row md:items-end justify-between mb-6 gap-6">
                 <div className="space-y-2">
@@ -22,13 +22,15 @@ const FlightCollection = () => {
                         <Compass size={16} className="animate-pulse" />
                         <span>Curated Journals</span>
                     </div>
-                    <h2 className="text-4xl md:text-5xl font-black text-slate-900 dark:text-white leading-tight">
+                    <h2 className="text-3xl md:text-5xl font-black text-slate-900 dark:text-white leading-tight">
                         Signature <span className="text-primary">Collections</span>
                     </h2>
                 </div>
-                <p className="text-slate-500 dark:text-slate-400 max-w-sm text-sm border-l-2 border-slate-200 dark:border-slate-800 pl-4">
-                    Hand-picked journeys selected by our travel experts for those seeking more than just a vacation.
-                </p>
+                <div>
+                    <p className="text-slate-500 dark:text-slate-400 max-w-sm text-sm lg:border-l-2 border-slate-200 dark:border-slate-800 lg:pl-4">
+                        Hand-picked journeys selected by our travel experts for those seeking more than just a vacation.
+                    </p>
+                </div>
             </div>
 
             <div className="relative group/slider">
@@ -47,7 +49,7 @@ const FlightCollection = () => {
                     className="overflow-visible!"
                 >
                     {collections.map((item) => (
-                        <SwiperSlide key={item.id} className="py-8">
+                        <SwiperSlide key={item.id} className="py-3 lg:py-8">
                             <a
                                 href={item.button_link || "#"}
                                 className="group/card block relative h-80 w-full rounded-[2.5rem] rounded-tr-none overflow-hidden transition-all duration-500 hover:-translate-y-2"

@@ -11,17 +11,19 @@ import { useState } from "react";
 const ShopHome = () => {
   const [offset, setOffset] = useState(0)
   // Aliasing destructuring to handle multiple hooks
-  const {
+  const 
+  {
     data: productData,
     isLoading: isProductsLoading,
     isError: isProductsError,
   } = useGetProductListsQuery({ type: "new", offset: offset });
 
-  const {
-    data: categoryData,
-    isLoading: isCategoriesLoading,
-    isError: isCategoriesError,
-  } = useShopHomeApiCategoryListsQuery();
+  const
+    {
+      data: categoryData,
+      isLoading: isCategoriesLoading,
+      isError: isCategoriesError,
+    } = useShopHomeApiCategoryListsQuery();
 
   const isLoading = isProductsLoading || isCategoriesLoading;
   const isError = isProductsError || isCategoriesError;
