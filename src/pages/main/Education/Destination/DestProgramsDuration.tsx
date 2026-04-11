@@ -11,7 +11,7 @@ const DestProgramsDuration = ({ programs, id = "programs" }: Props) => {
   return (
     <section id={id} className="w-full scroll-mt-40">
       {/* Header Section */}
-      <div className="text-center max-w-4xl mx-auto mb-10 space-y-4">
+      <div className="text-center max-w-4xl px-4 lg:px-0 mx-auto mb-10 space-y-4">
         <h2 className="text-3xl md:text-4xl font-bold text-foreground tracking-tight">
           {programs.title}
         </h2>
@@ -33,7 +33,7 @@ const DestProgramsDuration = ({ programs, id = "programs" }: Props) => {
                 <th 
                   key={i} 
                   className={`py-5 px-6 md:px-8 font-semibold text-foreground ${
-                    i === 0 ? "w-[60%]" : "w-[20%]" 
+                    i === 0 ? "lg:w-[60%] w-[20%]" : "w-[20%]" 
                   }`}
                 >
                   {header}

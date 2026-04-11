@@ -167,7 +167,7 @@ const CourseHeader = ({ course }: CourseHeaderProps) => {
                   {/* Bottom shine line */}
                   <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-0.5 bg-linear-to-r from-transparent via-primary-foreground to-transparent group-hover:w-full transition-all duration-700 delay-300" />
 
-                  {/* Corner accents */}
+                  {/* Corner accents */} 
                   <span className="absolute top-2 left-2 w-2 h-2 border-t-2 border-l-2 border-primary-foreground/30 rounded-tl-lg opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
                   <span className="absolute bottom-2 right-2 w-2 h-2 border-b-2 border-r-2 border-primary-foreground/30 rounded-br-lg opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
                 </motion.button>

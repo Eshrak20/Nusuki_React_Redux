@@ -66,7 +66,7 @@ const DestKeyFacts = ({ facts, title = "Key Facts About Studying" }: Props) => {
             /* Individual Column Card */
             <div
               key={i}
-              className="bg-card dark:bg-card/50 border border-border shadow-sm rounded-[1.5rem] p-6 md:p-8 flex flex-col h-full"
+              className="bg-card dark:bg-card/50 lg:border border-border lg:shadow-sm lg:rounded-[1.5rem] p-6 md:p-8 flex flex-col h-full"
             >
               {/* Category Header with Bullet */}
               <div className="flex items-center space-x-3 mb-6">

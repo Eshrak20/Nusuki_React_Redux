@@ -11,7 +11,7 @@ const DestStudyCost = ({ cost, id = "cost" }: Props) => {
   return (
     <section id={id} className="w-full scroll-mt-40">
       {/* Header Section */}
-      <div className="mb-8 text-left">
+      <div className="mb-8 text-center lg:text-left">
         <h2 className="text-3xl md:text-4xl font-bold text-foreground tracking-tight leading-tight">
           {cost.title}
         </h2>

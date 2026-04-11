@@ -50,10 +50,10 @@ const DestTopUniversities = ({ universities, id = "universities" }: Props) => {
     <section
       id={id}
       ref={ref}
-      className="relative max-w-7xl mx-auto py-12 px-4"
+      className="relative max-w-7xl mx-auto py-6 lg:py-12 px-4"
     >
       {/* Header */}
-      <div className="text-center mb-14">
+      <div className="text-center mb-10 lg:mb-14">
         <h2 className="text-3xl md:text-4xl font-extrabold text-foreground">
           Top Universities {countryName}
         </h2>
@@ -63,10 +63,9 @@ const DestTopUniversities = ({ universities, id = "universities" }: Props) => {
       </div>
 
       {/* Cards Grid */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6">
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 px-4 lg:px-0 lg:gap-6">
         {universities.map((u, i) => (
           <div key={i} className="relative">
-
             {/* Tap animation above active card */}
             {showTap && activeIndex === i && (
               <motion.div

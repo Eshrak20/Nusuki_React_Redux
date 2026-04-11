@@ -11,7 +11,7 @@ const DestAcademicIntake = ({ intake, id = "intake" }: Props) => {
   return (
     <section id={id} className="w-full scroll-mt-32">
       {/* Header Section */}
-      <div className="text-center max-w-4xl mx-auto mb-10 space-y-4">
+      <div className="text-center max-w-4xl mx-auto px-4 lg:px-0 mb-10 space-y-4">
         <h2 className="text-3xl md:text-4xl font-bold text-foreground tracking-tight">
           {intake.title}
         </h2>
@@ -23,7 +23,7 @@ const DestAcademicIntake = ({ intake, id = "intake" }: Props) => {
       </div>
 
       {/* Table Container */}
-      <div className="w-full overflow-x-auto border border-border/50 rounded-2xl shadow-sm bg-card">
+      <div className="w-full overflow-x-auto border border-border/50 lg:rounded-2xl shadow-sm bg-card">
         <table className="w-full text-left border-collapse whitespace-nowrap min-w-150">
 
           {/* Dynamic Table Header */}

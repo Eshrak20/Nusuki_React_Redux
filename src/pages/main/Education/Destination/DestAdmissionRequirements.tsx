@@ -22,7 +22,7 @@ const DestAdmissionRequirements = ({
   if (!requirements || requirements.length === 0) return null;
 
   return (
-    <section id={id} className="w-full scroll-mt-32">
+    <section id={id} className="w-full px-4 -mt-8 lg:mt-0 lg:px-0 scroll-mt-32">
       {/* Title */}
       <h2 className="text-3xl md:text-4xl font-bold text-center text-foreground mb-10 tracking-tight">
         {title} in {countryName}
