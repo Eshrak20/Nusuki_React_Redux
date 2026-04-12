@@ -5,11 +5,15 @@ import FlightTourPackages from "./FlightTourPackages";
 import { useFlightDestinationListsQuery } from "@/redux/api/flightApi/flightDest";
 import FlightCollection from "./FlightCollection";
 import FlightHomeSkeleton from "@/components/skeletons/FlightHomeSkeleton";
+import { useFlightSearchListsQuery } from "@/redux/api/flightApi/flightSearch";
+import FlightSearch from "./FlightSearch";
 
 const FlightHome = () => {
 
-  const { data, isLoading, error } = useFlightDestinationListsQuery();
+  const { data: searchList } = useFlightSearchListsQuery();
+  const searchDestinationList = searchList?.data?.data || [];
 
+  const { data, isLoading, error } = useFlightDestinationListsQuery();
   if (isLoading) return <FlightHomeSkeleton />;
   if (error) return <div className="py-20 text-center text-destructive">Error loading destinations</div>;
 
@@ -19,8 +23,13 @@ const FlightHome = () => {
 
   return (
     <div className="bg-white dark:bg-gray-950">
+
+      <section className="max-w-7xl mx-auto px-4 pt-32">
+        <FlightSearch searchDests={searchDestinationList} />
+      </section>
+
       {/* Promotions */}
-      <section className="max-w-7xl mx-auto px-4 pt-12 md:pt-16 lg:pt-32">
+      <section className="max-w-7xl mx-auto px-4 md:pt-20">
         <FlightPromotions />
       </section>
 

@@ -1,3 +1,16 @@
+export interface SearchDests {
+  id: number;
+  iata_code: string;
+  name: string;
+  city_id: string;
+  city_name: string;
+  country: string;
+  country_id: string;
+  iso: string;
+  created_at: string;
+  updated_at: string;
+}
+
 // Single Destination Item
 export interface Destination {
   id: number;
@@ -70,20 +83,6 @@ export interface TourPackage {
   updated_at: string;
   destination: TourDestination;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
