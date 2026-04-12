@@ -12,7 +12,7 @@ const DestWorkOpportunities = ({ opportunities, id = "work-opportunities" }: Pro
   return (
     <section id={id} className="w-full my-20 scroll-mt-40">
       {/* Optional Section Header */}
-      <div className="text-center mb-12 space-y-4">
+      <div className="text-center px-4 lg:px-0 mb-9 lg:mb-12 space-y-4">
         <h2 className="text-3xl md:text-4xl font-extrabold text-foreground tracking-tight">
           Work Opportunities & Pathways
         </h2>
@@ -26,7 +26,7 @@ const DestWorkOpportunities = ({ opportunities, id = "work-opportunities" }: Pro
         {opportunities.map((opportunity, i) => (
           <div
             key={i}
-            className="group relative flex flex-col bg-card border border-border/50 rounded-[2rem] p-8 md:p-10 shadow-sm hover:shadow-xl hover:border-primary/50 transition-all duration-500 overflow-hidden"
+            className="group relative flex flex-col bg-card border border-border/50 lg:rounded-[2rem] p-8 md:p-10 shadow-sm hover:shadow-xl hover:border-primary/50 transition-all duration-500 overflow-hidden"
           >
             {/* Decorative Background Glow on Hover */}
             <div className="absolute -top-24 -right-24 w-48 h-48 bg-primary/10 rounded-full blur-3xl group-hover:bg-primary/20 transition-colors duration-500" />

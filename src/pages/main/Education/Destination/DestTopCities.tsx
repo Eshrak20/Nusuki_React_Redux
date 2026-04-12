@@ -41,7 +41,7 @@ const DestTopCities = ({ cities, id = "cities" }: Props) => {
         initial={{ opacity: 0, y: 20 }}
         animate={isInView ? { opacity: 1, y: 0 } : {}}
         transition={{ duration: 0.6 }}
-        className="text-center mb-14 max-w-4xl mx-auto"
+        className="text-center mb-11 lg:mb-14 max-w-4xl mx-auto"
       >
         <motion.div
           initial={{ scale: 0.95 }}
@@ -53,17 +53,17 @@ const DestTopCities = ({ cities, id = "cities" }: Props) => {
           <span className="text-sm font-semibold tracking-wide uppercase">Top Destinations</span>
         </motion.div>
 
-        <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight text-foreground mb-4">
+        <h2 className="text-3xl md:text-4xl font-extrabold px-5 lg:px-0 tracking-tight text-foreground mb-4">
           Top Cities for Your Journey {countryName}
         </h2>
         
-        <p className="text-foreground/70 leading-relaxed max-w-2xl mx-auto">
+        <p className="text-foreground/70 leading-relaxed px-4 lg:px-0 max-w-2xl mx-auto">
           Discover vibrant cities with world-class education, rich culture, and endless opportunities.
         </p>
       </motion.div>
 
       {/* Cities Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-8">
         {cities.map((city, i) => (
           <motion.div
             key={i}
@@ -72,7 +72,7 @@ const DestTopCities = ({ cities, id = "cities" }: Props) => {
             transition={{ duration: 0.5, delay: i * 0.15 }}
             whileHover={{ y: -8 }}
             /* CHANGED HERE: aspect-[4/3] for mobile, aspect-[3/2] for desktop to make them significantly shorter */
-            className="group relative flex flex-col justify-end overflow-hidden rounded-[24px] shadow-md hover:shadow-2xl transition-all duration-500 aspect-4/3 lg:aspect-3/3"
+            className="group relative flex mx-6 lg:mx-0 flex-col justify-end overflow-hidden rounded-[24px] shadow-md hover:shadow-2xl transition-all duration-500 aspect-4/3 lg:aspect-3/3"
           >
             {/* Full Cover Image */}
             <motion.img

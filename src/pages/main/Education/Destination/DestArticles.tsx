@@ -15,9 +15,9 @@ const DestArticles = ({ articles, id = "articles" }: Props) => {
   if (!articles || articles.length === 0) return null;
 
   return (
-    <section id={id} className="w-full my-20 scroll-mt-40">
+    <section id={id} className="w-full -my-6 lg:my-20 scroll-mt-40">
       {/* Section Header */}
-      <div className="text-center mb-12">
+      <div className="text-center mb-7.5 lg:mb-12">
         <h2 className="text-3xl md:text-4xl font-bold text-foreground tracking-tight">
           Popular and recent articles
         </h2>
@@ -30,13 +30,13 @@ const DestArticles = ({ articles, id = "articles" }: Props) => {
           /* Article Card */
           <div 
             key={i} 
-            className="group flex flex-col-reverse sm:flex-row bg-card border border-border/60 rounded-[2rem] p-4 sm:p-5 gap-6 shadow-sm hover:shadow-lg hover:border-border transition-all duration-300 cursor-pointer"
+            className="group flex flex-col-reverse sm:flex-row bg-card lg:border border-border/60 lg:rounded-[2rem] py-4 px-7.5 lg:p-4 sm:p-5 gap-6 lg:shadow-sm hover:shadow-lg hover:border-border transition-all duration-300 cursor-pointer"
           >
             {/* Left Column: Text Content */}
-            <div className="flex flex-col flex-1 justify-center sm:pl-2 py-2">
+            <div className="flex flex-col flex-1 justify-center sm:pl-2 lg:py-2">
               
               {/* Meta Info Row: Badge & Date */}
-              <div className="flex flex-wrap items-center gap-3 sm:gap-4 mb-4">
+              <div className="flex flex-wrap items-center gap-3 sm:gap-4 -mt-2 lg:mt-0 mb-4">
                 <span className="px-4 py-1.5 rounded-full border border-border text-xs md:text-sm text-muted-foreground font-medium">
                   {/* 3. Safely access the properties without 'any' */}
                   {article.meta[0] || "Study Abroad"}

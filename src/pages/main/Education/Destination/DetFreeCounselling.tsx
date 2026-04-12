@@ -21,9 +21,9 @@ const DetFreeCounselling = () => {
                         "";
 
     return (
-        <section className="w-full my-20">
+        <section className="w-full -my-8 lg:my-20">
             {/* Banner Container */}
-            <div className="relative w-full rounded-[2rem] overflow-hidden bg-primary dark:bg-card py-16 px-6 md:px-12 flex flex-col items-center justify-center shadow-xl">
+            <div className="relative w-full lg:rounded-[2rem] overflow-hidden bg-primary dark:bg-card py-12 lg:py-16 px-6 md:px-12 flex flex-col items-center justify-center shadow-xl">
 
                 {/* Dark gradient overlay for the background (Left to Right) */}
                 <div className="absolute inset-0 z-0 bg-linear-to-r from-transparent to-black/40 mix-blend-multiply" />

@@ -36,7 +36,7 @@ const DestFAQs = ({
     <section className="w-full my-20">
 
       {/* Header Section */}
-      <div className="max-w-4xl mx-auto text-center mb-12 space-y-4">
+      <div className="max-w-4xl mx-auto text-center px-4 lg:px-0 mb-8 lg:mb-12 space-y-4">
         <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight text-foreground leading-tight">
           {title}
         </h2>
