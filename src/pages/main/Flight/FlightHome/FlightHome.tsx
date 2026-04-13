@@ -25,6 +25,11 @@ const FlightHome = () => {
     <div className="bg-white dark:bg-gray-950">
 
       <section className="max-w-7xl mx-auto px-4 pt-32">
+        <div className="max-w-3xl mx-auto text-center mb-8">
+          <h2 className="text-3xl lg:text-4xl font-bold text-slate-900 dark:text-white mb-4 tracking-tight">
+            Search your Destiny
+          </h2>
+        </div>
         <FlightSearch searchDests={searchDestinationList} />
       </section>
 

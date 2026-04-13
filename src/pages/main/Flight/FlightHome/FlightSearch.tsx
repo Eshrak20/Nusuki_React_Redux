@@ -1,5 +1,8 @@
-import { useState } from "react";
-import { ArrowRightLeft, Calendar, Search } from "lucide-react";
+import { useState, useRef, useEffect, useMemo } from "react";
+import { ArrowRightLeft, Calendar, Search, X, Minus, Plus, ChevronDown } from "lucide-react";
+import { useDispatch, useSelector } from "react-redux";
+import type { RootState } from "@/redux/store";
+import { setSearchDest } from "@/redux/features/flightFilterSlice";
 import type { SearchDests } from "@/types/flight/flightHome.types";
 
 interface searchDestsProps {
@@ -7,29 +10,91 @@ interface searchDestsProps {
 }
 
 const FlightSearch = ({ searchDests }: searchDestsProps) => {
+    const dispatch = useDispatch();
+
+    // Redux state for search input
+    const searchKeyword = useSelector((state: RootState) => state.flightFilter.searchDest);
+
+    // --- State Management ---
     const [tripType, setTripType] = useState("one-way");
     const [fareType, setFareType] = useState("regular");
-    const [passengers, setPassengers] = useState("1 Traveler");
-    const [flightClass, setFlightClass] = useState("Economy");
-
     const [fromDest, setFromDest] = useState(searchDests[0]);
     const [toDest, setToDest] = useState(searchDests[1]);
 
-    const handleSwap = () => {
-        if (fromDest && toDest) {
-            setFromDest(toDest);
-            setToDest(fromDest);
-        }
-    };
+    // Dropdown visibility
+    const [activeDropdown, setActiveDropdown] = useState<"from" | "to" | "traveler" | null>(null);
 
-    // Prevent crashing if state isn't initialized yet
-    if (!fromDest || !toDest) {
-        return <div className="w-full h-32 bg-slate-100 animate-pulse rounded-xl" />;
-    }
+    // Traveler Counter States
+    const [adults, setAdults] = useState(1);
+    const [children, setChildren] = useState(0);
+    const [infants, setInfants] = useState(0);
+    const [flightClass, setFlightClass] = useState("Economy");
+
+    const dropdownRef = useRef<HTMLDivElement>(null);
+    const travelerRef = useRef<HTMLDivElement>(null);
+
+    // --- Helpers ---
+    const totalTravelers = adults + children + infants;
+
+    const [isClassOpen, setIsClassOpen] = useState(false);
+    const flightClasses = ["Economy", "Premium Economy", "Business Class", "First Class"];
+
+    // Close dropdowns on outside click
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            const target = event.target as Node;
+            const isOutsideSearch = dropdownRef.current && !dropdownRef.current.contains(target);
+            const isOutsideTraveler = travelerRef.current && !travelerRef.current.contains(target);
+
+            if (isOutsideSearch && isOutsideTraveler) {
+                setActiveDropdown(null);
+                dispatch(setSearchDest(""));
+            }
+        };
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => document.removeEventListener("mousedown", handleClickOutside);
+    }, [dispatch]);
+
+    // --- Optimized Filter & Sort Logic ---
+    // This fix ensures backspacing works and specific matches appear at the top
+    const filteredDests = useMemo(() => {
+        const query = (searchKeyword || "").toLowerCase().trim();
+
+        // If search is cleared (backspace), show all
+        if (!query) return searchDests;
+
+        const filtered = searchDests.filter((dest) => {
+            const name = (dest.name || "").toLowerCase();
+            const city = (dest.city_name || "").toLowerCase();
+            const iata = (dest.iata_code || "").toLowerCase();
+            return name.includes(query) || city.includes(query) || iata.includes(query);
+        });
+
+        // Sort results: matches at the start of city/IATA come first
+        return filtered.sort((a, b) => {
+            const aCity = a.city_name.toLowerCase();
+            const bCity = b.city_name.toLowerCase();
+            const aIata = a.iata_code.toLowerCase();
+            const bIata = b.iata_code.toLowerCase();
+
+            if ((aCity.startsWith(query) || aIata.startsWith(query)) &&
+                !(bCity.startsWith(query) || bIata.startsWith(query))) return -1;
+            if (!(aCity.startsWith(query) || aIata.startsWith(query)) &&
+                (bCity.startsWith(query) || bIata.startsWith(query))) return 1;
+
+            return aCity.localeCompare(bCity);
+        });
+    }, [searchKeyword, searchDests]);
+
+    const handleSelectDest = (dest: SearchDests, type: "from" | "to") => {
+        if (type === "from") setFromDest(dest);
+        else setToDest(dest);
+        setActiveDropdown(null);
+        dispatch(setSearchDest(""));
+    };
 
     return (
         <div className="w-full bg-white dark:bg-slate-950 p-4 md:p-6 rounded-xl shadow-sm border border-slate-200 dark:border-slate-800">
-
             {/* Top Row: Trip Types & Travelers */}
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6">
                 <div className="flex flex-wrap gap-2 md:gap-4">
@@ -37,145 +102,257 @@ const FlightSearch = ({ searchDests }: searchDestsProps) => {
                         <button
                             key={type}
                             onClick={() => setTripType(type)}
-                            className={`flex items-center gap-2 px-4 py-2 rounded-md border transition-colors text-sm font-medium ${tripType === type
-                                ? "bg-primary text-primary-foreground border-primary"
-                                : "bg-transparent text-slate-700 dark:text-slate-300 border-slate-300 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-900"
+                            className={`flex items-center gap-2 px-4 py-2 rounded-md border transition-colors text-sm font-medium ${tripType === type ? "bg-primary text-white border-primary" : "bg-transparent text-slate-700 border-slate-300"
                                 }`}
                         >
-                            <div className={`w-4 h-4 rounded-full border flex items-center justify-center ${tripType === type ? "border-primary-foreground" : "border-slate-400"
-                                }`}>
-                                {tripType === type && <div className="w-2 h-2 rounded-full bg-primary-foreground" />}
+                            <div className={`w-4 h-4 rounded-full border flex items-center justify-center ${tripType === type ? "border-white" : "border-slate-400"}`}>
+                                {tripType === type && <div className="w-2 h-2 rounded-full bg-white" />}
                             </div>
                             {type.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ')}
                         </button>
                     ))}
                 </div>
 
-                <div className="flex items-center gap-3 w-full md:w-auto">
-                    <select
-                        value={passengers}
-                        onChange={(e) => setPassengers(e.target.value)}
-                        className="bg-slate-100 dark:bg-slate-900 text-slate-800 dark:text-slate-200 border-none text-sm font-medium py-2 px-4 rounded-md outline-none cursor-pointer flex-1 md:flex-none"
+                {/* Traveler & Class Dropdown */}
+                <div className="relative" ref={travelerRef}>
+                    <button
+                        onClick={() => setActiveDropdown(activeDropdown === "traveler" ? null : "traveler")}
+                        className="bg-slate-100 dark:bg-slate-900 text-slate-800 dark:text-slate-200 text-sm font-medium py-2 px-4 rounded-md flex items-center gap-2 min-w-[160px] hover:bg-slate-200 transition-colors"
                     >
-                        <option>1 Traveler</option>
-                        <option>2 Travelers</option>
-                        <option>3 Travelers</option>
-                    </select>
-                    <select
-                        value={flightClass}
-                        onChange={(e) => setFlightClass(e.target.value)}
-                        className="bg-slate-100 dark:bg-slate-900 text-slate-800 dark:text-slate-200 border-none text-sm font-medium py-2 px-4 rounded-md outline-none cursor-pointer flex-1 md:flex-none"
-                    >
-                        <option>Economy</option>
-                        <option>Premium Economy</option>
-                        <option>Business</option>
-                        <option>First Class</option>
-                    </select>
+                        <span>{totalTravelers} Traveler{totalTravelers > 1 ? 's' : ''}, {flightClass}</span>
+                        <ChevronDown className={`w-4 h-4 transition-transform ${activeDropdown === "traveler" ? "rotate-180" : ""}`} />
+                    </button>
+
+                    {activeDropdown === "traveler" && (
+                        <div className="absolute top-[110%] right-0 w-72 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg shadow-2xl z-[110] p-4">
+                            <div className="space-y-4">
+                                {/* Adults Counter */}
+                                <div className="flex justify-between items-center">
+                                    <div>
+                                        <p className="font-bold text-sm">Adults</p>
+                                        <p className="text-[10px] text-slate-500">(12 Years and Above)</p>
+                                    </div>
+                                    <div className="flex items-center gap-3">
+                                        <button onClick={() => setAdults(Math.max(1, adults - 1))} className="p-1 border rounded hover:bg-slate-50"><Minus className="w-3 h-3" /></button>
+                                        <span className="font-bold text-sm w-4 text-center">{adults}</span>
+                                        <button onClick={() => setAdults(adults + 1)} className="p-1 border rounded hover:bg-slate-50"><Plus className="w-3 h-3" /></button>
+                                    </div>
+                                </div>
+                                {/* Child Counter */}
+                                <div className="flex justify-between items-center">
+                                    <div>
+                                        <p className="font-bold text-sm">Child</p>
+                                        <p className="text-[10px] text-slate-500">(2-11 Years Below)</p>
+                                    </div>
+                                    <div className="flex items-center gap-3">
+                                        <button onClick={() => setChildren(Math.max(0, children - 1))} className="p-1 border rounded hover:bg-slate-50"><Minus className="w-3 h-3" /></button>
+                                        <span className="font-bold text-sm w-4 text-center">{children}</span>
+                                        <button onClick={() => setChildren(children + 1)} className="p-1 border rounded hover:bg-slate-50"><Plus className="w-3 h-3" /></button>
+                                    </div>
+                                </div>
+                                {/* Infants Counter */}
+                                <div className="flex justify-between items-center">
+                                    <div>
+                                        <p className="font-bold text-sm">Infants</p>
+                                        <p className="text-[10px] text-slate-500">(0-24 Months Below)</p>
+                                    </div>
+                                    <div className="flex items-center gap-3">
+                                        <button onClick={() => setInfants(Math.max(0, infants - 1))} className="p-1 border rounded hover:bg-slate-50"><Minus className="w-3 h-3" /></button>
+                                        <span className="font-bold text-sm w-4 text-center">{infants}</span>
+                                        <button onClick={() => setInfants(infants + 1)} className="p-1 border rounded hover:bg-slate-50"><Plus className="w-3 h-3" /></button>
+                                    </div>
+                                </div>
+
+                                <div className="relative w-full mb-4">
+                                    {/* Trigger Button */}
+                                    <div
+                                        onClick={() => setIsClassOpen(!isClassOpen)}
+                                        className="w-full p-2 border rounded-md text-sm cursor-pointer flex justify-between items-center bg-transparent border-slate-300"
+                                    >
+                                        {flightClass}
+                                        <ChevronDown className={`w-4 h-4 transition-transform ${isClassOpen ? "rotate-180" : ""}`} />
+                                    </div>
+
+                                    {/* Custom Options List - Positioned UNDER the bar */}
+                                    {isClassOpen && (
+                                        <div className="absolute left-0 right-0 top-full mt-1 bg-white border rounded-md shadow-lg z-[130] overflow-hidden">
+                                            {flightClasses.map((cls) => (
+                                                <div
+                                                    key={cls}
+                                                    onClick={() => {
+                                                        setFlightClass(cls);
+                                                        setIsClassOpen(false);
+                                                    }}
+                                                    className={`px-4 py-2 text-sm cursor-pointer transition-colors
+                        ${flightClass === cls
+                                                            ? "bg-primary text-white"
+                                                            : "hover:bg-primary hover:text-white text-slate-700"
+                                                        }`}
+                                                >
+                                                    {cls}
+                                                </div>
+                                            ))}
+                                        </div>
+                                    )}
+                                </div>
+
+                                <button
+                                    onClick={() => setActiveDropdown(null)}
+                                    className="w-full bg-primary text-white py-2 rounded-md font-bold text-sm hover:opacity-90 transition-colors"
+                                >
+                                    Done
+                                </button>
+                            </div>
+                        </div>
+                    )}
                 </div>
             </div>
 
             {/* Middle Row: Search Inputs */}
-            <div className="flex flex-col lg:flex-row items-center gap-2 mb-6 relative">
-
-                {/* From & To Container */}
+            <div className="flex flex-col lg:flex-row items-center gap-2 mb-6 relative" ref={dropdownRef}>
                 <div className="flex flex-col md:flex-row w-full lg:w-1/2 gap-2 relative">
+
                     {/* FROM Input */}
-                    <div className="flex-1 border border-slate-300 dark:border-slate-700 rounded-md p-3 hover:border-primary dark:hover:border-primary transition-colors cursor-pointer bg-transparent">
-                        <div className="flex items-center gap-3">
-                            {/* UPDATED: iata_code */}
-                            <span className="text-xl font-bold text-slate-800 dark:text-slate-100">{fromDest.iata_code}</span>
-                            <div className="flex flex-col overflow-hidden">
-                                {/* UPDATED: city_name */}
-                                <span className="text-sm font-semibold text-slate-900 dark:text-slate-100 truncate">{fromDest.city_name}</span>
-                                {/* UPDATED: name (Airport Name) */}
-                                <span className="text-xs text-slate-500 dark:text-slate-400 truncate">{fromDest.name}</span>
+                    <div
+                        className={`flex-1 border rounded-md transition-all cursor-pointer bg-white dark:bg-slate-950 relative min-h-[72px] flex items-center ${activeDropdown === "from" ? "border-primary ring-1 ring-primary" : "border-slate-300 dark:border-slate-700 hover:border-primary"
+                            }`}
+                        onClick={() => setActiveDropdown("from")}
+                    >
+                        {activeDropdown === "from" ? (
+                            <div className="flex items-center w-full px-3">
+                                <Search className="w-5 h-5 text-slate-400 mr-2" />
+                                <input
+                                    autoFocus
+                                    className="flex-1 bg-transparent outline-none text-lg font-medium"
+                                    placeholder="Search airport..."
+                                    value={searchKeyword}
+                                    onChange={(e) => dispatch(setSearchDest(e.target.value))}
+                                />
+                                {searchKeyword && (
+                                    <button onClick={(e) => { e.stopPropagation(); dispatch(setSearchDest("")); }}>
+                                        <X className="w-4 h-4 text-slate-400 hover:text-slate-600" />
+                                    </button>
+                                )}
                             </div>
-                        </div>
+                        ) : (
+                            <div className="flex items-center gap-3 p-3">
+                                <span className="text-2xl font-bold text-slate-800 dark:text-slate-100">{fromDest?.iata_code}</span>
+                                <div className="flex flex-col truncate">
+                                    <span className="text-sm font-semibold truncate text-slate-900 dark:text-slate-100">{fromDest?.city_name}</span>
+                                    <span className="text-xs text-slate-500 truncate">{fromDest?.name}</span>
+                                </div>
+                            </div>
+                        )}
+
+                        {activeDropdown === "from" && (
+                            <div className="absolute top-[105%] left-0 w-full md:w-[130%] bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg shadow-2xl z-[100] max-h-72 overflow-y-auto mt-1">
+                                {filteredDests.length > 0 ? (
+                                    filteredDests.map((dest, idx) => (
+                                        <div
+                                            key={`${dest.iata_code}-${idx}`}
+                                            className="p-3 hover:bg-slate-50 dark:hover:bg-slate-800 cursor-pointer border-b border-slate-50 dark:border-slate-800 last:border-0"
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                handleSelectDest(dest, "from");
+                                            }}
+                                        >
+                                            <div className="font-bold text-slate-700 dark:text-slate-200">{dest.city_name} ({dest.iata_code})</div>
+                                            <div className="text-xs text-slate-500">{dest.name}</div>
+                                        </div>
+                                    ))
+                                ) : (
+                                    <div className="p-4 text-center text-slate-400 text-sm">No results found</div>
+                                )}
+                            </div>
+                        )}
                     </div>
 
                     {/* Swap Button */}
                     <button
-                        onClick={handleSwap}
-                        className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10 bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 shadow-sm p-2 rounded-full text-primary hover:bg-slate-50 dark:hover:bg-slate-900 transition-transform hover:scale-105 hidden md:flex"
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            const temp = fromDest; setFromDest(toDest); setToDest(temp);
+                        }}
+                        className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10 bg-white dark:bg-slate-950 border border-slate-200 shadow-md p-2 rounded-full text-primary hover:scale-110 transition-transform hidden md:flex"
                     >
                         <ArrowRightLeft className="w-4 h-4" />
                     </button>
 
                     {/* TO Input */}
-                    <div className="flex-1 border border-slate-300 dark:border-slate-700 rounded-md p-3 hover:border-primary dark:hover:border-primary transition-colors cursor-pointer bg-transparent">
-                        <div className="flex items-center gap-3 pl-0 md:pl-4">
-                            {/* UPDATED: iata_code */}
-                            <span className="text-xl font-bold text-slate-800 dark:text-slate-100">{toDest.iata_code}</span>
-                            <div className="flex flex-col overflow-hidden">
-                                {/* UPDATED: city_name */}
-                                <span className="text-sm font-semibold text-slate-900 dark:text-slate-100 truncate">{toDest.city_name}</span>
-                                {/* UPDATED: name (Airport Name) */}
-                                <span className="text-xs text-slate-500 dark:text-slate-400 truncate">{toDest.name}</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                {/* Dates Container */}
-                <div className="flex flex-col md:flex-row w-full lg:w-auto flex-1 gap-2">
-                    <div className="flex-1 border border-slate-300 dark:border-slate-700 rounded-md p-3 hover:border-primary dark:hover:border-primary transition-colors cursor-pointer">
-                        <div className="flex items-center gap-2 mb-1">
-                            <Calendar className="w-4 h-4 text-slate-500 dark:text-slate-400" />
-                            <span className="text-xs text-slate-500 dark:text-slate-400">Departure Date</span>
-                        </div>
-                        <div className="text-sm font-semibold text-slate-900 dark:text-slate-100">13/04/2026</div>
-                    </div>
-
-                    <div className={`flex-1 border rounded-md p-3 transition-colors cursor-pointer ${tripType === 'one-way'
-                        ? 'border-slate-200 dark:border-slate-800 opacity-60 bg-slate-50 dark:bg-slate-900/50'
-                        : 'border-slate-300 dark:border-slate-700 hover:border-primary dark:hover:border-primary'
-                        }`}
-                        onClick={() => tripType === 'one-way' && setTripType('round-way')}
+                    <div
+                        className={`flex-1 border rounded-md transition-all cursor-pointer bg-white dark:bg-slate-950 relative min-h-[72px] flex items-center ${activeDropdown === "to" ? "border-primary ring-1 ring-primary" : "border-slate-300 dark:border-slate-700 hover:border-primary"
+                            }`}
+                        onClick={() => setActiveDropdown("to")}
                     >
-                        <div className="flex items-center gap-2 mb-1">
-                            <Calendar className="w-4 h-4 text-slate-500 dark:text-slate-400" />
-                            <span className="text-xs text-slate-500 dark:text-slate-400">Return Date</span>
-                        </div>
-                        <div className="text-sm font-semibold text-slate-900 dark:text-slate-100">
-                            {tripType === 'one-way' ? 'Save More' : 'Select Date'}
-                        </div>
+                        {activeDropdown === "to" ? (
+                            <div className="flex items-center w-full px-3 md:pl-8">
+                                <Search className="w-5 h-5 text-slate-400 mr-2" />
+                                <input
+                                    autoFocus
+                                    className="flex-1 bg-transparent outline-none text-lg font-medium"
+                                    placeholder="Search airport..."
+                                    value={searchKeyword}
+                                    onChange={(e) => dispatch(setSearchDest(e.target.value))}
+                                />
+                            </div>
+                        ) : (
+                            <div className="flex items-center gap-3 p-3 md:pl-8">
+                                <span className="text-2xl font-bold text-slate-800 dark:text-slate-100">{toDest?.iata_code}</span>
+                                <div className="flex flex-col truncate">
+                                    <span className="text-sm font-semibold truncate text-slate-900 dark:text-slate-100">{toDest?.city_name}</span>
+                                    <span className="text-xs text-slate-500 truncate">{toDest?.name}</span>
+                                </div>
+                            </div>
+                        )}
+
+                        {activeDropdown === "to" && (
+                            <div className="absolute top-[105%] right-0 w-full md:w-[130%] bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg shadow-2xl z-[100] max-h-72 overflow-y-auto mt-1">
+                                {filteredDests.map((dest, idx) => (
+                                    <div key={`${dest.iata_code}-${idx}`} className="p-3 hover:bg-slate-50 dark:hover:bg-slate-800 cursor-pointer border-b last:border-0" onClick={() => handleSelectDest(dest, "to")}>
+                                        <div className="font-bold">{dest.city_name} ({dest.iata_code})</div>
+                                        <div className="text-xs text-slate-500">{dest.name}</div>
+                                    </div>
+                                ))}
+                            </div>
+                        )}
                     </div>
                 </div>
 
-                {/* Search Button */}
-                <button className="w-full lg:w-14 lg:h-14 mt-4 lg:mt-0 shrink-0 bg-[#0f172a] hover:bg-[#1e293b] dark:bg-primary dark:hover:bg-primary/90 text-white rounded-md lg:rounded-xl flex items-center justify-center transition-colors p-4 lg:p-0">
-                    <Search className="w-6 h-6 mr-2 lg:mr-0" />
-                    <span className="lg:hidden font-semibold">Search Flights</span>
+                {/* Dates & Search */}
+                <div className="flex flex-col md:flex-row w-full lg:w-auto flex-1 gap-2">
+                    <div className="flex-1 border border-slate-300 dark:border-slate-700 rounded-md p-3 hover:border-primary cursor-pointer">
+                        <div className="flex items-center gap-2 mb-1 text-xs text-slate-500"><Calendar className="w-4 h-4" /> Departure</div>
+                        <div className="text-sm font-semibold">13/04/2026</div>
+                    </div>
+                    <div className="flex-1 border border-slate-300 dark:border-slate-700 rounded-md p-3 opacity-60 bg-slate-50">
+                        <div className="flex items-center gap-2 mb-1 text-xs text-slate-500"><Calendar className="w-4 h-4" /> Return</div>
+                        <div className="text-sm font-semibold">Save More</div>
+                    </div>
+                </div>
+
+                <button className="w-full lg:w-14 lg:h-14 bg-[#0f172a] hover:bg-slate-800 text-white rounded-md lg:rounded-xl flex items-center justify-center transition-colors shrink-0 shadow-lg">
+                    <Search className="w-6 h-6" />
                 </button>
             </div>
 
-            {/* Bottom Row: Fare Types */}
+            {/* Bottom Row: Fare Type Radios */}
             <div className="flex flex-wrap items-center gap-6 mt-4">
-                {["Regular Fare", "Student Fare", "Umrah Fare"].map((fare) => (
-                    <label key={fare} className="flex items-center gap-2 cursor-pointer group">
-                        <div className={`w-4 h-4 rounded-full border flex items-center justify-center transition-colors ${fareType === fare.toLowerCase().split(' ')[0]
-                            ? "border-primary"
-                            : "border-slate-400 group-hover:border-primary"
-                            }`}>
-                            {fareType === fare.toLowerCase().split(' ')[0] && (
-                                <div className="w-2.5 h-2.5 rounded-full bg-primary" />
-                            )}
-                        </div>
-                        <span className="text-sm font-medium text-slate-700 dark:text-slate-300 select-none">
-                            {fare}
-                        </span>
-                        <input
-                            type="radio"
-                            name="fareType"
-                            className="hidden"
-                            value={fare.toLowerCase().split(' ')[0]}
-                            checked={fareType === fare.toLowerCase().split(' ')[0]}
-                            onChange={(e) => setFareType(e.target.value)}
-                        />
-                    </label>
-                ))}
+                {["Regular Fare", "Student Fare", "Umrah Fare"].map((fare) => {
+                    const fareId = fare.toLowerCase().split(' ')[0];
+                    return (
+                        <label key={fare} className="flex items-center gap-2 cursor-pointer group">
+                            <div className={`w-4 h-4 rounded-full border flex items-center justify-center transition-colors ${fareType === fareId ? "border-primary" : "border-slate-400 group-hover:border-primary"
+                                }`}>
+                                {fareType === fareId && <div className="w-2.5 h-2.5 rounded-full bg-primary" />}
+                            </div>
+                            <span className={`text-sm font-medium transition-colors ${fareType === fareId ? "text-primary" : "text-slate-700 dark:text-slate-300"}`}>
+                                {fare}
+                            </span>
+                            <input type="radio" className="hidden" name="fareType" value={fareId} checked={fareType === fareId} onChange={(e) => setFareType(e.target.value)} />
+                        </label>
+                    );
+                })}
             </div>
-
         </div>
     );
 };
