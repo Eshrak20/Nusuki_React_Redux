@@ -1,9 +1,12 @@
 import { useState, useRef, useEffect, useMemo } from "react";
-import { ArrowRightLeft, Calendar, Search, X, Minus, Plus, ChevronDown } from "lucide-react";
+import { ArrowRightLeft, Calendar as CalendarIcon, Search, Minus, Plus, ChevronDown, ChevronLeft, ChevronRight } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import type { RootState } from "@/redux/store";
 import { setSearchDest } from "@/redux/features/flightFilterSlice";
 import type { SearchDests } from "@/types/flight/flightHome.types";
+import { DayPicker } from "react-day-picker"; 
+import { format, addDays } from "date-fns";
+import "react-day-picker/dist/style.css";
 
 interface searchDestsProps {
     searchDests: SearchDests[];
@@ -14,6 +17,11 @@ const FlightSearch = ({ searchDests }: searchDestsProps) => {
 
     // Redux state for search input
     const searchKeyword = useSelector((state: RootState) => state.flightFilter.searchDest);
+
+    // --- Date Logic ---
+    const nextDay = useMemo(() => addDays(new Date(), 1), []);
+    const [departureDate, setDepartureDate] = useState<Date | undefined>(nextDay);
+    const [isCalendarOpen, setIsCalendarOpen] = useState(false);
 
     // --- State Management ---
     const [tripType, setTripType] = useState("one-way");
@@ -32,35 +40,26 @@ const FlightSearch = ({ searchDests }: searchDestsProps) => {
 
     const dropdownRef = useRef<HTMLDivElement>(null);
     const travelerRef = useRef<HTMLDivElement>(null);
+    const calendarRef = useRef<HTMLDivElement>(null);
 
     // --- Helpers ---
     const totalTravelers = adults + children + infants;
-
     const [isClassOpen, setIsClassOpen] = useState(false);
     const flightClasses = ["Economy", "Premium Economy", "Business Class", "First Class"];
 
     // Close dropdowns on outside click
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
-            const target = event.target as Node;
-            const isOutsideSearch = dropdownRef.current && !dropdownRef.current.contains(target);
-            const isOutsideTraveler = travelerRef.current && !travelerRef.current.contains(target);
-
-            if (isOutsideSearch && isOutsideTraveler) {
-                setActiveDropdown(null);
-                dispatch(setSearchDest(""));
+            if (calendarRef.current && !calendarRef.current.contains(event.target as Node)) {
+                setIsCalendarOpen(false);
             }
         };
         document.addEventListener("mousedown", handleClickOutside);
         return () => document.removeEventListener("mousedown", handleClickOutside);
-    }, [dispatch]);
+    }, []);
 
-    // --- Optimized Filter & Sort Logic ---
-    // This fix ensures backspacing works and specific matches appear at the top
     const filteredDests = useMemo(() => {
         const query = (searchKeyword || "").toLowerCase().trim();
-
-        // If search is cleared (backspace), show all
         if (!query) return searchDests;
 
         const filtered = searchDests.filter((dest) => {
@@ -70,7 +69,6 @@ const FlightSearch = ({ searchDests }: searchDestsProps) => {
             return name.includes(query) || city.includes(query) || iata.includes(query);
         });
 
-        // Sort results: matches at the start of city/IATA come first
         return filtered.sort((a, b) => {
             const aCity = a.city_name.toLowerCase();
             const bCity = b.city_name.toLowerCase();
@@ -87,8 +85,11 @@ const FlightSearch = ({ searchDests }: searchDestsProps) => {
     }, [searchKeyword, searchDests]);
 
     const handleSelectDest = (dest: SearchDests, type: "from" | "to") => {
-        if (type === "from") setFromDest(dest);
-        else setToDest(dest);
+        if (type === "from") {
+            setFromDest(dest);
+        } else {
+            setToDest(dest);
+        }
         setActiveDropdown(null);
         dispatch(setSearchDest(""));
     };
@@ -102,8 +103,7 @@ const FlightSearch = ({ searchDests }: searchDestsProps) => {
                         <button
                             key={type}
                             onClick={() => setTripType(type)}
-                            className={`flex items-center gap-2 px-4 py-2 rounded-md border transition-colors text-sm font-medium ${tripType === type ? "bg-primary text-white border-primary" : "bg-transparent text-slate-700 border-slate-300"
-                                }`}
+                            className={`flex items-center gap-2 px-4 py-2 rounded-md border transition-colors text-sm font-medium ${tripType === type ? "bg-primary text-white border-primary" : "bg-transparent text-slate-700 border-slate-300"}`}
                         >
                             <div className={`w-4 h-4 rounded-full border flex items-center justify-center ${tripType === type ? "border-white" : "border-slate-400"}`}>
                                 {tripType === type && <div className="w-2 h-2 rounded-full bg-white" />}
@@ -117,16 +117,15 @@ const FlightSearch = ({ searchDests }: searchDestsProps) => {
                 <div className="relative" ref={travelerRef}>
                     <button
                         onClick={() => setActiveDropdown(activeDropdown === "traveler" ? null : "traveler")}
-                        className="bg-slate-100 dark:bg-slate-900 text-slate-800 dark:text-slate-200 text-sm font-medium py-2 px-4 rounded-md flex items-center gap-2 min-w-[160px] hover:bg-slate-200 transition-colors"
+                        className="bg-slate-100 dark:bg-slate-900 text-slate-800 dark:text-slate-200 text-sm font-medium py-2 px-4 rounded-md flex items-center gap-2 min-w-40 hover:bg-slate-200 transition-colors"
                     >
                         <span>{totalTravelers} Traveler{totalTravelers > 1 ? 's' : ''}, {flightClass}</span>
                         <ChevronDown className={`w-4 h-4 transition-transform ${activeDropdown === "traveler" ? "rotate-180" : ""}`} />
                     </button>
 
                     {activeDropdown === "traveler" && (
-                        <div className="absolute top-[110%] right-0 w-72 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg shadow-2xl z-[110] p-4">
+                        <div className="absolute top-[110%] right-0 w-72 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg shadow-2xl z-110 p-4">
                             <div className="space-y-4">
-                                {/* Adults Counter */}
                                 <div className="flex justify-between items-center">
                                     <div>
                                         <p className="font-bold text-sm">Adults</p>
@@ -138,7 +137,6 @@ const FlightSearch = ({ searchDests }: searchDestsProps) => {
                                         <button onClick={() => setAdults(adults + 1)} className="p-1 border rounded hover:bg-slate-50"><Plus className="w-3 h-3" /></button>
                                     </div>
                                 </div>
-                                {/* Child Counter */}
                                 <div className="flex justify-between items-center">
                                     <div>
                                         <p className="font-bold text-sm">Child</p>
@@ -150,7 +148,6 @@ const FlightSearch = ({ searchDests }: searchDestsProps) => {
                                         <button onClick={() => setChildren(children + 1)} className="p-1 border rounded hover:bg-slate-50"><Plus className="w-3 h-3" /></button>
                                     </div>
                                 </div>
-                                {/* Infants Counter */}
                                 <div className="flex justify-between items-center">
                                     <div>
                                         <p className="font-bold text-sm">Infants</p>
@@ -163,8 +160,7 @@ const FlightSearch = ({ searchDests }: searchDestsProps) => {
                                     </div>
                                 </div>
 
-                                <div className="relative w-full mb-4">
-                                    {/* Trigger Button */}
+                                <div className="relative w-full">
                                     <div
                                         onClick={() => setIsClassOpen(!isClassOpen)}
                                         className="w-full p-2 border rounded-md text-sm cursor-pointer flex justify-between items-center bg-transparent border-slate-300"
@@ -173,21 +169,13 @@ const FlightSearch = ({ searchDests }: searchDestsProps) => {
                                         <ChevronDown className={`w-4 h-4 transition-transform ${isClassOpen ? "rotate-180" : ""}`} />
                                     </div>
 
-                                    {/* Custom Options List - Positioned UNDER the bar */}
                                     {isClassOpen && (
-                                        <div className="absolute left-0 right-0 top-full mt-1 bg-white border rounded-md shadow-lg z-[130] overflow-hidden">
+                                        <div className="absolute left-0 right-0 top-full mt-1 bg-white border rounded-md shadow-lg z-130 overflow-hidden">
                                             {flightClasses.map((cls) => (
                                                 <div
                                                     key={cls}
-                                                    onClick={() => {
-                                                        setFlightClass(cls);
-                                                        setIsClassOpen(false);
-                                                    }}
-                                                    className={`px-4 py-2 text-sm cursor-pointer transition-colors
-                        ${flightClass === cls
-                                                            ? "bg-primary text-white"
-                                                            : "hover:bg-primary hover:text-white text-slate-700"
-                                                        }`}
+                                                    onClick={() => { setFlightClass(cls); setIsClassOpen(false); }}
+                                                    className={`px-4 py-2 text-sm cursor-pointer transition-colors ${flightClass === cls ? "bg-primary text-white" : "hover:bg-slate-100 text-slate-700"}`}
                                                 >
                                                     {cls}
                                                 </div>
@@ -210,12 +198,11 @@ const FlightSearch = ({ searchDests }: searchDestsProps) => {
 
             {/* Middle Row: Search Inputs */}
             <div className="flex flex-col lg:flex-row items-center gap-2 mb-6 relative" ref={dropdownRef}>
-                <div className="flex flex-col md:flex-row w-full lg:w-1/2 gap-2 relative">
+                <div className="flex flex-col md:flex-row w-full lg:w-2/3 gap-2 relative">
 
                     {/* FROM Input */}
                     <div
-                        className={`flex-1 border rounded-md transition-all cursor-pointer bg-white dark:bg-slate-950 relative min-h-[72px] flex items-center ${activeDropdown === "from" ? "border-primary ring-1 ring-primary" : "border-slate-300 dark:border-slate-700 hover:border-primary"
-                            }`}
+                        className={`flex-1 border rounded-md transition-all cursor-pointer bg-white dark:bg-slate-950 relative min-h-18 flex items-center ${activeDropdown === "from" ? "border-primary ring-1 ring-primary" : "border-slate-300 dark:border-slate-700 hover:border-primary"}`}
                         onClick={() => setActiveDropdown("from")}
                     >
                         {activeDropdown === "from" ? (
@@ -224,18 +211,13 @@ const FlightSearch = ({ searchDests }: searchDestsProps) => {
                                 <input
                                     autoFocus
                                     className="flex-1 bg-transparent outline-none text-lg font-medium"
-                                    placeholder="Search airport..."
+                                    placeholder="From where?"
                                     value={searchKeyword}
                                     onChange={(e) => dispatch(setSearchDest(e.target.value))}
                                 />
-                                {searchKeyword && (
-                                    <button onClick={(e) => { e.stopPropagation(); dispatch(setSearchDest("")); }}>
-                                        <X className="w-4 h-4 text-slate-400 hover:text-slate-600" />
-                                    </button>
-                                )}
                             </div>
                         ) : (
-                            <div className="flex items-center gap-3 p-3">
+                            <div className="flex items-center gap-3 p-3 w-full">
                                 <span className="text-2xl font-bold text-slate-800 dark:text-slate-100">{fromDest?.iata_code}</span>
                                 <div className="flex flex-col truncate">
                                     <span className="text-sm font-semibold truncate text-slate-900 dark:text-slate-100">{fromDest?.city_name}</span>
@@ -245,24 +227,13 @@ const FlightSearch = ({ searchDests }: searchDestsProps) => {
                         )}
 
                         {activeDropdown === "from" && (
-                            <div className="absolute top-[105%] left-0 w-full md:w-[130%] bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg shadow-2xl z-[100] max-h-72 overflow-y-auto mt-1">
-                                {filteredDests.length > 0 ? (
-                                    filteredDests.map((dest, idx) => (
-                                        <div
-                                            key={`${dest.iata_code}-${idx}`}
-                                            className="p-3 hover:bg-slate-50 dark:hover:bg-slate-800 cursor-pointer border-b border-slate-50 dark:border-slate-800 last:border-0"
-                                            onClick={(e) => {
-                                                e.stopPropagation();
-                                                handleSelectDest(dest, "from");
-                                            }}
-                                        >
-                                            <div className="font-bold text-slate-700 dark:text-slate-200">{dest.city_name} ({dest.iata_code})</div>
-                                            <div className="text-xs text-slate-500">{dest.name}</div>
-                                        </div>
-                                    ))
-                                ) : (
-                                    <div className="p-4 text-center text-slate-400 text-sm">No results found</div>
-                                )}
+                            <div className="absolute top-[105%] left-0 w-full md:w-[130%] bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg shadow-2xl z-120 max-h-72 overflow-y-auto mt-1">
+                                {filteredDests.map((dest, idx) => (
+                                    <div key={idx} className="p-3 hover:bg-slate-50 dark:hover:bg-slate-800 cursor-pointer border-b last:border-0" onClick={(e) => { e.stopPropagation(); handleSelectDest(dest, "from"); }}>
+                                        <div className="font-bold text-sm">{dest.city_name} ({dest.iata_code})</div>
+                                        <div className="text-[10px] text-slate-500">{dest.name}</div>
+                                    </div>
+                                ))}
                             </div>
                         )}
                     </div>
@@ -280,23 +251,22 @@ const FlightSearch = ({ searchDests }: searchDestsProps) => {
 
                     {/* TO Input */}
                     <div
-                        className={`flex-1 border rounded-md transition-all cursor-pointer bg-white dark:bg-slate-950 relative min-h-[72px] flex items-center ${activeDropdown === "to" ? "border-primary ring-1 ring-primary" : "border-slate-300 dark:border-slate-700 hover:border-primary"
-                            }`}
+                        className={`flex-1 border rounded-md transition-all cursor-pointer bg-white dark:bg-slate-950 relative min-h-18 flex items-center ${activeDropdown === "to" ? "border-primary ring-1 ring-primary" : "border-slate-300 dark:border-slate-700 hover:border-primary"}`}
                         onClick={() => setActiveDropdown("to")}
                     >
                         {activeDropdown === "to" ? (
-                            <div className="flex items-center w-full px-3 md:pl-8">
+                            <div className="flex items-center w-full px-3">
                                 <Search className="w-5 h-5 text-slate-400 mr-2" />
                                 <input
                                     autoFocus
                                     className="flex-1 bg-transparent outline-none text-lg font-medium"
-                                    placeholder="Search airport..."
+                                    placeholder="To where?"
                                     value={searchKeyword}
                                     onChange={(e) => dispatch(setSearchDest(e.target.value))}
                                 />
                             </div>
                         ) : (
-                            <div className="flex items-center gap-3 p-3 md:pl-8">
+                            <div className="flex items-center gap-3 p-3 w-full">
                                 <span className="text-2xl font-bold text-slate-800 dark:text-slate-100">{toDest?.iata_code}</span>
                                 <div className="flex flex-col truncate">
                                     <span className="text-sm font-semibold truncate text-slate-900 dark:text-slate-100">{toDest?.city_name}</span>
@@ -306,11 +276,11 @@ const FlightSearch = ({ searchDests }: searchDestsProps) => {
                         )}
 
                         {activeDropdown === "to" && (
-                            <div className="absolute top-[105%] right-0 w-full md:w-[130%] bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg shadow-2xl z-[100] max-h-72 overflow-y-auto mt-1">
+                            <div className="absolute top-[105%] right-0 w-full md:w-[130%] bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg shadow-2xl z-120 max-h-72 overflow-y-auto mt-1">
                                 {filteredDests.map((dest, idx) => (
-                                    <div key={`${dest.iata_code}-${idx}`} className="p-3 hover:bg-slate-50 dark:hover:bg-slate-800 cursor-pointer border-b last:border-0" onClick={() => handleSelectDest(dest, "to")}>
-                                        <div className="font-bold">{dest.city_name} ({dest.iata_code})</div>
-                                        <div className="text-xs text-slate-500">{dest.name}</div>
+                                    <div key={idx} className="p-3 hover:bg-slate-50 dark:hover:bg-slate-800 cursor-pointer border-b last:border-0" onClick={(e) => { e.stopPropagation(); handleSelectDest(dest, "to"); }}>
+                                        <div className="font-bold text-sm">{dest.city_name} ({dest.iata_code})</div>
+                                        <div className="text-[10px] text-slate-500">{dest.name}</div>
                                     </div>
                                 ))}
                             </div>
@@ -319,18 +289,67 @@ const FlightSearch = ({ searchDests }: searchDestsProps) => {
                 </div>
 
                 {/* Dates & Search */}
-                <div className="flex flex-col md:flex-row w-full lg:w-auto flex-1 gap-2">
-                    <div className="flex-1 border border-slate-300 dark:border-slate-700 rounded-md p-3 hover:border-primary cursor-pointer">
-                        <div className="flex items-center gap-2 mb-1 text-xs text-slate-500"><Calendar className="w-4 h-4" /> Departure</div>
-                        <div className="text-sm font-semibold">13/04/2026</div>
+                <div className="flex flex-col md:flex-row w-full lg:w-auto flex-1 gap-2 relative">
+                    {/* Departure Date Field */}
+                    <div
+                        className={`flex-1 border rounded-md p-3 cursor-pointer transition-all ${isCalendarOpen ? 'border-primary ring-1 ring-primary' : 'border-slate-300 dark:border-slate-700 hover:border-primary'}`}
+                        onClick={() => setIsCalendarOpen(!isCalendarOpen)}
+                    >
+                        <div className="flex items-center gap-2 mb-1 text-xs text-slate-500">
+                            <CalendarIcon className="w-4 h-4" /> Departure
+                        </div>
+                        <div className="text-sm font-semibold">
+                            {departureDate ? format(departureDate, "dd/MM/yyyy") : "Select Date"}
+                        </div>
+
+                        {/* Floating Calendar Card */}
+                        {isCalendarOpen && (
+                            <div
+                                ref={calendarRef}
+                                className="absolute top-[110%] left-0 z-150 bg-white dark:bg-slate-900 shadow-2xl border border-slate-200 dark:border-slate-800 rounded-xl p-2"
+                                onClick={(e) => e.stopPropagation()} // Prevent closing when clicking inside calendar
+                            >
+                                <DayPicker
+                                    mode="single"
+                                    selected={departureDate}
+                                    onSelect={(date) => {
+                                        setDepartureDate(date);
+                                        setIsCalendarOpen(false);
+                                    }}
+                                    disabled={{ before: new Date() }}
+                                    showOutsideDays
+                                    className="m-0"
+                                    classNames={{
+                                        day_selected: "bg-primary text-white hover:bg-primary hover:text-white rounded-full",
+                                        day_today: "text-primary font-bold underline",
+                                        head_cell: "text-slate-500 font-medium text-sm w-9",
+                                        cell: "w-9 h-9 text-center text-sm p-0 relative",
+                                        day: "h-9 w-9 p-0 font-normal aria-selected:opacity-100 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition-colors",
+                                        nav_button: "border border-slate-200 rounded-md p-1 hover:bg-slate-100",
+                                        caption: "flex justify-center pt-1 relative items-center mb-4 text-sm font-bold",
+                                    }}
+                                    // Fix: Use 'Chevron' instead of 'IconLeft'/'IconRight'
+                                    components={{
+                                        Chevron: ({ orientation }) => {
+                                            const Icon = orientation === "left" ? ChevronLeft : ChevronRight;
+                                            return <Icon className="h-4 w-4" />;
+                                        },
+                                    }}
+                                />
+                            </div>
+                        )}
                     </div>
-                    <div className="flex-1 border border-slate-300 dark:border-slate-700 rounded-md p-3 opacity-60 bg-slate-50">
-                        <div className="flex items-center gap-2 mb-1 text-xs text-slate-500"><Calendar className="w-4 h-4" /> Return</div>
+
+                    {/* Return Date Field */}
+                    <div className="flex-1 border border-slate-300 dark:border-slate-700 rounded-md p-3 opacity-60 bg-slate-50 dark:bg-slate-900/50">
+                        <div className="flex items-center gap-2 mb-1 text-xs text-slate-500">
+                            <CalendarIcon className="w-4 h-4" /> Return
+                        </div>
                         <div className="text-sm font-semibold">Save More</div>
                     </div>
                 </div>
 
-                <button className="w-full lg:w-14 lg:h-14 bg-[#0f172a] hover:bg-slate-800 text-white rounded-md lg:rounded-xl flex items-center justify-center transition-colors shrink-0 shadow-lg">
+                <button className="w-full lg:w-14 lg:h-14 bg-primary hover:opacity-90 text-white rounded-md lg:rounded-xl flex items-center justify-center transition-colors shrink-0 shadow-lg">
                     <Search className="w-6 h-6" />
                 </button>
             </div>
@@ -341,8 +360,7 @@ const FlightSearch = ({ searchDests }: searchDestsProps) => {
                     const fareId = fare.toLowerCase().split(' ')[0];
                     return (
                         <label key={fare} className="flex items-center gap-2 cursor-pointer group">
-                            <div className={`w-4 h-4 rounded-full border flex items-center justify-center transition-colors ${fareType === fareId ? "border-primary" : "border-slate-400 group-hover:border-primary"
-                                }`}>
+                            <div className={`w-4 h-4 rounded-full border flex items-center justify-center transition-colors ${fareType === fareId ? "border-primary" : "border-slate-400 group-hover:border-primary"}`}>
                                 {fareType === fareId && <div className="w-2.5 h-2.5 rounded-full bg-primary" />}
                             </div>
                             <span className={`text-sm font-medium transition-colors ${fareType === fareId ? "text-primary" : "text-slate-700 dark:text-slate-300"}`}>
