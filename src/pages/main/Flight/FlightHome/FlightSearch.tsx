@@ -13,7 +13,6 @@ interface searchDestsProps {
 }
 
 const FlightSearch = ({ searchDests }: searchDestsProps) => {
-    console.log(searchDests);
     
     const dispatch = useDispatch();
 
