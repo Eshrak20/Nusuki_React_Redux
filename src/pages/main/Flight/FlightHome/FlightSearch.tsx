@@ -100,7 +100,7 @@ const FlightSearch = ({ searchDests }: FlightSearchProps) => {
                     </button>
 
                     {activeDropdown === "traveler" && (
-                        <div className="absolute top-[110%] right-0 w-72 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg shadow-2xl z-[110] p-4">
+                        <div className="absolute top-[110%] right-0 w-72 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg shadow-2xl z-110 p-4">
                             <div className="space-y-4">
                                 {/* Adult Counter */}
                                 <div className="flex justify-between items-center">
@@ -137,7 +137,7 @@ const FlightSearch = ({ searchDests }: FlightSearchProps) => {
                                         {searchData.flightClass} <ChevronDown className={`w-4 h-4 transition-transform ${isClassOpen ? "rotate-180" : ""}`} />
                                     </div>
                                     {isClassOpen && (
-                                        <div className="absolute left-0 right-0 top-full mt-1 bg-white border rounded shadow-lg z-[130] overflow-hidden">
+                                        <div className="absolute left-0 right-0 top-full mt-1 bg-white border rounded shadow-lg z-130 overflow-hidden">
                                             {flightClasses.map((cls) => (
                                                 <div key={cls} onClick={() => { dispatch(setSearchField({ flightClass: cls })); setIsClassOpen(false); }} className={`px-4 py-2 text-sm cursor-pointer hover:bg-slate-100 ${searchData.flightClass === cls ? "bg-primary text-white" : "text-slate-700"}`}>{cls}</div>
                                             ))}
@@ -155,7 +155,7 @@ const FlightSearch = ({ searchDests }: FlightSearchProps) => {
             <div className="flex flex-col lg:flex-row items-center gap-2 mb-6 relative" ref={dropdownRef}>
                 <div className="flex flex-col md:flex-row w-full lg:w-2/3 gap-2 relative">
                     {/* FROM Input */}
-                    <div className={`flex-1 border rounded-md transition-all cursor-pointer bg-white dark:bg-slate-950 min-h-[72px] flex items-center ${activeDropdown === "from" ? "border-primary ring-1 ring-primary" : "border-slate-300 dark:border-slate-700 hover:border-primary"}`} onClick={() => setActiveDropdown("from")}>
+                    <div className={`flex-1 border rounded-md transition-all cursor-pointer bg-white dark:bg-slate-950 min-h-18 flex items-center ${activeDropdown === "from" ? "border-primary ring-1 ring-primary" : "border-slate-300 dark:border-slate-700 hover:border-primary"}`} onClick={() => setActiveDropdown("from")}>
                         {activeDropdown === "from" ? (
                             <div className="flex items-center w-full px-3">
                                 <Search className="w-5 h-5 text-slate-400 mr-2" />
@@ -171,7 +171,7 @@ const FlightSearch = ({ searchDests }: FlightSearchProps) => {
                             </div>
                         )}
                         {activeDropdown === "from" && (
-                            <div className="absolute top-[105%] left-0 w-full md:w-[130%] bg-white dark:bg-slate-900 border rounded-lg shadow-2xl z-[120] max-h-72 overflow-y-auto">
+                            <div className="absolute top-[105%] left-0 w-full md:w-[130%] bg-white dark:bg-slate-900 border rounded-lg shadow-2xl z-120 max-h-72 overflow-y-auto">
                                 {filteredDests.map((dest, idx) => (
                                     <div key={idx} className="p-3 hover:bg-slate-50 dark:hover:bg-slate-800 cursor-pointer border-b last:border-0" onClick={(e) => { e.stopPropagation(); dispatch(setSearchField({ fromDest: dest })); setActiveDropdown(null); dispatch(setSearchDest("")); }}>
                                         <div className="font-bold text-sm">{dest.city_name} ({dest.iata_code})</div>
@@ -185,7 +185,7 @@ const FlightSearch = ({ searchDests }: FlightSearchProps) => {
                     <button onClick={(e) => { e.stopPropagation(); dispatch(swapDestinations()); }} className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10 bg-white dark:bg-slate-950 border border-slate-200 shadow-md p-2 rounded-full text-primary hover:scale-110 transition-transform hidden md:flex"><ArrowRightLeft className="w-4 h-4" /></button>
 
                     {/* TO Input */}
-                    <div className={`flex-1 border rounded-md cursor-pointer bg-white dark:bg-slate-950 min-h-[72px] flex items-center ${activeDropdown === "to" ? "border-primary ring-1 ring-primary" : "border-slate-300 dark:border-slate-700 hover:border-primary"}`} onClick={() => setActiveDropdown("to")}>
+                    <div className={`flex-1 border rounded-md cursor-pointer bg-white dark:bg-slate-950 min-h-18 flex items-center ${activeDropdown === "to" ? "border-primary ring-1 ring-primary" : "border-slate-300 dark:border-slate-700 hover:border-primary"}`} onClick={() => setActiveDropdown("to")}>
                         {activeDropdown === "to" ? (
                              <div className="flex items-center w-full px-3">
                                 <Search className="w-5 h-5 text-slate-400 mr-2" />
@@ -201,7 +201,7 @@ const FlightSearch = ({ searchDests }: FlightSearchProps) => {
                             </div>
                         )}
                         {activeDropdown === "to" && (
-                            <div className="absolute top-[105%] right-0 w-full md:w-[130%] bg-white dark:bg-slate-900 border rounded-lg shadow-2xl z-[120] max-h-72 overflow-y-auto">
+                            <div className="absolute top-[105%] right-0 w-full md:w-[130%] bg-white dark:bg-slate-900 border rounded-lg shadow-2xl z-120 max-h-72 overflow-y-auto">
                                 {filteredDests.map((dest, idx) => (
                                     <div key={idx} className="p-3 hover:bg-slate-50 dark:hover:bg-slate-800 cursor-pointer border-b" onClick={(e) => { e.stopPropagation(); dispatch(setSearchField({ toDest: dest })); setActiveDropdown(null); dispatch(setSearchDest("")); }}>
                                         <div className="font-bold text-sm">{dest.city_name} ({dest.iata_code})</div>
@@ -219,7 +219,7 @@ const FlightSearch = ({ searchDests }: FlightSearchProps) => {
                         <div className="flex items-center gap-2 mb-1 text-xs text-slate-500"><CalendarIcon className="w-4 h-4" /> Departure Date</div>
                         <div className="text-sm font-semibold">{format(parseISO(searchData.departureDate), "dd/MM/yyyy")}</div>
                         {isCalendarOpen && (
-                            <div ref={calendarRef} className="absolute top-[110%] left-0 z-[150] bg-white dark:bg-slate-900 shadow-2xl border rounded-xl p-2" onClick={(e) => e.stopPropagation()}>
+                            <div ref={calendarRef} className="absolute top-[110%] left-0 z-150 bg-white dark:bg-slate-900 shadow-2xl border rounded-xl p-2" onClick={(e) => e.stopPropagation()}>
                                 <DayPicker mode="single" selected={parseISO(searchData.departureDate)} onSelect={(d) => d && (dispatch(setSearchField({ departureDate: d.toISOString() })), setIsCalendarOpen(false))} disabled={{ before: new Date() }} showOutsideDays />
                             </div>
                         )}
@@ -230,7 +230,7 @@ const FlightSearch = ({ searchDests }: FlightSearchProps) => {
                             <div className="flex items-center gap-2 mb-1 text-xs text-slate-500"><CalendarIcon className="w-4 h-4" /> Return Date</div>
                             <div className="text-sm font-semibold">{format(parseISO(searchData.returnDate), "dd/MM/yyyy")}</div>
                             {isReturnCalendarOpen && (
-                                <div ref={returnCalendarRef} className="absolute top-[110%] right-0 z-[150] bg-white dark:bg-slate-900 shadow-2xl border rounded-xl p-2" onClick={(e) => e.stopPropagation()}>
+                                <div ref={returnCalendarRef} className="absolute top-[110%] right-0 z-150 bg-white dark:bg-slate-900 shadow-2xl border rounded-xl p-2" onClick={(e) => e.stopPropagation()}>
                                     <DayPicker mode="single" selected={parseISO(searchData.returnDate)} onSelect={(d) => d && (dispatch(setSearchField({ returnDate: d.toISOString() })), setIsReturnCalendarOpen(false))} disabled={{ before: parseISO(searchData.departureDate) }} showOutsideDays />
                                 </div>
                             )}
