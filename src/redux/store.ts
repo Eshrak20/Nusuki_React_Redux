@@ -6,9 +6,10 @@ import testFilterReducer from "./features/testFilterSlice";
 import flightFilterReducer from "./features/flightFilterSlice"
 import { laravelApi } from "./api/laravelApi";
 import { medusaApi } from "./api/medusaApi";
-
+import flightSearchReducer from "@/redux/features/flightSearchSlice";
 export const store = configureStore({
   reducer: {
+    flightSearch: flightSearchReducer,
     universityFilter: universityFilterReducer,
     courseFilter: courseFilterReducer,
     visaFilter: visaFilterReducer,
