@@ -18,7 +18,7 @@ const AppSection = () => {
           transition={{ duration: 0.6 }}
           className="space-y-4 mb-2"
         >
-          <h2 className="text-3xl md:text-5xl font-black text-[#002365] dark:text-white">
+          <h2 className="text-3xl md:text-5xl font-black text-primary dark:text-white">
             Your all-in-one Travel App
           </h2>
           <p className="text-gray-500 dark:text-gray-400 max-w-2xl mx-auto mb-7 text-sm md:text-base leading-relaxed">

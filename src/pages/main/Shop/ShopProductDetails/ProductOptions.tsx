@@ -16,7 +16,7 @@ const ProductOptions = ({ options }: Props) => {
 
   return (
     <div className="space-y-6">
-      {options.map((opt) => (
+      {options?.map((opt) => (
         <div key={opt.id} className="space-y-3">
           <div className="flex items-center justify-between">
             <h4 className="text-xs font-bold uppercase tracking-widest text-gray-900 dark:text-gray-100">
@@ -33,8 +33,8 @@ const ProductOptions = ({ options }: Props) => {
                   onClick={() => handleSelect(opt.id, val.id)}
                   className={`px-5 py-2.5 text-sm font-semibold rounded-full transition-all duration-300 border ${
                     isSelected
-                      ? "border-[#002365] bg-[#002365] text-white dark:border-white dark:bg-white dark:text-black shadow-md"
-                      : "border-gray-200 bg-transparent text-gray-700 hover:border-[#002365] dark:border-gray-700 dark:text-gray-300 dark:hover:border-white"
+                      ? "border-primary bg-primary text-white dark:border-white dark:bg-white dark:text-black shadow-md"
+                      : "border-gray-200 bg-transparent text-gray-700 hover:border-primary dark:border-gray-700 dark:text-gray-300 dark:hover:border-white"
                   }`}
                 >
                   {val.value}

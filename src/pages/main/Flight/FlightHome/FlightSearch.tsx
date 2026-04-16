@@ -66,7 +66,7 @@ const FlightSearch = ({ searchDests }: FlightSearchProps) => {
             d.name?.toLowerCase().includes(query) || 
             d.city_name?.toLowerCase().includes(query) || 
             d.iata_code?.toLowerCase().includes(query)
-        ).sort((a, b) => a.city_name.localeCompare(b.city_name)); //! Sorting must be come from backend
+        ); //! Sorting must be come from backend
     }, [searchKeyword, searchDests]);
 
     if (!searchData || !searchData.travelers) return null;

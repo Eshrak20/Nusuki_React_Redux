@@ -35,7 +35,7 @@ const ShopCategory = ({ categories }: { categories: ProductCategory[] }) => {
                       className="object-cover w-full h-full transition-transform duration-700 group-hover:scale-125"
                     />
                   </div>
-                  <p className="text-sm font-bold text-[#002365] dark:text-gray-200 group-hover:text-primary transition-colors text-center">
+                  <p className="text-sm font-bold text-primary dark:text-gray-200 group-hover:text-primary transition-colors text-center">
                     {category.name}
                   </p>
                 </CardContent>
