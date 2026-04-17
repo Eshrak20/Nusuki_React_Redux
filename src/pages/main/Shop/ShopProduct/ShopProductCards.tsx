@@ -41,12 +41,12 @@ console.log(products);
                 />
 
                 {/* Modern Price Badge */}
-                <div className="absolute top-5 right-5 bg-white/80 backdrop-blur-md text-[#002365] px-4 py-2 rounded-2xl text-sm font-black shadow-sm ring-1 ring-black/5">
+                <div className="absolute top-5 right-5 bg-white/80 backdrop-blur-md text-primary px-4 py-2 rounded-2xl text-sm font-black shadow-sm ring-1 ring-black/5">
                   ৳{product.price.toLocaleString()}
                 </div>
 
                 {/* Glassmorphism Hover Button */}
-                <div className="absolute inset-0 bg-[#002365]/20 opacity-0 group-hover:opacity-100 transition-all duration-500 flex items-center justify-center backdrop-blur-[3px]">
+                <div className="absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 transition-all duration-500 flex items-center justify-center backdrop-blur-[3px]">
                   <span className="bg-primary text-white px-8 py-3 rounded-full font-bold shadow-2xl transform translate-y-8 group-hover:translate-y-0 transition-all duration-500 flex items-center gap-2">
                     View Detail
                     <svg
@@ -70,7 +70,7 @@ console.log(products);
                     {product.brand}
                   </span>
                 </div>
-                <h3 className="text-xl font-bold text-[#002365] dark:text-gray-100 line-clamp-1 mb-4 group-hover:text-primary transition-colors">
+                <h3 className="text-xl font-bold text-primary dark:text-gray-100 line-clamp-1 mb-4 group-hover:text-primary transition-colors">
                   {product.title}
                 </h3>
 
@@ -79,12 +79,12 @@ console.log(products);
                     <span className="text-xs text-gray-400 line-through font-medium">
                       ৳{(product.price * 1.2).toFixed(0)}
                     </span>
-                    <span className="text-2xl font-black text-[#002365] dark:text-white">
+                    <span className="text-2xl font-black text-primary dark:text-white">
                       ৳{product.price.toLocaleString()}
                     </span>
                   </div>
 
-                  <div className="h-12 w-12 rounded-2xl bg-[#002365] text-white flex items-center justify-center group-hover:bg-primary group-hover:rotate-12 transition-all duration-500 shadow-lg">
+                  <div className="h-12 w-12 rounded-2xl bg-primary text-white flex items-center justify-center group-hover:bg-primary group-hover:rotate-12 transition-all duration-500 shadow-lg">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="24"

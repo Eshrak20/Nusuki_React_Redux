@@ -5,10 +5,11 @@ import {
   useAddToCartMutation,
   useCreateCartMutation,
 } from "@/redux/api/shopApi/shopCartApi";
-import type { Product } from "@/types/shop/types.productDetail";
+import type { Product, Variant } from "@/types/shop/types.productDetail";
 
 interface Props {
-  product: Product; // Changed from any to Product
+  product: Product;
+  selectedVariant: Variant // Changed from any to Product
 }
 
 interface CartResponse {
@@ -18,7 +19,9 @@ interface CartResponse {
   };
 }
 
-const ProAddToCart = ({ product }: Props) => {
+const ProAddToCart = ({ product, selectedVariant }: Props) => {
+  console.log(selectedVariant);
+  
   const [qty, setQty] = useState(1);
   const navigate = useNavigate();
 
@@ -85,7 +88,7 @@ const ProAddToCart = ({ product }: Props) => {
         <button
           type="button"
           onClick={() => setQty((p) => Math.max(1, p - 1))}
-          className="w-10 h-10 flex items-center justify-center text-gray-500 hover:text-[#002365] dark:hover:text-white transition-colors rounded-full hover:bg-gray-200 dark:hover:bg-gray-800"
+          className="w-10 h-10 flex items-center justify-center text-gray-500 hover:text-primary dark:hover:text-white transition-colors rounded-full hover:bg-gray-200 dark:hover:bg-gray-800"
         >
           <Minus size={16} strokeWidth={2.5} />
         </button>
@@ -97,7 +100,7 @@ const ProAddToCart = ({ product }: Props) => {
         <button
           type="button"
           onClick={() => setQty((p) => p + 1)}
-          className="w-10 h-10 flex items-center justify-center text-gray-500 hover:text-[#002365] dark:hover:text-white transition-colors rounded-full hover:bg-gray-200 dark:hover:bg-gray-800"
+          className="w-10 h-10 flex items-center justify-center text-gray-500 hover:text-primary dark:hover:text-white transition-colors rounded-full hover:bg-gray-200 dark:hover:bg-gray-800"
         >
           <Plus size={16} strokeWidth={2.5} />
         </button>
@@ -108,7 +111,7 @@ const ProAddToCart = ({ product }: Props) => {
         <button
           type="button"
           onClick={handleAddToCart}
-          className="group relative w-full bg-white dark:bg-gray-900 border-2 border-[#002365] dark:border-gray-100 text-[#002365] dark:text-white py-4 rounded-full font-bold flex items-center justify-center gap-2 overflow-hidden transition-all hover:shadow-lg"
+          className="group relative w-full bg-white dark:bg-gray-900 border-2 border-primary dark:border-gray-100 text-primary dark:text-white py-4 rounded-full font-bold flex items-center justify-center gap-2 overflow-hidden transition-all hover:shadow-lg"
         >
           <ShoppingBag size={18} className="group-hover:scale-110 transition-transform" />
           <span>Add to Cart</span>
@@ -117,7 +120,7 @@ const ProAddToCart = ({ product }: Props) => {
         <button
           type="button"
           onClick={handleBuyNow}
-          className="group w-full bg-[#002365] dark:bg-white text-white dark:text-[#002365] py-4 rounded-full font-bold flex items-center justify-center gap-2 transition-all hover:bg-opacity-90 hover:shadow-lg"
+          className="group w-full bg-primary dark:bg-white text-white dark:text-primary py-4 rounded-full font-bold flex items-center justify-center gap-2 transition-all hover:bg-opacity-90 hover:shadow-lg"
         >
           <Zap size={18} className="group-hover:scale-110 transition-transform" />
           <span>Buy Now</span>
