@@ -5,10 +5,11 @@ import {
   useAddToCartMutation,
   useCreateCartMutation,
 } from "@/redux/api/shopApi/shopCartApi";
-import type { Product } from "@/types/shop/types.productDetail";
+import type { Product, Variant } from "@/types/shop/types.productDetail";
 
 interface Props {
-  product: Product; // Changed from any to Product
+  product: Product;
+  selectedVariant: Variant // Changed from any to Product
 }
 
 interface CartResponse {
@@ -18,7 +19,9 @@ interface CartResponse {
   };
 }
 
-const ProAddToCart = ({ product }: Props) => {
+const ProAddToCart = ({ product, selectedVariant }: Props) => {
+  console.log(selectedVariant);
+  
   const [qty, setQty] = useState(1);
   const navigate = useNavigate();
 

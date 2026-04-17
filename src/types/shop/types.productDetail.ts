@@ -44,36 +44,57 @@ export interface Image {
 }
 
 export interface ProductOption {
-    id: string;
-    title: string;
-    values: OptionValue[];
+  id: string;
+  title: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  metadata: Record<string, any> | null;
+  product_id: string;
+  created_at: string;
+  updated_at: string;
+  deleted_at: string | null;
+  values: OptionValue[];
 }
 
 export interface OptionValue {
-    id: string;
-    value: string;
+  id: string;
+  value: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  metadata: Record<string, any> | null;
+  option_id: string;
+  created_at: string;
+  updated_at: string;
+  deleted_at: string | null;
 }
 
 export interface Variant {
-    id: string;
-    title: string;
-    options: VariantOption[];
-    prices: Price[];
+  id: string;
+  title: string;
+  thumbnail: string;
+  options: VariantOption[];
+  prices: Price[];
+  sku?: string;
+  // ... add other fields like weight, material if needed
 }
 
 export interface VariantOption {
+  id: string;
+  value: string;
+  option_id: string; // Added to match JSON
+  option: {
     id: string;
-    value: string;
-    option: {
-        id: string;
-        title: string;
-    };
+    title: string;
+    product_id: string;
+  };
 }
 
 export interface Price {
-    id: string;
-    currency_code: string;
-    amount: number;
+  id: string;
+  currency_code: string;
+  amount: number;
+  raw_amount: {
+    value: string;
+    precision: number;
+  };
 }
 
 export interface Tag {

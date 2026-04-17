@@ -4,7 +4,6 @@ import type { SearchDests } from "@/types/flight/flightHome.types";
 import { addDays } from "date-fns";
 
 interface FlightSearchState {
-    toLowerCase(): unknown;
     tripType: string;
     fareType: string;
     fromDest: SearchDests | null;
