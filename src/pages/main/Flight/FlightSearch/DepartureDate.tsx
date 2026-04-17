@@ -1,21 +1,21 @@
-import { format, parseISO } from "date-fns"
-import { Calendar as CalendarIcon } from "lucide-react"
+import { format, parseISO } from "date-fns";
+import { Calendar as CalendarIcon } from "lucide-react";
 
-import { Calendar } from "@/components/ui/calendar"
+import { Calendar } from "@/components/ui/calendar";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/components/ui/popover"
-import { cn } from "@/lib/utils"
+} from "@/components/ui/popover";
+import { cn } from "@/lib/utils";
 
 interface DepartureDateProps {
-  departureDate?: string
-  returnDate?: string
+  departureDate?: string;
+  returnDate?: string;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  dispatch: any
+  dispatch: any;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  setSearchField: (payload: any) => void
+  setSearchField: (payload: any) => void;
 }
 
 const DepartureDate: React.FC<DepartureDateProps> = ({
@@ -24,9 +24,7 @@ const DepartureDate: React.FC<DepartureDateProps> = ({
   dispatch,
   setSearchField,
 }) => {
-  const selectedDate = departureDate
-    ? parseISO(departureDate)
-    : undefined
+  const selectedDate = departureDate ? parseISO(departureDate) : undefined;
 
   return (
     <Popover>
@@ -35,7 +33,7 @@ const DepartureDate: React.FC<DepartureDateProps> = ({
           className={cn(
             "flex-1 rounded-xl border p-3 cursor-pointer transition",
             "bg-background hover:border-primary",
-            "border-border"
+            "border-border",
           )}
         >
           {/* Label */}
@@ -46,9 +44,7 @@ const DepartureDate: React.FC<DepartureDateProps> = ({
 
           {/* Value */}
           <div className="text-sm font-semibold text-foreground">
-            {selectedDate
-              ? format(selectedDate, "dd/MM/yyyy")
-              : "Select date"}
+            {selectedDate ? format(selectedDate, "dd/MM/yyyy") : "Select date"}
           </div>
         </div>
       </PopoverTrigger>
@@ -60,30 +56,33 @@ const DepartureDate: React.FC<DepartureDateProps> = ({
         <Calendar
           mode="single"
           selected={selectedDate}
+          disabled={{
+            before: selectedDate as Date,
+          }}
           onSelect={(date) => {
-            if (!date) return
+            if (!date) return;
 
             // ✅ Set departure
             dispatch(
               setSearchField({
                 departureDate: date.toISOString(),
-              })
-            )
+              }),
+            );
 
             // 🔥 Fix invalid return date
             if (returnDate && date > parseISO(returnDate)) {
               dispatch(
                 setSearchField({
                   returnDate: "",
-                })
-              )
+                }),
+              );
             }
           }}
           captionLayout="dropdown"
         />
       </PopoverContent>
     </Popover>
-  )
-}
+  );
+};
 
-export default DepartureDate
+export default DepartureDate;

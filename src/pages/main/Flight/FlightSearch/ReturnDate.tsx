@@ -93,6 +93,7 @@ const ReturnDate: React.FC<ReturnDateProps> = ({
           disabled={{
             before: minDate as Date,
           }}
+          
           captionLayout="dropdown"
         />
       </PopoverContent>

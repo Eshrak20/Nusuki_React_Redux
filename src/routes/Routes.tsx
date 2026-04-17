@@ -25,6 +25,7 @@ import FlightHome from "@/pages/main/Flight/FlightHome/FlightHome";
 import ShopHome from "@/pages/main/Shop/ShopHome/ShopHome";
 import ShopProductDetailsMain from "@/pages/main/Shop/ShopProductDetails/ProductDetailsMain";
 import ShopCartMain from "@/pages/main/Shop/ShopCart/ShopCartMain";
+import FlightDetailsMain from "@/pages/main/Flight/FlightDetails/FlightDetailsMain";
 // import ShopCheckOutMain from "@/pages/main/Shop/ShopCheckOut/ShopCheckOutMain";
 
 export const router = createBrowserRouter([
@@ -34,10 +35,16 @@ export const router = createBrowserRouter([
     errorElement: <ErrorPage />,
     children: [
       {
-        index: true,
-        // element: <Flight />,
-        // element: <Upcoming title="Flight Section Upcoming" />,
-        element: <FlightHome />,
+        children: [
+          {
+            index: true,
+             element: <FlightHome />,
+          },
+          {
+            path: "flight-details",
+            element: <FlightDetailsMain />,
+          },
+        ],
       },
       {
         path: "education",
