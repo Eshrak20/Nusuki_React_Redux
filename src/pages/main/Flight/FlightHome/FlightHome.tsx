@@ -39,14 +39,14 @@ const FlightHome = () => {
         />
 
         <div className="absolute top-40 left-0 right-0 bottom-0 translate-y-1/2 z-20">
-          <section className="max-w-7xl mx-auto px-4">
+          <section className="max-w-screen-2xl mx-auto  lg:px-8">
             <FlightSearch searchDests={searchDestinationList} />
           </section>
         </div>
       </div>
 
       {/* Promotions */}
-      <section className="max-w-7xl mx-auto px-4 md:pt-72">
+      <section className="max-w-7xl mx-auto px-4 pt-96 mt-96 md:mt-0 md:pt-72">
         <FlightPromotions />
       </section>
 

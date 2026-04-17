@@ -1,7 +1,9 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useRef, useEffect } from "react";
-import { Search } from "lucide-react";
+import { Search, AlertCircle } from "lucide-react"; // Added AlertCircle for icons
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom"; // Import useNavigate
+import { useNavigate } from "react-router-dom";
+import { toast } from "sonner"; // Assuming you use Shadcn (which uses Sonner)
 
 import type { RootState } from "@/redux/store";
 import type { SearchDests } from "@/types/flight/flightHome.types";
@@ -22,7 +24,7 @@ interface FlightSearchProps {
 
 const FlightSearch = ({ searchDests }: FlightSearchProps) => {
   const dispatch = useDispatch();
-  const navigate = useNavigate(); // Initialize navigate
+  const navigate = useNavigate();
   const searchData = useSelector((state: RootState) => state.flightSearch);
 
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -42,18 +44,38 @@ const FlightSearch = ({ searchDests }: FlightSearchProps) => {
     }
   }, [searchDests, searchData.fromDest, dispatch]);
 
-  // --- Search Handler ---
+  // --- Search Handler with Validation ---
+  // FlightSearch.tsx
   const handleSearch = () => {
-    // 1. Basic Validation (Optional but recommended)
-    if (!searchData.fromDest || !searchData.toDest) {
-      alert("Please select both origin and destination");
-      return;
+    if (isMultiWay) {
+      const incompleteIndex = searchData.segments.findIndex(
+        (seg) => !seg.fromDest || !seg.toDest,
+      );
+
+      if (incompleteIndex !== -1) {
+        toast.error(`Incomplete Flight Information`, {
+          description: `Flight #${incompleteIndex + 1} is missing a destination. Please select it before searching.`,
+          duration: 4000, // Stay a bit longer so they can read it
+        });
+        return;
+      }
+    } else {
+      if (!searchData.fromDest || !searchData.toDest) {
+        toast.error("Where are you flying?", {
+          description:
+            "Please select both your departure and arrival airports.",
+          duration: 3000,
+        });
+        return;
+      }
     }
 
-    // 2. Redirect to flight-details
-    // Since your route is a child of the current route, use a relative path 
-    // or absolute path "/flight-details" depending on your App.tsx setup.
-    navigate("flight-details");
+    // Passing validation
+    toast.success("Searching for flights...", {
+      description: "Hang tight! We're fetching the best prices for you.",
+    });
+
+    navigate("/flight-details");
   };
 
   if (!searchData || !searchData.travelers) return null;
@@ -70,7 +92,10 @@ const FlightSearch = ({ searchDests }: FlightSearchProps) => {
       </div>
 
       {/* Middle Row */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:flex items-stretch lg:items-center gap-2 sm:gap-3 mb-6" ref={dropdownRef}>
+      <div
+        className="grid grid-cols-1 sm:grid-cols-2 lg:flex items-stretch lg:items-center gap-2 sm:gap-3 mb-6"
+        ref={dropdownRef}
+      >
         <div className="col-span-1 sm:col-span-2 lg:flex-1">
           <DestinationSelector searchDests={searchDests} />
         </div>
@@ -97,19 +122,18 @@ const FlightSearch = ({ searchDests }: FlightSearchProps) => {
           </>
         )}
 
-        {/* Search Button Linked to Handler */}
         <button
           onClick={handleSearch}
-          className="col-span-1 sm:col-span-2 lg:w-14 lg:h-14 w-full h-12 bg-primary hover:opacity-90 text-white rounded-md lg:rounded-xl flex items-center justify-center transition-colors shadow-lg"
+          className="col-span-1 sm:col-span-2 lg:w-14 lg:h-14 w-full h-12 bg-primary hover:bg-primary/90 text-white rounded-md lg:rounded-xl flex items-center justify-center transition-all shadow-lg active:scale-95"
         >
-          <Search className="w-5 h-5" />
+          <Search className="w-6 h-6" />
         </button>
       </div>
 
-      {/* Bottom Row */}
       <FareType
         fareType={searchData.fareType}
         onChange={(value) => dispatch(setSearchField({ fareType: value }))}
+        // No extra logic needed here now!
       />
     </div>
   );

@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import type { RootState } from "@/redux/store";
 import { setSearchField } from "@/redux/features/flightSearchSlice";
+import { cn } from "@/lib/utils";
 
 const TripTypeSelector = () => {
   const dispatch = useDispatch();
@@ -12,32 +13,42 @@ const TripTypeSelector = () => {
 
   return (
     <div className="flex flex-wrap gap-2 md:gap-4 mb-5">
-      {types.map((type) => (
-        <button
-          key={type}
-          onClick={() => dispatch(setSearchField({ tripType: type }))}
-          className={`flex items-center gap-2 px-4 py-2 rounded-md border text-sm font-medium transition-colors ${
-            tripType === type
-              ? "bg-primary text-white border-primary"
-              : "bg-transparent text-slate-700 dark:text-primary border-slate-300"
-          }`}
-        >
-          <div
-            className={`w-4 h-4 rounded-full border flex items-center justify-center ${
-              tripType === type ? "dark:bg-black border-white" : "border-slate-400"
-            }`}
-          >
-            {tripType === type && (
-              <div className="w-2 h-2 rounded-full bg-white" />
+      {types.map((type) => {
+        const isActive = tripType === type;
+        
+        return (
+          <button
+            key={type}
+            type="button"
+            onClick={() => dispatch(setSearchField({ tripType: type }))}
+            className={cn(
+              "flex items-center gap-2 px-4 py-2 rounded-md border text-sm font-medium transition-all",
+              isActive
+                ? "bg-primary text-primary-foreground border-primary shadow-sm"
+                : "bg-background text-muted-foreground border-input hover:border-primary hover:text-foreground"
             )}
-          </div>
+          >
+            {/* Custom Radio Icon */}
+            <div
+              className={cn(
+                "w-4 h-4 rounded-full border flex items-center justify-center transition-colors",
+                isActive 
+                  ? "border-primary-foreground bg-transparent" 
+                  : "border-muted-foreground"
+              )}
+            >
+              {isActive && (
+                <div className="w-2 h-2 rounded-full bg-primary-foreground" />
+              )}
+            </div>
 
-          {type
-            .split("-")
-            .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
-            .join(" ")}
-        </button>
-      ))}
+            {/* Label Formatting */}
+            <span className="capitalize">
+              {type.replace("-", " ")}
+            </span>
+          </button>
+        );
+      })}
     </div>
   );
 };

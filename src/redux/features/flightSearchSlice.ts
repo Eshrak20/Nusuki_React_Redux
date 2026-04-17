@@ -19,7 +19,7 @@ interface FlightSearchState {
     departureDate: string;
     returnDate: string;
     // Multi-way data
-    segments: FlightSegment[]; 
+    segments: FlightSegment[];
     travelers: {
         adults: number;
         children: number;
@@ -50,7 +50,18 @@ export const flightSearchSlice = createSlice({
     initialState,
     reducers: {
         setSearchField: (state, action: PayloadAction<Partial<FlightSearchState>>) => {
-            return { ...state, ...action.payload };
+            // 1. Update the fields
+            Object.assign(state, action.payload);
+
+            // 2. Enforce Student Fare Rule: If fareType is updated to student, or if it is already student
+            if (state.fareType === "student") {
+                state.travelers = {
+                    adults: 1,
+                    children: 0,
+                    kids: 0,
+                    infants: 0
+                };
+            }
         },
         // Specialized reducer to update a specific segment in multi-way
         updateSegment: (state, action: PayloadAction<{ index: number; data: Partial<FlightSegment> }>) => {
@@ -76,6 +87,9 @@ export const flightSearchSlice = createSlice({
             }
         },
         updateTravelers: (state, action: PayloadAction<Partial<FlightSearchState["travelers"]>>) => {
+            // BLOCK updates if student fare is active
+            if (state.fareType === "student") return;
+
             state.travelers = { ...state.travelers, ...action.payload };
         },
         swapDestinations: (state) => {
@@ -86,13 +100,13 @@ export const flightSearchSlice = createSlice({
     }
 });
 
-export const { 
-    setSearchField, 
-    updateSegment, 
-    addSegment, 
-    removeSegment, 
-    updateTravelers, 
-    swapDestinations 
+export const {
+    setSearchField,
+    updateSegment,
+    addSegment,
+    removeSegment,
+    updateTravelers,
+    swapDestinations
 } = flightSearchSlice.actions;
 
 export default flightSearchSlice.reducer;
