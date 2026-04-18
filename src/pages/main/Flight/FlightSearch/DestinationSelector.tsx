@@ -5,7 +5,6 @@ import {
   Plus,
   X,
   Calendar as CalendarIcon,
-  Search,
 } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import { format, parseISO } from "date-fns";
@@ -109,8 +108,7 @@ const DestinationSelector = ({ searchDests }: { searchDests: SearchDests[] }) =>
       
       <PopoverContent className="p-0 w-[80vw] sm:w-100 md:w-112.5 shadow-2xl border-border" align="start" sideOffset={8}>
         <Command className="bg-popover">
-          <div className="flex items-center px-3 border-b border-border">
-            <Search className="w-4 h-4 text-muted-foreground mr-2" />
+          <div className="flex items-center border-b border-border">
             <CommandInput 
                 placeholder={type === "from" ? "Departure city..." : "Arrival city..."} 
                 className="h-12 border-none focus:ring-0 bg-transparent" 

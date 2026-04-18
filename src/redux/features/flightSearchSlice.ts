@@ -56,7 +56,7 @@ export const flightSearchSlice = createSlice({
             // 2. Enforce Student Fare Rule: If fareType is updated to student, or if it is already student
             if (state.fareType === "student") {
                 state.travelers = {
-                    adults: 1,
+                    adults: state.travelers.adults,
                     children: 0,
                     kids: 0,
                     infants: 0
@@ -88,7 +88,7 @@ export const flightSearchSlice = createSlice({
         },
         updateTravelers: (state, action: PayloadAction<Partial<FlightSearchState["travelers"]>>) => {
             // BLOCK updates if student fare is active
-            if (state.fareType === "student") return;
+            if (state.fareType === "student" && (state.travelers.children || state.travelers.kids || state.travelers.infants)) return;
 
             state.travelers = { ...state.travelers, ...action.payload };
         },

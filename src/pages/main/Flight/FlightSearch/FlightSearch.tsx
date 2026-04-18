@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useRef, useEffect } from "react";
-import { Search, AlertCircle } from "lucide-react"; // Added AlertCircle for icons
+import { Search } from "lucide-react"; // Added AlertCircle for icons
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner"; // Assuming you use Shadcn (which uses Sonner)
@@ -75,7 +75,7 @@ const FlightSearch = ({ searchDests }: FlightSearchProps) => {
       description: "Hang tight! We're fetching the best prices for you.",
     });
 
-    navigate("/flight-details");
+    navigate("/flight/details");
   };
 
   if (!searchData || !searchData.travelers) return null;
@@ -124,7 +124,7 @@ const FlightSearch = ({ searchDests }: FlightSearchProps) => {
 
         <button
           onClick={handleSearch}
-          className="col-span-1 sm:col-span-2 lg:w-14 lg:h-14 w-full h-12 bg-primary hover:bg-primary/90 text-white rounded-md lg:rounded-xl flex items-center justify-center transition-all shadow-lg active:scale-95"
+          className="col-span-1 sm:col-span-2 w-full h-12 lg:w-14 lg:h-14 bg-primary hover:bg-primary/90 dark:hover:bg-primary/80 text-primary-foreground rounded-md lg:rounded-xl flex items-center justify-center transition-all duration-200 shadow-lg active:scale-95"
         >
           <Search className="w-6 h-6" />
         </button>

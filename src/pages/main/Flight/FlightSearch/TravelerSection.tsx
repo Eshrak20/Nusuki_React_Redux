@@ -1,5 +1,3 @@
-// TravelerSection.tsx
-
 import { useState } from "react";
 import { ChevronDown } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
@@ -28,22 +26,29 @@ const TravelerSection = ({ totalTravelers }: Props) => {
   return (
     <DropdownMenu modal={false} open={open} onOpenChange={setOpen}>
       <DropdownMenuTrigger asChild>
-        <Button variant="outline" className="min-w-40 justify-between bg-white">
-          <span className="text-slate-700">
+        <Button 
+          variant="outline" 
+          className="min-w-40 justify-between bg-background border-input hover:bg-accent hover:text-accent-foreground"
+        >
+          <span className="text-foreground/90 font-medium">
             {totalTravelers} Traveler{totalTravelers > 1 ? "s" : ""}
           </span>
           <ChevronDown
-            className={`w-4 h-4 transition-transform ${open ? "rotate-180" : ""}`}
+            className={`w-4 h-4 transition-transform text-muted-foreground ${
+              open ? "rotate-180" : ""
+            }`}
           />
         </Button>
       </DropdownMenuTrigger>
 
-      <DropdownMenuContent className="w-80 p-4 shadow-xl border-slate-200">
-        <div className="space-y-1">
+      <DropdownMenuContent 
+        align="start" 
+        className="w-80 p-4 shadow-xl border-border bg-popover text-popover-foreground"
+      >
+        <div className="space-y-2">
           {travelerConfig.map((item) => {
-            // If it's student fare, the entire row is locked.
-            const isRowDisabled = isStudentFare;
-
+            const isAdult = item.key === "adults";
+            const isRowDisabled = isStudentFare && !isAdult;
             return (
               <TravelerCounter
                 key={item.key}
@@ -54,7 +59,7 @@ const TravelerSection = ({ totalTravelers }: Props) => {
                 max={item.max}
                 total={totalTravelers}
                 totalMax={9}
-                disabled={isRowDisabled} // CRITICAL
+                disabled={isRowDisabled}
                 onChange={(val) => {
                   if (!isRowDisabled) {
                     dispatch(updateTravelers({ [item.key]: val }));
@@ -65,11 +70,10 @@ const TravelerSection = ({ totalTravelers }: Props) => {
           })}
         </div>
 
-        {/* This must be OUTSIDE the TravelerCounter component map loop */}
         {isStudentFare && (
-          <div className="mt-4 p-2 bg-orange-50 rounded border border-orange-100">
-            <p className="text-[11px] text-orange-600 leading-relaxed italic">
-              * Student fares are restricted to 1 Adult traveler only.
+          <div className="mt-4 p-2.5 bg-orange-500/10 rounded-lg border border-orange-500/20">
+            <p className="text-[11px] text-orange-600 dark:text-orange-400 leading-relaxed italic">
+              * Student fares are restricted to Adult traveler only.
             </p>
           </div>
         )}

@@ -1,4 +1,4 @@
-import { createBrowserRouter } from "react-router";
+import { createBrowserRouter, Navigate } from "react-router";
 import MainLayout from "../layouts/MainLayout";
 import HajjLayout from "../layouts/HajjLayout";
 import VisaRequirements from "../pages/main/Hajj_Umrah/VisaRequirements/VisaRequirements";
@@ -35,13 +35,18 @@ export const router = createBrowserRouter([
     errorElement: <ErrorPage />,
     children: [
       {
+        index: true,
+        element: <Navigate to="/flight" replace />,
+      },
+      {
+        path: "flight",
         children: [
           {
             index: true,
-             element: <FlightHome />,
+            element: <FlightHome />,
           },
           {
-            path: "flight-details",
+            path: "details",
             element: <FlightDetailsMain />,
           },
         ],

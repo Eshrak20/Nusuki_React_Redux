@@ -14,6 +14,7 @@ const ShopProductDetailsMain = () => {
   const { id } = useParams<{ id: string }>();
   const { data, isLoading, error } = useGetProductDetailsQuery(id as string, { skip: !id });
 
+  //TODO Need to fix here any
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [selectedVariant, setSelectedVariant] = useState<any>(null);
 

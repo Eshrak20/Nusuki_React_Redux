@@ -5,9 +5,9 @@ import { MenuIcon, ChevronDown, ArrowUp } from "lucide-react";
 import logoWhite from "../assets/reactAssets/Logo/whiteLogo.png";
 import logoDark from "../assets/reactAssets/Logo/darkLogo.png";
 // import logoEduLight from "../assets/reactAssets/Logo/eduLight.jpeg"
-import logoEduLight from "../assets/reactAssets/Logo/eduLight (Edited).jpeg"
+import logoEduLight from "../assets/reactAssets/Logo/eduLight (Edited).jpeg";
 // import logoEduDark from "../assets/reactAssets/Logo/eduDark (Copy).jpeg"
-import logoEduDark from "../assets/reactAssets/Logo/eduDark1.png"
+import logoEduDark from "../assets/reactAssets/Logo/eduDark1.png";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -29,7 +29,7 @@ import { ModeToggle } from "./ModeToggler";
 import { cn } from "@/lib/utils";
 
 const navigationLinks = [
-  { href: "/", label: "Flight" },
+  { href: "/flight", label: "Flight" },
   { href: "/hotel", label: "Hotel" },
   { href: "/visa", label: "Visa" },
   {
@@ -95,12 +95,20 @@ export default function Navbar() {
           {/* Logo */}
           <Link to="/" className="flex h-12 w-56 items-center">
             <img
-              src={location.pathname.startsWith("/education") ? logoEduLight : logoWhite}
+              src={
+                location.pathname.startsWith("/education")
+                  ? logoEduLight
+                  : logoWhite
+              }
               alt="Logo"
               className="dark:hidden object-contain"
             />
             <img
-              src={location.pathname.startsWith("/education") ? logoEduDark : logoDark}
+              src={
+                location.pathname.startsWith("/education")
+                  ? logoEduDark
+                  : logoDark
+              }
               alt="Logo"
               className="hidden dark:block object-contain"
             />
@@ -110,9 +118,7 @@ export default function Navbar() {
           <NavigationMenu viewport={false} className="hidden md:flex">
             <NavigationMenuList className="gap-1">
               {navigationLinks.map((link) => {
-                const isActive =
-                  location.pathname === link.href ||
-                  link.subLinks?.some((sub) => location.pathname.startsWith(sub.href));
+                const isActive = location.pathname.startsWith(link.href);
 
                 return (
                   <NavigationMenuItem key={link.label}>
@@ -164,8 +170,7 @@ export default function Navbar() {
                           className={cn(
                             "inline-flex h-9 items-center justify-center rounded-md px-3 py-2 text-lg text-primary font-medium transition-colors",
                             "hover:text-primary hover:font-semibold",
-                            location.pathname === link.href &&
-                            "text-primary font-semibold",
+                            isActive && "text-primary font-semibold underline",
                           )}
                         >
                           {link.label}

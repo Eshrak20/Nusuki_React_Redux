@@ -12,11 +12,10 @@ interface TravelerCounterProps {
   total: number;
   totalMax?: number;
   onChange: (value: number) => void;
-  disabled?: boolean; // Controls the entire row's interactivity
+  disabled?: boolean;
   className?: string;
 }
 
-// TravelerCounter.tsx
 export const TravelerCounter: React.FC<TravelerCounterProps> = ({
   label,
   subLabel,
@@ -29,7 +28,6 @@ export const TravelerCounter: React.FC<TravelerCounterProps> = ({
   disabled = false,
   className,
 }) => {
-  // Logic: Both buttons are disabled if the entire row is disabled
   const isDecreaseDisabled = disabled || value <= min;
   const isIncreaseDisabled =
     disabled || total >= totalMax || (max !== undefined && value >= max);
@@ -37,24 +35,23 @@ export const TravelerCounter: React.FC<TravelerCounterProps> = ({
   return (
     <div
       className={cn(
-        "flex items-center justify-between rounded-xl border p-3 transition-all",
-        "bg-background dark:border-slate-800 border-slate-200",
-        disabled &&
-          "opacity-60 bg-slate-50/50 dark:bg-slate-900/50 cursor-not-allowed",
-        className,
+        "flex items-center justify-between rounded-xl border p-3 transition-colors",
+        "bg-card text-card-foreground border-border",
+        disabled && "opacity-50 bg-muted/40 cursor-not-allowed",
+        className
       )}
     >
-      <div>
-        <p
-          className={cn(
-            "text-sm font-semibold",
-            disabled && "text-muted-foreground",
-          )}
-        >
+      <div className="flex flex-col">
+        <p className={cn(
+          "text-sm font-semibold", 
+          disabled && "text-muted-foreground"
+        )}>
           {label}
         </p>
         {subLabel && (
-          <p className="text-[11px] text-muted-foreground">{subLabel}</p>
+          <p className="text-[10px] uppercase tracking-wider text-muted-foreground/80 font-medium">
+            {subLabel}
+          </p>
         )}
       </div>
 
@@ -69,25 +66,23 @@ export const TravelerCounter: React.FC<TravelerCounterProps> = ({
           }}
           disabled={isDecreaseDisabled}
           className={cn(
-            "h-8 w-8 rounded-full",
-            isDecreaseDisabled && "pointer-events-none opacity-40",
+            "h-8 w-8 rounded-full border-input bg-background hover:bg-accent",
+            isDecreaseDisabled && "opacity-50 pointer-events-none"
           )}
         >
           <Minus className="h-3.5 w-3.5" />
         </Button>
 
-        <span
-          className={cn(
-            "w-5 text-center text-sm font-bold",
-            disabled && "text-muted-foreground",
-          )}
-        >
+        <span className={cn(
+          "w-5 text-center text-sm font-bold tabular-nums", 
+          disabled && "text-muted-foreground"
+        )}>
           {value}
         </span>
 
         <Button
           type="button"
-          variant="secondary"
+          variant="default"
           size="icon"
           onClick={(e) => {
             e.preventDefault();
@@ -95,9 +90,8 @@ export const TravelerCounter: React.FC<TravelerCounterProps> = ({
           }}
           disabled={isIncreaseDisabled}
           className={cn(
-            "h-8 w-8 rounded-full",
-            !isIncreaseDisabled && "bg-primary text-primary-foreground",
-            isIncreaseDisabled && "pointer-events-none opacity-40",
+            "h-8 w-8 rounded-full shadow-sm",
+            isIncreaseDisabled && "opacity-50 pointer-events-none"
           )}
         >
           <Plus className="h-3.5 w-3.5" />
