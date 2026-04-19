@@ -24,7 +24,7 @@ const FlightTimer = () => {
 
     const timer = setInterval(() => {
       setTimeLeft((prev) => prev - 1);
-    }, 30);
+    }, 1000);
     return () => clearInterval(timer);
   }, [isExpired]);
 

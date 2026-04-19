@@ -6,8 +6,8 @@ import { useFlightDestinationListsQuery } from "@/redux/api/flightApi/flightDest
 import FlightCollection from "./FlightCollection";
 import FlightHomeSkeleton from "@/components/skeletons/FlightHomeSkeleton";
 import { useFlightSearchListsQuery } from "@/redux/api/flightApi/flightSearch";
-import FlightSearch from "../FlightSearch/FlightSearch";
 import VideoBanner from "@/components/VideoBanner";
+import FlightSearch from "../FlightSearch/FlightSearch";
 
 const FlightHome = () => {
   const { data: searchList } = useFlightSearchListsQuery();

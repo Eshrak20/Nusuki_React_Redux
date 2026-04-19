@@ -17,6 +17,7 @@ import TripTypeSelector from "./TripTypeSelector";
 import DestinationSelector from "./DestinationSelector";
 import TravelerSection from "./TravelerSection";
 import FlightClassDropdown from "./FlightClassSelector";
+import { formatApiDate, mapCabinClass } from "@/lib/utils";
 
 interface FlightSearchProps {
   searchDests: SearchDests[];
@@ -44,40 +45,80 @@ const FlightSearch = ({ searchDests }: FlightSearchProps) => {
     }
   }, [searchDests, searchData.fromDest, dispatch]);
 
-  // --- Search Handler with Validation ---
-  // FlightSearch.tsx
   const handleSearch = () => {
+    // --- Validation ---
     if (isMultiWay) {
       const incompleteIndex = searchData.segments.findIndex(
         (seg) => !seg.fromDest || !seg.toDest,
       );
-
       if (incompleteIndex !== -1) {
         toast.error(`Incomplete Flight Information`, {
-          description: `Flight #${incompleteIndex + 1} is missing a destination. Please select it before searching.`,
-          duration: 4000, // Stay a bit longer so they can read it
+          description: `Flight #${incompleteIndex + 1} is missing a destination.`,
         });
         return;
       }
     } else {
       if (!searchData.fromDest || !searchData.toDest) {
         toast.error("Where are you flying?", {
-          description:
-            "Please select both your departure and arrival airports.",
-          duration: 3000,
+          description: "Please select both departure and arrival airports.",
         });
         return;
       }
     }
 
-    // Passing validation
-    toast.success("Searching for flights...", {
-      description: "Hang tight! We're fetching the best prices for you.",
-    });
+    // --- Construct the API Body ---
+    const requestBody: any = {
+      trip_type: searchData.tripType.replace("-", "_"), // "one-way" -> "one_way"
+      fare_type: searchData.fareType,
+      adults: searchData.travelers.adults,
+      children:
+        searchData.travelers.children + (searchData.travelers.kids || 0), // combine kids if API only has children
+      infants: searchData.travelers.infants,
+      cabin: mapCabinClass(searchData.flightClass),
+      max_stops: 0,
+      page: 1,
+      size: 20,
+      sort_by: "price",
+      sort_order: "asc",
+      refundability: [],
+      stops: [],
+      airlines: [],
+      layover_cities: [],
+      flight_schedule_departure: [],
+      flight_schedule_arrival: [],
+      aircraft: [],
+      price_min: null,
+      price_max: null,
+      layover_duration_min: null,
+      layover_duration_max: null,
+    };
 
-    navigate("/flight/details");
+    // --- Add Trip-Specific Segments ---
+    if (isMultiWay) {
+      requestBody.segments = searchData.segments.map((seg) => ({
+        origin: seg.fromDest?.iata_code,
+        destination: seg.toDest?.iata_code,
+        departure_date: formatApiDate(seg.departureDate),
+      }));
+    } else {
+      requestBody.origin = searchData.fromDest?.iata_code;
+      requestBody.destination = searchData.toDest?.iata_code;
+      requestBody.departure_date = formatApiDate(searchData.departureDate);
+
+      if (searchData.tripType === "round-way") {
+        requestBody.return_date = formatApiDate(searchData.returnDate);
+      }
+    }
+
+    // --- Execution ---
+    toast.success("Searching for flights...");
+
+    // Option A: Pass data to the next page via state
+    navigate("/flight/details", { state: { searchPayload: requestBody } });
+
+    // Option B: If you're calling the API here directly
+    // console.log("Final API Body:", JSON.stringify(requestBody, null, 2));
   };
-
   if (!searchData || !searchData.travelers) return null;
 
   return (

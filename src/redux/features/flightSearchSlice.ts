@@ -13,6 +13,7 @@ export interface FlightSegment {
 interface FlightSearchState {
     tripType: string;
     fareType: string;
+    searchDest: string;
     // Single trip data (used for One-Way/Round-Trip)
     fromDest: SearchDests | null;
     toDest: SearchDests | null;
@@ -32,6 +33,7 @@ interface FlightSearchState {
 const initialState: FlightSearchState = {
     tripType: "one-way",
     fareType: "regular",
+    searchDest: "",
     fromDest: null,
     toDest: null,
     departureDate: addDays(new Date(), 0).toISOString(),
@@ -49,6 +51,11 @@ export const flightSearchSlice = createSlice({
     name: "flightSearch",
     initialState,
     reducers: {
+
+        setSearchDest: (state, action: PayloadAction<string>) => {
+            state.searchDest = action.payload;
+        },
+
         setSearchField: (state, action: PayloadAction<Partial<FlightSearchState>>) => {
             // 1. Update the fields
             Object.assign(state, action.payload);
@@ -101,6 +108,7 @@ export const flightSearchSlice = createSlice({
 });
 
 export const {
+    setSearchDest,
     setSearchField,
     updateSegment,
     addSegment,

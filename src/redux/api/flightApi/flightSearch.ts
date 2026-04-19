@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import type { FlightSearchRequest } from "@/types/flight/flightSearch.types";
 import { laravelApi } from "../laravelApi";
 import type { ApiResponse, Pagination, SearchDests } from "@/types/flight/flightHome.types";
 export const flightSearchApi = laravelApi.injectEndpoints({
@@ -8,7 +10,14 @@ export const flightSearchApi = laravelApi.injectEndpoints({
                 method: "GET",
             }),
         }),
+        flightSearchTicketLists: builder.query<any, FlightSearchRequest>({
+            query: (body) => ({
+                url: "/flights/search", // Ensure full path is correct
+                method: "POST",
+                body, // Use the actual parameter here
+            }),
+        }),
     }),
 });
 
-export const { useFlightSearchListsQuery } = flightSearchApi;
+export const { useFlightSearchListsQuery, useFlightSearchTicketListsQuery } = flightSearchApi;
