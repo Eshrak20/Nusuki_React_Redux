@@ -17,7 +17,7 @@ const FlightHome = () => {
   if (isLoading) return <FlightHomeSkeleton />;
   if (error)
     return (
-      <div className="py-20 text-center text-destructive">
+      <div className="pt-44 pb-20 text-center text-destructive">
         Error loading destinations
       </div>
     );

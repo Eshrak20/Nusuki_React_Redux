@@ -21,6 +21,17 @@ export const mapCabinClass = (className: string) => {
   return mapping[className] || "Y";
 };
 
+export const mapCabinCodeToLabel = (code: string) => {
+  const mapping: Record<string, string> = {
+    Y: "Economy",
+    S: "Premium Economy",
+    C: "Business Class",
+    F: "First Class",
+  };
+
+  return mapping[code] || "Economy";
+};
+
 // Converts ISO string "2026-04-19T00:00:00Z" to "2026-04-19"
 export const formatApiDate = (dateString: string) => dateString.split('T')[0];
 

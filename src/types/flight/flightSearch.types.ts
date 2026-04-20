@@ -58,7 +58,7 @@ export interface FlightSearchState {
         infants: number;
         child_ages?: number[];
     };
-    flightClass: string;
+    cabin: string;
     // ✅ Filters added
     filters: FlightFilters;
     ui: {

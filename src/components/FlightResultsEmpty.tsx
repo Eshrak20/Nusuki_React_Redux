@@ -40,7 +40,7 @@ const FlightResultsEmpty = () => {
         <div className="mt-6 w-full max-w-xs">
           <Link
             to="/"
-            className="group flex h-12 w-full items-center justify-center rounded-2xl bg-primary text-base font-semibold text-white shadow-lg transition-all duration-200 hover:scale-[1.02]"
+            className="group flex h-12 w-full items-center justify-center rounded-2xl bg-primary text-base font-semibold dark:text-black text-white shadow-lg transition-all duration-200 hover:scale-[1.02]"
           >
             <Search className="mr-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
             Search Again

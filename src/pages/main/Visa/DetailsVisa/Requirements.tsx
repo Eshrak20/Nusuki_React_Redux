@@ -11,7 +11,7 @@ const requirementTabs = [
   "For Students",
   "For Job Holder",
   "For Service Holder",
-  "For HouseWife",
+  "For Housewife",
 ];
 
 const tabTypeMap: Record<string, string> = {
@@ -19,7 +19,7 @@ const tabTypeMap: Record<string, string> = {
   "For Students": "for_student",
   "For Job Holder": "for_job_holder",
   "For Service Holder": "for_service_holder",
-  "For HouseWife": "for_house_wife",
+  "For Housewife": "for_house_wife",
 };
 
 const Requirements = ({ details }: RequirementProps) => {

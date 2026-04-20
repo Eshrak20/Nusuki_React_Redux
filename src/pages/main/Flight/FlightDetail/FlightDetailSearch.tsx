@@ -1,7 +1,6 @@
 import { useMemo, useState } from "react";
 import { useSelector } from "react-redux";
 import type { RootState } from "@/redux/store";
-import type { SearchDests, FlightSegment } from "@/types/flight/your-type-file"; // adjust path
 import { AnimatePresence, motion } from "framer-motion";
 import {
   Users,
@@ -17,6 +16,8 @@ import {
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import type { SearchDests } from "@/types/flight/flightHome.types";
+import { mapCabinCodeToLabel } from "@/lib/utils";
 
 type FlightDisplayItem = {
   fromDest: SearchDests | null;
@@ -159,7 +160,7 @@ const FlightDetailSearch = () => {
                 Cabin Class
               </p>
               <p className="mt-1 text-sm font-bold text-foreground">
-                {searchData.flightClass}
+                {mapCabinCodeToLabel(searchData.cabin)}
               </p>
             </div>
 
