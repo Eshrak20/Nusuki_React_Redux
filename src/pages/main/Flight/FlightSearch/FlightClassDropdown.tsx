@@ -19,7 +19,7 @@ import { cn } from "@/lib/utils";
 const FlightClassDropdown = () => {
   const dispatch = useDispatch();
   const flightClass = useSelector(
-    (state: RootState) => state.flightSearch.flightClass,
+    (state: RootState) => state.flightSearch.cabin,
   );
 
   const [open, setOpen] = useState(false);
@@ -56,7 +56,7 @@ const FlightClassDropdown = () => {
             <DropdownMenuItem
               key={cls.value}
               onSelect={() => {
-                dispatch(setSearchField({ flightClass: cls.value }));
+                dispatch(setSearchField({ cabin: cls.value }));
                 setOpen(false);
               }}
               className={cn(

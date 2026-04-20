@@ -27,7 +27,7 @@ const ReturnDate: React.FC<ReturnDateProps> = ({
   setSearchField,
 }) => {
   // use dashed value if your redux state stores one-way / round-way / multi-way
-  if (tripType === "one-way") {
+  if (tripType === "one_way") {
     return (
       <div className="flex-1 cursor-not-allowed rounded-xl border bg-muted p-3 opacity-60">
         <div className="mb-1 flex items-center gap-2 text-xs text-muted-foreground">
