@@ -1,6 +1,11 @@
+import type { AssistanceInfo } from '@/types/visa/types.visa';
 import { Phone, Mail } from 'lucide-react';
 
-const NeedAssistance = () => {
+interface AssistanceInfoProps {
+    assistanceInfo?: AssistanceInfo;
+}
+
+const NeedAssistance = ({ assistanceInfo }: AssistanceInfoProps) => {
     return (
         <div className="relative mb-5 overflow-hidden rounded-2xl bg-primary dark:bg-card dark:border dark:border-border p-6 shadow-lg md:p-8">
             {/* Background Gradient matching your banner theme - Hidden in dark mode to keep the card clean */}
@@ -8,7 +13,7 @@ const NeedAssistance = () => {
 
             <div className="relative z-10 flex flex-col gap-4">
                 <h3 className="text-xl font-bold text-primary-foreground dark:text-card-foreground">
-                    Need Assistance?
+                    Need Assistance ?
                 </h3>
 
                 <p className="mb-2 text-base text-primary-foreground/80 dark:text-muted-foreground">
@@ -22,7 +27,7 @@ const NeedAssistance = () => {
                         className="flex items-center gap-3 text-primary-foreground/90 transition-all hover:text-primary-foreground hover:opacity-100 dark:text-card-foreground dark:hover:text-primary"
                     >
                         <Phone className="h-5 w-5 fill-current dark:fill-none dark:text-primary" />
-                        <span className="font-semibold tracking-wide">+8801714742454</span>
+                        <span className="font-semibold tracking-wide">{assistanceInfo?.phone}</span>
                     </a>
 
                     {/* Email Contact */}
@@ -31,7 +36,7 @@ const NeedAssistance = () => {
                         className="flex items-center gap-3 text-primary-foreground/90 transition-all hover:text-primary-foreground hover:opacity-100 dark:text-card-foreground dark:hover:text-primary"
                     >
                         <Mail className="h-5 w-5 fill-current dark:fill-none dark:text-primary" />
-                        <span className="font-semibold tracking-wide">info@nusukibd.com</span>
+                        <span className="font-semibold tracking-wide">{assistanceInfo?.email}</span>
                     </a>
                 </div>
             </div>

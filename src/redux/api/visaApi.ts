@@ -1,7 +1,8 @@
 import type {
   VisaApiResponse,
   VisaQueryParams,
-  VisaDetailsApiResponse
+  VisaDetailsApiResponse,
+  VisaAssistanceApiResponse
 } from "@/types/visa/types.visa";
 import { laravelApi } from "./laravelApi";
 
@@ -30,7 +31,13 @@ export const visaApi = laravelApi.injectEndpoints({
         method: "GET",
       }), 
     }),
+    getVisaAssistance: builder.query<VisaAssistanceApiResponse, void>({
+      query: () => ({
+        url: `/visa-assistance`,
+        method: "GET",
+      }), 
+    }),
   }),
 });
 
-export const { useGetVisasQuery, useGetVisaDetailsQuery } = visaApi;
+export const { useGetVisasQuery, useGetVisaDetailsQuery, useGetVisaAssistanceQuery } = visaApi;

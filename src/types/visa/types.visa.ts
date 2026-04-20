@@ -86,3 +86,21 @@ export interface VisaDetailsApiResponse {
   message: string;
   data: VisaDetails; // Now properly includes requirements and processes
 }
+
+export interface VisaAssistanceApiResponse {
+  code?: number;
+  success: boolean;
+  message: string;
+  data: AssistanceInfo;
+}
+
+export interface AssistanceInfo {
+  id: number;
+  email: string;
+  phone: string;
+  office_hours: string;
+  office_hours_time: string;
+  off_day: string;
+  created_at: string;
+  updated_at: string;
+}

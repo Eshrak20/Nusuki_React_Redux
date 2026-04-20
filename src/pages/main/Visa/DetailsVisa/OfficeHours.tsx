@@ -1,6 +1,12 @@
+import type { AssistanceInfo } from "@/types/visa/types.visa";
 import { FaClock } from "react-icons/fa";
 
-const OfficeHours = () => {
+interface AssistanceInfoProps {
+    assistanceInfo?: AssistanceInfo;
+}
+
+const OfficeHours = ({ assistanceInfo }: AssistanceInfoProps) => {
+    
     return (
         <div className="mb-5 rounded-2xl border border-border bg-card p-6 text-card-foreground shadow-sm">
             {/* Header */}
@@ -13,13 +19,13 @@ const OfficeHours = () => {
             <div className="space-y-4">
                 {/* Regular Days */}
                 <div className="flex items-center justify-between text-base">
-                    <span className="font-medium text-muted-foreground">Saturday – Thursday</span>
-                    <span className="font-bold text-primary">10:00 AM – 7:00 PM</span>
+                    <span className="font-medium text-muted-foreground">{assistanceInfo?.office_hours}</span>
+                    <span className="font-bold text-primary">{assistanceInfo?.office_hours_time}</span>
                 </div>
 
                 {/* Weekend/Closed Day */}
                 <div className="flex items-center justify-between text-base">
-                    <span className="font-medium text-muted-foreground">Friday</span>
+                    <span className="font-medium text-muted-foreground">{assistanceInfo?.off_day}</span>
                     <span className="font-bold text-destructive">Closed</span>
                 </div>
             </div>

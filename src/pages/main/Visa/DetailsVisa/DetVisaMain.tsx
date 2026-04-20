@@ -1,4 +1,4 @@
-import { useGetVisaDetailsQuery } from "@/redux/api/visaApi";
+import { useGetVisaAssistanceQuery, useGetVisaDetailsQuery } from "@/redux/api/visaApi";
 import { useParams } from "react-router-dom";
 import Banner from "./Banner";
 import QuickInfo from "./QuickInfo";
@@ -28,6 +28,9 @@ const DetVisaMain = () => {
     );
 
     const details = data?.data;
+
+    const { data: assistanceData } = useGetVisaAssistanceQuery();
+    const assistanceInfo = assistanceData?.data;
 
     if (isLoading) {
         return (
@@ -74,8 +77,8 @@ const DetVisaMain = () => {
                     <div className="lg:col-span-1">
                         <div className="sticky top-24">
                             <VisaActionCard details={details} />
-                            <NeedAssistance />
-                            <OfficeHours />
+                            <NeedAssistance assistanceInfo={assistanceInfo} />
+                            <OfficeHours assistanceInfo={assistanceInfo} />
                         </div>
                     </div>
 
