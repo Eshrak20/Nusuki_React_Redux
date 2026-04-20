@@ -14,10 +14,22 @@ const requirementTabs = [
   "For HouseWife",
 ];
 
+const tabTypeMap: Record<string, string> = {
+  "Basic Requirements": "basic",
+  "For Students": "for_student",
+  "For Job Holder": "for_job_holder",
+  "For Service Holder": "for_service_holder",
+  "For HouseWife": "for_house_wife",
+};
+
 const Requirements = ({ details }: RequirementProps) => {
   const requirements = details.requirements || [];
   
   const [activeTab, setActiveTab] = useState("Basic Requirements");
+
+const filteredRequirements = requirements.filter(
+  (req) => req.type === tabTypeMap[activeTab]
+);
 
   return (
     <div className="mx-auto max-w-7xl pt-1 lg:pt-2 lg:-mt-5 lg:p-4">
@@ -58,9 +70,9 @@ const Requirements = ({ details }: RequirementProps) => {
         </div>
 
         {/* Requirements List */}
-        {requirements.length > 0 ? (
+        {filteredRequirements.length > 0 ? (
           <div className="space-y-3">
-            {requirements.map((req) => (
+            {filteredRequirements.map((req) => (
               <div
                 key={req.id}
                 className="flex items-center gap-3 rounded-lg px-4 py-3.5 transition-colors hover:bg-muted lg:bg-muted/50"
