@@ -8,10 +8,6 @@ interface Props {
 }
 
 const FlightJourneySummary = ({ flight }: Props) => {
-  // console.log("Flight item:", flight);
-  // console.log("Segments:", flight.segments);
-  // console.log("Summary:", flight.summary);
-  // console.log("Airline:", flight.airline);
   const { airline, summary, segments } = flight;
 
   return (

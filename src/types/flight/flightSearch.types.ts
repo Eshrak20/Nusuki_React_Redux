@@ -61,6 +61,12 @@ export interface FlightSearchState {
     flightClass: string;
     // ✅ Filters added
     filters: FlightFilters;
+    ui: {
+        currentPage: number;
+        sortBy: "price" | "duration" | "departure_at";
+        sortOrder: "asc" | "desc";
+        selectedAirlineCode: string | null;
+    };
 }
 export interface FlightFilters {
     airlines: string[];
