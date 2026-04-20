@@ -23,7 +23,6 @@ const NeedAssistance = ({ assistanceInfo }: AssistanceInfoProps) => {
                 <div className="flex flex-col gap-5">
                     {/* Phone Contact */}
                     <a
-                        href="tel:+88096100000000"
                         className="flex items-center gap-3 text-primary-foreground/90 transition-all hover:text-primary-foreground hover:opacity-100 dark:text-card-foreground dark:hover:text-primary"
                     >
                         <Phone className="h-5 w-5 fill-current dark:fill-none dark:text-primary" />
@@ -32,7 +31,6 @@ const NeedAssistance = ({ assistanceInfo }: AssistanceInfoProps) => {
 
                     {/* Email Contact */}
                     <a
-                        href="mailto:visa.skyroute@tamimiqbal.com"
                         className="flex items-center gap-3 text-primary-foreground/90 transition-all hover:text-primary-foreground hover:opacity-100 dark:text-card-foreground dark:hover:text-primary"
                     >
                         <Mail className="h-5 w-5 fill-current dark:fill-none dark:text-primary" />
