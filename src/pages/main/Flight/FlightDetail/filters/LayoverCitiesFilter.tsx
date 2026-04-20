@@ -1,9 +1,10 @@
 import { useDispatch, useSelector } from "react-redux";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import { updateFilter } from "@/redux/features/flightSearchSlice";
 import type { RootState } from "@/redux/store";
 import type { FilterOptionString } from "@/types/flight/flightResults.types";
+import FlightFilterSection from "./reusableComponents/FlightFilterSection";
+import FilterCheckboxItem from "./reusableComponents/FilterCheckboxItem";
 
 interface Props {
   data: FilterOptionString[];
@@ -11,27 +12,38 @@ interface Props {
 
 const LayoverCitiesFilter = ({ data }: Props) => {
   const dispatch = useDispatch();
-  const selected = useSelector((state: RootState) => state.flightSearch.filters.layover_cities);
+  const selected = useSelector(
+    (state: RootState) => state.flightSearch.filters.layover_cities
+  );
 
   if (!data.length) return null;
 
   return (
-    <Card className="rounded-2xl border-0 bg-white shadow-none">
-      <CardHeader className="pb-3">
-        <CardTitle className="text-base">Layover City</CardTitle>
-      </CardHeader>
-      <CardContent className="space-y-2">
-        {data.map((item) => (
-          <label key={item.value} className="flex cursor-pointer items-center gap-3 rounded-xl border px-3 py-3">
-            <Checkbox
-              checked={selected.includes(item.value)}
-              onCheckedChange={() => dispatch(updateFilter({ category: "layover_cities", value: item.value }))}
-            />
-            <span className="text-sm font-medium text-slate-700">{item.label}</span>
-          </label>
-        ))}
-      </CardContent>
-    </Card>
+    <FlightFilterSection value="layover-city" title="Layover City">
+      <ScrollArea className="max-h-80 pr-2">
+        <div className="space-y-2">
+          {data.map((item) => {
+            const parts = item.label.split("(");
+            const main = parts[0]?.trim();
+            const code = parts[1] ? `(${parts[1]}` : "";
+
+            return (
+              <FilterCheckboxItem
+                key={item.value}
+                checked={selected.includes(item.value)}
+                onCheckedChange={() =>
+                  dispatch(
+                    updateFilter({ category: "layover_cities", value: item.value })
+                  )
+                }
+                label={main}
+                subLabel={code}
+              />
+            );
+          })}
+        </div>
+      </ScrollArea>
+    </FlightFilterSection>
   );
 };
 

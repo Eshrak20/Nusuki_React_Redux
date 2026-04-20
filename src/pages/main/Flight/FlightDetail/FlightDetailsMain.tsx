@@ -71,7 +71,7 @@ const FlightDetailsMain = () => {
       infants: infantsCount,
       child_ages: childAgesArray,
       cabin: mapCabinClass(searchData.flightClass),
-      max_stops: 0,
+      max_stops: 0, //!Remove max_stops: 0 unless you intentionally want to lock everything to non-stop.
       page: currentPage,
       size: pageSize,
       sort_by: "price",

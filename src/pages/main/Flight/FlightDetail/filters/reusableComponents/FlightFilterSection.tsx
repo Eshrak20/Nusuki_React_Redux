@@ -1,0 +1,47 @@
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+import type { ReactNode } from "react";
+import { cn } from "@/lib/utils";
+
+interface Props {
+  value: string;
+  title: string;
+  children: ReactNode;
+  defaultOpen?: boolean;
+  className?: string;
+}
+
+const FlightFilterSection = ({
+  value,
+  title,
+  children,
+  defaultOpen = true,
+  className,
+}: Props) => {
+  return (
+    <Accordion
+      type="single"
+      collapsible
+      defaultValue={defaultOpen ? value : undefined}
+      className={cn(
+        "rounded-2xl border border-border bg-card shadow-sm",
+        className
+      )}
+    >
+      <AccordionItem value={value} className="border-none">
+        <AccordionTrigger className="px-4 py-3 text-sm font-bold hover:no-underline">
+          {title}
+        </AccordionTrigger>
+        <AccordionContent className="px-3 pb-3">
+          {children}
+        </AccordionContent>
+      </AccordionItem>
+    </Accordion>
+  );
+};
+
+export default FlightFilterSection;
