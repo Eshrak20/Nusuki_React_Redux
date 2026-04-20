@@ -25,7 +25,7 @@ const initialState: FlightSearchState = {
         },
     ],
     travelers: { adults: 1, children: [], infants: 0 },
-    flightClass: "Economy",
+    flightClass: "Y",
     filters: {
         airlines: [],
         aircraft: [],

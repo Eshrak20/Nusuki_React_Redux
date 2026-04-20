@@ -3,7 +3,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import AvailabilityTab from "./AvailabilityTab";
 import FlightSegmentTimeline from "../FlightSegmentTimeLine";
 import RefundPolicyTab from "./RefundPolicyTab";
-
+import { motion } from "framer-motion";
 interface Props {
   flight: FlightResultItem;
 }
@@ -65,125 +65,155 @@ const FlightTabsDetails = ({ flight }: Props) => {
         </TabsList>
 
         <TabsContent value="details" className="mt-6">
-          <FlightSegmentTimeline segments={flight.segments} />
+          <motion.div
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.2 }}
+          >
+            <FlightSegmentTimeline segments={flight.segments} />
+          </motion.div>
         </TabsContent>
 
         <TabsContent value="fare" className="mt-6">
-          <div className="overflow-hidden rounded-xl border bg-card">
-            <div className="grid grid-cols-1 lg:grid-cols-4">
-              <div className="border-b lg:col-span-3 lg:border-b-0 lg:border-r">
-                <div className="border-b bg-muted/40 px-4 py-3 text-center">
-                  <h3 className="text-base font-semibold text-primary">
-                    Passenger Fare
-                  </h3>
-                </div>
+          <motion.div
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.2 }}
+          >
+            <div className="overflow-hidden rounded-xl border bg-card">
+              <div className="grid grid-cols-1 lg:grid-cols-4">
+                <div className="border-b lg:col-span-3 lg:border-b-0 lg:border-r">
+                  <div className="border-b bg-muted/40 px-4 py-3 text-center">
+                    <h3 className="text-base font-semibold text-primary">
+                      Passenger Fare
+                    </h3>
+                  </div>
 
-                <div className="overflow-x-auto">
-                  <table className="w-full min-w-[520px] text-sm">
-                    <thead className="bg-muted/60 text-muted-foreground">
-                      <tr>
-                        <th className="px-4 py-3 text-left font-semibold">
-                          TYPE
-                        </th>
-                        <th className="px-4 py-3 text-left font-semibold">
-                          BASE FARE
-                        </th>
-                        <th className="px-4 py-3 text-left font-semibold">
-                          TAX
-                        </th>
-                        <th className="px-4 py-3 text-left font-semibold">
-                          TOTAL PRICE
-                        </th>
-                      </tr>
-                    </thead>
+                  <div className="overflow-x-auto">
+                    <table className="w-full min-w-[520px] text-sm">
+                      <thead className="bg-muted/60 text-muted-foreground">
+                        <tr>
+                          <th className="px-4 py-3 text-left font-semibold">
+                            TYPE
+                          </th>
+                          <th className="px-4 py-3 text-left font-semibold">
+                            BASE FARE
+                          </th>
+                          <th className="px-4 py-3 text-left font-semibold">
+                            TAX
+                          </th>
+                          <th className="px-4 py-3 text-left font-semibold">
+                            TOTAL PRICE
+                          </th>
+                        </tr>
+                      </thead>
 
-                    <tbody>
-                      {passengerBreakdown.length > 0 ? (
-                        passengerBreakdown.map((item, index) => (
-                          <tr
-                            key={`${item.type}-${index}`}
-                            className="border-t hover:bg-muted/20"
-                          >
-                            <td className="px-4 py-4 font-medium text-foreground">
-                              {item.label || item.type}
-                            </td>
-                            <td className="px-4 py-4">
-                              {formatBDT(item.base)}
-                            </td>
-                            <td className="px-4 py-4">{formatBDT(item.tax)}</td>
-                            <td className="px-4 py-4 font-medium">
-                              {formatBDT(item.total)}
+                      <tbody>
+                        {passengerBreakdown.length > 0 ? (
+                          passengerBreakdown.map((item, index) => (
+                            <tr
+                              key={`${item.type}-${index}`}
+                              className="border-t hover:bg-muted/20"
+                            >
+                              <td className="px-4 py-4 font-medium text-foreground">
+                                {item.label || item.type}
+                              </td>
+                              <td className="px-4 py-4">
+                                {formatBDT(item.base)}
+                              </td>
+                              <td className="px-4 py-4">
+                                {formatBDT(item.tax)}
+                              </td>
+                              <td className="px-4 py-4 font-medium">
+                                {formatBDT(item.total)}
+                              </td>
+                            </tr>
+                          ))
+                        ) : (
+                          <tr>
+                            <td
+                              colSpan={4}
+                              className="px-4 py-6 text-center text-muted-foreground"
+                            >
+                              No passenger fare breakdown available.
                             </td>
                           </tr>
-                        ))
-                      ) : (
-                        <tr>
-                          <td
-                            colSpan={4}
-                            className="px-4 py-6 text-center text-muted-foreground"
-                          >
-                            No passenger fare breakdown available.
-                          </td>
-                        </tr>
-                      )}
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-
-              <div className="lg:col-span-1">
-                <div className="border-b bg-muted/40 px-4 py-3 text-center">
-                  <h3 className="text-base font-semibold text-primary">
-                    Total Fare Summary
-                  </h3>
+                        )}
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
 
-                <div className="space-y-3 px-4 py-4 text-sm">
-                  <div className="flex items-center justify-between">
-                    <span className="text-muted-foreground">Base Fare</span>
-                    <span className="font-medium">{formatBDT(totalBase)}</span>
+                <div className="lg:col-span-1">
+                  <div className="border-b bg-muted/40 px-4 py-3 text-center">
+                    <h3 className="text-base font-semibold text-primary">
+                      Total Fare Summary
+                    </h3>
                   </div>
 
-                  <div className="flex items-center justify-between">
-                    <span className="text-muted-foreground">Tax</span>
-                    <span className="font-medium">{formatBDT(totalTax)}</span>
-                  </div>
+                  <div className="space-y-3 px-4 py-4 text-sm">
+                    <div className="flex items-center justify-between">
+                      <span className="text-muted-foreground">Base Fare</span>
+                      <span className="font-medium">
+                        {formatBDT(totalBase)}
+                      </span>
+                    </div>
 
-                  <div className="flex items-center justify-between">
-                    <span className="text-muted-foreground">AIT</span>
-                    <span className="font-medium">{formatBDT(ait)}</span>
-                  </div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-muted-foreground">Tax</span>
+                      <span className="font-medium">{formatBDT(totalTax)}</span>
+                    </div>
 
-                  <div className="flex items-center justify-between">
-                    <span className="text-muted-foreground">Total Price</span>
-                    <span className="font-medium">{formatBDT(totalPrice)}</span>
-                  </div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-muted-foreground">AIT</span>
+                      <span className="font-medium">{formatBDT(ait)}</span>
+                    </div>
 
-                  <div className="flex items-center justify-between">
-                    <span className="text-muted-foreground">Discount</span>
-                    <span className="font-medium">{formatBDT(discount)}</span>
-                  </div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-muted-foreground">Total Price</span>
+                      <span className="font-medium">
+                        {formatBDT(totalPrice)}
+                      </span>
+                    </div>
 
-                  <div className="flex items-center justify-between border-t pt-3">
-                    <span className="text-base font-semibold text-primary">
-                      Total Amount
-                    </span>
-                    <span className="text-base font-bold text-primary">
-                      {formatBDT(grandTotal)}
-                    </span>
+                    <div className="flex items-center justify-between">
+                      <span className="text-muted-foreground">Discount</span>
+                      <span className="font-medium">{formatBDT(discount)}</span>
+                    </div>
+
+                    <div className="flex items-center justify-between border-t pt-3">
+                      <span className="text-base font-semibold text-primary">
+                        Total Amount
+                      </span>
+                      <span className="text-base font-bold text-primary">
+                        {formatBDT(grandTotal)}
+                      </span>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
+          </motion.div>
         </TabsContent>
 
         <TabsContent value="availability" className="mt-6">
-          <AvailabilityTab flight={flight} />
+          <motion.div
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.2 }}
+          >
+            <AvailabilityTab flight={flight} />
+          </motion.div>
         </TabsContent>
 
         <TabsContent value="refund" className="mt-6">
-          <RefundPolicyTab />
+          <motion.div
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.2 }}
+          >
+            <RefundPolicyTab />
+          </motion.div>
         </TabsContent>
       </Tabs>
     </div>

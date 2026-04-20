@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { useMemo, useState } from "react";
 import { useSelector } from "react-redux";
 import type { RootState } from "@/redux/store";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import {
   Users,
   PlaneTakeoff,
@@ -9,41 +10,40 @@ import {
   Calendar,
   Settings2,
   ChevronRight,
+  ChevronDown,
+  ChevronUp,
+  Route,
+  PlaneLanding,
 } from "lucide-react";
 import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
 
 const FlightDetailSearch = () => {
   const searchData = useSelector((state: RootState) => state.flightSearch);
+  const [open, setOpen] = useState(false);
 
-  // Logic to handle Multi-way segments or Single-way
   const isMultiWay = searchData.tripType === "multi-way";
   const flights =
     isMultiWay && searchData.segments ? searchData.segments : [searchData];
 
-  /**
-   * Helper: Formats the traveler object into a readable string
-   * Example: "1 Adult, 2 Children"
-   */
   const getTravelerSummary = () => {
     const { travelers } = searchData;
     if (!travelers) return "No travelers selected";
 
     const parts = [];
 
-    // Adults logic
     if (travelers.adults > 0) {
       parts.push(`${travelers.adults} Adult${travelers.adults > 1 ? "s" : ""}`);
     }
 
-    // CHILDREN LOGIC: Calculate count from array length
     const childrenCount = Array.isArray(travelers.children)
       ? travelers.children.length
       : 0;
+
     if (childrenCount > 0) {
       parts.push(`${childrenCount} Child${childrenCount > 1 ? "ren" : ""}`);
     }
 
-    // Infants logic
     if (travelers.infants > 0) {
       parts.push(
         `${travelers.infants} Infant${travelers.infants > 1 ? "s" : ""}`,
@@ -53,9 +53,6 @@ const FlightDetailSearch = () => {
     return parts.join(", ");
   };
 
-  /**
-   * Helper: Calculates total headcount
-   */
   const totalTravelers = searchData.travelers
     ? searchData.travelers.adults +
       (Array.isArray(searchData.travelers.children)
@@ -74,22 +71,27 @@ const FlightDetailSearch = () => {
     });
   };
 
-  // Framer Motion Variants
+  const journeyLabel = useMemo(() => {
+    const fromCity = flights[0]?.fromDest?.city_name || "Unknown";
+    const toCity = flights[flights.length - 1]?.toDest?.city_name || "Unknown";
+    return `${fromCity} to ${toCity}`;
+  }, [flights]);
+
   const containerVariants = {
-    hidden: { opacity: 0, y: 20 },
+    hidden: { opacity: 0, y: 18 },
     visible: {
       opacity: 1,
       y: 0,
       transition: {
-        duration: 0.5,
-        staggerChildren: 0.08,
+        duration: 0.35,
+        staggerChildren: 0.06,
       },
     },
   };
 
-  const itemVariants = {
-    hidden: { x: -10, opacity: 0 },
-    visible: { x: 0, opacity: 1 },
+  const rowVariants = {
+    hidden: { opacity: 0, y: 14 },
+    visible: { opacity: 1, y: 0 },
   };
 
   return (
@@ -99,162 +101,257 @@ const FlightDetailSearch = () => {
       variants={containerVariants}
       className="w-full space-y-4"
     >
-      {/* HEADER SUMMARY CARD */}
-      <div className="bg-white  dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 shadow-sm flex flex-wrap items-center justify-between gap-4">
-        <div className="flex items-center gap-6">
-          {/* Trip Type */}
-          <div>
-            <span className="text-[10px] uppercase font-black text-slate-400 block mb-1 tracking-tight">
-              Trip Type
-            </span>
-            <span className="px-3 py-1 bg-primary/10 text-primary rounded-full text-xs font-bold capitalize">
-              {searchData.tripType?.replace("-", " ")}
-            </span>
-          </div>
+      {/* Top Summary Card */}
+      <motion.div
+        variants={rowVariants}
+        className="overflow-hidden rounded-3xl border border-border bg-card shadow-sm"
+      >
+        <div className="flex flex-col gap-4 p-4 sm:p-5 lg:flex-row lg:items-center lg:justify-between">
+          <div className="flex flex-wrap items-center gap-4 sm:gap-6">
+            <div className="rounded-2xl bg-primary/10 px-4 py-3">
+              <p className="text-[10px] font-black uppercase tracking-[0.18em] text-primary/70">
+                Trip Type
+              </p>
+              <p className="mt-1 text-sm font-bold capitalize text-primary">
+                {searchData.tripType?.replace("-", " ")}
+              </p>
+            </div>
 
-          <div className="h-10 w-[1px] bg-slate-100 dark:bg-slate-800 hidden sm:block" />
+            <div className="hidden h-10 w-px bg-border sm:block" />
 
-          {/* Dynamic Travelers Info */}
-          <div>
-            <span className="text-[10px] uppercase font-black text-slate-400 block mb-1 tracking-tight">
-              Travelers
-            </span>
-            <div className="flex items-center gap-2 text-slate-700 dark:text-slate-200">
-              <Users className="w-4 h-4 text-primary" />
-              <div className="flex flex-col">
-                <span className="text-sm font-bold leading-none">
-                  {totalTravelers}{" "}
-                  {totalTravelers > 1 ? "Travelers" : "Traveler"}
-                </span>
-                <span className="text-[10px] text-slate-500 font-medium mt-0.5">
-                  {getTravelerSummary()}
-                </span>
+            <div className="min-w-[160px]">
+              <p className="text-[10px] font-black uppercase tracking-[0.18em] text-muted-foreground">
+                Travelers
+              </p>
+              <div className="mt-1 flex items-start gap-2">
+                <Users className="mt-0.5 h-4 w-4 text-primary" />
+                <div>
+                  <p className="text-sm font-bold text-foreground">
+                    {totalTravelers}{" "}
+                    {totalTravelers > 1 ? "Travelers" : "Traveler"}
+                  </p>
+                  <p className="text-xs text-muted-foreground">
+                    {getTravelerSummary()}
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div className="hidden h-10 w-px bg-border sm:block" />
+
+            <div className="min-w-[120px]">
+              <p className="text-[10px] font-black uppercase tracking-[0.18em] text-muted-foreground">
+                Cabin Class
+              </p>
+              <p className="mt-1 text-sm font-bold text-foreground">
+                {searchData.flightClass}
+              </p>
+            </div>
+
+            <div className="hidden h-10 w-px bg-border sm:block" />
+
+            <div className="min-w-[180px]">
+              <p className="text-[10px] font-black uppercase tracking-[0.18em] text-muted-foreground">
+                Journey
+              </p>
+              <div className="mt-1 flex items-center gap-2">
+                <Route className="h-4 w-4 text-primary" />
+                <p className="text-sm font-bold text-foreground">
+                  {journeyLabel}
+                </p>
               </div>
             </div>
           </div>
 
-          <div className="h-10 w-[1px] bg-slate-100 dark:bg-slate-800 hidden sm:block" />
+          <div className="flex flex-wrap items-center gap-3">
+            <Button
+              variant="outline"
+              onClick={() => setOpen((prev) => !prev)}
+              className="group rounded-xl border-border bg-background"
+            >
+              {open ? "Hide Journey Details" : "Show Journey Details"}
+              {open ? (
+                <ChevronUp className="ml-2 h-4 w-4 transition-transform duration-200 group-hover:-translate-y-0.5" />
+              ) : (
+                <ChevronDown className="ml-2 h-4 w-4 transition-transform duration-200 group-hover:translate-y-0.5" />
+              )}
+            </Button>
 
-          {/* Cabin Class */}
-          <div>
-            <span className="text-[10px] uppercase font-black text-slate-400 block mb-1 tracking-tight">
-              Cabin Class
-            </span>
-            <span className="text-sm font-bold text-slate-700 dark:text-slate-200 block">
-              {searchData.flightClass}
-            </span>
+            <Link to="/">
+              <Button
+                variant="secondary"
+                className="rounded-xl"
+              >
+                <Settings2 className="mr-2 h-4 w-4" />
+                Modify Search
+              </Button>
+            </Link>
           </div>
         </div>
 
-        {/* Action Button */}
-        <Link to="/">
-          <button className="flex items-center gap-2 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 px-5 py-2.5 rounded-xl text-sm font-bold transition-all active:scale-95">
-            <Settings2 className="w-4 h-4" />
-            Modify Search
-          </button>
-        </Link>
-      </div>
+        {/* Expandable Journey Details */}
+        <AnimatePresence initial={false}>
+          {open && (
+            <motion.div
+              key="journey-panel"
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: "auto", opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.28, ease: "easeInOut" }}
+              className="overflow-hidden border-t"
+            >
+              <div className="bg-muted/20">
+                {/* Desktop / tablet table */}
+                <div className="hidden overflow-x-auto md:block">
+                  <table className="w-full border-collapse">
+                    <thead>
+                      <tr className="border-b bg-muted/30">
+                        <th className="px-6 py-4 text-left text-[11px] font-black uppercase tracking-[0.18em] text-muted-foreground">
+                          Flight
+                        </th>
+                        <th className="px-6 py-4 text-left text-[11px] font-black uppercase tracking-[0.18em] text-muted-foreground">
+                          Departure
+                        </th>
+                        <th className="px-4 py-4 text-center text-[11px] font-black uppercase tracking-[0.18em] text-muted-foreground">
+                          Route
+                        </th>
+                        <th className="px-6 py-4 text-left text-[11px] font-black uppercase tracking-[0.18em] text-muted-foreground">
+                          Arrival
+                        </th>
+                        <th className="px-6 py-4 text-left text-[11px] font-black uppercase tracking-[0.18em] text-muted-foreground">
+                          Date
+                        </th>
+                      </tr>
+                    </thead>
 
-      {/* SEGMENTS TABLE */}
-      <div className="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-3xl shadow-lg overflow-hidden">
-        <div className="overflow-x-auto">
-          <table className="w-full border-collapse">
-            <thead>
-              <tr className="border-b border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/50">
-                <th className="px-6 py-4 text-left text-[11px] uppercase font-black text-slate-400 tracking-widest">
-                  Flight
-                </th>
-                <th className="px-6 py-4 text-left text-[11px] uppercase font-black text-slate-400 tracking-widest">
-                  Departure
-                </th>
-                <th className="px-6 py-4 text-center"></th>
-                <th className="px-6 py-4 text-left text-[11px] uppercase font-black text-slate-400 tracking-widest">
-                  Arrival
-                </th>
-                <th className="px-6 py-4 text-left text-[11px] uppercase font-black text-slate-400 tracking-widest">
-                  Date
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {flights.map((flight: any, index: number) => (
-                <motion.tr
-                  key={index}
-                  variants={itemVariants}
-                  className="group border-b border-slate-50 dark:border-slate-900 last:border-0 hover:bg-slate-50/30 dark:hover:bg-slate-900/30 transition-colors"
-                >
-                  {/* SL NO */}
-                  <td className="px-6 py-5">
-                    <div className="flex items-center gap-3">
-                      <span className="flex items-center justify-center w-7 h-7 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-500 text-xs font-black">
-                        {String(index + 1).padStart(2, "0")}
-                      </span>
-                      <PlaneTakeoff className="w-4 h-4 text-primary opacity-0 group-hover:opacity-100 transition-opacity hidden sm:block" />
-                    </div>
-                  </td>
+                    <tbody>
+                      {flights.map((flight: any, index: number) => (
+                        <motion.tr
+                          key={index}
+                          initial={{ opacity: 0, y: 8 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ duration: 0.22, delay: index * 0.05 }}
+                          className="group border-b last:border-0 hover:bg-background/80"
+                        >
+                          <td className="px-6 py-5">
+                            <div className="flex items-center gap-3">
+                              <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-primary/10 text-xs font-extrabold text-primary">
+                                {String(index + 1).padStart(2, "0")}
+                              </span>
+                              <PlaneTakeoff className="h-4 w-4 text-primary transition-transform duration-200 group-hover:-translate-y-0.5" />
+                            </div>
+                          </td>
 
-                  {/* DEPARTURE */}
-                  <td className="px-6 py-5">
-                    <div className="flex flex-col">
-                      <span className="text-base font-black text-slate-800 dark:text-white uppercase leading-none">
-                        {flight.fromDest?.iata_code || "---"}
-                      </span>
-                      <span className="text-[11px] text-slate-500 mt-1 truncate max-w-[120px] font-medium">
-                        {flight.fromDest?.city_name}
-                      </span>
-                    </div>
-                  </td>
+                          <td className="px-6 py-5">
+                            <div className="space-y-1">
+                              <p className="text-lg font-extrabold uppercase leading-none text-foreground">
+                                {flight.fromDest?.iata_code || "---"}
+                              </p>
+                              <p className="text-xs font-medium text-muted-foreground">
+                                {flight.fromDest?.city_name}
+                              </p>
+                            </div>
+                          </td>
 
-                  {/* CONNECTOR ICON */}
-                  <td className="px-4 py-5 text-center">
-                    <div className="flex items-center justify-center">
-                      <div className="w-8 h-8 rounded-full border border-slate-100 dark:border-slate-800 flex items-center justify-center bg-white dark:bg-slate-900 group-hover:border-primary/50 group-hover:shadow-sm transition-all">
-                        <ChevronRight className="w-4 h-4 text-slate-300 group-hover:text-primary" />
+                          <td className="px-4 py-5">
+                            <div className="flex items-center justify-center">
+                              <div className="flex h-10 w-10 items-center justify-center rounded-full border bg-background shadow-sm transition-all duration-200 group-hover:scale-105 group-hover:border-primary/40">
+                                <ChevronRight className="h-4 w-4 text-primary" />
+                              </div>
+                            </div>
+                          </td>
+
+                          <td className="px-6 py-5">
+                            <div className="space-y-1">
+                              <p className="text-lg font-extrabold uppercase leading-none text-foreground">
+                                {flight.toDest?.iata_code || "---"}
+                              </p>
+                              <p className="text-xs font-medium text-muted-foreground">
+                                {flight.toDest?.city_name}
+                              </p>
+                            </div>
+                          </td>
+
+                          <td className="px-6 py-5">
+                            <div className="flex items-center gap-2 text-sm font-semibold text-foreground">
+                              <Calendar className="h-4 w-4 text-primary/70" />
+                              {formatDate(flight.departureDate)}
+                            </div>
+                          </td>
+                        </motion.tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+
+                {/* Mobile cards */}
+                <div className="space-y-3 p-4 md:hidden">
+                  {flights.map((flight: any, index: number) => (
+                    <motion.div
+                      key={index}
+                      initial={{ opacity: 0, y: 8 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.22, delay: index * 0.05 }}
+                      className="rounded-2xl border bg-card p-4 shadow-sm"
+                    >
+                      <div className="mb-3 flex items-center justify-between">
+                        <span className="inline-flex h-8 w-8 items-center justify-center rounded-xl bg-primary/10 text-xs font-extrabold text-primary">
+                          {String(index + 1).padStart(2, "0")}
+                        </span>
+
+                        <div className="flex items-center gap-2 text-xs font-semibold text-muted-foreground">
+                          <Calendar className="h-4 w-4 text-primary/70" />
+                          {formatDate(flight.departureDate)}
+                        </div>
                       </div>
-                    </div>
-                  </td>
 
-                  {/* ARRIVAL */}
-                  <td className="px-6 py-5">
-                    <div className="flex flex-col">
-                      <span className="text-base font-black text-slate-800 dark:text-white uppercase leading-none">
-                        {flight.toDest?.iata_code || "---"}
-                      </span>
-                      <span className="text-[11px] text-slate-500 mt-1 truncate max-w-[120px] font-medium">
-                        {flight.toDest?.city_name}
-                      </span>
-                    </div>
-                  </td>
+                      <div className="grid grid-cols-[1fr_auto_1fr] items-center gap-3">
+                        <div>
+                          <p className="text-lg font-extrabold uppercase text-foreground">
+                            {flight.fromDest?.iata_code || "---"}
+                          </p>
+                          <p className="text-xs text-muted-foreground">
+                            {flight.fromDest?.city_name}
+                          </p>
+                        </div>
 
-                  {/* DATE */}
-                  <td className="px-6 py-5">
-                    <div className="flex items-center gap-2 text-slate-600 dark:text-slate-400">
-                      <Calendar className="w-4 h-4 text-primary/60" />
-                      <span className="text-sm font-bold">
-                        {formatDate(flight.departureDate)}
-                      </span>
-                    </div>
-                  </td>
-                </motion.tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+                        <div className="flex flex-col items-center gap-1">
+                          <PlaneTakeoff className="h-4 w-4 text-primary" />
+                          <ChevronRight className="h-4 w-4 text-muted-foreground" />
+                          <PlaneLanding className="h-4 w-4 text-primary" />
+                        </div>
 
-        {/* FOOTER INFO */}
-        <div className="bg-slate-50 dark:bg-slate-900/30 px-6 py-3 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <MapPin className="w-3.5 h-3.5 text-primary" />
-            <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">
-              Journey details for {flights[0]?.fromDest?.city_name} to{" "}
-              {flights[flights.length - 1]?.toDest?.city_name}
-            </p>
-          </div>
-          <span className="text-[10px] font-black text-primary/50 uppercase">
-            {flights.length} Segments
-          </span>
-        </div>
-      </div>
+                        <div className="text-right">
+                          <p className="text-lg font-extrabold uppercase text-foreground">
+                            {flight.toDest?.iata_code || "---"}
+                          </p>
+                          <p className="text-xs text-muted-foreground">
+                            {flight.toDest?.city_name}
+                          </p>
+                        </div>
+                      </div>
+                    </motion.div>
+                  ))}
+                </div>
+
+                {/* Footer */}
+                <div className="flex items-center justify-between border-t bg-muted/30 px-4 py-3 sm:px-6">
+                  <div className="flex items-center gap-2">
+                    <MapPin className="h-4 w-4 text-primary" />
+                    <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-muted-foreground sm:text-[11px]">
+                      Journey details for {journeyLabel}
+                    </p>
+                  </div>
+
+                  <span className="text-[10px] font-extrabold uppercase tracking-[0.16em] text-primary/70 sm:text-[11px]">
+                    {flights.length} Segment{flights.length > 1 ? "s" : ""}
+                  </span>
+                </div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </motion.div>
     </motion.div>
   );
 };

@@ -22,7 +22,7 @@ const NeedAssistance = () => {
                         className="flex items-center gap-3 text-primary-foreground/90 transition-all hover:text-primary-foreground hover:opacity-100 dark:text-card-foreground dark:hover:text-primary"
                     >
                         <Phone className="h-5 w-5 fill-current dark:fill-none dark:text-primary" />
-                        <span className="font-semibold tracking-wide">+880 9610 0000000</span>
+                        <span className="font-semibold tracking-wide">+8801714742454</span>
                     </a>
 
                     {/* Email Contact */}
@@ -31,7 +31,7 @@ const NeedAssistance = () => {
                         className="flex items-center gap-3 text-primary-foreground/90 transition-all hover:text-primary-foreground hover:opacity-100 dark:text-card-foreground dark:hover:text-primary"
                     >
                         <Mail className="h-5 w-5 fill-current dark:fill-none dark:text-primary" />
-                        <span className="font-semibold tracking-wide">visa.skyroute@tamimiqbal.com</span>
+                        <span className="font-semibold tracking-wide">info@nusukibd.com</span>
                     </a>
                 </div>
             </div>

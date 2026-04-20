@@ -33,3 +33,24 @@ export const getBaggage = (flight: FlightResultItem) => {
     hand: list.find((b) => b.category === "hand") || null,
   };
 };
+
+
+export const getInitials = (name: string) => {
+  return name
+    .split(" ")
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((word) => word[0])
+    .join("")
+    .toUpperCase();
+};
+
+
+export const formatToBulletPoints = (text: string): string[] => {
+  if (!text) return [];
+
+  return text
+    .split(/\d+\.\s+/) // split by "1. ", "2. ", etc.
+    .map(item => item.trim())
+    .filter(item => item.length > 0);
+};

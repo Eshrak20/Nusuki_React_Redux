@@ -16,8 +16,8 @@ import FareType from "./FareType";
 import TripTypeSelector from "./TripTypeSelector";
 import DestinationSelector from "./DestinationSelector";
 import TravelerSection from "./TravelerSection";
-import FlightClassDropdown from "./FlightClassSelector";
-import { formatApiDate, mapCabinClass } from "@/lib/utils";
+import FlightClassDropdown from "./FlightClassDropdown";
+import { formatApiDate } from "@/lib/utils";
 
 interface FlightSearchProps {
   searchDests: SearchDests[];
@@ -70,10 +70,9 @@ const FlightSearch = ({ searchDests }: FlightSearchProps) => {
       trip_type: searchData.tripType.replace("-", "_"), // "one-way" -> "one_way"
       fare_type: searchData.fareType,
       adults: searchData.travelers.adults,
-      children:
-        searchData.travelers.children,
+      children: searchData.travelers.children,
       infants: searchData.travelers.infants,
-      cabin: mapCabinClass(searchData.flightClass),
+      cabin: searchData.flightClass,
       max_stops: 0,
       page: 1,
       size: 20,
@@ -111,13 +110,13 @@ const FlightSearch = ({ searchDests }: FlightSearchProps) => {
 
     // --- Execution ---
     toast.success("Searching for flights...");
-
     // Option A: Pass data to the next page via state
     navigate("/flight/details", { state: { searchPayload: requestBody } });
 
     // Option B: If you're calling the API here directly
     // console.log("Final API Body:", JSON.stringify(requestBody, null, 2));
   };
+  
   if (!searchData || !searchData.travelers) return null;
 
   return (

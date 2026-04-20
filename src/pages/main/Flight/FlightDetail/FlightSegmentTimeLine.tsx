@@ -1,6 +1,8 @@
-import { Plane } from "lucide-react";
+import { motion } from "framer-motion";
+import { Plane, PlaneTakeoff, PlaneLanding } from "lucide-react";
 import { format } from "date-fns";
 import type { FlightSegmentItem } from "@/types/flight/flightResults.types";
+import AirlineLogo from "@/components/AirlineLogo";
 
 interface Props {
   segments: FlightSegmentItem[];
@@ -8,36 +10,91 @@ interface Props {
 
 const FlightSegmentTimeline = ({ segments }: Props) => {
   return (
-    <div className="space-y-6">
+    <div className="space-y-5">
       {segments.map((segment, index) => (
-        <div key={`${segment.flight_number}-${index}`} className="rounded-2xl border p-5">
-          <div className="mb-4 flex items-center gap-3">
-            <img src={segment.airline.logo} alt={segment.airline.name} className="h-10 w-10 rounded-full border object-cover" />
+        <motion.div
+          key={`${segment.flight_number}-${index}`}
+          initial={{ opacity: 0, y: 14 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.25, delay: index * 0.06 }}
+          className="rounded-2xl border border-border bg-card p-5 shadow-sm"
+        >
+          <div className="mb-5 flex items-center gap-3">
+            <AirlineLogo
+              logo={segment.airline.logo}
+              name={segment.airline.name}
+              code={segment.airline.code}
+              className="h-11 w-11"
+              iconClassName="h-3.5 w-3.5"
+              textClassName="text-[9px]"
+            />
+
             <div>
-              <p className="font-semibold text-slate-900">{segment.airline.name}</p>
-              <p className="text-sm text-slate-500">{segment.flight_number}</p>
+              <p className="font-semibold text-foreground">
+                {segment.airline.name}
+              </p>
+              <p className="text-sm text-muted-foreground">
+                {segment.flight_number}
+              </p>
             </div>
           </div>
 
-          <div className="grid grid-cols-1 gap-6 md:grid-cols-[1fr_120px_1fr] md:items-center">
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-[1fr_140px_1fr] md:items-center">
             <div>
-              <p className="text-3xl font-bold">{segment.origin.airport} - {format(new Date(segment.departure_at), "HH:mm")}</p>
-              <p className="mt-1 text-sm text-slate-500">{format(new Date(segment.departure_at), "EEE dd MMM yyyy")}</p>
-              <p className="mt-2 text-sm text-slate-700">{segment.origin.airport_name} {segment.origin.terminal ? `(Terminal - ${segment.origin.terminal})` : ""}</p>
+              <div className="flex items-center gap-2">
+                <PlaneTakeoff className="h-4 w-4 text-primary" />
+                <p className="text-2xl font-bold text-foreground sm:text-3xl">
+                  {segment.origin.airport} -{" "}
+                  {format(new Date(segment.departure_at), "HH:mm")}
+                </p>
+              </div>
+
+              <p className="mt-1 text-sm text-muted-foreground">
+                {format(new Date(segment.departure_at), "EEE dd MMM yyyy")}
+              </p>
+
+              <p className="mt-2 text-sm text-foreground/80">
+                {segment.origin.airport_name}{" "}
+                {segment.origin.terminal
+                  ? `(Terminal - ${segment.origin.terminal})`
+                  : ""}
+              </p>
             </div>
 
             <div className="text-center">
-              <Plane className="mx-auto h-6 w-6 text-slate-400" />
-              <p className="mt-2 font-semibold">{segment.elapsed_time_text}</p>
+              <div className="flex items-center justify-center gap-2">
+                <div className="h-px w-8 bg-border" />
+                <Plane className="h-5 w-5 text-primary" />
+                <div className="h-px w-8 bg-border" />
+              </div>
+
+              <p className="mt-2 font-semibold text-foreground">
+                {segment.elapsed_time_text}
+              </p>
             </div>
 
             <div className="md:text-right">
-              <p className="text-3xl font-bold">{segment.destination.airport} - {format(new Date(segment.arrival_at), "HH:mm")}</p>
-              <p className="mt-1 text-sm text-slate-500">{format(new Date(segment.arrival_at), "EEE dd MMM yyyy")}</p>
-              <p className="mt-2 text-sm text-slate-700">{segment.destination.airport_name}</p>
+              <div className="flex items-center gap-2 md:justify-end">
+                <PlaneLanding className="h-4 w-4 text-primary" />
+                <p className="text-2xl font-bold text-foreground sm:text-3xl">
+                  {segment.destination.airport} -{" "}
+                  {format(new Date(segment.arrival_at), "HH:mm")}
+                </p>
+              </div>
+
+              <p className="mt-1 text-sm text-muted-foreground">
+                {format(new Date(segment.arrival_at), "EEE dd MMM yyyy")}
+              </p>
+
+              <p className="mt-2 text-sm text-foreground/80">
+                {segment.destination.airport_name}
+                {segment.destination.terminal
+                  ? ` (Terminal - ${segment.destination.terminal})`
+                  : ""}
+              </p>
             </div>
           </div>
-        </div>
+        </motion.div>
       ))}
     </div>
   );

@@ -177,11 +177,15 @@ const FlightDetailsMain = () => {
               isError={isError}
             />
 
+            {!isLoading &&
+              !isError &&
+              (result?.pagination?.total_pages || 0) > 1 && (
                 <FlightResultsPagination
                   currentPage={result?.pagination?.page || effectivePage}
-                  totalPages={50}
+                  totalPages={result?.pagination?.total_pages || 1}
                   onPageChange={handlePageChange}
                 />
+              )}
           </main>
         </div>
       </div>

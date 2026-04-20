@@ -8,10 +8,10 @@ export const travelerConfig = [
 ];
 
 export const flightClasses = [
-    "Economy",
-    "Premium Economy",
-    "Business Class",
-    "First Class",
+  { label: "Economy", value: "Y" },
+  { label: "Premium Economy", value: "S" },
+  { label: "Business Class", value: "C" },
+  { label: "First Class", value: "F" },
 ];
 
 

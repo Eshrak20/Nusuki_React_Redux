@@ -1,69 +1,71 @@
+import {
+  AlertTriangle,
+  BadgeInfo,
+  CircleDollarSign,
+  Headphones,
+  ShieldCheck,
+} from "lucide-react";
+
 const RefundPolicyTab = () => {
   return (
-    <div className="rounded-xl border bg-card">
-      {/* Header */}
-      <div className="border-b bg-muted/30 px-4 py-3 text-center">
-        <h3 className="text-sm md:text-base font-semibold text-primary">
+    <div className="overflow-hidden rounded-2xl border border-border bg-card shadow-sm">
+      <div className="border-b bg-muted/30 px-4 py-4 text-center">
+        <h3 className="text-sm font-semibold text-primary md:text-base">
           Refund & Cancellation Policy
         </h3>
       </div>
 
-      {/* Content */}
-      <div className="space-y-4 px-4 py-4 text-sm text-foreground">
-        <ul className="space-y-3 list-disc pl-4">
-          <li>
-            Nusuki BD follows airline's cancellation and reissue policy.
-          </li>
+      <div className="space-y-4 px-4 py-4 text-sm">
+        <div className="flex gap-3 rounded-xl border bg-background p-4">
+          <ShieldCheck className="mt-0.5 h-5 w-5 text-primary" />
+          <p className="text-foreground">
+            Nusuki BD follows the airline&apos;s cancellation and reissue policy.
+          </p>
+        </div>
 
-          <li>
-            <span className="bg-yellow-100 text-yellow-800 px-2 py-1 rounded-md">
-              Convenience fee is Non-refundable.
-            </span>
-          </li>
+        <div className="flex gap-3 rounded-xl border border-yellow-200 bg-yellow-50 p-4 dark:border-yellow-500/20 dark:bg-yellow-500/10">
+          <AlertTriangle className="mt-0.5 h-5 w-5 text-yellow-600 dark:text-yellow-400" />
+          <p className="text-foreground">
+            Convenience fee is non-refundable.
+          </p>
+        </div>
 
-          <li className="bg-yellow-50 border border-yellow-200 rounded-md p-3">
-            To cancel/reissue, travelers are advised to confirm Nusuki BD 48
-            hours prior to the travel date. Otherwise, no-show charge might be
-            applicable depending on the airline's rule.
-          </li>
+        <div className="flex gap-3 rounded-xl border border-yellow-200 bg-yellow-50 p-4 dark:border-yellow-500/20 dark:bg-yellow-500/10">
+          <BadgeInfo className="mt-0.5 h-5 w-5 text-yellow-600 dark:text-yellow-400" />
+          <p className="text-foreground">
+            To cancel or reissue, travelers are advised to confirm with Nusuki
+            BD at least 48 hours before travel. Otherwise, no-show charges may
+            apply depending on airline rules.
+          </p>
+        </div>
 
-          <li>
-            To cancel/reissue, travelers need to call at{" "}
-            <span className="font-medium text-primary">
-              +8801714742454
-            </span>{" "}
-            or knock on Messenger{" "}
+        <div className="flex gap-3 rounded-xl border bg-background p-4">
+          <Headphones className="mt-0.5 h-5 w-5 text-primary" />
+          <p className="text-foreground">
+            For cancel or reissue support, call{" "}
+            <span className="font-semibold text-primary">+8801714742454</span>{" "}
+            or message{" "}
             <a
               href="https://m.me/NusukiBD"
               target="_blank"
-              className="text-blue-600 hover:underline"
+              rel="noreferrer"
+              className="font-medium text-primary hover:underline"
             >
-              m.me/NusukiBD
+              Nusuki BD on Messenger
             </a>
-            . Our team will initiate an email and solve the issue upon
-            confirmation from the customer.
-          </li>
+            .
+          </p>
+        </div>
 
-          <li>
-            Cancellation fee/reissue fee and a Standard service charge may apply
-            in case of any change as per airlines policy. Cancellation fee/reissue
-            is shared by the airlines and may get changed at any time.
-          </li>
-
-          <li>
-            Nusuki BD won't charge any additional service charge apart from the
-            airline quoted fees. For the EMI method, the applicable EMI charge
-            will be deducted from the payable amount.
-          </li>
-
-          <li className="bg-yellow-50 border border-yellow-200 rounded-md p-3">
-            Refunds will be initiated (if applicable) after a successful
-            cancellation. The refund will be sent through the same channel that
-            the traveler has used for payment. Depending on the channel type, the
-            payment may take one to five working days to be reflected in the
-            account.
-          </li>
-        </ul>
+        <div className="flex gap-3 rounded-xl border bg-background p-4">
+          <CircleDollarSign className="mt-0.5 h-5 w-5 text-primary" />
+          <p className="text-foreground">
+            Cancellation, reissue, and standard service charges may apply
+            according to airline policy. Refunds, if applicable, are sent
+            through the same payment channel and may take one to five working
+            days to reflect.
+          </p>
+        </div>
       </div>
     </div>
   );
