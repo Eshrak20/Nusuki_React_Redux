@@ -14,10 +14,11 @@ import { Link } from "react-router-dom";
 
 const FlightDetailSearch = () => {
   const searchData = useSelector((state: RootState) => state.flightSearch);
-  
+
   // Logic to handle Multi-way segments or Single-way
   const isMultiWay = searchData.tripType === "multi-way";
-  const flights = isMultiWay && searchData.segments ? searchData.segments : [searchData];
+  const flights =
+    isMultiWay && searchData.segments ? searchData.segments : [searchData];
 
   /**
    * Helper: Formats the traveler object into a readable string
@@ -28,10 +29,26 @@ const FlightDetailSearch = () => {
     if (!travelers) return "No travelers selected";
 
     const parts = [];
-    if (travelers.adults > 0) parts.push(`${travelers.adults} Adult${travelers.adults > 1 ? 's' : ''}`);
-    if (travelers.children > 0) parts.push(`${travelers.children} Child${travelers.children > 1 ? 'ren' : ''}`);
-    if (travelers.kids > 0) parts.push(`${travelers.kids} Kid${travelers.kids > 1 ? 's' : ''}`);
-    if (travelers.infants > 0) parts.push(`${travelers.infants} Infant${travelers.infants > 1 ? 's' : ''}`);
+
+    // Adults logic
+    if (travelers.adults > 0) {
+      parts.push(`${travelers.adults} Adult${travelers.adults > 1 ? "s" : ""}`);
+    }
+
+    // CHILDREN LOGIC: Calculate count from array length
+    const childrenCount = Array.isArray(travelers.children)
+      ? travelers.children.length
+      : 0;
+    if (childrenCount > 0) {
+      parts.push(`${childrenCount} Child${childrenCount > 1 ? "ren" : ""}`);
+    }
+
+    // Infants logic
+    if (travelers.infants > 0) {
+      parts.push(
+        `${travelers.infants} Infant${travelers.infants > 1 ? "s" : ""}`,
+      );
+    }
 
     return parts.join(", ");
   };
@@ -39,8 +56,12 @@ const FlightDetailSearch = () => {
   /**
    * Helper: Calculates total headcount
    */
-  const totalTravelers = searchData.travelers 
-    ? (searchData.travelers.adults + (searchData.travelers.children || 0) + (searchData.travelers.kids || 0) + (searchData.travelers.infants || 0))
+  const totalTravelers = searchData.travelers
+    ? searchData.travelers.adults +
+      (Array.isArray(searchData.travelers.children)
+        ? searchData.travelers.children.length
+        : 0) +
+      (searchData.travelers.infants || 0)
     : 0;
 
   const formatDate = (dateString: string | null) => {
@@ -59,9 +80,9 @@ const FlightDetailSearch = () => {
     visible: {
       opacity: 1,
       y: 0,
-      transition: { 
+      transition: {
         duration: 0.5,
-        staggerChildren: 0.08 
+        staggerChildren: 0.08,
       },
     },
   };
@@ -79,7 +100,7 @@ const FlightDetailSearch = () => {
       className="w-full space-y-4"
     >
       {/* HEADER SUMMARY CARD */}
-      <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 shadow-sm flex flex-wrap items-center justify-between gap-4">
+      <div className="bg-white  dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 shadow-sm flex flex-wrap items-center justify-between gap-4">
         <div className="flex items-center gap-6">
           {/* Trip Type */}
           <div>
@@ -102,7 +123,8 @@ const FlightDetailSearch = () => {
               <Users className="w-4 h-4 text-primary" />
               <div className="flex flex-col">
                 <span className="text-sm font-bold leading-none">
-                  {totalTravelers} {totalTravelers > 1 ? 'Travelers' : 'Traveler'}
+                  {totalTravelers}{" "}
+                  {totalTravelers > 1 ? "Travelers" : "Traveler"}
                 </span>
                 <span className="text-[10px] text-slate-500 font-medium mt-0.5">
                   {getTravelerSummary()}
@@ -139,11 +161,19 @@ const FlightDetailSearch = () => {
           <table className="w-full border-collapse">
             <thead>
               <tr className="border-b border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/50">
-                <th className="px-6 py-4 text-left text-[11px] uppercase font-black text-slate-400 tracking-widest">Flight</th>
-                <th className="px-6 py-4 text-left text-[11px] uppercase font-black text-slate-400 tracking-widest">Departure</th>
+                <th className="px-6 py-4 text-left text-[11px] uppercase font-black text-slate-400 tracking-widest">
+                  Flight
+                </th>
+                <th className="px-6 py-4 text-left text-[11px] uppercase font-black text-slate-400 tracking-widest">
+                  Departure
+                </th>
                 <th className="px-6 py-4 text-center"></th>
-                <th className="px-6 py-4 text-left text-[11px] uppercase font-black text-slate-400 tracking-widest">Arrival</th>
-                <th className="px-6 py-4 text-left text-[11px] uppercase font-black text-slate-400 tracking-widest">Date</th>
+                <th className="px-6 py-4 text-left text-[11px] uppercase font-black text-slate-400 tracking-widest">
+                  Arrival
+                </th>
+                <th className="px-6 py-4 text-left text-[11px] uppercase font-black text-slate-400 tracking-widest">
+                  Date
+                </th>
               </tr>
             </thead>
             <tbody>
@@ -216,11 +246,12 @@ const FlightDetailSearch = () => {
           <div className="flex items-center gap-2">
             <MapPin className="w-3.5 h-3.5 text-primary" />
             <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">
-              Journey details for {flights[0]?.fromDest?.city_name} to {flights[flights.length - 1]?.toDest?.city_name}
+              Journey details for {flights[0]?.fromDest?.city_name} to{" "}
+              {flights[flights.length - 1]?.toDest?.city_name}
             </p>
           </div>
           <span className="text-[10px] font-black text-primary/50 uppercase">
-             {flights.length} Segments
+            {flights.length} Segments
           </span>
         </div>
       </div>

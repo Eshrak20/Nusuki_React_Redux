@@ -33,8 +33,7 @@ const FlightSearch = ({ searchDests }: FlightSearchProps) => {
 
   const totalTravelers =
     (searchData?.travelers?.adults || 0) +
-    (searchData?.travelers?.children || 0) +
-    (searchData?.travelers?.kids || 0) +
+    (searchData?.travelers?.children?.length || 0) + // Use .length here
     (searchData?.travelers?.infants || 0);
 
   useEffect(() => {
@@ -72,7 +71,7 @@ const FlightSearch = ({ searchDests }: FlightSearchProps) => {
       fare_type: searchData.fareType,
       adults: searchData.travelers.adults,
       children:
-        searchData.travelers.children + (searchData.travelers.kids || 0), // combine kids if API only has children
+        searchData.travelers.children,
       infants: searchData.travelers.infants,
       cabin: mapCabinClass(searchData.flightClass),
       max_stops: 0,

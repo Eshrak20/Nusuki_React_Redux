@@ -1,3 +1,5 @@
+import type { SearchDests } from "./flightHome.types";
+
 export interface FlightSearchRequest {
     trip_type: "one_way" | "round_way" | "multi_way";
     origin?: string; // Required for one_way/round_way
@@ -31,3 +33,54 @@ export interface FlightSearchRequest {
     layover_duration_min: number | null;
     layover_duration_max: number | null;
 }
+
+
+export interface FlightSegment {
+    fromDest: SearchDests | null;
+    toDest: SearchDests | null;
+    departureDate: string;
+}
+
+export interface FlightSearchState {
+    tripType: string;
+    fareType: string;
+    searchDest: string;
+    // Single trip data (used for One-Way/Round-Trip)
+    fromDest: SearchDests | null;
+    toDest: SearchDests | null;
+    departureDate: string;
+    returnDate: string;
+    // Multi-way data
+    segments: FlightSegment[];
+    travelers: {
+        adults: number;
+        children: number[];
+        infants: number;
+        child_ages?: number[];
+    };
+    flightClass: string;
+    // ✅ Filters added
+    filters: FlightFilters;
+}
+export interface FlightFilters {
+    airlines: string[];
+    aircraft: string[];
+    stops: number[];
+    refundability: string[];
+
+    price_min: number | null;
+    price_max: number | null;
+
+    flight_schedules: {
+        departure: string[];
+        arrival: string[];
+    };
+
+    layover_cities: string[];
+    layover_duration_min: number | null;
+    layover_duration_max: number | null;
+}
+export type UpdateTravelerPayload = Partial<FlightSearchState["travelers"]> & {
+    childrenCount?: number;
+    childAgeUpdate?: { index: number; age: number };
+};

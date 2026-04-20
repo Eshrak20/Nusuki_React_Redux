@@ -1,5 +1,5 @@
 
-const FlightDetailsCard = () => {
+const FlightResultList = () => {
     return (
         <div>
             
@@ -7,4 +7,4 @@ const FlightDetailsCard = () => {
     );
 };
 
-export default FlightDetailsCard;
+export default FlightResultList;

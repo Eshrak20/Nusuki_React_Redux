@@ -1,3 +1,4 @@
+import type { FlightResultItem } from "@/types/flight/flightResults.types";
 import { clsx, type ClassValue } from "clsx"
 import { twMerge } from "tailwind-merge"
 
@@ -22,3 +23,13 @@ export const mapCabinClass = (className: string) => {
 
 // Converts ISO string "2026-04-19T00:00:00Z" to "2026-04-19"
 export const formatApiDate = (dateString: string) => dateString.split('T')[0];
+
+export const getBaggage = (flight: FlightResultItem) => {
+  const list = flight?.baggage_allowances || [];
+
+  return {
+    checked:
+      list.find((b) => b.category === "checked") || flight?.baggage,
+    hand: list.find((b) => b.category === "hand") || null,
+  };
+};

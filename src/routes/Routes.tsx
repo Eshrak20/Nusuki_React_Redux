@@ -25,7 +25,7 @@ import FlightHome from "@/pages/main/Flight/FlightHome/FlightHome";
 import ShopHome from "@/pages/main/Shop/ShopHome/ShopHome";
 import ShopProductDetailsMain from "@/pages/main/Shop/ShopProductDetails/ProductDetailsMain";
 import ShopCartMain from "@/pages/main/Shop/ShopCart/ShopCartMain";
-import FlightDetailsMain from "@/pages/main/Flight/FlightDetailSearch/FlightDetailsSearchMain";
+import FlightDetailsMain from "@/pages/main/Flight/FlightDetail/FlightDetailsMain";
 // import ShopCheckOutMain from "@/pages/main/Shop/ShopCheckOut/ShopCheckOutMain";
 
 export const router = createBrowserRouter([

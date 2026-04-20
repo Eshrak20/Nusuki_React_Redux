@@ -1,35 +1,11 @@
-import { createSlice } from "@reduxjs/toolkit";
-import type { PayloadAction } from "@reduxjs/toolkit";
-import type { SearchDests } from "@/types/flight/flightHome.types";
+import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import { addDays } from "date-fns";
-
-// Define what a single flight segment looks like
-export interface FlightSegment {
-    fromDest: SearchDests | null;
-    toDest: SearchDests | null;
-    departureDate: string;
-}
-
-interface FlightSearchState {
-    tripType: string;
-    fareType: string;
-    searchDest: string;
-    // Single trip data (used for One-Way/Round-Trip)
-    fromDest: SearchDests | null;
-    toDest: SearchDests | null;
-    departureDate: string;
-    returnDate: string;
-    // Multi-way data
-    segments: FlightSegment[];
-    travelers: {
-        adults: number;
-        children: number;
-        kids: number;
-        infants: number;
-    };
-    flightClass: string;
-}
-
+import type {
+    FlightFilters,
+    FlightSearchState,
+    FlightSegment,
+    UpdateTravelerPayload,
+} from "@/types/flight/flightSearch.types";
 const initialState: FlightSearchState = {
     tripType: "one-way",
     fareType: "regular",
@@ -38,53 +14,69 @@ const initialState: FlightSearchState = {
     toDest: null,
     departureDate: addDays(new Date(), 0).toISOString(),
     returnDate: addDays(new Date(), 3).toISOString(),
-    // Initialize with 2 default segments for multi-way view
     segments: [
-        { fromDest: null, toDest: null, departureDate: addDays(new Date(), 0).toISOString() },
-        { fromDest: null, toDest: null, departureDate: addDays(new Date(), 2).toISOString() },
+        {
+            fromDest: null, toDest: null, departureDate: addDays(new Date(),
+                0).toISOString()
+        },
+        {
+            fromDest: null, toDest: null, departureDate: addDays(new Date(),
+                2).toISOString()
+        },
     ],
-    travelers: { adults: 1, children: 0, kids: 0, infants: 0 },
+    travelers: { adults: 1, children: [], infants: 0 },
     flightClass: "Economy",
+    filters: {
+        airlines: [],
+        aircraft: [],
+        stops: [],
+        refundability: [],
+        price_min: null,
+        price_max: null,
+        flight_schedules: {
+            departure: [],
+            arrival: [],
+        },
+        layover_cities: [],
+        layover_duration_min: null,
+        layover_duration_max: null,
+    },
 };
 
 export const flightSearchSlice = createSlice({
     name: "flightSearch",
     initialState,
     reducers: {
-
         setSearchDest: (state, action: PayloadAction<string>) => {
             state.searchDest = action.payload;
         },
-
         setSearchField: (state, action: PayloadAction<Partial<FlightSearchState>>) => {
-            // 1. Update the fields
             Object.assign(state, action.payload);
-
-            // 2. Enforce Student Fare Rule: If fareType is updated to student, or if it is already student
             if (state.fareType === "student") {
                 state.travelers = {
                     adults: state.travelers.adults,
-                    children: 0,
-                    kids: 0,
-                    infants: 0
+                    children: [],
+                    infants: 0,
                 };
             }
         },
-        // Specialized reducer to update a specific segment in multi-way
-        updateSegment: (state, action: PayloadAction<{ index: number; data: Partial<FlightSegment> }>) => {
+        updateSegment: (
+            state,
+            action: PayloadAction<{ index: number; data: Partial<FlightSegment> }>
+        ) => {
             const { index, data } = action.payload;
             if (state.segments[index]) {
                 state.segments[index] = { ...state.segments[index], ...data };
             }
         },
-        // Add a new segment (Max 5)
         addSegment: (state) => {
             if (state.segments.length < 5) {
                 const lastSegment = state.segments[state.segments.length - 1];
                 state.segments.push({
-                    fromDest: lastSegment?.toDest || null, // Auto-fill next start with previous end
+                    fromDest: lastSegment?.toDest || null,
                     toDest: null,
-                    departureDate: addDays(new Date(lastSegment?.departureDate || new Date()), 2).toISOString(),
+                    departureDate: addDays(new Date(lastSegment?.departureDate || new
+                        Date()), 2).toISOString(),
                 });
             }
         },
@@ -93,20 +85,95 @@ export const flightSearchSlice = createSlice({
                 state.segments.splice(action.payload, 1);
             }
         },
-        updateTravelers: (state, action: PayloadAction<Partial<FlightSearchState["travelers"]>>) => {
-            // BLOCK updates if student fare is active
-            if (state.fareType === "student" && (state.travelers.children || state.travelers.kids || state.travelers.infants)) return;
+        updateTravelers: (state, action: PayloadAction<UpdateTravelerPayload>) => {
+            const { childrenCount, childAgeUpdate, ...otherTravelers } = action.payload;
 
-            state.travelers = { ...state.travelers, ...action.payload };
+            // Student fare: only adult is allowed
+            if (state.fareType === "student") {
+                // Allow only adult update
+                if ("adults" in otherTravelers && typeof otherTravelers.adults === "number") {
+                    state.travelers.adults = Math.max(1, otherTravelers.adults);
+                }
+
+                // Always keep children/infants cleared
+                state.travelers.children = [];
+                state.travelers.infants = 0;
+                return;
+            }
+
+            if (childrenCount !== undefined) {
+                const currentAges = [...state.travelers.children];
+
+                if (childrenCount > currentAges.length) {
+                    const needed = childrenCount - currentAges.length;
+                    state.travelers.children.push(...Array(needed).fill(2));
+                } else {
+                    state.travelers.children = currentAges.slice(0, childrenCount);
+                }
+            } else if (childAgeUpdate) {
+                const { index, age } = childAgeUpdate;
+                if (state.travelers.children[index] !== undefined) {
+                    state.travelers.children[index] = age;
+                }
+            } else {
+                state.travelers = {
+                    ...state.travelers,
+                    ...otherTravelers,
+                };
+            }
         },
         swapDestinations: (state) => {
             const temp = state.fromDest;
             state.fromDest = state.toDest;
             state.toDest = temp;
-        }
-    }
+        },
+        updateFilter: (state, action: PayloadAction<{
+            category: string; value:
+            string | number
+        }>) => {
+            const { category, value } = action.payload;
+            if (category === "departure" || category === "arrival") {
+                const target = state.filters.flight_schedules[category];
+                state.filters.flight_schedules[category] =
+                    target.includes(String(value))
+                        ? target.filter((i) => i !== String(value))
+                        : [...target, String(value)];
+                return;
+            }
+            const key = category as keyof FlightFilters;
+            if (!(key in state.filters)) return;
+            const currentField = state.filters[key];
+            if (Array.isArray(currentField)) {
+                const exists = currentField.includes(value as never);
+                (state.filters[key] as (string | number)[]) = exists
+                    ? (currentField as (string | number)[]).filter((i) => i !== value)
+                    : [...(currentField as (string | number)[]), value];
+            } else {
+                (state.filters[key] as number | null) = value as number | null;
+            }
+        },
+        setRangeFilter: (
+            state,
+            action: PayloadAction<{
+                category: "price" | "layover"; min: number |
+                null; max: number | null
+            }>
+        ) => {
+            const { category, min, max } = action.payload;
+            if (category === "price") {
+                state.filters.price_min = min;
+                state.filters.price_max = max;
+            } else {
+                state.filters.layover_duration_min = min;
+                state.filters.layover_duration_max = max;
+            }
+        },
+        resetFilters: (state) => {
+            state.filters = initialState.filters;
+        },
+        resetFlightSearchState: () => initialState,
+    },
 });
-
 export const {
     setSearchDest,
     setSearchField,
@@ -114,7 +181,10 @@ export const {
     addSegment,
     removeSegment,
     updateTravelers,
-    swapDestinations
+    swapDestinations,
+    updateFilter,
+    setRangeFilter,
+    resetFilters,
+    resetFlightSearchState,
 } = flightSearchSlice.actions;
-
 export default flightSearchSlice.reducer;

@@ -1,18 +1,11 @@
 
-type TravelerType = "adults" | "kids" | "children" | "infants";
+// Updated Type
 
-export const travelerConfig: {
-    key: TravelerType;
-    label: string;
-    sub: string;
-    min: number;
-    max?: number;
-}[] = [
-        { key: "adults", label: "Adults", sub: "(12+ Years)", min: 1 },
-        { key: "children", label: "Children", sub: "(5–12 Years)", min: 0 },
-        { key: "kids", label: "Kids", sub: "(2–5 Years)", min: 0 },
-        { key: "infants", label: "Infants", sub: "(0–2 Years)", min: 0 },
-    ];
+export const travelerConfig = [
+    { key: "adults", label: "Adults", sub: "(12+ Years)", min: 1, max: 9 },
+    { key: "children", label: "Child", sub: "(2-11 Years)", min: 0, max: 8 },
+    { key: "infants", label: "Infants", sub: "(0-24 Months)", min: 0, max: 4 },
+];
 
 export const flightClasses = [
     "Economy",
