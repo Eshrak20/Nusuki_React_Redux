@@ -41,6 +41,15 @@ const initialState: FlightSearchState = {
         layover_duration_min: null,
         layover_duration_max: null,
     },
+
+    ui: {
+        currentPage: 1,
+        sortBy: "price" as "price" | "duration" | "departure_at",
+        sortOrder: "asc" as "asc" | "desc",
+        selectedAirlineCode: null as string | null,
+        scheduleIndex: 0,
+    },
+
 };
 
 export const flightSearchSlice = createSlice({
@@ -172,6 +181,28 @@ export const flightSearchSlice = createSlice({
             state.filters = initialState.filters;
         },
         resetFlightSearchState: () => initialState,
+        setUiField: (
+            state,
+            action: PayloadAction<
+                Partial<{
+                    currentPage: number;
+                    sortBy: "price" | "duration" | "departure_at";
+                    sortOrder: "asc" | "desc";
+                    selectedAirlineCode: string | null;
+                    scheduleIndex: number;
+                }>
+            >
+        ) => {
+            state.ui = { ...state.ui, ...action.payload };
+        },
+
+        resetFlightUiState: (state) => {
+            state.ui.currentPage = 1;
+            state.ui.sortBy = "price";
+            state.ui.sortOrder = "asc";
+            state.ui.selectedAirlineCode = null;
+            state.ui.scheduleIndex = 0;
+        },
     },
 });
 export const {
@@ -186,5 +217,8 @@ export const {
     setRangeFilter,
     resetFilters,
     resetFlightSearchState,
+    setUiField,
+    resetFlightUiState,
 } = flightSearchSlice.actions;
+
 export default flightSearchSlice.reducer;
