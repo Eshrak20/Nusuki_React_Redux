@@ -28,6 +28,7 @@ export interface Visa {
   country: string;
   visa_category: string;
   visa_validity: string;
+  staying_validity: string;
   service_fee: string;
   processing_time: string;
   entry_type: string;

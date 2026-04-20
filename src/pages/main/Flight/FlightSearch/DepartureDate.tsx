@@ -1,4 +1,4 @@
-import { format, parseISO } from "date-fns";
+import { format, parseISO, startOfDay } from "date-fns";
 import { Calendar as CalendarIcon } from "lucide-react";
 
 import { Calendar } from "@/components/ui/calendar";
@@ -25,6 +25,7 @@ const DepartureDate: React.FC<DepartureDateProps> = ({
   setSearchField,
 }) => {
   const selectedDate = departureDate ? parseISO(departureDate) : undefined;
+  const today = startOfDay(new Date());
 
   return (
     <Popover>
@@ -33,52 +34,53 @@ const DepartureDate: React.FC<DepartureDateProps> = ({
           className={cn(
             "flex-1 rounded-xl border p-3 cursor-pointer transition",
             "bg-background hover:border-primary",
-            "border-border",
+            "border-border"
           )}
         >
-          {/* Label */}
-          <div className="flex items-center gap-2 mb-1 text-xs text-muted-foreground">
-            <CalendarIcon className="w-4 h-4" />
+          <div className="mb-1 flex items-center gap-2 text-xs text-muted-foreground">
+            <CalendarIcon className="h-4 w-4" />
             Departure Date
           </div>
 
-          {/* Value */}
           <div className="text-sm font-semibold text-foreground">
-            {selectedDate ? format(selectedDate, "dd/MM/yyyy") : "Select date"}
+            {selectedDate ? format(selectedDate, "EEE, dd MMM yyyy") : "Select date"}
           </div>
+
+          {selectedDate && (
+            <div className="mt-1 text-[11px] text-muted-foreground">
+              {format(selectedDate, "MMMM yyyy")}
+            </div>
+          )}
         </div>
       </PopoverTrigger>
 
       <PopoverContent
-        className="w-auto p-0 rounded-xl border bg-popover shadow-lg"
+        className="w-auto rounded-xl border bg-popover p-0 shadow-lg"
         align="start"
       >
         <Calendar
           mode="single"
           selected={selectedDate}
-          disabled={{
-            before: selectedDate as Date,
-          }}
+          disabled={{ before: today }}
           onSelect={(date) => {
             if (!date) return;
 
-            // ✅ Set departure
             dispatch(
               setSearchField({
                 departureDate: date.toISOString(),
-              }),
+              })
             );
 
-            // 🔥 Fix invalid return date
             if (returnDate && date > parseISO(returnDate)) {
               dispatch(
                 setSearchField({
                   returnDate: "",
-                }),
+                })
               );
             }
           }}
           captionLayout="dropdown"
+          fromDate={today}
         />
       </PopoverContent>
     </Popover>

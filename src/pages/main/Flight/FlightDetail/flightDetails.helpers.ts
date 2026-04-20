@@ -68,7 +68,6 @@ export const buildFlightSearchPayload = ({
   const infantsCount = isStudent ? 0 : searchData.travelers?.infants || 0;
   const childAgesArray = isStudent ? [] : searchData.travelers?.children || [];
   const childrenCount = childAgesArray.length;
-
   const commonPayload = {
     fare_type: searchData.fareType || "regular",
     adults: adultsCount,
@@ -164,15 +163,15 @@ export const filterFlightsByAirlineAndSchedule = ({
 }): FlightResultItem[] => {
   const airlineFilteredFlights = selectedAirlineCode
     ? flights.filter((flight) => {
-        const mainAirlineCode = flight.airline?.code ?? null;
+      const mainAirlineCode = flight.airline?.code ?? null;
 
-        const segmentAirlineMatch =
-          flight.segments?.some(
-            (segment) => segment.airline?.code === selectedAirlineCode
-          ) ?? false;
+      const segmentAirlineMatch =
+        flight.segments?.some(
+          (segment) => segment.airline?.code === selectedAirlineCode
+        ) ?? false;
 
-        return mainAirlineCode === selectedAirlineCode || segmentAirlineMatch;
-      })
+      return mainAirlineCode === selectedAirlineCode || segmentAirlineMatch;
+    })
     : flights;
 
   if (!selectedScheduleSlot) return airlineFilteredFlights;

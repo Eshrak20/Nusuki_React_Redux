@@ -1,7 +1,7 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useMemo, useState } from "react";
 import { useSelector } from "react-redux";
 import type { RootState } from "@/redux/store";
+import type { SearchDests, FlightSegment } from "@/types/flight/your-type-file"; // adjust path
 import { AnimatePresence, motion } from "framer-motion";
 import {
   Users,
@@ -18,19 +18,35 @@ import {
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 
+type FlightDisplayItem = {
+  fromDest: SearchDests | null;
+  toDest: SearchDests | null;
+  departureDate: string;
+};
+
 const FlightDetailSearch = () => {
   const searchData = useSelector((state: RootState) => state.flightSearch);
   const [open, setOpen] = useState(false);
 
-  const isMultiWay = searchData.tripType === "multiway";
-  const flights =
-    isMultiWay && searchData.segments ? searchData.segments : [searchData];
+  const flights = useMemo<FlightDisplayItem[]>(() => {
+    if (searchData.tripType === "multi_way") {
+      return searchData.segments;
+    }
+
+    return [
+      {
+        fromDest: searchData.fromDest,
+        toDest: searchData.toDest,
+        departureDate: searchData.departureDate,
+      },
+    ];
+  }, [searchData]);
 
   const getTravelerSummary = () => {
     const { travelers } = searchData;
     if (!travelers) return "No travelers selected";
 
-    const parts = [];
+    const parts: string[] = [];
 
     if (travelers.adults > 0) {
       parts.push(`${travelers.adults} Adult${travelers.adults > 1 ? "s" : ""}`);
@@ -101,7 +117,6 @@ const FlightDetailSearch = () => {
       variants={containerVariants}
       className="w-full space-y-4"
     >
-      {/* Top Summary Card */}
       <motion.div
         variants={rowVariants}
         className="overflow-hidden rounded-3xl border border-border bg-card shadow-sm"
@@ -113,13 +128,13 @@ const FlightDetailSearch = () => {
                 Trip Type
               </p>
               <p className="mt-1 text-sm font-bold capitalize text-primary">
-                {searchData.tripType?.replace("-", " ")}
+                {searchData.tripType?.replace("_", " ")}
               </p>
             </div>
 
             <div className="hidden h-10 w-px bg-border sm:block" />
 
-            <div className="min-w-[160px]">
+            <div className="min-w-40">
               <p className="text-[10px] font-black uppercase tracking-[0.18em] text-muted-foreground">
                 Travelers
               </p>
@@ -139,7 +154,7 @@ const FlightDetailSearch = () => {
 
             <div className="hidden h-10 w-px bg-border sm:block" />
 
-            <div className="min-w-[120px]">
+            <div className="min-w-30">
               <p className="text-[10px] font-black uppercase tracking-[0.18em] text-muted-foreground">
                 Cabin Class
               </p>
@@ -150,7 +165,7 @@ const FlightDetailSearch = () => {
 
             <div className="hidden h-10 w-px bg-border sm:block" />
 
-            <div className="min-w-[180px]">
+            <div className="min-w-45">
               <p className="text-[10px] font-black uppercase tracking-[0.18em] text-muted-foreground">
                 Journey
               </p>
@@ -178,10 +193,7 @@ const FlightDetailSearch = () => {
             </Button>
 
             <Link to="/">
-              <Button
-                variant="secondary"
-                className="rounded-xl"
-              >
+              <Button variant="secondary" className="rounded-xl">
                 <Settings2 className="mr-2 h-4 w-4" />
                 Modify Search
               </Button>
@@ -189,7 +201,6 @@ const FlightDetailSearch = () => {
           </div>
         </div>
 
-        {/* Expandable Journey Details */}
         <AnimatePresence initial={false}>
           {open && (
             <motion.div
@@ -201,7 +212,6 @@ const FlightDetailSearch = () => {
               className="overflow-hidden border-t"
             >
               <div className="bg-muted/20">
-                {/* Desktop / tablet table */}
                 <div className="hidden overflow-x-auto md:block">
                   <table className="w-full border-collapse">
                     <thead>
@@ -225,7 +235,7 @@ const FlightDetailSearch = () => {
                     </thead>
 
                     <tbody>
-                      {flights.map((flight: any, index: number) => (
+                      {flights.map((flight, index) => (
                         <motion.tr
                           key={index}
                           initial={{ opacity: 0, y: 8 }}
@@ -284,9 +294,8 @@ const FlightDetailSearch = () => {
                   </table>
                 </div>
 
-                {/* Mobile cards */}
                 <div className="space-y-3 p-4 md:hidden">
-                  {flights.map((flight: any, index: number) => (
+                  {flights.map((flight, index) => (
                     <motion.div
                       key={index}
                       initial={{ opacity: 0, y: 8 }}
@@ -334,7 +343,6 @@ const FlightDetailSearch = () => {
                   ))}
                 </div>
 
-                {/* Footer */}
                 <div className="flex items-center justify-between border-t bg-muted/30 px-4 py-3 sm:px-6">
                   <div className="flex items-center gap-2">
                     <MapPin className="h-4 w-4 text-primary" />

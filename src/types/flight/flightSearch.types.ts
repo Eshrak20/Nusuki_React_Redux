@@ -50,7 +50,7 @@ export interface FlightSearchState {
     toDest: SearchDests | null;
     departureDate: string;
     returnDate: string;
-    // multiway data
+    // multi_way data
     segments: FlightSegment[];
     travelers: {
         adults: number;
