@@ -22,7 +22,7 @@ const FlightDetailSearch = () => {
   const searchData = useSelector((state: RootState) => state.flightSearch);
   const [open, setOpen] = useState(false);
 
-  const isMultiWay = searchData.tripType === "multi-way";
+  const isMultiWay = searchData.tripType === "multiway";
   const flights =
     isMultiWay && searchData.segments ? searchData.segments : [searchData];
 

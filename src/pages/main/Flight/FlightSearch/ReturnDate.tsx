@@ -27,7 +27,7 @@ const ReturnDate: React.FC<ReturnDateProps> = ({
   setSearchField,
 }) => {
   // 🔒 One-way → disabled UI
-  if (tripType === "one-way") {
+  if (tripType === "one_way") {
     return (
       <div className="flex-1 rounded-xl border p-3 opacity-60 bg-muted cursor-not-allowed">
         <div className="flex items-center gap-2 mb-1 text-xs text-muted-foreground">

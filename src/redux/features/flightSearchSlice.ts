@@ -8,7 +8,7 @@ import type {
 } from "@/types/flight/flightSearch.types";
 
 const initialState: FlightSearchState = {
-  tripType: "one-way",
+  tripType: "one_way",
   fareType: "regular",
   searchDest: "",
   fromDest: null,

@@ -56,7 +56,7 @@ const FlightDetailsMain = () => {
   const { data, isLoading, isError, isFetching } =
     useFlightSearchTicketListsQuery(apiPayload, {
       skip:
-        searchData.tripType === "multi-way"
+        searchData.tripType === "multiway"
           ? !searchData.segments?.[0]?.fromDest ||
             !searchData.segments?.[0]?.toDest
           : !searchData.fromDest || !searchData.toDest,
@@ -126,8 +126,11 @@ const FlightDetailsMain = () => {
     );
     dispatch(setUiField({ currentPage: 1, selectedAirlineCode: null }));
   };
+
+
   return (
     <div className="mt-20 min-h-screen bg-slate-100/80 pb-10 dark:bg-background">
+      
       <div className="border-b bg-white dark:bg-card">
         <div className="container mx-auto px-4 py-5">
           <FlightDetailSearch />
@@ -148,7 +151,7 @@ const FlightDetailsMain = () => {
             <FlightResultsHeader
               isLoading={isLoading || isFetching}
               isError={isError}
-              totalFlights={response?.data?.pagination?.total || flights.length}
+              totalFlights={response?.data?.pagination?.total ?? flights.length}
               airlineSummary={response?.data?.airline_price_summary || []}
               selectedAirlineCode={ui.selectedAirlineCode}
               onAirlineSelect={handleAirlineSelect}

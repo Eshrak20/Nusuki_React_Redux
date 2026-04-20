@@ -103,7 +103,7 @@ const FlightSearch = ({ searchDests }: FlightSearchProps) => {
       requestBody.destination = searchData.toDest?.iata_code;
       requestBody.departure_date = formatApiDate(searchData.departureDate);
 
-      if (searchData.tripType === "round-way") {
+      if (searchData.tripType === "round_way") {
         requestBody.return_date = formatApiDate(searchData.returnDate);
       }
     }

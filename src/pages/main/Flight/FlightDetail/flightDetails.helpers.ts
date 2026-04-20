@@ -96,7 +96,7 @@ export const buildFlightSearchPayload = ({
     layover_duration_max: searchData.filters.layover_duration_max ?? null,
   };
 
-  if (searchData.tripType === "multi-way") {
+  if (searchData.tripType === "multi_way") {
     return {
       ...commonPayload,
       trip_type: "multi_way",
@@ -108,7 +108,7 @@ export const buildFlightSearchPayload = ({
     };
   }
 
-  if (searchData.tripType === "round-way") {
+  if (searchData.tripType === "round_way") {
     return {
       ...commonPayload,
       trip_type: "round_way",
