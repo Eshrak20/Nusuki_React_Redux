@@ -207,7 +207,7 @@ const DestinationSelector = ({
 
           {renderCityPicker(index, "to", segment.toDest)}
 
-          {isMultiWay &&  (
+          {isMultiWay && (
             <div className="w-full lg:w-48">
               <Popover>
                 <PopoverTrigger asChild>
@@ -234,11 +234,30 @@ const DestinationSelector = ({
                         : undefined
                     }
                     onSelect={(d) =>
-                      d && handleUpdateSegment(index, { date: d.toISOString() })
+                      d &&
+                      handleUpdateSegment(index, {
+                        date: d.toISOString(),
+                      })
                     }
-                    disabled={(date) =>
-                      date < new Date(new Date().setHours(0, 0, 0, 0))
-                    }
+                    disabled={(date) => {
+                      const today = new Date();
+                      today.setHours(0, 0, 0, 0);
+
+                      // ❗ Prevent past dates
+                      if (date < today) return true;
+
+                      // ❗ Prevent selecting before previous segment
+                      if (index > 0) {
+                        const prevDate =
+                          searchData.segments[index - 1]?.departureDate;
+
+                        if (prevDate) {
+                          return date < parseISO(prevDate);
+                        }
+                      }
+
+                      return false;
+                    }}
                     className="bg-popover"
                   />
                 </PopoverContent>

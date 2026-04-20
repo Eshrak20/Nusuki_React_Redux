@@ -14,7 +14,7 @@ export const buildSearchResetKey = (searchData: SearchData) =>
   JSON.stringify({
     tripType: searchData.tripType,
     fareType: searchData.fareType,
-    flightClass: searchData.flightClass,
+    flightClass: searchData.cabin,
     fromDest: searchData.fromDest?.iata_code ?? "",
     toDest: searchData.toDest?.iata_code ?? "",
     departureDate: searchData.departureDate,
@@ -74,7 +74,7 @@ export const buildFlightSearchPayload = ({
     children: childrenCount,
     infants: infantsCount,
     child_ages: childAgesArray,
-    cabin: mapCabinClass(searchData.flightClass),
+    cabin: mapCabinClass(searchData.cabin),
     max_stops: 0,
     page: currentPage,
     size: pageSize,
