@@ -16,6 +16,7 @@ const requirementTabs = [
 
 const Requirements = ({ details }: RequirementProps) => {
   const requirements = details.requirements || [];
+  
   const [activeTab, setActiveTab] = useState("Basic Requirements");
 
   return (
@@ -54,9 +55,6 @@ const Requirements = ({ details }: RequirementProps) => {
         {/* Active Section Title */}
         <div className="mb-4">
           <h3 className="text-lg font-semibold">{activeTab}</h3>
-          <p className="mt-1 text-sm text-muted-foreground">
-            Backend is not ready yet, so currently the same data is shown in every section.
-          </p>
         </div>
 
         {/* Requirements List */}

@@ -78,7 +78,7 @@ const ProductVariants = ({ variants, options, selectedVariant, setVariant }: Pro
                         />
                       )}
                       {isSelected && (
-                        <div className="absolute bottom-0 right-0 bg-orange-500 text-white p-[2px]">
+                        <div className="absolute bottom-0 right-0 bg-orange-500 text-white p-0.5">
                           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-3.5 h-3.5">
                             <path fillRule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clipRule="evenodd" />
                           </svg>
@@ -93,7 +93,7 @@ const ProductVariants = ({ variants, options, selectedVariant, setVariant }: Pro
                     key={val.id}
                     onClick={() => handleSelect(opt.id, val.value)}
                     className={`
-                      min-w-[80px] px-6 py-3 text-sm font-bold rounded-full border transition-all duration-200 
+                      min-w-20 px-6 py-3 text-sm font-bold rounded-full border transition-all duration-200 
                       flex items-center justify-center shadow-sm
                       ${isSelected
                         ? "bg-[#002261] border-[#002261] text-white dark:bg-white dark:text-black shadow-md"
