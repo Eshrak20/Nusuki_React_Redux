@@ -9,7 +9,6 @@ import { mapCabinClass } from "@/lib/utils";
 import type { SortBy, SortOrder } from "./useFlightDetailsUi";
 
 type SearchData = RootState["flightSearch"];
-type TripType = "one_way" | "round_way" | "multi_way";
 
 export const buildSearchResetKey = (searchData: SearchData) =>
   JSON.stringify({
