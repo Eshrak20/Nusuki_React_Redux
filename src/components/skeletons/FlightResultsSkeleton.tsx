@@ -143,7 +143,7 @@ interface FlightResultsListSkeletonProps {
 }
 
 export const FlightResultsListSkeleton = ({
-  count = 4,
+  count = 10,
 }: FlightResultsListSkeletonProps) => {
   return (
     <div className="space-y-4 sm:space-y-5">

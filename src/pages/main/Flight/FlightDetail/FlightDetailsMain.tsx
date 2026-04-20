@@ -16,9 +16,6 @@ import FlightResultsHeader from "./flightResult/FlightResultsHeader";
 import FlightResultsList from "./FlightResultsList";
 import FlightResultsPagination from "./FlightResultsPagination";
 import {
-  FlightResultsListSkeleton,
-} from "@/components/skeletons/FlightResultsSkeleton";
-import {
   buildFlightSearchPayload,
   buildSearchResetKey,
   extractFlights,
@@ -165,15 +162,11 @@ const FlightDetailsMain = () => {
               onSortChange={handleSortChange}
             />
 
-            {isLoading ? (
-              <FlightResultsListSkeleton count={5} />
-            ) : (
-              <FlightResultsList
-                flights={processedFlights}
-                isLoading={isLoading || isFetching}
-                isError={isError}
-              />
-            )}
+            <FlightResultsList
+              flights={processedFlights}
+              isLoading={isLoading || isFetching}
+              isError={isError}
+            />
 
             {!isLoading &&
               !isError &&
