@@ -44,7 +44,7 @@ const DestinationSelector = ({
   const dispatch = useDispatch();
   const searchData = useSelector((state: RootState) => state.flightSearch);
   const { tripType, segments } = searchData;
-  const isMultiWay = tripType === "multi-way";
+  const isMultiWay = tripType === "multi_way";
 
   const [openStates, setOpenStates] = useState<Record<string, boolean>>({});
 

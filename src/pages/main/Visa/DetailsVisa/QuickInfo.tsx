@@ -18,6 +18,11 @@ const QuickInfo = ({ details }: QuickInfoProps) => {
             icon: Calendar,
         },
         {
+            title: 'Staying Validity',
+            value: details.staying_validity,
+            icon: Calendar,
+        },
+        {
             title: 'Entry Type',
             value: details.entry_type,
             icon: DoorOpen,
@@ -32,7 +37,7 @@ const QuickInfo = ({ details }: QuickInfoProps) => {
     return (
         <section className="py-6">
             <div className="container mx-auto lg:px-4">
-                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
                     {infoCards.map((card, index) => (
                         <div
                             key={index}

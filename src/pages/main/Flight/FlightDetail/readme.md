@@ -1,6 +1,6 @@
 {
   // For One Way
-  "trip_type": "one_way", // can be one_way, round_way, multiway
+  "trip_type": "one_way", // can be one_way, round_way, multi_way
   "origin": "DAC",
   "destination": "KUL",
   "departure_date": "2026-04-20",

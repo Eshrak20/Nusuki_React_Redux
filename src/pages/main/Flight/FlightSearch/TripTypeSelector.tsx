@@ -9,7 +9,7 @@ const TripTypeSelector = () => {
     (state: RootState) => state.flightSearch.tripType
   );
 
-  const types = ["one-way", "round-way", "multi-way"];
+  const types = ["one_way", "round_way", "multi_way"];
 
   return (
     <div className="flex flex-wrap gap-2 md:gap-4 mb-5">
@@ -44,7 +44,7 @@ const TripTypeSelector = () => {
 
             {/* Label Formatting */}
             <span className="capitalize">
-              {type.replace("-", " ")}
+              {type.replace("_", "")}
             </span>
           </button>
         );

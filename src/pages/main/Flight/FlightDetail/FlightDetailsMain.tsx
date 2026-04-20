@@ -56,7 +56,7 @@ const FlightDetailsMain = () => {
   const { data, isLoading, isError, isFetching } =
     useFlightSearchTicketListsQuery(apiPayload, {
       skip:
-        searchData.tripType === "multiway"
+        searchData.tripType === "multi_way"
           ? !searchData.segments?.[0]?.fromDest ||
             !searchData.segments?.[0]?.toDest
           : !searchData.fromDest || !searchData.toDest,
@@ -66,6 +66,8 @@ const FlightDetailsMain = () => {
     });
 
   const response = data as FlightSearchApiResponse | undefined;
+  console.log("apiPayload",apiPayload)
+  // console.log("data",data)
   const flights = useMemo(() => extractFlights(response), [response]);
 
   const processedFlights = useMemo(() => {

@@ -54,3 +54,16 @@ export const formatToBulletPoints = (text: string): string[] => {
     .map(item => item.trim())
     .filter(item => item.length > 0);
 };
+
+
+export type ApiTripType = "one_way" | "round_way" | "multi_way";
+
+export const mapTripType = (tripType: "one-way" | "round-way" | "multi-way"): ApiTripType => {
+  const mapping: Record<"one-way" | "round-way" | "multi-way", ApiTripType> = {
+    "one-way": "one_way",
+    "round-way": "round_way",
+    "multi-way": "multi_way",
+  };
+
+  return mapping[tripType];
+};

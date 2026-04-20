@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useRef, useEffect } from "react";
 import { Search } from "lucide-react"; // Added AlertCircle for icons
 import { useDispatch, useSelector } from "react-redux";
@@ -17,7 +16,7 @@ import TripTypeSelector from "./TripTypeSelector";
 import DestinationSelector from "./DestinationSelector";
 import TravelerSection from "./TravelerSection";
 import FlightClassDropdown from "./FlightClassDropdown";
-import { formatApiDate } from "@/lib/utils";
+import { buildFlightSearchPayload } from "../FlightDetail/flightDetails.helpers";
 
 interface FlightSearchProps {
   searchDests: SearchDests[];
@@ -29,7 +28,7 @@ const FlightSearch = ({ searchDests }: FlightSearchProps) => {
   const searchData = useSelector((state: RootState) => state.flightSearch);
 
   const dropdownRef = useRef<HTMLDivElement>(null);
-  const isMultiWay = searchData.tripType === "multi-way";
+  const isMultiWay = searchData.tripType === "multi_way";
 
   const totalTravelers =
     (searchData?.travelers?.adults || 0) +
@@ -45,14 +44,14 @@ const FlightSearch = ({ searchDests }: FlightSearchProps) => {
   }, [searchDests, searchData.fromDest, dispatch]);
 
   const handleSearch = () => {
-    // --- Validation ---
     if (isMultiWay) {
       const incompleteIndex = searchData.segments.findIndex(
-        (seg) => !seg.fromDest || !seg.toDest,
+        (seg) => !seg.fromDest || !seg.toDest || !seg.departureDate,
       );
+
       if (incompleteIndex !== -1) {
-        toast.error(`Incomplete Flight Information`, {
-          description: `Flight #${incompleteIndex + 1} is missing a destination.`,
+        toast.error("Incomplete Flight Information", {
+          description: `Flight #${incompleteIndex + 1} is missing route or date.`,
         });
         return;
       }
@@ -63,60 +62,36 @@ const FlightSearch = ({ searchDests }: FlightSearchProps) => {
         });
         return;
       }
-    }
 
-    // --- Construct the API Body ---
-    const requestBody: any = {
-      trip_type: searchData.tripType.replace("-", "_"), // "one-way" -> "one_way"
-      fare_type: searchData.fareType,
-      adults: searchData.travelers.adults,
-      children: searchData.travelers.children,
-      infants: searchData.travelers.infants,
-      cabin: searchData.flightClass,
-      max_stops: 0,
-      page: 1,
-      size: 20,
-      sort_by: "price",
-      sort_order: "asc",
-      refundability: [],
-      stops: [],
-      airlines: [],
-      layover_cities: [],
-      flight_schedule_departure: [],
-      flight_schedule_arrival: [],
-      aircraft: [],
-      price_min: null,
-      price_max: null,
-      layover_duration_min: null,
-      layover_duration_max: null,
-    };
+      if (!searchData.departureDate) {
+        toast.error("Departure date missing", {
+          description: "Please select a departure date.",
+        });
+        return;
+      }
 
-    // --- Add Trip-Specific Segments ---
-    if (isMultiWay) {
-      requestBody.segments = searchData.segments.map((seg) => ({
-        origin: seg.fromDest?.iata_code,
-        destination: seg.toDest?.iata_code,
-        departure_date: formatApiDate(seg.departureDate),
-      }));
-    } else {
-      requestBody.origin = searchData.fromDest?.iata_code;
-      requestBody.destination = searchData.toDest?.iata_code;
-      requestBody.departure_date = formatApiDate(searchData.departureDate);
-
-      if (searchData.tripType === "round_way") {
-        requestBody.return_date = formatApiDate(searchData.returnDate);
+      if (searchData.tripType === "round-way" && !searchData.returnDate) {
+        toast.error("Return date missing", {
+          description: "Please select a return date.",
+        });
+        return;
       }
     }
 
-    // --- Execution ---
+    const requestBody = buildFlightSearchPayload({
+      searchData,
+      currentPage: 1,
+      pageSize: 20,
+      sortBy: "price",
+      sortOrder: "asc",
+    });
+
     toast.success("Searching for flights...");
-    // Option A: Pass data to the next page via state
     navigate("/flight/details", { state: { searchPayload: requestBody } });
 
-    // Option B: If you're calling the API here directly
     // console.log("Final API Body:", JSON.stringify(requestBody, null, 2));
   };
-  
+
   if (!searchData || !searchData.travelers) return null;
 
   return (

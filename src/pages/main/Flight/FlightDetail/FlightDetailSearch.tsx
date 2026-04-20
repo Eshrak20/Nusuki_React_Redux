@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useMemo, useState } from "react";
 import { useSelector } from "react-redux";
 import type { RootState } from "@/redux/store";
@@ -22,9 +21,12 @@ const FlightDetailSearch = () => {
   const searchData = useSelector((state: RootState) => state.flightSearch);
   const [open, setOpen] = useState(false);
 
-  const isMultiWay = searchData.tripType === "multiway";
-  const flights =
-    isMultiWay && searchData.segments ? searchData.segments : [searchData];
+  const flights = useMemo(() => {
+    if (searchData.tripType === "multi_way" && searchData.segments) {
+      return searchData.segments;
+    }
+    return [searchData];
+  }, [searchData]);
 
   const getTravelerSummary = () => {
     const { travelers } = searchData;
@@ -113,13 +115,13 @@ const FlightDetailSearch = () => {
                 Trip Type
               </p>
               <p className="mt-1 text-sm font-bold capitalize text-primary">
-                {searchData.tripType?.replace("-", " ")}
+                {searchData.tripType?.replace("_", " ")}
               </p>
             </div>
 
             <div className="hidden h-10 w-px bg-border sm:block" />
 
-            <div className="min-w-[160px]">
+            <div className="min-w-40">
               <p className="text-[10px] font-black uppercase tracking-[0.18em] text-muted-foreground">
                 Travelers
               </p>
@@ -139,7 +141,7 @@ const FlightDetailSearch = () => {
 
             <div className="hidden h-10 w-px bg-border sm:block" />
 
-            <div className="min-w-[120px]">
+            <div className="min-w-30">
               <p className="text-[10px] font-black uppercase tracking-[0.18em] text-muted-foreground">
                 Cabin Class
               </p>
@@ -150,7 +152,7 @@ const FlightDetailSearch = () => {
 
             <div className="hidden h-10 w-px bg-border sm:block" />
 
-            <div className="min-w-[180px]">
+            <div className="min-w-45">
               <p className="text-[10px] font-black uppercase tracking-[0.18em] text-muted-foreground">
                 Journey
               </p>
@@ -178,10 +180,7 @@ const FlightDetailSearch = () => {
             </Button>
 
             <Link to="/">
-              <Button
-                variant="secondary"
-                className="rounded-xl"
-              >
+              <Button variant="secondary" className="rounded-xl">
                 <Settings2 className="mr-2 h-4 w-4" />
                 Modify Search
               </Button>
