@@ -1,4 +1,3 @@
-import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import Lottie from "lottie-react";
 import {
@@ -14,30 +13,14 @@ import { Card } from "@/components/ui/card";
 import { Clock, RefreshCcw } from "lucide-react";
 import { cn } from "@/lib/utils";
 import flightErrorAnimation from "@/assets/Lottie/Plane.json";
+import useSharedFlightTimer from "@/hooks/useSharedFlightTimer";
 
 interface FlightTimerProps {
   compact?: boolean;
 }
 
 const FlightTimer = ({ compact = false }: FlightTimerProps) => {
-  const INITIAL_TIME = 15 * 60;
-  const [timeLeft, setTimeLeft] = useState(INITIAL_TIME);
-
-  const isExpired = timeLeft <= 0;
-
-  useEffect(() => {
-    if (isExpired) return;
-
-    const timer = setInterval(() => {
-      setTimeLeft((prev) => prev - 1);
-    }, 1000);
-
-    return () => clearInterval(timer);
-  }, [isExpired]);
-
-  const safeTimeLeft = Math.max(0, timeLeft);
-  const minutes = Math.floor(safeTimeLeft / 60);
-  const seconds = safeTimeLeft % 60;
+ const { isExpired, minutes, seconds } = useSharedFlightTimer();
 
   const handleRedirect = () => {
     window.location.href = "/";
@@ -107,7 +90,7 @@ const FlightTimer = ({ compact = false }: FlightTimerProps) => {
       <AlertDialog open={isExpired}>
         <AlertDialogContent className="border-border bg-background/95 p-0 shadow-2xl backdrop-blur-md sm:max-w-md overflow-hidden">
           {/* TOP SECTION */}
-          <div className="bg-gradient-to-b from-primary/5 to-background px-6 pt-8 pb-4 flex flex-col items-center text-center">
+          <div className="bg-linear-to-b from-primary/5 to-background px-6 pt-8 pb-4 flex flex-col items-center text-center">
             {/* LOTTIE */}
             <div className="mb-4 flex justify-center items-center">
               <div className="h-36 w-36">

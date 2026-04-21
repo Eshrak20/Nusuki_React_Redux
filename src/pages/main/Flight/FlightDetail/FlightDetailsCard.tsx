@@ -77,6 +77,9 @@ const FlightDetailsCard = ({ flight }: Props) => {
         onOpenChange={setBookingOpen}
         flightId={flight.flight_id}
         searchId={flight.search_id}
+        onContinue={() => {
+          console.log("continue booking is clicked from FlightBookingDialog to FlightDetailsCard");
+        }}
       />
     </>
   );

@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import type { FetchBaseQueryError } from "@reduxjs/toolkit/query";
@@ -12,26 +13,41 @@ import { resetFlightSearchState } from "@/redux/features/flightSearchSlice";
 interface Props {
   flights: FlightResultItem[];
   isLoading: boolean;
+  isFetching?: boolean;
   isError: boolean;
   error?: FetchBaseQueryError | SerializedError | undefined;
+  onRetry?: () => void;
 }
 
-const FlightResultsList = ({ flights, isLoading, isError, error }: Props) => {
+const MAX_RETRY_COUNT = 7;
+const RETRY_DELAY = 2000;
+
+const FlightResultsList = ({
+  flights,
+  isLoading,
+  isFetching = false,
+  isError,
+  error,
+  onRetry,
+}: Props) => {
+  const [retryCount, setRetryCount] = useState(0);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  if (isLoading) {
-    return (
-      <div className="space-y-4">
-        {Array.from({ length: 10 }).map((_, index) => (
-          <FlightCardSkeleton key={index} />
-        ))}
-      </div>
-    );
-  }
-
   const isRateLimitError =
     isError && !!error && "status" in error && error.status === 429;
+  const activeRetryCount = isRateLimitError ? retryCount : 0;
+  useEffect(() => {
+    if (!isRateLimitError || !onRetry) return;
+
+    if (retryCount >= MAX_RETRY_COUNT) return;
+
+    const timeout = setTimeout(() => {
+      setRetryCount((prev) => prev + 1);
+      onRetry();
+    }, RETRY_DELAY);
+
+    return () => clearTimeout(timeout);
+  }, [isRateLimitError, onRetry, retryCount]);
 
   let errorMessage = "Something went wrong while loading flights.";
 
@@ -55,11 +71,25 @@ const FlightResultsList = ({ flights, isLoading, isError, error }: Props) => {
     dispatch(resetFlightSearchState());
     navigate("/");
   };
+  const shouldShowLoadingState =
+    isLoading ||
+    isFetching ||
+    (isRateLimitError && activeRetryCount < MAX_RETRY_COUNT);
+
+  if (shouldShowLoadingState) {
+    return (
+      <div className="space-y-4">
+        {Array.from({ length: 10 }).map((_, index) => (
+          <FlightCardSkeleton key={index} />
+        ))}
+      </div>
+    );
+  }
 
   if (isError) {
     return (
       <FlightResultsError
-        isRateLimit={isRateLimitError}
+        isRateLimit={false}
         message={errorMessage}
         onSearchAgain={handleSearchAgain}
       />

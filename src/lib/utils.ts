@@ -6,6 +6,25 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
 
+export const clampToZero = (value: number) => Math.max(0, value);
+
+export const getCountdownParts = (totalSeconds: number) => {
+  const safe = Math.max(0, totalSeconds);
+
+  const minutes = Math.floor(safe / 60);
+  const seconds = safe % 60;
+
+  return {
+    totalSeconds: safe,
+    minutes,
+    seconds,
+    formattedMinutes: String(minutes).padStart(2, "0"),
+    formattedSeconds: String(seconds).padStart(2, "0"),
+    timeText: `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`,
+  };
+};
+
+
 export function doubleLineBreaker(des: string) {
   const splittedDescription = des?.split(/\.\s+/).map((p) => p.trim()).filter(Boolean);
   return splittedDescription

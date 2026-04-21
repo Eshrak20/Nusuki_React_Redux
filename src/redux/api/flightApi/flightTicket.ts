@@ -17,3 +17,4 @@ export const flightTicketApi = laravelApi.injectEndpoints({
 });
 
 export const { useLazyFlightDetailTicketQuery } = flightTicketApi;
+

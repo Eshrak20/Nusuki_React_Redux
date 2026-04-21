@@ -17,12 +17,21 @@ import {
 } from "./flightDetails.helpers";
 import FlightFilterDrawer from "./filters/reusableComponents/FlightFilterDrawer";
 import FlightResultsSortBar from "./flightResult/FlightResultsSortBar";
+import { startFlightSession } from "@/redux/features/flightSessionSlice";
 
 const FlightDetailsMain = () => {
   const dispatch = useDispatch();
   const searchData = useSelector((state: RootState) => state.flightSearch);
   const ui = searchData.ui;
+  const expiresAt = useSelector(
+    (state: RootState) => state.flightSession?.expiresAt ?? null,
+  );
 
+  useEffect(() => {
+    if (!expiresAt) {
+      dispatch(startFlightSession(15 * 60));
+    }
+  }, [dispatch, expiresAt]);
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, []);
@@ -41,7 +50,7 @@ const FlightDetailsMain = () => {
     [searchData, ui.currentPage, ui.sortBy, ui.sortOrder],
   );
 
-  const { data, isLoading, isError, isFetching, error } =
+  const { data, isLoading, isError, isFetching, error, refetch } =
     useFlightSearchTicketListsQuery(apiPayload, {
       skip:
         searchData.tripType === "multi_way"
@@ -207,6 +216,7 @@ const FlightDetailsMain = () => {
               isLoading={isLoading || isFetching}
               isError={isError}
               error={error}
+              onRetry={refetch}
             />
 
             <FlightResultsPagination
