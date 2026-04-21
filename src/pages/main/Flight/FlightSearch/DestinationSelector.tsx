@@ -212,8 +212,8 @@ const DestinationSelector = ({
               <Popover>
                 <PopoverTrigger asChild>
                   <div className="border border-input rounded-lg p-3 bg-background cursor-pointer hover:border-primary min-h-18 flex flex-col justify-center transition-all px-4">
-                    <div className="flex items-center gap-2 mb-1 text-xs text-muted-foreground font-medium lowercase">
-                      <CalendarIcon className="w-3.5 h-3.5" /> departure
+                    <div className="flex items-center gap-2 mb-1 text-xs text-muted-foreground font-medium">
+                      <CalendarIcon className="w-3.5 h-3.5" /> Departure Date
                     </div>
                     <div className="text-sm font-bold text-foreground">
                       {segment.departureDate

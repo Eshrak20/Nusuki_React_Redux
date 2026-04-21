@@ -46,7 +46,7 @@ const FlightHome = () => {
       </div>
 
       {/* Promotions */}
-      <section className="max-w-7xl mx-auto px-4 pt-96 mt-96 md:mt-0 md:pt-72">
+      <section className="max-w-7xl mx-auto px-4 pt-96 mt-44 md:mt-0 md:pt-72">
         <FlightPromotions />
       </section>
 

@@ -40,9 +40,9 @@ const FlightJourneySummary = ({ flight }: Props) => {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 gap-5 md:grid-cols-[140px_minmax(0,1fr)_140px] md:items-center">
+        <div className="grid grid-cols-3 gap-13 lg:gap-5 md:grid-cols-[140px_minmax(0,1fr)_140px] md:items-center">
           <div>
-            <p className="text-3xl font-bold leading-none text-foreground sm:text-4xl">
+            <p className="text-xl font-bold leading-none text-foreground sm:text-4xl">
               {format(new Date(summary.departure_at), "HH:mm")}
             </p>
             <p className="mt-2 text-base font-semibold text-foreground">
@@ -58,7 +58,7 @@ const FlightJourneySummary = ({ flight }: Props) => {
               {summary.duration_text}
             </p>
 
-            <div className="my-3 flex items-center gap-3">
+            <div className="my-2 lg:my-3 flex items-center gap-3">
               <div className="h-px flex-1 bg-border" />
               <PlaneTakeoff className="h-4 w-4 text-primary" />
               <div className="h-px flex-1 bg-border" />
@@ -78,7 +78,7 @@ const FlightJourneySummary = ({ flight }: Props) => {
           </div>
 
           <div className="text-left md:text-right">
-            <p className="text-3xl font-bold leading-none text-foreground sm:text-4xl">
+            <p className="text-xl font-bold leading-none text-foreground sm:text-4xl">
               {format(new Date(summary.arrival_at), "HH:mm")}
             </p>
             <p className="mt-2 text-base font-semibold text-foreground">

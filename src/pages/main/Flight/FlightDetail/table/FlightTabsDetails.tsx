@@ -34,7 +34,7 @@ const FlightTabsDetails = ({ flight }: Props) => {
   return (
     <div className="border-t bg-background p-4 md:p-6">
       <Tabs defaultValue="details" className="w-full">
-        <TabsList className="grid h-auto w-full grid-cols-2 gap-2 rounded-lg bg-muted p-1 md:grid-cols-4">
+        <TabsList className="grid h-auto w-full grid-cols-2 gap-2 rounded-lg bg-muted p-1 mb-7 lg:mb-0 md:grid-cols-4">
           <TabsTrigger
             value="details"
             className="rounded-md px-3 py-2 text-xs sm:text-sm data-[state=active]:bg-primary data-[state=active]:text-primary-foreground"
@@ -46,7 +46,7 @@ const FlightTabsDetails = ({ flight }: Props) => {
             value="fare"
             className="rounded-md px-3 py-2 text-xs sm:text-sm data-[state=active]:bg-primary data-[state=active]:text-primary-foreground"
           >
-            Fare Summery
+            Fare Summary
           </TabsTrigger>
 
           <TabsTrigger
@@ -90,7 +90,7 @@ const FlightTabsDetails = ({ flight }: Props) => {
                   </div>
 
                   <div className="overflow-x-auto">
-                    <table className="w-full min-w-[520px] text-sm">
+                    <table className="w-full min-w-130 text-sm">
                       <thead className="bg-muted/60 text-muted-foreground">
                         <tr>
                           <th className="px-4 py-3 text-left font-semibold">

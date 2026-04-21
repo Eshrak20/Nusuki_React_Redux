@@ -43,7 +43,7 @@ const FlightSegmentTimeline = ({ segments }: Props) => {
             <div>
               <div className="flex items-center gap-2">
                 <PlaneTakeoff className="h-4 w-4 text-primary" />
-                <p className="text-2xl font-bold text-foreground sm:text-3xl">
+                <p className="text-xl font-bold text-foreground sm:text-3xl">
                   {segment.origin.airport} -{" "}
                   {format(new Date(segment.departure_at), "HH:mm")}
                 </p>
@@ -54,18 +54,26 @@ const FlightSegmentTimeline = ({ segments }: Props) => {
               </p>
 
               <p className="mt-2 text-sm text-foreground/80">
-                {segment.origin.airport_name}{" "}
+                {segment.origin.airport_name}
                 {segment.origin.terminal
-                  ? `(Terminal - ${segment.origin.terminal})`
+                  ?
+                  (
+                    <span
+                      key={`${segment.flight_number}-${index}`}
+                      className="inline-flex items-center rounded-md border border-primary/30 bg-primary/5 px-2.5 py-1.5 mt-2 text-xs font-medium text-primary"
+                    >
+                      (Terminal - {segment.origin.terminal})
+                    </span>
+                  )
                   : ""}
               </p>
             </div>
 
-            <div className="text-center">
+            <div className="text-center -mt-6 lg:mt-0 mb-2 lg:mb-0 flex flex-row lg:flex-col items-center gap-1 justify-center">
               <div className="flex items-center justify-center gap-2">
-                <div className="h-px w-8 bg-border" />
-                <Plane className="h-5 w-5 text-primary" />
-                <div className="h-px w-8 bg-border" />
+                <div className="h-px w-8 hidden lg:block bg-border" />
+                <Plane className="mt-2.5 lg:mt-0 h-5 w-5 text-primary" />
+                <div className="h-px w-8 hidden lg:block bg-border" />
               </div>
 
               <p className="mt-2 font-semibold text-foreground">
@@ -76,7 +84,7 @@ const FlightSegmentTimeline = ({ segments }: Props) => {
             <div className="md:text-right">
               <div className="flex items-center gap-2 md:justify-end">
                 <PlaneLanding className="h-4 w-4 text-primary" />
-                <p className="text-2xl font-bold text-foreground sm:text-3xl">
+                <p className="text-xl font-bold text-foreground sm:text-3xl">
                   {segment.destination.airport} -{" "}
                   {format(new Date(segment.arrival_at), "HH:mm")}
                 </p>
@@ -89,7 +97,15 @@ const FlightSegmentTimeline = ({ segments }: Props) => {
               <p className="mt-2 text-sm text-foreground/80">
                 {segment.destination.airport_name}
                 {segment.destination.terminal
-                  ? ` (Terminal - ${segment.destination.terminal})`
+                  ?
+                  (
+                    <span
+                      key={`${segment.flight_number}-${index}`}
+                      className="inline-flex items-center rounded-md border border-primary/30 bg-primary/5 px-2.5 py-1.5 mt-2 text-xs font-medium text-primary"
+                    >
+                      (Terminal - {segment.destination.terminal})
+                    </span>
+                  )
                   : ""}
               </p>
             </div>

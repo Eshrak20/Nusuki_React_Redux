@@ -31,7 +31,7 @@ const FlightFilter = ({
   return (
     <aside
       className={cn(
-        "w-full rounded-3xl border border-border bg-muted/40 p-3 md:p-4",
+        "w-full rounded-3xl py-3 md:py-4",
         isDrawer && "rounded-none border-0 bg-transparent p-0 shadow-none",
         className,
       )}

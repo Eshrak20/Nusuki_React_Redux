@@ -104,10 +104,10 @@ const FlightResultsHeader = ({
             <Button
               variant="outline"
               size="sm"
-              className="h-11 w-full justify-center rounded-2xl border-border bg-background px-3 text-sm font-medium shadow-sm"
+              className="h-11 w-full justify-center rounded-2xl bg-background px-3 text-sm font-medium shadow-sm"
             >
               <SlidersHorizontal className="mr-2 h-4 w-4" />
-              Flight Options
+              <h1 className="text-[12px]">Flight Options</h1>
             </Button>
           </SheetTrigger>
 

@@ -8,7 +8,7 @@ type FareTypeProps = {
 const FareType = ({ fareType, onChange }: FareTypeProps) => {
 
   return (
-    <div className="flex flex-wrap items-center gap-6 mt-4">
+    <div className="flex flex-wrap items-center gap-6 mt-4 mb-4 lg:mb-0">
       {fares.map((fare) => {
         const isActive = fareType === fare.value;
 
@@ -27,7 +27,7 @@ const FareType = ({ fareType, onChange }: FareTypeProps) => {
               )}
             </div>
 
-            <span className={isActive ? "text-primary" : ""}>{fare.label}</span>
+            <span className={`text-sm lg:text-base ${isActive ? "text-primary" : ""}`}>{fare.label}</span>
 
             <input
               type="radio"
