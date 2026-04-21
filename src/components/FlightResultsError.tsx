@@ -1,28 +1,42 @@
 import { motion, AnimatePresence } from "framer-motion";
 import Lottie from "lottie-react";
-import { AlertTriangle, RefreshCw } from "lucide-react";
+import { AlertTriangle, RefreshCw, Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useNavigate } from "react-router-dom";
 import flightErrorAnimation from "@/assets/Lottie/Plane.json";
 
 interface FlightResultsErrorProps {
   isOpen?: boolean;
+  isRateLimit?: boolean;
+  message?: string;
+  onSearchAgain?: () => void;
 }
 
 const FlightResultsError = ({
   isOpen = true,
+  isRateLimit = false,
+  message,
+  onSearchAgain,
 }: FlightResultsErrorProps) => {
-  const navigate = useNavigate();
+  const handleAction = () => {
+    if (isRateLimit) {
+      window.location.reload();
+      return;
+    }
 
-  const handleSearchAgain = () => {
-    navigate("/");
+    onSearchAgain?.();
   };
+
+  const displayMessage = message?.trim()
+    ? message
+    : isRateLimit
+      ? "Too many requests. Please reload after a moment."
+      : "Something went wrong while loading flights.";
 
   return (
     <AnimatePresence>
       {isOpen && (
         <motion.div
-          className="fixed inset-0 z-100 flex items-center justify-center bg-black/40 p-4 backdrop-blur-md sm:p-6"
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-black/40 p-4 backdrop-blur-md sm:p-6"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
@@ -58,22 +72,32 @@ const FlightResultsError = ({
                 </h3>
 
                 <p className="mt-2 max-w-md text-sm leading-6 text-slate-600 dark:text-slate-300 sm:text-base">
-                  Something went wrong while fetching flight results. Please try
-                  searching again. The issue may be temporary.
+                  {displayMessage}
                 </p>
 
                 <div className="mt-6 w-full max-w-sm">
                   <Button
-                    onClick={handleSearchAgain}
+                    onClick={handleAction}
                     className="group h-12 w-full rounded-2xl bg-primary text-base font-semibold shadow-lg transition-all duration-200 hover:scale-[1.02]"
                   >
-                    <RefreshCw className="mr-2 h-4 w-4 transition-transform duration-300 group-hover:rotate-180" />
-                    Search Again
+                    {isRateLimit ? (
+                      <>
+                        <RefreshCw className="mr-2 h-4 w-4 transition-transform duration-300 group-hover:rotate-180" />
+                        Reload Page
+                      </>
+                    ) : (
+                      <>
+                        <Search className="mr-2 h-4 w-4 transition-transform duration-300 group-hover:scale-110" />
+                        Search Again
+                      </>
+                    )}
                   </Button>
                 </div>
 
                 <p className="mt-3 text-xs text-slate-400 dark:text-slate-500">
-                  Please check your network or try another search.
+                  {isRateLimit
+                    ? "Rate limit reached from the server."
+                    : "Please reset your search and try again."}
                 </p>
               </div>
             </div>

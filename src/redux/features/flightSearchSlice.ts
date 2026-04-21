@@ -1,56 +1,12 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
-import { addDays } from "date-fns";
 import type {
   FlightFilters,
   FlightSearchState,
   FlightSegment,
   UpdateTravelerPayload,
 } from "@/types/flight/flightSearch.types";
-
-const initialState: FlightSearchState = {
-  tripType: "one_way",
-  fareType: "regular",
-  searchDest: "",
-  fromDest: null,
-  toDest: null,
-  departureDate: addDays(new Date(), 1).toISOString(),
-  returnDate: addDays(new Date(), 3).toISOString(),
-  segments: [
-    {
-      fromDest: null,
-      toDest: null,
-      departureDate: addDays(new Date(), 1).toISOString(),
-    },
-    {
-      fromDest: null,
-      toDest: null,
-      departureDate: addDays(new Date(), 3).toISOString(),
-    },
-  ],
-  travelers: { adults: 1, children: [], infants: 0 },
-  cabin: "Y",
-  filters: {
-    airlines: [],
-    aircraft: [],
-    stops: [],
-    refundability: [],
-    price_min: null,
-    price_max: null,
-    flight_schedules: {
-      departure: [],
-      arrival: [],
-    },
-    layover_cities: [],
-    layover_duration_min: null,
-    layover_duration_max: null,
-  },
-  ui: {
-    currentPage: 1,
-    sortBy: "price",
-    sortOrder: "asc",
-    selectedAirlineCode: null,
-  },
-};
+import { addDays } from "date-fns";
+import { initialState } from "@/pages/main/Flight/FlightSearch/FlightConfigData";
 
 export const flightSearchSlice = createSlice({
   name: "flightSearch",

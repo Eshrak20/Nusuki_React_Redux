@@ -12,9 +12,9 @@ export const flightSearchApi = laravelApi.injectEndpoints({
         }),
         flightSearchTicketLists: builder.query<any, FlightSearchRequest>({
             query: (body) => ({
-                url: "/flights/search", // Ensure full path is correct
+                url: "/flights/search",
                 method: "POST",
-                body, // Use the actual parameter here
+                body,
             }),
         }),
     }),

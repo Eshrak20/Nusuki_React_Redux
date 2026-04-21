@@ -6,7 +6,11 @@ import { toast } from "sonner"; // Assuming you use Shadcn (which uses Sonner)
 
 import type { RootState } from "@/redux/store";
 import type { SearchDests } from "@/types/flight/flightHome.types";
-import { setSearchField } from "@/redux/features/flightSearchSlice";
+import {
+  resetFilters,
+  resetFlightUiState,
+  setSearchField,
+} from "@/redux/features/flightSearchSlice";
 
 // Components
 import DepartureDate from "./DepartureDate";
@@ -70,14 +74,15 @@ const FlightSearch = ({ searchDests }: FlightSearchProps) => {
         return;
       }
 
-      if (searchData.tripType === "round-way" && !searchData.returnDate) {
+      if (searchData.tripType === "round_way" && !searchData.returnDate) {
         toast.error("Return date missing", {
           description: "Please select a return date.",
         });
         return;
       }
     }
-
+    dispatch(resetFilters());
+    dispatch(resetFlightUiState());
     const requestBody = buildFlightSearchPayload({
       searchData,
       currentPage: 1,

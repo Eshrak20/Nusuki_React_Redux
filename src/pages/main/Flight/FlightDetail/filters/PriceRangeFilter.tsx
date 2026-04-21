@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import type { RootState } from "@/redux/store";
 import { setRangeFilter } from "@/redux/features/flightSearchSlice";
 import FlightFilterSection from "./reusableComponents/FlightFilterSection";
+import PriceRangeFilterSkeleton from "@/components/skeletons/PriceRangeFilterSkeleton";
 
 interface PriceRangeData {
   min: number;
@@ -133,9 +134,7 @@ const PriceRangeFilter = ({ data, isLoading }: PriceRangeFilterProps) => {
 
   if (isLoading) {
     return (
-      <div className="rounded-2xl border border-border bg-card p-4">
-        <p className="text-sm text-muted-foreground">Loading price range...</p>
-      </div>
+      <PriceRangeFilterSkeleton/>
     );
   }
 

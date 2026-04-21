@@ -7,6 +7,7 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
+import { generatePaginationPages } from "@/lib/utils";
 
 interface FlightResultsPaginationProps {
   currentPage: number;
@@ -19,38 +20,10 @@ const FlightResultsPagination = ({
   totalPages,
   onPageChange,
 }: FlightResultsPaginationProps) => {
-  console.log("currentPage", currentPage);
-  console.log("totalPages", totalPages);
-  // if (totalPages <= 1) return null;
-
-  const generatePages = () => {
-    const pages: (number | "ellipsis")[] = [];
-
-    // If total pages small → show all
-    if (totalPages <= 10) {
-      for (let i = 1; i <= totalPages; i++) {
-        pages.push(i);
-      }
-      return pages;
-    }
-
-    // Always show first 10 pages
-    for (let i = 1; i <= 10; i++) {
-      pages.push(i);
-    }
-
-    // Add ellipsis if needed
-    if (totalPages > 10) {
-      pages.push("ellipsis");
-    }
-
-    // Always show last page
-    pages.push(totalPages);
-
-    return pages;
-  };
-
-  const pages = generatePages();
+  const pages = generatePaginationPages({
+    currentPage,
+    totalPages,
+  });
 
   return (
     <div className="flex justify-end pt-2">

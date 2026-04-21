@@ -111,6 +111,27 @@ const FlightDetailSearch = () => {
     visible: { opacity: 1, y: 0 },
   };
 
+  const compactInfoItems = [
+    {
+      label: "Trip Type",
+      value: searchData.tripType?.replace("_", " "),
+      valueClassName: "capitalize text-primary",
+    },
+    {
+      label: "Travelers",
+      value: `${totalTravelers} ${totalTravelers > 1 ? "Travelers" : "Traveler"}`,
+      subValue: getTravelerSummary(),
+    },
+    {
+      label: "Cabin",
+      value: mapCabinCodeToLabel(searchData.cabin),
+    },
+    {
+      label: "Journey",
+      value: journeyLabel,
+    },
+  ];
+
   return (
     <motion.div
       initial="hidden"
@@ -120,85 +141,143 @@ const FlightDetailSearch = () => {
     >
       <motion.div
         variants={rowVariants}
-        className="overflow-hidden rounded-3xl border border-border bg-card shadow-sm"
+        className="overflow-hidden rounded-[28px] border border-border bg-card shadow-sm"
       >
-        <div className="flex flex-col gap-4 p-4 sm:p-5 lg:flex-row lg:items-center lg:justify-between">
-          <div className="flex flex-wrap items-center gap-4 sm:gap-6">
-            <div className="rounded-2xl bg-primary/10 px-4 py-3">
-              <p className="text-[10px] font-black uppercase tracking-[0.18em] text-primary/70">
-                Trip Type
-              </p>
-              <p className="mt-1 text-sm font-bold capitalize text-primary">
-                {searchData.tripType?.replace("_", " ")}
-              </p>
+        <div className="p-3 sm:p-5">
+          {/* Mobile compact layout */}
+          <div className="space-y-3 lg:hidden">
+            <div className="grid grid-cols-2 gap-2">
+              {compactInfoItems.map((item) => (
+                <div
+                  key={item.label}
+                  className="rounded-2xl border border-border/70 bg-muted/30 px-3 py-2"
+                >
+                  <p className="text-[9px] font-black uppercase tracking-[0.16em] text-muted-foreground">
+                    {item.label}
+                  </p>
+                  <p
+                    className={`mt-1 truncate text-[13px] font-bold leading-tight text-foreground ${
+                      item.valueClassName || ""
+                    }`}
+                  >
+                    {item.value}
+                  </p>
+                  {item.subValue ? (
+                    <p className="mt-0.5 truncate text-[10px] leading-tight text-muted-foreground">
+                      {item.subValue}
+                    </p>
+                  ) : null}
+                </div>
+              ))}
             </div>
 
-            <div className="hidden h-10 w-px bg-border sm:block" />
+            <div className="grid grid-cols-2 gap-2">
+              <Button
+                variant="outline"
+                onClick={() => setOpen((prev) => !prev)}
+                className="h-10 rounded-xl border-border bg-background px-3 text-[12px] font-medium"
+              >
+                <span className="truncate">
+                  {open ? "Hide Journey" : "Journey Details"}
+                </span>
+                {open ? (
+                  <ChevronUp className="ml-1 h-4 w-4 shrink-0" />
+                ) : (
+                  <ChevronDown className="ml-1 h-4 w-4 shrink-0" />
+                )}
+              </Button>
 
-            <div className="min-w-40">
-              <p className="text-[10px] font-black uppercase tracking-[0.18em] text-muted-foreground">
-                Travelers
-              </p>
-              <div className="mt-1 flex items-start gap-2">
-                <Users className="mt-0.5 h-4 w-4 text-primary" />
-                <div>
+              <Link to="/" className="block">
+                <Button
+                  variant="secondary"
+                  className="h-10 w-full rounded-xl px-3 text-[12px] font-medium"
+                >
+                  <Settings2 className="mr-1.5 h-4 w-4 shrink-0" />
+                  <span className="truncate">Modify Search</span>
+                </Button>
+              </Link>
+            </div>
+          </div>
+
+          {/* Desktop / tablet layout */}
+          <div className="hidden lg:flex lg:flex-row lg:items-center lg:justify-between lg:gap-4">
+            <div className="flex flex-wrap items-center gap-4 sm:gap-6">
+              <div className="rounded-2xl bg-primary/10 px-4 py-3">
+                <p className="text-[10px] font-black uppercase tracking-[0.18em] text-primary/70">
+                  Trip Type
+                </p>
+                <p className="mt-1 text-sm font-bold capitalize text-primary">
+                  {searchData.tripType?.replace("_", " ")}
+                </p>
+              </div>
+
+              <div className="hidden h-10 w-px bg-border sm:block" />
+
+              <div className="min-w-40">
+                <p className="text-[10px] font-black uppercase tracking-[0.18em] text-muted-foreground">
+                  Travelers
+                </p>
+                <div className="mt-1 flex items-start gap-2">
+                  <Users className="mt-0.5 h-4 w-4 text-primary" />
+                  <div>
+                    <p className="text-sm font-bold text-foreground">
+                      {totalTravelers}{" "}
+                      {totalTravelers > 1 ? "Travelers" : "Traveler"}
+                    </p>
+                    <p className="text-xs text-muted-foreground">
+                      {getTravelerSummary()}
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="hidden h-10 w-px bg-border sm:block" />
+
+              <div className="min-w-30">
+                <p className="text-[10px] font-black uppercase tracking-[0.18em] text-muted-foreground">
+                  Cabin Class
+                </p>
+                <p className="mt-1 text-sm font-bold text-foreground">
+                  {mapCabinCodeToLabel(searchData.cabin)}
+                </p>
+              </div>
+
+              <div className="hidden h-10 w-px bg-border sm:block" />
+
+              <div className="min-w-45">
+                <p className="text-[10px] font-black uppercase tracking-[0.18em] text-muted-foreground">
+                  Journey
+                </p>
+                <div className="mt-1 flex items-center gap-2">
+                  <Route className="h-4 w-4 text-primary" />
                   <p className="text-sm font-bold text-foreground">
-                    {totalTravelers}{" "}
-                    {totalTravelers > 1 ? "Travelers" : "Traveler"}
-                  </p>
-                  <p className="text-xs text-muted-foreground">
-                    {getTravelerSummary()}
+                    {journeyLabel}
                   </p>
                 </div>
               </div>
             </div>
 
-            <div className="hidden h-10 w-px bg-border sm:block" />
-
-            <div className="min-w-30">
-              <p className="text-[10px] font-black uppercase tracking-[0.18em] text-muted-foreground">
-                Cabin Class
-              </p>
-              <p className="mt-1 text-sm font-bold text-foreground">
-                {mapCabinCodeToLabel(searchData.cabin)}
-              </p>
-            </div>
-
-            <div className="hidden h-10 w-px bg-border sm:block" />
-
-            <div className="min-w-45">
-              <p className="text-[10px] font-black uppercase tracking-[0.18em] text-muted-foreground">
-                Journey
-              </p>
-              <div className="mt-1 flex items-center gap-2">
-                <Route className="h-4 w-4 text-primary" />
-                <p className="text-sm font-bold text-foreground">
-                  {journeyLabel}
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <div className="flex flex-wrap items-center gap-3">
-            <Button
-              variant="outline"
-              onClick={() => setOpen((prev) => !prev)}
-              className="group rounded-xl border-border bg-background"
-            >
-              {open ? "Hide Journey Details" : "Show Journey Details"}
-              {open ? (
-                <ChevronUp className="ml-2 h-4 w-4 transition-transform duration-200 group-hover:-translate-y-0.5" />
-              ) : (
-                <ChevronDown className="ml-2 h-4 w-4 transition-transform duration-200 group-hover:translate-y-0.5" />
-              )}
-            </Button>
-
-            <Link to="/">
-              <Button variant="secondary" className="rounded-xl">
-                <Settings2 className="mr-2 h-4 w-4" />
-                Modify Search
+            <div className="flex flex-wrap items-center gap-3">
+              <Button
+                variant="outline"
+                onClick={() => setOpen((prev) => !prev)}
+                className="group rounded-xl border-border bg-background"
+              >
+                {open ? "Hide Journey Details" : "Show Journey Details"}
+                {open ? (
+                  <ChevronUp className="ml-2 h-4 w-4 transition-transform duration-200 group-hover:-translate-y-0.5" />
+                ) : (
+                  <ChevronDown className="ml-2 h-4 w-4 transition-transform duration-200 group-hover:translate-y-0.5" />
+                )}
               </Button>
-            </Link>
+
+              <Link to="/">
+                <Button variant="secondary" className="rounded-xl">
+                  <Settings2 className="mr-2 h-4 w-4" />
+                  Modify Search
+                </Button>
+              </Link>
+            </div>
           </div>
         </div>
 

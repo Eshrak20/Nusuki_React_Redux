@@ -48,7 +48,7 @@ export const FlightCardSkeleton = () => {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.25, ease: "easeOut" }}
     >
-      <Card className="overflow-hidden rounded-3xl border border-border/60 bg-card shadow-sm">
+      <Card className="overflow-hidden rounded-3xl border border-border/60 bg-primary/40 shadow-sm">
         <CardContent className="p-0">
           <div className="grid grid-cols-1 xl:grid-cols-[minmax(0,1fr)_260px] xl:items-stretch">
             {/* Left */}

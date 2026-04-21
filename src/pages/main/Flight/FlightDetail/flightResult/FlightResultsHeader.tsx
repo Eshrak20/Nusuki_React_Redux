@@ -6,6 +6,15 @@ import FlightResultsSummaryBar from "./FlightResultsSummaryBar";
 import { Card, CardContent } from "@/components/ui/card";
 import FlightResultsAirlineRow from "./FlightResultsAirlineRow";
 import FlightResultsSortBar from "./FlightResultsSortBar";
+import { Button } from "@/components/ui/button";
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
+import { SlidersHorizontal } from "lucide-react";
 
 export type SortBy = "price" | "duration" | "departure_at";
 export type SortOrder = "asc" | "desc";
@@ -54,7 +63,7 @@ const FlightResultsHeader = ({
     );
   }
 
-  return (
+  const headerContent = (
     <div className="space-y-4">
       <FlightResultsSummaryBar
         isLoading={isLoading}
@@ -67,21 +76,56 @@ const FlightResultsHeader = ({
         disablePrevDay={disablePrevDay}
         disableNextDay={disableNextDay}
       />
+      <div className="hidden">
+        <FlightResultsAirlineRow
+          isLoading={isLoading}
+          airlineSummary={airlineSummary}
+          selectedAirlineCode={selectedAirlineCode}
+          onAirlineSelect={onAirlineSelect}
+        />
+      </div>
 
-      <FlightResultsAirlineRow
-        isLoading={isLoading}
-        airlineSummary={airlineSummary}
-        selectedAirlineCode={selectedAirlineCode}
-        onAirlineSelect={onAirlineSelect}
-      />
-
-      <FlightResultsSortBar
-        isLoading={isLoading}
-        sortBy={sortBy}
-        sortOrder={sortOrder}
-        onSortChange={onSortChange}
-      />
+      <div className="md:hidden bg-background/95 backdrop-blur supports-backdrop-filter:bg-background/80">
+        <FlightResultsSortBar
+          isLoading={isLoading}
+          sortBy={sortBy}
+          sortOrder={sortOrder}
+          onSortChange={onSortChange}
+        />
+      </div>
     </div>
+  );
+
+  return (
+    <>
+      <div className="w-full lg:hidden">
+        <Sheet>
+          <SheetTrigger asChild>
+            <Button
+              variant="outline"
+              size="sm"
+              className="h-11 w-full justify-center rounded-2xl border-border bg-background px-3 text-sm font-medium shadow-sm"
+            >
+              <SlidersHorizontal className="mr-2 h-4 w-4" />
+              Flight Options
+            </Button>
+          </SheetTrigger>
+
+          <SheetContent
+            side="left"
+            className="w-[92vw] max-w-sm overflow-y-auto p-4"
+          >
+            <SheetHeader className="mb-4">
+              <SheetTitle>Flight Options</SheetTitle>
+            </SheetHeader>
+
+            {headerContent}
+          </SheetContent>
+        </Sheet>
+      </div>
+
+      <div className="hidden lg:block">{headerContent}</div>
+    </>
   );
 };
 

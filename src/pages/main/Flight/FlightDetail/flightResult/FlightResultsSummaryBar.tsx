@@ -28,58 +28,67 @@ const FlightResultsSummaryBar = ({
   disableNextDay,
 }: Props) => {
   return (
-    <Card className="overflow-hidden rounded-2xl border bg-card shadow-sm">
-      <CardContent className="flex flex-col gap-4 p-4 lg:flex-row lg:items-center lg:justify-between">
-        <div className="flex flex-wrap items-center gap-3">
-          {isLoading ? (
-            <FlightMiniLoader />
-          ) : (
-            <h2 className="text-lg font-bold text-foreground sm:text-xl">
-              {totalFlights} Available Flights
-            </h2>
-          )}
+    <Card className="overflow-hidden rounded-3xl border bg-card shadow-sm">
+      <CardContent className="p-4 sm:p-5">
+        <div className="flex flex-col gap-4">
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <div className="min-w-0 space-y-2">
+              {isLoading ? (
+                <FlightMiniLoader />
+              ) : (
+                <div className="flex flex-wrap items-center gap-2">
+                  <h2 className="text-lg font-bold leading-tight text-foreground sm:text-xl">
+                    {totalFlights} Available Flights
+                  </h2>
 
-          {selectedAirlineCode && !isLoading && (
-            <Button
-              variant="secondary"
-              size="sm"
-              onClick={onClearAirline}
-              className="h-8 rounded-full px-3"
-            >
-              <XCircle className="mr-1 h-4 w-4" />
-              Clear filter
-            </Button>
-          )}
+                  {dateLabel && (
+                    <Badge
+                      variant="outline"
+                      className="rounded-full px-3 py-1 text-xs font-medium"
+                    >
+                      {dateLabel}
+                    </Badge>
+                  )}
+                </div>
+              )}
 
-          {dateLabel && !isLoading && (
-            <Badge variant="outline" className="rounded-full px-3 py-1 text-xs">
-              {dateLabel}
-            </Badge>
-          )}
-        </div>
+              {selectedAirlineCode && !isLoading && (
+                <Button
+                  variant="secondary"
+                  size="sm"
+                  onClick={onClearAirline}
+                  className="h-8 rounded-full px-3 text-xs sm:text-sm"
+                >
+                  <XCircle className="mr-1 h-4 w-4" />
+                  Clear filter
+                </Button>
+              )}
+            </div>
 
-        <div className="flex items-center gap-2 self-start lg:self-auto">
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={onPrevDay}
-            disabled={disablePrevDay || isLoading}
-            className="h-10 rounded-full px-4"
-          >
-            <ChevronLeft className="mr-1 h-4 w-4" />
-            Previous
-          </Button>
+            <div className="flex w-full flex-col gap-2 sm:w-auto sm:flex-row sm:items-center">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={onPrevDay}
+                disabled={disablePrevDay || isLoading}
+                className="h-11 w-full rounded-full px-4 sm:w-auto"
+              >
+                <ChevronLeft className="mr-1 h-4 w-4" />
+                Previous
+              </Button>
 
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={onNextDay}
-            disabled={disableNextDay || isLoading}
-            className="h-10 rounded-full px-4"
-          >
-            Next
-            <ChevronRight className="ml-1 h-4 w-4" />
-          </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={onNextDay}
+                disabled={disableNextDay || isLoading}
+                className="h-11 w-full rounded-full px-4 sm:w-auto"
+              >
+                Next
+                <ChevronRight className="ml-1 h-4 w-4" />
+              </Button>
+            </div>
+          </div>
         </div>
       </CardContent>
     </Card>

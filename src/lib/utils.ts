@@ -6,7 +6,7 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
 
-export function doubleLineBreaker(des: string){
+export function doubleLineBreaker(des: string) {
   const splittedDescription = des?.split(/\.\s+/).map((p) => p.trim()).filter(Boolean);
   return splittedDescription
 }
@@ -78,3 +78,39 @@ export const mapTripType = (tripType: "one-way" | "round-way" | "multi-way"): Ap
 
   return mapping[tripType];
 };
+
+export type PaginationItem = number | "ellipsis";
+
+interface GeneratePagesParams {
+  currentPage: number;
+  totalPages: number;
+  maxVisible?: number; // optional (default 10)
+}
+
+export const generatePaginationPages = ({
+  totalPages,
+  maxVisible = 10,
+}: GeneratePagesParams): PaginationItem[] => {
+  const pages: PaginationItem[] = [];
+
+  // If small → show all
+  if (totalPages <= maxVisible) {
+    for (let i = 1; i <= totalPages; i++) {
+      pages.push(i);
+    }
+    return pages;
+  }
+
+  // Always show first pages
+  for (let i = 1; i <= maxVisible; i++) {
+    pages.push(i);
+  }
+
+  // Ellipsis
+  pages.push("ellipsis");
+
+  // Last page
+  pages.push(totalPages);
+
+  return pages;
+};  

@@ -3,11 +3,7 @@ import { addDays, format, isAfter, isSameDay, startOfDay } from "date-fns";
 import { useDispatch, useSelector } from "react-redux";
 import type { RootState } from "@/redux/store";
 import type { FlightSearchApiResponse } from "@/types/flight/flightResults.types";
-import {
-  setUiField,
-  resetFlightUiState,
-  setSearchField,
-} from "@/redux/features/flightSearchSlice";
+import { setUiField, setSearchField } from "@/redux/features/flightSearchSlice";
 import FlightDetailSearch from "./FlightDetailSearch";
 import FlightFilter from "./filters/FlightFilter";
 import FlightTimer from "./FlightTimer";
@@ -17,9 +13,10 @@ import FlightResultsList from "./FlightResultsList";
 import FlightResultsPagination from "./FlightResultsPagination";
 import {
   buildFlightSearchPayload,
-  buildSearchResetKey,
   extractFlights,
 } from "./flightDetails.helpers";
+import FlightFilterDrawer from "./filters/reusableComponents/FlightFilterDrawer";
+import FlightResultsSortBar from "./flightResult/FlightResultsSortBar";
 
 const FlightDetailsMain = () => {
   const dispatch = useDispatch();
@@ -29,15 +26,6 @@ const FlightDetailsMain = () => {
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, []);
-
-  const searchResetKey = useMemo(
-    () => buildSearchResetKey(searchData),
-    [searchData],
-  );
-
-  useEffect(() => {
-    dispatch(resetFlightUiState());
-  }, [dispatch, searchResetKey]);
 
   const pageSize = 20;
 
@@ -53,7 +41,7 @@ const FlightDetailsMain = () => {
     [searchData, ui.currentPage, ui.sortBy, ui.sortOrder],
   );
 
-  const { data, isLoading, isError, isFetching } =
+  const { data, isLoading, isError, isFetching, error } =
     useFlightSearchTicketListsQuery(apiPayload, {
       skip:
         searchData.tripType === "multi_way"
@@ -66,8 +54,6 @@ const FlightDetailsMain = () => {
     });
 
   const response = data as FlightSearchApiResponse | undefined;
-  console.log("apiPayload",apiPayload)
-  // console.log("data",data)
   const flights = useMemo(() => extractFlights(response), [response]);
 
   const processedFlights = useMemo(() => {
@@ -129,19 +115,56 @@ const FlightDetailsMain = () => {
     dispatch(setUiField({ currentPage: 1, selectedAirlineCode: null }));
   };
 
-
   return (
     <div className="mt-20 min-h-screen bg-slate-100/80 pb-10 dark:bg-background">
-      
-      <div className="border-b bg-white dark:bg-card">
+      <div className="sticky top-20 z-20 ">
         <div className="container mx-auto px-4 py-5">
           <FlightDetailSearch />
         </div>
       </div>
 
+      {/* mobile sticky controls under search card */}
+      <div className="sticky top-18 z-30 border-b border-border/60 bg-slate-100/90 backdrop-blur-md dark:bg-background/90 lg:hidden">
+        <div className="container mx-auto px-4 py-3">
+          <div className="mx-auto max-w-md rounded-3xl border border-border/70 bg-background/80 p-3 shadow-sm">
+            <div className="flex justify-center">
+              <div className="w-full max-w-60">
+                <FlightTimer compact />
+              </div>
+            </div>
+
+            <div className="mt-3 grid grid-cols-2 gap-2">
+              <FlightResultsHeader
+                isLoading={isLoading || isFetching}
+                isError={isError}
+                totalFlights={
+                  response?.data?.pagination?.total ?? flights.length
+                }
+                airlineSummary={response?.data?.airline_price_summary || []}
+                selectedAirlineCode={ui.selectedAirlineCode}
+                onAirlineSelect={handleAirlineSelect}
+                onPrevDay={handlePrevDay}
+                onNextDay={handleNextDay}
+                disablePrevDay={disablePrevDay}
+                disableNextDay={false}
+                dateLabel={format(selectedDate, "dd MMM yyyy")}
+                sortBy={ui.sortBy}
+                sortOrder={ui.sortOrder}
+                onSortChange={handleSortChange}
+              />
+
+              <FlightFilterDrawer
+                availableFilters={response?.data?.filters}
+                isLoading={isLoading || isFetching}
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div className="container mx-auto px-4 pt-6">
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-[320px_minmax(0,1fr)]">
-          <aside className="space-y-4">
+          <aside className="hidden space-y-4 lg:block">
             <FlightTimer />
             <FlightFilter
               availableFilters={response?.data?.filters}
@@ -150,40 +173,47 @@ const FlightDetailsMain = () => {
           </aside>
 
           <main className="space-y-4">
-            <FlightResultsHeader
-              isLoading={isLoading || isFetching}
-              isError={isError}
-              totalFlights={response?.data?.pagination?.total ?? flights.length}
-              airlineSummary={response?.data?.airline_price_summary || []}
-              selectedAirlineCode={ui.selectedAirlineCode}
-              onAirlineSelect={handleAirlineSelect}
-              onPrevDay={handlePrevDay}
-              onNextDay={handleNextDay}
-              disablePrevDay={disablePrevDay}
-              disableNextDay={false}
-              dateLabel={format(selectedDate, "dd MMM yyyy")}
-              sortBy={ui.sortBy}
-              sortOrder={ui.sortOrder}
-              onSortChange={handleSortChange}
-            />
+            <div className="hidden lg:block">
+              <FlightResultsHeader
+                isLoading={isLoading || isFetching}
+                isError={isError}
+                totalFlights={
+                  response?.data?.pagination?.total ?? flights.length
+                }
+                airlineSummary={response?.data?.airline_price_summary || []}
+                selectedAirlineCode={ui.selectedAirlineCode}
+                onAirlineSelect={handleAirlineSelect}
+                onPrevDay={handlePrevDay}
+                onNextDay={handleNextDay}
+                disablePrevDay={disablePrevDay}
+                disableNextDay={false}
+                dateLabel={format(selectedDate, "dd MMM yyyy")}
+              />
+            </div>
+
+            <div className="sticky top-32 z-20 hidden lg:block">
+              <div className=" bg-background/95 p-3 rounded-2xl backdrop-blur supports-backdrop-filter:bg-background/80">
+                <FlightResultsSortBar
+                  isLoading={isLoading || isFetching}
+                  sortBy={ui.sortBy}
+                  sortOrder={ui.sortOrder}
+                  onSortChange={handleSortChange}
+                />
+              </div>
+            </div>
 
             <FlightResultsList
               flights={processedFlights}
               isLoading={isLoading || isFetching}
               isError={isError}
+              error={error}
             />
 
-            {!isLoading &&
-              !isError &&
-              (response?.data?.pagination?.total_pages || 0) > 1 && (
-                <FlightResultsPagination
-                  currentPage={
-                    response?.data?.pagination?.page || ui.currentPage
-                  }
-                  totalPages={response?.data?.pagination?.total_pages || 1}
-                  onPageChange={handlePageChange}
-                />
-              )}
+            <FlightResultsPagination
+              currentPage={response?.data?.pagination?.page || ui.currentPage}
+              totalPages={response?.data?.pagination?.total_pages || 1}
+              onPageChange={handlePageChange}
+            />
           </main>
         </div>
       </div>

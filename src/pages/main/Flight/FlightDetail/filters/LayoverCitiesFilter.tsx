@@ -13,7 +13,7 @@ interface Props {
 const LayoverCitiesFilter = ({ data }: Props) => {
   const dispatch = useDispatch();
   const selected = useSelector(
-    (state: RootState) => state.flightSearch.filters.layover_cities
+    (state: RootState) => state.flightSearch.filters.layover_cities,
   );
 
   if (!data.length) return null;
@@ -22,18 +22,21 @@ const LayoverCitiesFilter = ({ data }: Props) => {
     <FlightFilterSection value="layover-city" title="Layover City">
       <ScrollArea className="max-h-80 pr-2">
         <div className="space-y-2">
-          {data.map((item) => {
+          {data.map((item, index) => {
             const parts = item.label.split("(");
             const main = parts[0]?.trim();
             const code = parts[1] ? `(${parts[1]}` : "";
 
             return (
               <FilterCheckboxItem
-                key={item.value}
+                key={`${item.value}-${index}`}
                 checked={selected.includes(item.value)}
                 onCheckedChange={() =>
                   dispatch(
-                    updateFilter({ category: "layover_cities", value: item.value })
+                    updateFilter({
+                      category: "layover_cities",
+                      value: item.value,
+                    }),
                   )
                 }
                 label={main}

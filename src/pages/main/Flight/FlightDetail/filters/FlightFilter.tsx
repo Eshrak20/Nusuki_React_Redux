@@ -11,54 +11,86 @@ import AircraftFilter from "./AircraftFilter";
 import { useDispatch } from "react-redux";
 import { resetFilters } from "@/redux/features/flightSearchSlice";
 import { SlidersHorizontal, RotateCcw } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 interface Props {
   availableFilters?: ApiFilters;
   isLoading: boolean;
+  className?: string;
+  isDrawer?: boolean;
 }
 
-const FlightFilter = ({ availableFilters, isLoading }: Props) => {
+const FlightFilter = ({
+  availableFilters,
+  isLoading,
+  className,
+  isDrawer = false,
+}: Props) => {
   const dispatch = useDispatch();
 
   return (
-    <aside className="w-full rounded-3xl border border-border bg-muted/40 p-3 md:p-4">
-      <div className="mb-3 flex items-center justify-between rounded-2xl border border-border bg-background px-4 py-3 shadow-sm">
-        <div className="flex items-center gap-2">
-          <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-primary/10 text-primary">
-            <SlidersHorizontal className="h-4 w-4" />
+    <aside
+      className={cn(
+        "w-full rounded-3xl border border-border bg-muted/40 p-3 md:p-4",
+        isDrawer && "rounded-none border-0 bg-transparent p-0 shadow-none",
+        className,
+      )}
+    >
+      {!isDrawer && (
+        <div className="mb-3 flex items-center justify-between rounded-2xl border border-border bg-background px-4 py-3 shadow-sm">
+          <div className="flex items-center gap-2">
+            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-primary/10 text-primary">
+              <SlidersHorizontal className="h-4 w-4" />
+            </div>
+            <div>
+              <h3 className="text-base font-bold text-foreground">Filters</h3>
+              <p className="text-xs text-muted-foreground">
+                Refine your flights
+              </p>
+            </div>
           </div>
-          <div>
-            <h3 className="text-base font-bold text-foreground">Filters</h3>
-            <p className="text-xs text-muted-foreground">Refine your flights</p>
-          </div>
-        </div>
 
-        <Button
-          variant="ghost"
-          size="sm"
-          className="rounded-xl"
-          onClick={() => dispatch(resetFilters())}
-        >
-          <RotateCcw className="mr-2 h-4 w-4" />
-          Reset
-        </Button>
-      </div>
+          <Button
+            variant="ghost"
+            size="sm"
+            className="rounded-xl"
+            onClick={() => dispatch(resetFilters())}
+          >
+            <RotateCcw className="mr-2 h-4 w-4" />
+            Reset
+          </Button>
+        </div>
+      )}
+
+      {isDrawer && (
+        <div className="mb-4 flex justify-end">
+          <Button
+            variant="ghost"
+            size="sm"
+            className="rounded-xl"
+            onClick={() => dispatch(resetFilters())}
+          >
+            <RotateCcw className="mr-2 h-4 w-4" />
+            Reset
+          </Button>
+        </div>
+      )}
 
       <div className="space-y-3">
         <PriceRangeFilter
           data={availableFilters?.price_range}
           isLoading={isLoading}
         />
+        <FlightScheduleFilter data={availableFilters?.flight_schedules} />
+        <AirlinesFilter data={availableFilters?.airlines || []} />
+        <AircraftFilter data={availableFilters?.aircraft || []} />
+        <StopsFilter data={availableFilters?.stops || []} />
+        <RefundabilityFilter data={availableFilters?.refundability || []} />
+        <LayoverCitiesFilter data={availableFilters?.layover_cities || []} />
         <LayoverDurationFilter
           data={availableFilters?.layover_duration}
           isLoading={isLoading}
         />
-        <RefundabilityFilter data={availableFilters?.refundability || []} />
-        <StopsFilter data={availableFilters?.stops || []} />
-        <AirlinesFilter data={availableFilters?.airlines || []} />
-        <LayoverCitiesFilter data={availableFilters?.layover_cities || []} />
-        <FlightScheduleFilter data={availableFilters?.flight_schedules} />
-        <AircraftFilter data={availableFilters?.aircraft || []} />
       </div>
     </aside>
   );

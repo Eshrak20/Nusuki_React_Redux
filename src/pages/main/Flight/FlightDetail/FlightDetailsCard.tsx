@@ -22,7 +22,7 @@ const FlightDetailsCard = ({ flight }: Props) => {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.35, ease: "easeOut" }}
     >
-      <Card className="overflow-hidden rounded-3xl border border-border/60 bg-card shadow-sm transition-all duration-300 hover:shadow-md">
+      <Card className="overflow-hidden md:rounded-3xl border border-border/60 bg-card shadow-sm transition-all duration-300 hover:shadow-md">
         <CardContent className="p-0">
           <div className="grid grid-cols-1 gap-8 p-5 sm:p-6 xl:grid-cols-[minmax(0,1fr)_260px] xl:items-center">
             <FlightJourneySummary flight={flight} />
