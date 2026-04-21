@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 
 interface Props {
   pricing: FlightPricing;
+  onBookNow: () => void;
 }
 
 const formatBDT = (amount: number | string) => {
@@ -14,7 +15,7 @@ const formatBDT = (amount: number | string) => {
   })}`;
 };
 
-const FlightPriceInfo = ({ pricing }: Props) => {
+const FlightPriceInfo = ({ pricing, onBookNow }: Props) => {
   const basePlusTax = Number(pricing.base || 0) + Number(pricing.tax || 0);
   const hasDiscount = Number(pricing.discount || 0) > 0;
 
@@ -37,7 +38,10 @@ const FlightPriceInfo = ({ pricing }: Props) => {
         </p>
       </div>
 
-      <Button className="h-12 rounded-xl px-8 text-base font-semibold shadow-sm transition-all duration-200 hover:scale-[1.02]">
+      <Button
+        onClick={onBookNow}
+        className="h-12 rounded-xl px-8 text-base font-semibold shadow-sm transition-all duration-200 hover:scale-[1.02]"
+      >
         Book Now
         <ArrowRight className="ml-1 h-4 w-4" />
       </Button>
