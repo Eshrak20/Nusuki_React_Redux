@@ -30,10 +30,10 @@ const FlightDetailsCard = ({ flight }: Props) => {
           </div>
 
           <div className="border-t bg-muted/30 px-5 py-4 sm:px-6">
-            <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+            <div className="flex flex-col items-center gap-4 lg:flex-row lg:items-center lg:justify-between">
               <FlightMetaBadges flight={flight} />
 
-              <Button
+                <Button
                 variant="ghost"
                 onClick={() => setOpen((prev) => !prev)}
                 className="group w-fit gap-2 px-0 text-sm font-semibold text-muted-foreground hover:bg-transparent hover:text-primary"
@@ -45,7 +45,7 @@ const FlightDetailsCard = ({ flight }: Props) => {
                   <ChevronDown className="h-4 w-4 transition-transform duration-200 group-hover:translate-y-0.5" />
                 )}
               </Button>
-            </div>
+              </div>
           </div>
 
           <AnimatePresence initial={false}>

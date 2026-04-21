@@ -117,18 +117,18 @@ const FlightDetailsMain = () => {
 
   return (
     <div className="mt-20 min-h-screen bg-slate-100/80 pb-10 dark:bg-background">
-      <div className="sticky top-20 z-20 ">
+      <div className="sticky -top-6 lg:top-20 z-20 ">
         <div className="container mx-auto px-4 py-5">
           <FlightDetailSearch />
         </div>
       </div>
 
       {/* mobile sticky controls under search card */}
-      <div className="sticky top-18 z-30 border-b border-border/60 bg-slate-100/90 backdrop-blur-md dark:bg-background/90 lg:hidden">
-        <div className="container mx-auto px-4 py-3">
-          <div className="mx-auto max-w-md rounded-3xl border border-border/70 bg-background/80 p-3 shadow-sm">
+      <div className="sticky top-18 z-30 bg-slate-100/90 backdrop-blur-md dark:bg-background/90 lg:hidden">
+        <div className="container mx-auto px-4 lg:py-3">
+          <div className="mx-auto pt-3">
             <div className="flex justify-center">
-              <div className="w-full max-w-60">
+              <div className="w-full max-w-60 hidden lg:block">
                 <FlightTimer compact />
               </div>
             </div>

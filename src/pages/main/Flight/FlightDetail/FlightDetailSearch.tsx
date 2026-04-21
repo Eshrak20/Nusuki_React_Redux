@@ -141,16 +141,16 @@ const FlightDetailSearch = () => {
     >
       <motion.div
         variants={rowVariants}
-        className="overflow-hidden rounded-[28px] border border-border bg-card shadow-sm"
+        className="overflow-hidden lg:rounded-[28px] lg:border lg:border-border lg:bg-card lg:shadow-sm"
       >
-        <div className="p-3 sm:p-5">
+        <div className="pt-1 pb-3 sm:p-5">
           {/* Mobile compact layout */}
           <div className="space-y-3 lg:hidden">
-            <div className="grid grid-cols-2 gap-2">
+            <div className="grid grid-cols-2 gap-2 -px-2">
               {compactInfoItems.map((item) => (
                 <div
                   key={item.label}
-                  className="rounded-2xl border border-border/70 bg-muted/30 px-3 py-2"
+                  className="rounded-2xl border border-border/70 bg-white dark:bg-background px-3 py-3"
                 >
                   <p className="text-[9px] font-black uppercase tracking-[0.16em] text-muted-foreground">
                     {item.label}
@@ -171,7 +171,7 @@ const FlightDetailSearch = () => {
               ))}
             </div>
 
-            <div className="grid grid-cols-2 gap-2">
+            <div className="grid grid-cols-2 gap-2 -px-2">
               <Button
                 variant="outline"
                 onClick={() => setOpen((prev) => !prev)}
