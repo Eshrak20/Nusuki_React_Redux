@@ -110,6 +110,7 @@ export const flightSearchSlice = createSlice({
         state.filters.flight_schedules[category] = target.includes(String(value))
           ? target.filter((i) => i !== String(value))
           : [...target, String(value)];
+
         return;
       }
 
@@ -126,8 +127,8 @@ export const flightSearchSlice = createSlice({
       } else {
         (state.filters[key] as number | null) = value as number | null;
       }
-    },
 
+    },
     setRangeFilter: (
       state,
       action: PayloadAction<{

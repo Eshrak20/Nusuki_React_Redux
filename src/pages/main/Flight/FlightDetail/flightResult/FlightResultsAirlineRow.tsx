@@ -1,36 +1,45 @@
 import { Plane } from "lucide-react";
+import { useDispatch, useSelector } from "react-redux";
 import { Card, CardContent } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
-import type { AirlinePriceSummaryItem } from "@/types/flight/flightResults.types";
 import AirlineLogo from "@/components/AirlineLogo";
+import { updateFilter } from "@/redux/features/flightSearchSlice";
+import type { RootState } from "@/redux/store";
+import type { AirlinePriceSummaryItem } from "@/types/flight/flightResults.types";
 
 interface Props {
   isLoading: boolean;
   airlineSummary: AirlinePriceSummaryItem[];
-  selectedAirlineCode: string | null;
-  onAirlineSelect?: (airlineCode: string | null) => void;
 }
 
 const FlightResultsAirlineRow = ({
   isLoading,
   airlineSummary,
-  selectedAirlineCode,
-  onAirlineSelect,
 }: Props) => {
+  const dispatch = useDispatch();
+
+  const selectedAirlines = useSelector(
+    (state: RootState) => state.flightSearch.filters.airlines,
+  );
+
   if (!airlineSummary.length || isLoading) return null;
+
+  const handleClick = (airlineCode: string) => {
+    dispatch(updateFilter({ category: "airlines", value: airlineCode }));
+  };
 
   return (
     <Card className="rounded-2xl border bg-card shadow-sm">
       <CardContent className="p-3">
         <div className="flex gap-3 overflow-x-auto pb-1">
           {airlineSummary.map((airline) => {
-            const isActive = selectedAirlineCode === airline.code;
+            const isActive = selectedAirlines.includes(airline.code);
 
             return (
               <button
                 key={airline.code}
                 type="button"
-                onClick={() => onAirlineSelect?.(isActive ? null : airline.code)}
+                onClick={() => handleClick(airline.code)}
                 className={cn(
                   "group min-w-[220px] shrink-0 rounded-2xl border px-4 py-3 text-left transition-all duration-200",
                   "hover:-translate-y-0.5 hover:shadow-md",

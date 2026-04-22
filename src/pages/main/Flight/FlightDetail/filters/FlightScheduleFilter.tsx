@@ -18,11 +18,17 @@ interface Props {
 const getIcon = (label: string) => {
   const l = label.toLowerCase();
 
-  if (l.includes("00-06")) return <Moon className="h-4 w-4" />;
-  if (l.includes("06-12")) return <Sunrise className="h-4 w-4" />;
-  if (l.includes("12-18")) return <Sun className="h-4 w-4" />;
+  if (l.includes("00-06")) return <Moon className="h-3.5 w-3.5" />;
+  if (l.includes("06-12")) return <Sunrise className="h-3.5 w-3.5" />;
+  if (l.includes("12-18")) return <Sun className="h-3.5 w-3.5" />;
 
-  return <Sunset className="h-4 w-4" />;
+  return <Sunset className="h-3.5 w-3.5" />;
+};
+
+const formatCount = (count: number) => {
+  if (count === 0) return "No flights";
+  if (count === 1) return "1 flight";
+  return `${count} flights`;
 };
 
 const ScheduleOptionButton = ({
@@ -35,60 +41,76 @@ const ScheduleOptionButton = ({
   onClick: () => void;
 }) => {
   return (
-    <Button
+    <button
       type="button"
-      variant="outline"
       onClick={onClick}
       className={cn(
-        "h-auto min-h-[92px] flex-col rounded-2xl border px-3 py-4 text-center shadow-sm transition-all duration-200",
-        "hover:scale-[1.01] hover:shadow-md",
-        "focus-visible:ring-2 focus-visible:ring-primary/40",
+        "group flex min-h-[38px] w-full items-center justify-between rounded-md border px-3 py-2 text-left transition-all duration-200",
+        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/30",
         isActive
-          ? [
-              "border-primary bg-primary text-primary-foreground",
-              "hover:bg-primary/90 hover:text-primary-foreground",
-              "dark:border-primary dark:bg-primary dark:text-primary-foreground",
-            ]
-          : [
-              "border-border bg-background text-foreground",
-              "hover:border-primary/40 hover:bg-accent",
-              "dark:bg-background dark:text-foreground dark:hover:bg-accent",
-            ]
+          ? "border-primary/80 bg-primary/10 text-primary dark:border-primary/70 dark:bg-primary/15"
+          : "border-border/80 bg-muted/25 text-foreground hover:border-primary/30 hover:bg-accent/60 dark:bg-muted/15"
       )}
     >
-      <div
-        className={cn(
-          "flex h-9 w-9 items-center justify-center rounded-full transition-colors",
-          isActive
-            ? "bg-primary-foreground/15 text-primary-foreground"
-            : "bg-muted text-muted-foreground dark:bg-muted/80"
-        )}
-      >
-        {getIcon(item.label)}
+      <div className="flex min-w-0 items-center gap-2.5">
+        <div
+          className={cn(
+            "flex h-6 w-6 shrink-0 items-center justify-center rounded-full transition-colors",
+            isActive
+              ? "bg-primary text-primary-foreground"
+              : "bg-muted text-muted-foreground group-hover:text-foreground"
+          )}
+        >
+          {getIcon(item.label)}
+        </div>
+
+        <span
+          className={cn(
+            "truncate text-[12px] font-medium tracking-tight",
+            isActive ? "text-primary dark:text-primary-foreground" : "text-foreground"
+          )}
+        >
+          {item.label}
+        </span>
       </div>
 
       <span
         className={cn(
-          "mt-2 text-xs font-semibold",
+          "ml-3 shrink-0 text-[11px] font-medium",
           isActive
-            ? "text-primary-foreground"
-            : "text-foreground dark:text-foreground"
-        )}
-      >
-        {item.label}
-      </span>
-
-      <span
-        className={cn(
-          "mt-1 text-[11px]",
-          isActive
-            ? "text-primary-foreground/80"
+            ? "text-primary/90 dark:text-primary-foreground/85"
             : "text-muted-foreground"
         )}
       >
-        {item.count} flights
+        {formatCount(item.count)}
       </span>
-    </Button>
+    </button>
+  );
+};
+
+const SectionMeta = ({
+  label,
+  onClear,
+  hasSelected,
+}: {
+  label: string;
+  onClear: () => void;
+  hasSelected: boolean;
+}) => {
+  return (
+    <div className="flex items-center justify-between gap-2">
+      <p className="text-[12px] font-medium text-muted-foreground">{label}</p>
+
+      {hasSelected && (
+        <button
+          type="button"
+          onClick={onClear}
+          className="text-[11px] font-medium text-primary transition hover:opacity-80"
+        >
+          Clear
+        </button>
+      )}
+    </div>
   );
 };
 
@@ -127,14 +149,14 @@ const FlightScheduleFilter = ({ data }: Props) => {
 
   return (
     <FlightFilterSection value="flight-schedules" title="Flight Schedules">
-      <div className="space-y-4">
-        <div className="flex items-center justify-between gap-3">
-          <div>
+      <div className="space-y-3">
+        <div className="flex items-start justify-between gap-3">
+          <div className="space-y-0.5">
             <p className="text-sm font-semibold text-foreground">
-              Choose your preferred timing
+              Choose preferred timing
             </p>
-            <p className="text-xs text-muted-foreground">
-              Filter by departure or arrival time slots
+            <p className="text-[11px] text-muted-foreground">
+              Filter by departure or arrival slots
             </p>
           </div>
 
@@ -144,7 +166,7 @@ const FlightScheduleFilter = ({ data }: Props) => {
               variant="ghost"
               size="sm"
               onClick={clearAll}
-              className="h-8 rounded-lg px-3 text-xs font-medium text-muted-foreground hover:text-destructive"
+              className="h-7 rounded-md px-2 text-[11px] font-medium text-muted-foreground hover:text-destructive"
             >
               <X className="mr-1 h-3.5 w-3.5" />
               Clear
@@ -153,39 +175,29 @@ const FlightScheduleFilter = ({ data }: Props) => {
         </div>
 
         <Tabs defaultValue="departure" className="w-full">
-          <TabsList className="grid h-11 w-full grid-cols-2 rounded-xl bg-muted p-1">
+          <TabsList className="grid h-9 w-full grid-cols-2 rounded-lg bg-muted/70 p-0.5">
             <TabsTrigger
               value="departure"
-              className="rounded-lg data-[state=active]:bg-background data-[state=active]:shadow-sm"
+              className="rounded-md text-xs font-medium data-[state=active]:bg-background data-[state=active]:shadow-none"
             >
               Departure
             </TabsTrigger>
             <TabsTrigger
               value="arrival"
-              className="rounded-lg data-[state=active]:bg-background data-[state=active]:shadow-sm"
+              className="rounded-md text-xs font-medium data-[state=active]:bg-background data-[state=active]:shadow-none"
             >
               Arrival
             </TabsTrigger>
           </TabsList>
 
-          <TabsContent value="departure" className="mt-4 space-y-3">
-            <div className="flex items-center justify-between gap-2">
-              <p className="text-xs font-medium text-muted-foreground">
-                Departure from DAC
-              </p>
+          <TabsContent value="departure" className="mt-3 space-y-2.5">
+            <SectionMeta
+              label="Departure from DAC"
+              onClear={clearDeparture}
+              hasSelected={selectedDeparture.length > 0}
+            />
 
-              {selectedDeparture.length > 0 && (
-                <button
-                  type="button"
-                  onClick={clearDeparture}
-                  className="text-xs font-medium text-primary hover:underline"
-                >
-                  Clear departure
-                </button>
-              )}
-            </div>
-
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-2 gap-2">
               {data.departure.map((item) => {
                 const isActive = selectedDeparture.includes(item.value);
 
@@ -208,24 +220,14 @@ const FlightScheduleFilter = ({ data }: Props) => {
             </div>
           </TabsContent>
 
-          <TabsContent value="arrival" className="mt-4 space-y-3">
-            <div className="flex items-center justify-between gap-2">
-              <p className="text-xs font-medium text-muted-foreground">
-                Arrival to destination
-              </p>
+          <TabsContent value="arrival" className="mt-3 space-y-2.5">
+            <SectionMeta
+              label="Arrival to destination"
+              onClear={clearArrival}
+              hasSelected={selectedArrival.length > 0}
+            />
 
-              {selectedArrival.length > 0 && (
-                <button
-                  type="button"
-                  onClick={clearArrival}
-                  className="text-xs font-medium text-primary hover:underline"
-                >
-                  Clear arrival
-                </button>
-              )}
-            </div>
-
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-2 gap-2">
               {data.arrival.map((item) => {
                 const isActive = selectedArrival.includes(item.value);
 

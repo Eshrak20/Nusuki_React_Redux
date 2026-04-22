@@ -77,20 +77,20 @@ const FlightFilter = ({
       )}
 
       <div className="space-y-3">
+        <AirlinesFilter data={availableFilters?.airlines || []} />
+        <AircraftFilter data={availableFilters?.aircraft || []} />
         <PriceRangeFilter
           data={availableFilters?.price_range}
           isLoading={isLoading}
         />
-        <FlightScheduleFilter data={availableFilters?.flight_schedules} />
-        <AirlinesFilter data={availableFilters?.airlines || []} />
-        <AircraftFilter data={availableFilters?.aircraft || []} />
-        <StopsFilter data={availableFilters?.stops || []} />
-        <RefundabilityFilter data={availableFilters?.refundability || []} />
-        <LayoverCitiesFilter data={availableFilters?.layover_cities || []} />
         <LayoverDurationFilter
           data={availableFilters?.layover_duration}
           isLoading={isLoading}
         />
+        <FlightScheduleFilter data={availableFilters?.flight_schedules} />
+        <StopsFilter data={availableFilters?.stops || []} />
+        <RefundabilityFilter data={availableFilters?.refundability || []} />
+        <LayoverCitiesFilter data={availableFilters?.layover_cities || []} />
       </div>
     </aside>
   );

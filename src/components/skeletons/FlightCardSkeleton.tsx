@@ -1,33 +1,7 @@
 import { motion } from "framer-motion";
-import { Loader2, PlaneTakeoff } from "lucide-react";
+import { PlaneTakeoff } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
-
-export const FlightMiniLoader = () => {
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 8 }}
-      animate={{ opacity: 1, y: 0 }}
-      className="flex justify-center"
-    >
-      <div className="inline-flex items-center gap-3 rounded-2xl border border-border/60 bg-background/90 px-4 py-3 shadow-sm backdrop-blur-md">
-        <div className="relative flex h-11 w-11 items-center justify-center rounded-full bg-primary/10 text-primary">
-          <Loader2 className="h-5 w-5 animate-spin" />
-          <span className="absolute inset-0 rounded-full border border-primary/20" />
-        </div>
-
-        <div>
-          <p className="text-sm font-semibold text-foreground">
-            Searching flights...
-          </p>
-          <p className="text-xs text-muted-foreground">
-            Finding the best available options
-          </p>
-        </div>
-      </div>
-    </motion.div>
-  );
-};
 
 const NiceSkeleton = ({ className = "" }: { className?: string }) => (
   <Skeleton
@@ -135,23 +109,5 @@ export const FlightCardSkeleton = () => {
         </CardContent>
       </Card>
     </motion.div>
-  );
-};
-
-interface FlightResultsListSkeletonProps {
-  count?: number;
-}
-
-export const FlightResultsListSkeleton = ({
-  count = 10,
-}: FlightResultsListSkeletonProps) => {
-  return (
-    <div className="space-y-4 sm:space-y-5">
-      <FlightMiniLoader />
-
-      {Array.from({ length: count }).map((_, index) => (
-        <FlightCardSkeleton key={index} />
-      ))}
-    </div>
   );
 };

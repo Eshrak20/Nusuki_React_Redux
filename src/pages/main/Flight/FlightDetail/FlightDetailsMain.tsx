@@ -64,6 +64,7 @@ const FlightDetailsMain = () => {
 
   const response = data as FlightSearchApiResponse | undefined;
   const flights = useMemo(() => extractFlights(response), [response]);
+ 
 
   const processedFlights = useMemo(() => {
     if (!ui.selectedAirlineCode) return flights;
@@ -72,7 +73,6 @@ const FlightDetailsMain = () => {
       (flight) => flight.airline?.code === ui.selectedAirlineCode,
     );
   }, [flights, ui.selectedAirlineCode]);
-
   const handlePageChange = (page: number) => {
     if (isFetching || page === ui.currentPage) return;
     dispatch(setUiField({ currentPage: page }));
@@ -146,6 +146,9 @@ const FlightDetailsMain = () => {
               <FlightResultsHeader
                 isLoading={isLoading || isFetching}
                 isError={isError}
+                error={error}
+                isFetching={isFetching}
+                retryCount={7}
                 totalFlights={
                   response?.data?.pagination?.total ?? flights.length
                 }
@@ -186,9 +189,12 @@ const FlightDetailsMain = () => {
               <FlightResultsHeader
                 isLoading={isLoading || isFetching}
                 isError={isError}
+                error={error}
                 totalFlights={
                   response?.data?.pagination?.total ?? flights.length
                 }
+                isFetching={isFetching}
+                retryCount={7}
                 airlineSummary={response?.data?.airline_price_summary || []}
                 selectedAirlineCode={ui.selectedAirlineCode}
                 onAirlineSelect={handleAirlineSelect}

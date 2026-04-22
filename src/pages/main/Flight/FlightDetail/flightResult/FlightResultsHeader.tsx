@@ -15,13 +15,20 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { SlidersHorizontal } from "lucide-react";
+import { MAX_RETRY_COUNT, shouldShowFlightLoadingState } from "@/lib/utils";
+import type { FetchBaseQueryError } from "@reduxjs/toolkit/query";
+import type { SerializedError } from "@reduxjs/toolkit";
+import { FlightMiniLoader } from "@/components/skeletons/FlightMiniLoader";
 
 export type SortBy = "price" | "duration" | "departure_at";
 export type SortOrder = "asc" | "desc";
 
 interface Props {
   isLoading: boolean;
+  isFetching: boolean;
   isError: boolean;
+  error?: FetchBaseQueryError | SerializedError;
+  retryCount: number;
   totalFlights: number;
   airlineSummary: AirlinePriceSummaryItem[];
   availableFilters?: ApiFilters;
@@ -39,7 +46,10 @@ interface Props {
 
 const FlightResultsHeader = ({
   isLoading,
+  isFetching = false,
   isError,
+  error,
+  retryCount = 0,
   totalFlights,
   airlineSummary,
   selectedAirlineCode = null,
@@ -53,6 +63,23 @@ const FlightResultsHeader = ({
   sortOrder = "asc",
   onSortChange,
 }: Props) => {
+  const isRateLimitError =
+    isError && !!error && "status" in error && error.status === 429;
+
+  const activeRetryCount = isRateLimitError ? retryCount : 0;
+
+  const shouldShowLoadingState = shouldShowFlightLoadingState({
+    isLoading,
+    isFetching,
+    isRateLimitError,
+    activeRetryCount,
+    maxRetryCount: MAX_RETRY_COUNT,
+  });
+
+  if (shouldShowLoadingState) {
+    return <FlightMiniLoader />;
+  }
+
   if (isError) {
     return (
       <Card className="rounded-2xl border bg-card shadow-sm">
@@ -76,12 +103,10 @@ const FlightResultsHeader = ({
         disablePrevDay={disablePrevDay}
         disableNextDay={disableNextDay}
       />
-      <div className="hidden">
+      <div className="">
         <FlightResultsAirlineRow
           isLoading={isLoading}
           airlineSummary={airlineSummary}
-          selectedAirlineCode={selectedAirlineCode}
-          onAirlineSelect={onAirlineSelect}
         />
       </div>
 

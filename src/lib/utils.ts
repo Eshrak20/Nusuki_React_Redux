@@ -133,3 +133,26 @@ export const generatePaginationPages = ({
 
   return pages;
 };  
+
+export interface FlightLoadingStateParams {
+  isLoading: boolean;
+  isFetching?: boolean;
+  isRateLimitError: boolean;
+  activeRetryCount: number;
+  maxRetryCount: number;
+}
+
+export const shouldShowFlightLoadingState = ({
+  isLoading,
+  isFetching = false,
+  isRateLimitError,
+  activeRetryCount,
+  maxRetryCount,
+}: FlightLoadingStateParams): boolean => {
+  return (
+    isLoading ||
+    isFetching ||
+    (isRateLimitError && activeRetryCount < maxRetryCount)
+  );
+};
+export const MAX_RETRY_COUNT = 10;

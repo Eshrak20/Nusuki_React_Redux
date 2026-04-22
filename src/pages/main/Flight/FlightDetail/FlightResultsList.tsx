@@ -7,8 +7,9 @@ import type { FlightResultItem } from "@/types/flight/flightResults.types";
 import FlightDetailsCard from "./FlightDetailsCard";
 import FlightResultsError from "@/components/FlightResultsError";
 import FlightResultsEmpty from "@/components/FlightResultsEmpty";
-import { FlightCardSkeleton } from "@/components/skeletons/FlightResultsSkeleton";
+import { FlightCardSkeleton } from "@/components/skeletons/FlightCardSkeleton";
 import { resetFlightSearchState } from "@/redux/features/flightSearchSlice";
+import { shouldShowFlightLoadingState } from "@/lib/utils";
 
 interface Props {
   flights: FlightResultItem[];
@@ -33,12 +34,14 @@ const FlightResultsList = ({
   const [retryCount, setRetryCount] = useState(0);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
   const isRateLimitError =
     isError && !!error && "status" in error && error.status === 429;
+
   const activeRetryCount = isRateLimitError ? retryCount : 0;
+
   useEffect(() => {
     if (!isRateLimitError || !onRetry) return;
-
     if (retryCount >= MAX_RETRY_COUNT) return;
 
     const timeout = setTimeout(() => {
@@ -71,10 +74,14 @@ const FlightResultsList = ({
     dispatch(resetFlightSearchState());
     navigate("/");
   };
-  const shouldShowLoadingState =
-    isLoading ||
-    isFetching ||
-    (isRateLimitError && activeRetryCount < MAX_RETRY_COUNT);
+
+  const shouldShowLoadingState = shouldShowFlightLoadingState({
+    isLoading,
+    isFetching,
+    isRateLimitError,
+    activeRetryCount,
+    maxRetryCount: MAX_RETRY_COUNT,
+  });
 
   if (shouldShowLoadingState) {
     return (

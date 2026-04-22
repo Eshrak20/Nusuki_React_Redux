@@ -28,6 +28,7 @@ type FlightDisplayItem = {
 const FlightDetailSearch = () => {
   const searchData = useSelector((state: RootState) => state.flightSearch);
   const [open, setOpen] = useState(false);
+  // const [showModifySearch, setShowModifySearch] = useState(false);
 
   const flights = useMemo<FlightDisplayItem[]>(() => {
     if (searchData.tripType === "multi_way") {
@@ -271,12 +272,28 @@ const FlightDetailSearch = () => {
                 )}
               </Button>
 
-              <Link to="/">
-                <Button variant="secondary" className="rounded-xl">
+              <div className="flex flex-col gap-4">
+                {/* <Button
+                  variant="secondary"
+                  className="rounded-xl"
+                  onClick={() => setShowModifySearch((prev) => !prev)}
+                >
                   <Settings2 className="mr-2 h-4 w-4" />
-                  Modify Search
-                </Button>
-              </Link>
+                  {showModifySearch ? "Hide Search" : "Modify Search"}
+                </Button> */}
+
+                {/* {showModifySearch && (
+                  <div className="rounded-[24px] border border-slate-200/80 bg-white/90 p-3 shadow-sm dark:border-slate-800 dark:bg-slate-950/80">
+                    <InlineFlightSearch />
+                  </div>
+                )} */}
+                <Link to="/">
+                  <Button variant="secondary" className="rounded-xl">
+                    <Settings2 className="mr-2 h-4 w-4" />
+                    Modify Search
+                  </Button>
+                </Link>
+              </div>
             </div>
           </div>
         </div>

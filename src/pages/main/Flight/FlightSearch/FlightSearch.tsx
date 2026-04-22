@@ -24,9 +24,12 @@ import { buildFlightSearchPayload } from "../FlightDetail/flightDetails.helpers"
 
 interface FlightSearchProps {
   searchDests: SearchDests[];
+  onSearchSubmit?: (
+    payload: ReturnType<typeof buildFlightSearchPayload>,
+  ) => void;
 }
 
-const FlightSearch = ({ searchDests }: FlightSearchProps) => {
+const FlightSearch = ({ searchDests,onSearchSubmit }: FlightSearchProps) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const searchData = useSelector((state: RootState) => state.flightSearch);
@@ -81,8 +84,10 @@ const FlightSearch = ({ searchDests }: FlightSearchProps) => {
         return;
       }
     }
+
     dispatch(resetFilters());
     dispatch(resetFlightUiState());
+
     const requestBody = buildFlightSearchPayload({
       searchData,
       currentPage: 1,
@@ -92,9 +97,13 @@ const FlightSearch = ({ searchDests }: FlightSearchProps) => {
     });
 
     toast.success("Searching for flights...");
-    navigate("/flight/details", { state: { searchPayload: requestBody } });
 
-    // console.log("Final API Body:", JSON.stringify(requestBody, null, 2));
+    if (onSearchSubmit) {
+      onSearchSubmit(requestBody);
+      return;
+    }
+
+    navigate("/flight/details", { state: { searchPayload: requestBody } });
   };
 
   if (!searchData || !searchData.travelers) return null;

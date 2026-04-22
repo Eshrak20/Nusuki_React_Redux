@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { AlertCircle, Loader2, X } from "lucide-react";
+import {  X } from "lucide-react";
 
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
@@ -11,6 +11,7 @@ import { useLazyFlightDetailTicketQuery } from "@/redux/api/flightApi/flightTick
 import BookingJourneyTimeline from "./BookingJourneyTimeline";
 import BookingPriceSidebar from "./BookingPriceSidebar";
 import useSharedFlightTimer from "@/hooks/useSharedFlightTimer";
+import FlightDetailState from "@/components/skeletons/FlightDetailState";
 
 interface Props {
   open: boolean;
@@ -61,28 +62,13 @@ const FlightBookingDialog = ({
         </button>
 
         {isFetching ? (
-          <div className="flex h-full items-center justify-center">
-            <div className="flex flex-col items-center gap-3 text-[#1e3775] dark:text-[#8fb4ff]">
-              <Loader2 className="h-10 w-10 animate-spin" />
-              <p className="text-sm font-semibold">
-                Loading latest flight details...
-              </p>
-            </div>
-          </div>
+          <FlightDetailState variant="loading" />
         ) : isError || !flight ? (
-          <div className="flex h-full items-center justify-center">
-            <div className="flex flex-col items-center gap-3 text-center">
-              <AlertCircle className="h-10 w-10 text-red-500" />
-              <div>
-                <p className="text-lg font-bold text-[#1a2f6b] dark:text-[#8fb4ff]">
-                  Failed to load flight detail
-                </p>
-                <p className="text-sm text-muted-foreground">
-                  Please try again.
-                </p>
-              </div>
-            </div>
-          </div>
+          <FlightDetailState
+            variant="error"
+            title="Failed to load flight detail"
+            message="Please try again."
+          />
         ) : (
           <div className="flex h-full flex-col">
             <div className="flex-1 overflow-y-auto px-6 py-6 md:px-8 xl:px-10">

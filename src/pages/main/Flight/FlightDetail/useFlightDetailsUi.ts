@@ -5,14 +5,12 @@ export type SortOrder = "asc" | "desc";
 
 export const useFlightDetailsUi = () => {
   const [currentPage, setCurrentPage] = useState(1);
-  const [selectedAirlineCode, setSelectedAirlineCode] = useState<string | null>(null);
   const [sortBy, setSortBy] = useState<SortBy>("price");
   const [sortOrder, setSortOrder] = useState<SortOrder>("asc");
   const [scheduleIndex, setScheduleIndex] = useState(0);
 
   const resetUiState = useCallback(() => {
     setCurrentPage(1);
-    setSelectedAirlineCode(null);
     setSortBy("price");
     setSortOrder("asc");
     setScheduleIndex(0);
@@ -21,11 +19,6 @@ export const useFlightDetailsUi = () => {
   const handlePageChange = useCallback((page: number) => {
     setCurrentPage(page);
     window.scrollTo({ top: 0, behavior: "smooth" });
-  }, []);
-
-  const handleAirlineSelect = useCallback((airlineCode: string | null) => {
-    setSelectedAirlineCode(airlineCode);
-    setCurrentPage(1);
   }, []);
 
   const handleSortChange = useCallback(
@@ -49,14 +42,12 @@ export const useFlightDetailsUi = () => {
 
   return {
     currentPage,
-    selectedAirlineCode,
     sortBy,
     sortOrder,
     scheduleIndex,
     setScheduleIndex,
     resetUiState,
     handlePageChange,
-    handleAirlineSelect,
     handleSortChange,
     handlePrevSchedule,
     handleNextSchedule,
