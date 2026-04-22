@@ -42,7 +42,7 @@ const FlightDetailsCard = ({ flight }: Props) => {
                 <Button
                   variant="ghost"
                   onClick={() => setOpen((prev) => !prev)}
-                  className="group w-fit gap-2 px-0 text-sm font-semibold text-muted-foreground hover:bg-transparent hover:text-primary"
+                  className="group w-fit gap-2 px-0 text-sm font-semibold mx-auto lg:mx-0 text-muted-foreground hover:bg-transparent hover:text-primary"
                 >
                   {open ? "Hide Flight Details" : "View Flight Details"}
                   {open ? (
@@ -78,6 +78,7 @@ const FlightDetailsCard = ({ flight }: Props) => {
         flightId={flight.flight_id}
         searchId={flight.search_id}
         onContinue={() => {
+          // eslint-disable-next-line no-console
           console.log("continue booking is clicked from FlightBookingDialog to FlightDetailsCard");
         }}
       />

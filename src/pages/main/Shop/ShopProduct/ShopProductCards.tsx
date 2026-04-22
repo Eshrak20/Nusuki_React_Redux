@@ -10,7 +10,6 @@ interface ShopProductCardsProps {
 }
 
 const ShopProductCards = ({ products, offset }: ShopProductCardsProps) => {
-console.log(products);
 
   return (
     <section className="">
