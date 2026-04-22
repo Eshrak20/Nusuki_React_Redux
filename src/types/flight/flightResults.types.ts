@@ -219,8 +219,22 @@ export interface FlightSearchResponseData {
     filters: ApiFilters;
     pagination: ApiPagination;
     airline_price_summary?: AirlinePriceSummaryItem[];
+    statistics: FlightSearchStatistics;
+}
+export interface FlightSearchStatisticsMessage {
+    severity: string;
+    type: string;
+    code: string;
+    text: string;
 }
 
+export interface FlightSearchStatistics {
+    itinerary_count: number;
+    quality_filtered_count: number;
+    returned_count: number;
+    available_flights: number;
+    messages: FlightSearchStatisticsMessage[];
+}
 export interface FlightSearchApiResponse {
     success: boolean;
     message: string;

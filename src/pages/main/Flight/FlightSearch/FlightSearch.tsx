@@ -29,7 +29,7 @@ interface FlightSearchProps {
   ) => void;
 }
 
-const FlightSearch = ({ searchDests,onSearchSubmit }: FlightSearchProps) => {
+const FlightSearch = ({ searchDests, onSearchSubmit }: FlightSearchProps) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const searchData = useSelector((state: RootState) => state.flightSearch);
@@ -87,11 +87,11 @@ const FlightSearch = ({ searchDests,onSearchSubmit }: FlightSearchProps) => {
 
     dispatch(resetFilters());
     dispatch(resetFlightUiState());
-
+    const DEFAULT_PAGE_SIZE = 20;
     const requestBody = buildFlightSearchPayload({
       searchData,
       currentPage: 1,
-      pageSize: 20,
+      pageSize: DEFAULT_PAGE_SIZE,
       sortBy: "price",
       sortOrder: "asc",
     });

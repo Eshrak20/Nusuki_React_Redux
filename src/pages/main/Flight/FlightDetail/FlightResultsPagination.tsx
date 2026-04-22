@@ -20,6 +20,8 @@ const FlightResultsPagination = ({
   totalPages,
   onPageChange,
 }: FlightResultsPaginationProps) => {
+  if (totalPages <= 1) return null;
+
   const pages = generatePaginationPages({
     currentPage,
     totalPages,
@@ -34,7 +36,9 @@ const FlightResultsPagination = ({
               href="#"
               onClick={(e) => {
                 e.preventDefault();
-                if (currentPage > 1) onPageChange(currentPage - 1);
+                if (currentPage > 1) {
+                  onPageChange(currentPage - 1);
+                }
               }}
               className={
                 currentPage === 1
@@ -56,7 +60,9 @@ const FlightResultsPagination = ({
                   isActive={currentPage === page}
                   onClick={(e) => {
                     e.preventDefault();
-                    onPageChange(page);
+                    if (page !== currentPage) {
+                      onPageChange(page);
+                    }
                   }}
                   className={`h-10 w-10 cursor-pointer rounded-md border text-sm font-medium ${
                     currentPage === page
@@ -75,7 +81,9 @@ const FlightResultsPagination = ({
               href="#"
               onClick={(e) => {
                 e.preventDefault();
-                if (currentPage < totalPages) onPageChange(currentPage + 1);
+                if (currentPage < totalPages) {
+                  onPageChange(currentPage + 1);
+                }
               }}
               className={
                 currentPage === totalPages

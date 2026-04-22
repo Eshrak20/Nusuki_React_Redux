@@ -101,16 +101,24 @@ export const flightSearchSlice = createSlice({
 
     updateFilter: (
       state,
-      action: PayloadAction<{ category: string; value: string | number }>
+      action: PayloadAction<{
+        category:
+        | keyof FlightFilters
+        | "departure"
+        | "arrival";
+        value: string | number;
+      }>
     ) => {
       const { category, value } = action.payload;
 
       if (category === "departure" || category === "arrival") {
         const target = state.filters.flight_schedules[category];
+
         state.filters.flight_schedules[category] = target.includes(String(value))
           ? target.filter((i) => i !== String(value))
           : [...target, String(value)];
 
+        state.ui.currentPage = 1;
         return;
       }
 
@@ -128,15 +136,9 @@ export const flightSearchSlice = createSlice({
         (state.filters[key] as number | null) = value as number | null;
       }
 
+      state.ui.currentPage = 1;
     },
-    setRangeFilter: (
-      state,
-      action: PayloadAction<{
-        category: "price" | "layover";
-        min: number | null;
-        max: number | null;
-      }>
-    ) => {
+    setRangeFilter: (state, action) => {
       const { category, min, max } = action.payload;
 
       if (category === "price") {
@@ -146,6 +148,8 @@ export const flightSearchSlice = createSlice({
         state.filters.layover_duration_min = min;
         state.filters.layover_duration_max = max;
       }
+
+      state.ui.currentPage = 1;
     },
 
     resetFilters: (state) => {
