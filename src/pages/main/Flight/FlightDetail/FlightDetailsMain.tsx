@@ -55,16 +55,18 @@ const FlightDetailsMain = () => {
       skip:
         searchData.tripType === "multi_way"
           ? !searchData.segments?.[0]?.fromDest ||
-            !searchData.segments?.[0]?.toDest
+          !searchData.segments?.[0]?.toDest
           : !searchData.fromDest || !searchData.toDest,
       refetchOnMountOrArgChange: false,
       refetchOnFocus: false,
       refetchOnReconnect: false,
     });
 
-  const response = data as FlightSearchApiResponse | undefined;
+  const response = data as FlightSearchApiResponse;
   const flights = useMemo(() => extractFlights(response), [response]);
- 
+  const pagination = response?.data?.pagination
+  const total = pagination?.total;
+
 
   const processedFlights = useMemo(() => {
     if (!ui.selectedAirlineCode) return flights;
@@ -225,11 +227,15 @@ const FlightDetailsMain = () => {
               onRetry={refetch}
             />
 
-            <FlightResultsPagination
-              currentPage={response?.data?.pagination?.page || ui.currentPage}
-              totalPages={response?.data?.pagination?.total_pages || 1}
-              onPageChange={handlePageChange}
-            />
+            {
+             total >= pagination?.size &&
+              <FlightResultsPagination
+                currentPage={response?.data?.pagination?.page || ui.currentPage}
+                totalPages={response?.data?.pagination?.total_pages || 1}
+                onPageChange={handlePageChange}
+              />
+            }
+
           </main>
         </div>
       </div>
