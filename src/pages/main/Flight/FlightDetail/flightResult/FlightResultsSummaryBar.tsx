@@ -64,8 +64,8 @@ const FlightResultsSummaryBar = ({
                 </Button>
               )}
             </div>
-
-            <div className="flex w-full flex-col gap-2 sm:w-auto sm:flex-row sm:items-center">
+            {/*//TODO: This feature will enable if client said or next phase || To enable it remove the hidden and use flex*/}
+            <div className="hidden w-full flex-col gap-2 sm:w-auto sm:flex-row sm:items-center">
               <Button
                 variant="outline"
                 size="sm"
