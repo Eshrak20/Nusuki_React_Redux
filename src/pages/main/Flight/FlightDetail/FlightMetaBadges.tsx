@@ -34,12 +34,13 @@ const FlightMetaBadges = ({ flight }: Props) => {
 
       <span className={badgeClass}>
         <Luggage className="h-4 w-4 text-primary" />
+        <span className="hidden lg:inline -mr-1">Baggage -</span>
         {flight.baggage.weight} KG
       </span>
 
       <span className={badgeClass}>
         <Users className="h-4 w-4 text-primary" />
-
+          <span className="hidden lg:inline -mr-1">Available Seat -</span>
          {flight.fare.seats_available}
       </span>
     </div>

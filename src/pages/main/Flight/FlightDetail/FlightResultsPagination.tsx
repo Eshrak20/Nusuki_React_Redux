@@ -20,7 +20,6 @@ const FlightResultsPagination = ({
   totalPages,
   onPageChange,
 }: FlightResultsPaginationProps) => {
-  console.log(totalPages);
   
   const pages = generatePaginationPages({
     currentPage,

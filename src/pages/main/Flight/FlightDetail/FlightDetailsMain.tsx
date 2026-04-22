@@ -62,7 +62,7 @@ const FlightDetailsMain = () => {
       skip:
         searchData.tripType === "multi_way"
           ? !searchData.segments?.[0]?.fromDest ||
-          !searchData.segments?.[0]?.toDest
+            !searchData.segments?.[0]?.toDest
           : !searchData.fromDest || !searchData.toDest,
       refetchOnMountOrArgChange: false,
       refetchOnFocus: false,
@@ -70,18 +70,15 @@ const FlightDetailsMain = () => {
     });
 
   const response = data as FlightSearchApiResponse;
-  const flights = useMemo(() => extractFlights(response), [response]);
-  const pagination = response?.data?.pagination
-  const total = pagination?.total;
-
+  const rawFlights = useMemo(() => extractFlights(response), [response]);
 
   const filteredFlights = useMemo(() => {
     return getClientFilteredFlights({
-      flights: flights,
+      flights: rawFlights,
       filters: searchData.filters,
       selectedAirlineCode: ui.selectedAirlineCode,
     });
-  }, [flights, searchData.filters, ui.selectedAirlineCode]);
+  }, [rawFlights, searchData.filters, ui.selectedAirlineCode]);
 
   const sortedFlights = useMemo(() => {
     return sortFlightsClientSide({
@@ -248,16 +245,13 @@ const FlightDetailsMain = () => {
               error={error}
               onRetry={refetch}
             />
-
-            {
-             total >= pagination?.size &&
-              <FlightResultsPagination
-                currentPage={response?.data?.pagination?.page || ui.currentPage}
-                totalPages={response?.data?.pagination?.total_pages || 1}
-                onPageChange={handlePageChange}
-              />
-            }
-
+        { response?.data?.pagination?.total > 20 && 
+            <FlightResultsPagination
+              currentPage={safeCurrentPage}
+              totalPages={totalPages}
+              onPageChange={handlePageChange}
+            />
+        }
           </main>
         </div>
       </div>

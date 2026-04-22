@@ -50,7 +50,7 @@ const FlightBookingDialog = ({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="h-[94vh] w-[98vw]! max-w-375! overflow-hidden border-none bg-[#eef1f5] p-0 shadow-2xl dark:bg-[#0b1220] sm:rounded-xl">
+      <DialogContent className="h-[94vh] w-[98vw]! max-w-375! overflow-hidden border-none p-0 shadow-2xl dark:bg-[#0b1220] sm:rounded-xl">
         <DialogTitle className="sr-only">Flight booking details</DialogTitle>
 
         <button
@@ -79,6 +79,10 @@ const FlightBookingDialog = ({
                   </h2>
                 </div>
 
+                <div className="mb-6 lg:hidden block">
+                  <BookingTimerCard timeText={timeText} />
+                </div>
+
                 <div className="grid grid-cols-1 gap-5 xl:grid-cols-[minmax(0,1fr)_360px]">
                   <div className="space-y-5 min-h-0 max-h-[70vh] overflow-y-auto pr-2">
                     <BookingJourneyTimeline flight={flight} />
@@ -90,7 +94,9 @@ const FlightBookingDialog = ({
                   </div>
 
                   <div className="space-y-5">
-                    <BookingTimerCard timeText={timeText} />
+                    <div className="hidden lg:block">
+                  <BookingTimerCard timeText={timeText} />
+                </div>
                     <BookingPriceSidebar flight={flight} />
                   </div>
                 </div>

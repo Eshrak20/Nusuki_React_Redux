@@ -60,9 +60,9 @@ const FlightSegmentTimeline = ({ segments }: Props) => {
                   (
                     <span
                       key={`${segment.flight_number}-${index}`}
-                      className="inline-flex items-center rounded-md border border-primary/30 bg-primary/5 px-2.5 py-1.5 mt-2 text-xs font-medium text-primary"
+                      className="inline-flex items-center rounded-md border border-primary/30 bg-primary/5 px-2.5 py-1.5 lg:ml-2 mt-2 text-xs font-medium text-primary"
                     >
-                      (Terminal - {segment.origin.terminal})
+                      Terminal - {segment.origin.terminal}
                     </span>
                   )
                   : ""}
@@ -101,12 +101,13 @@ const FlightSegmentTimeline = ({ segments }: Props) => {
                   (
                     <span
                       key={`${segment.flight_number}-${index}`}
-                      className="inline-flex items-center rounded-md border border-primary/30 bg-primary/5 px-2.5 py-1.5 mt-2 text-xs font-medium text-primary"
+                      className="inline-flex items-center rounded-md border border-primary/30 bg-primary/5 px-2.5 py-1.5 lg:ml-2 mt-2 text-xs font-medium text-primary"
                     >
-                      (Terminal - {segment.destination.terminal})
+                      Terminal - {segment.destination.terminal}
                     </span>
                   )
-                  : ""}
+                  : ""
+                  }
               </p>
             </div>
           </div>

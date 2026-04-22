@@ -113,7 +113,7 @@ const FlightSearch = ({ searchDests,onSearchSubmit }: FlightSearchProps) => {
       {/* Top Row */}
       <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 mb-6">
         <TripTypeSelector />
-        <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 w-full md:w-auto">
+        <div className="flex gap-7 lg:items-start lg:gap-3 w-full md:w-auto mx-4 lg:mx-0">
           <TravelerSection totalTravelers={totalTravelers} />
           <FlightClassDropdown />
         </div>
