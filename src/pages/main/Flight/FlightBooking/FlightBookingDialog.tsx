@@ -94,9 +94,8 @@ const FlightBookingDialog = ({
                 </div>
 
                 <div className="grid grid-cols-1 gap-5 xl:grid-cols-[minmax(0,1fr)_360px]">
-                  <div className="space-y-5">
+                  <div className="space-y-5 min-h-0 max-h-[70vh] overflow-y-auto pr-2">
                     <BookingJourneyTimeline flight={flight} />
-                    //TODO: Here scrolling needed
                     <BookingFlightDetailsAccordion
                       open={showDetails}
                       onToggle={() => setShowDetails((prev) => !prev)}
