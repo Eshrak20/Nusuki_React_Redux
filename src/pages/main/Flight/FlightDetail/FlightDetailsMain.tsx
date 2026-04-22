@@ -14,17 +14,23 @@ import FlightResultsPagination from "./FlightResultsPagination";
 import {
   buildFlightSearchPayload,
   extractFlights,
+  getClientFilteredFlights,
+  paginateFlights,
+  sortFlightsClientSide,
 } from "./flightDetails.helpers";
 import FlightFilterDrawer from "./filters/reusableComponents/FlightFilterDrawer";
 import FlightResultsSortBar from "./flightResult/FlightResultsSortBar";
 import { startFlightSession } from "@/redux/features/flightSessionSlice";
+
+const API_FETCH_SIZE = 100;
+const CLIENT_PAGE_SIZE = 20;
 
 const FlightDetailsMain = () => {
   const dispatch = useDispatch();
   const searchData = useSelector((state: RootState) => state.flightSearch);
   const ui = searchData.ui;
   const expiresAt = useSelector(
-    (state: RootState) => state.flightSession?.expiresAt ?? null,
+    (state: RootState) => state.flightSession?.expiresAt ?? null
   );
 
   useEffect(() => {
@@ -32,23 +38,24 @@ const FlightDetailsMain = () => {
       dispatch(startFlightSession(15 * 60));
     }
   }, [dispatch, expiresAt]);
+
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, []);
 
-  const pageSize = 20;
+  useEffect(() => {
+    if (ui.currentPage !== 1) {
+      dispatch(setUiField({ currentPage: 1 }));
+    }
+  }, [dispatch, searchData.filters, ui.currentPage]);
 
-  const apiPayload = useMemo(
-    () =>
-      buildFlightSearchPayload({
-        searchData,
-        currentPage: ui.currentPage,
-        pageSize,
-        sortBy: ui.sortBy,
-        sortOrder: ui.sortOrder,
-      }),
-    [searchData, ui.currentPage, ui.sortBy, ui.sortOrder],
-  );
+  const apiPayload = buildFlightSearchPayload({
+    searchData,
+    currentPage: 1,
+    pageSize: API_FETCH_SIZE,
+    sortBy: "price",
+    sortOrder: "asc",
+  });
 
   const { data, isLoading, isError, isFetching, error, refetch } =
     useFlightSearchTicketListsQuery(apiPayload, {
@@ -68,15 +75,39 @@ const FlightDetailsMain = () => {
   const total = pagination?.total;
 
 
-  const processedFlights = useMemo(() => {
-    if (!ui.selectedAirlineCode) return flights;
+  const filteredFlights = useMemo(() => {
+    return getClientFilteredFlights({
+      flights: flights,
+      filters: searchData.filters,
+      selectedAirlineCode: ui.selectedAirlineCode,
+    });
+  }, [flights, searchData.filters, ui.selectedAirlineCode]);
 
-    return flights.filter(
-      (flight) => flight.airline?.code === ui.selectedAirlineCode,
-    );
-  }, [flights, ui.selectedAirlineCode]);
+  const sortedFlights = useMemo(() => {
+    return sortFlightsClientSide({
+      flights: filteredFlights,
+      sortBy: ui.sortBy,
+      sortOrder: ui.sortOrder,
+    });
+  }, [filteredFlights, ui.sortBy, ui.sortOrder]);
+
+  const totalPages = Math.max(
+    1,
+    Math.ceil(sortedFlights.length / CLIENT_PAGE_SIZE)
+  );
+
+  const safeCurrentPage = Math.min(ui.currentPage, totalPages);
+
+  const paginatedFlights = useMemo(() => {
+    return paginateFlights({
+      flights: sortedFlights,
+      currentPage: safeCurrentPage,
+      pageSize: CLIENT_PAGE_SIZE,
+    });
+  }, [sortedFlights, safeCurrentPage]);
+
   const handlePageChange = (page: number) => {
-    if (isFetching || page === ui.currentPage) return;
+    if (page === safeCurrentPage) return;
     dispatch(setUiField({ currentPage: page }));
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
@@ -87,17 +118,15 @@ const FlightDetailsMain = () => {
 
   const handleSortChange = (
     sortBy: "price" | "duration" | "departure_at",
-    sortOrder: "asc" | "desc",
+    sortOrder: "asc" | "desc"
   ) => {
-    if (isFetching) return;
     if (ui.sortBy === sortBy && ui.sortOrder === sortOrder) return;
-
     dispatch(setUiField({ sortBy, sortOrder, currentPage: 1 }));
   };
 
   const selectedDate = useMemo(
     () => startOfDay(new Date(searchData.departureDate)),
-    [searchData.departureDate],
+    [searchData.departureDate]
   );
 
   const today = startOfDay(new Date());
@@ -105,41 +134,38 @@ const FlightDetailsMain = () => {
     isSameDay(selectedDate, today) || !isAfter(selectedDate, today);
 
   const handleNextDay = () => {
-    if (isFetching) return;
-
     dispatch(
       setSearchField({
         departureDate: addDays(selectedDate, 1).toISOString(),
-      }),
+      })
     );
     dispatch(setUiField({ currentPage: 1, selectedAirlineCode: null }));
   };
 
   const handlePrevDay = () => {
-    if (isFetching || disablePrevDay) return;
+    if (disablePrevDay) return;
 
     dispatch(
       setSearchField({
         departureDate: addDays(selectedDate, -1).toISOString(),
-      }),
+      })
     );
     dispatch(setUiField({ currentPage: 1, selectedAirlineCode: null }));
   };
 
   return (
     <div className="mt-20 min-h-screen bg-slate-100/80 pb-10 dark:bg-background">
-      <div className="sticky -top-6 lg:top-20 z-20 ">
+      <div className="sticky -top-6 z-20 lg:top-20">
         <div className="container mx-auto px-4 py-5">
           <FlightDetailSearch />
         </div>
       </div>
 
-      {/* mobile sticky controls under search card */}
       <div className="sticky top-18 z-30 bg-slate-100/90 backdrop-blur-md dark:bg-background/90 lg:hidden">
         <div className="container mx-auto px-4 lg:py-3">
           <div className="mx-auto pt-3">
             <div className="flex justify-center">
-              <div className="w-full max-w-60 hidden lg:block">
+              <div className="hidden w-full max-w-60 lg:block">
                 <FlightTimer compact />
               </div>
             </div>
@@ -151,9 +177,7 @@ const FlightDetailsMain = () => {
                 error={error}
                 isFetching={isFetching}
                 retryCount={7}
-                totalFlights={
-                  response?.data?.pagination?.total ?? flights.length
-                }
+                totalFlights={sortedFlights.length}
                 airlineSummary={response?.data?.airline_price_summary || []}
                 selectedAirlineCode={ui.selectedAirlineCode}
                 onAirlineSelect={handleAirlineSelect}
@@ -192,9 +216,7 @@ const FlightDetailsMain = () => {
                 isLoading={isLoading || isFetching}
                 isError={isError}
                 error={error}
-                totalFlights={
-                  response?.data?.pagination?.total ?? flights.length
-                }
+                totalFlights={sortedFlights.length}
                 isFetching={isFetching}
                 retryCount={7}
                 airlineSummary={response?.data?.airline_price_summary || []}
@@ -209,7 +231,7 @@ const FlightDetailsMain = () => {
             </div>
 
             <div className="sticky top-32 z-20 hidden lg:block">
-              <div className=" bg-background/95 p-3 rounded-2xl backdrop-blur supports-backdrop-filter:bg-background/80">
+              <div className="rounded-2xl bg-background/95 p-3 backdrop-blur supports-backdrop-filter:bg-background/80">
                 <FlightResultsSortBar
                   isLoading={isLoading || isFetching}
                   sortBy={ui.sortBy}
@@ -220,7 +242,7 @@ const FlightDetailsMain = () => {
             </div>
 
             <FlightResultsList
-              flights={processedFlights}
+              flights={paginatedFlights}
               isLoading={isLoading || isFetching}
               isError={isError}
               error={error}

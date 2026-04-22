@@ -131,10 +131,22 @@ export interface FlightBaggage {
 }
 
 
+export interface FlightJourneyItem {
+    journey_index: number;
+    requested?: {
+        origin?: string;
+        destination?: string;
+        departure_date?: string;
+    };
+    summary: FlightSummary;
+    segments: FlightSegmentItem[];
+}
+
 export interface FlightResultItem {
     id: number;
     airline: AirlineInfo;
     segments: FlightSegmentItem[];
+    journeys?: FlightJourneyItem[];
     summary: FlightSummary;
     pricing: FlightPricing;
     fare: FlightFare;
