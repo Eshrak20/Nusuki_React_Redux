@@ -47,9 +47,6 @@ const CourseActionPlan = ({ sections }: CourseActionPlanProps) => {
             <h2 className="text-3xl font-extrabold text-foreground">
               Your Action Plan
             </h2>
-            <h2 className="hidden text-3xl font-extrabold text-foreground">
-              Your Action Plan
-            </h2>
             <div className="flex items-center gap-2 text-primary/60 text-xs uppercase tracking-widest mt-1">
               <Sparkles className="w-3 h-3" />
               Your journey starts here
