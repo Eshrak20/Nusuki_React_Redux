@@ -8,14 +8,20 @@ interface Props {
 }
 
 const AvailabilityTab = ({ flight }: Props) => {
-  const firstSegment = flight?.segments?.[0];
+  const segments = flight?.segments ?? [];
+  const firstSegment = segments[0];
+  const lastSegment = segments[segments.length - 1];
 
   const originCode =
     firstSegment?.origin?.airport || firstSegment?.origin?.city || "N/A";
+
   const destinationCode =
-    firstSegment?.destination?.airport ||
-    firstSegment?.destination?.city ||
+    lastSegment?.destination?.airport ||
+    lastSegment?.destination?.city ||
     "N/A";
+
+  const cabinName = firstSegment?.cabin_name || "Not Found";
+  const bookingClass = firstSegment?.booking_code || "K";
 
   const baggage = getBaggage(flight);
 
@@ -34,44 +40,42 @@ const AvailabilityTab = ({ flight }: Props) => {
       </div>
 
       <div className="space-y-4 p-4">
-        <div className="grid gap-3 md:grid-cols-3">
-          <div className="rounded-xl border bg-background p-3">
-            <div className="mb-1 flex items-center gap-2 text-sm font-medium text-muted-foreground">
-              <BriefcaseBusiness className="h-4 w-4 text-primary" />
-              Cabin
+        <div className="space-y-4">
+          {segments.length > 0 ? (
+            segments.map((segment, index) => (
+              <AvailabilitySegmentCard
+                key={`${segment.flight_number}-${segment.departure_at}-${index}`}
+                segmentIndex={index + 1}
+                cabin={segment?.cabin_name || "Not Found"}
+                bookingClass={segment?.booking_code || "K"}
+                passengersLabel="1 ADT Passenger"
+                handBaggage={baggage.hand?.label || "7 KG"}
+                checkInBaggage={baggage.checked?.label || "Approximately 20 KG"}
+                seatsAvailable={segment?.seats_available}
+                airlineName={segment?.airline?.name || "Unknown Airline"}
+                airlineCode={segment?.airline?.code || "N/A"}
+                flightNumber={segment?.flight_number || "N/A"}
+                fromCode={
+                  segment?.origin?.airport || segment?.origin?.city || "N/A"
+                }
+                toCode={
+                  segment?.destination?.airport ||
+                  segment?.destination?.city ||
+                  "N/A"
+                }
+                departureAt={segment?.departure_at}
+                arrivalAt={segment?.arrival_at}
+                aircraftName={segment?.aircraft?.name || "N/A"}
+                aircraftCode={segment?.aircraft?.code || "N/A"}
+                elapsedTime={segment?.elapsed_time_text || "N/A"}
+              />
+            ))
+          ) : (
+            <div className="rounded-xl border border-dashed p-4 text-sm text-muted-foreground">
+              No segment information found.
             </div>
-            <p className="font-semibold text-foreground">
-              {flight?.segments?.[0]?.cabin_name || "Not Found"}
-            </p>
-          </div>
-
-          <div className="rounded-xl border bg-background p-3">
-            <div className="mb-1 flex items-center gap-2 text-sm font-medium text-muted-foreground">
-              <UserRound className="h-4 w-4 text-primary" />
-              Passenger
-            </div>
-            <p className="font-semibold text-foreground">1 ADT Passenger</p>
-          </div>
-
-          <div className="rounded-xl border bg-background p-3">
-            <div className="mb-1 flex items-center gap-2 text-sm font-medium text-muted-foreground">
-              <BaggageClaim className="h-4 w-4 text-primary" />
-              Booking Class
-            </div>
-            <p className="font-semibold text-foreground">
-              {flight?.segments?.[0]?.booking_code || "K"}
-            </p>
-          </div>
+          )}
         </div>
-
-        <AvailabilitySegmentCard
-          segmentIndex={1}
-          cabin={flight?.segments?.[0]?.cabin_name || "Not Found"}
-          bookingClass={flight?.segments?.[0]?.booking_code || "K"}
-          passengersLabel={`1 ADT Passenger`}
-          handBaggage={baggage.hand?.label || "7 KG"}
-          checkInBaggage={baggage.checked?.label || "Approximately 20 KG"}
-        />
       </div>
     </div>
   );
