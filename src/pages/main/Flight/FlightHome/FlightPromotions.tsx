@@ -84,12 +84,6 @@ const FlightPromotions = () => {
                     <h3 className="font-bold text-xl text-white mb-2 line-clamp-1">{promo.title}</h3>
                     <p className="text-sm font-medium text-white/90 mb-3 line-clamp-1">{promo.subtitle}</p>
                     <p className="text-xs text-gray-300 mb-5 line-clamp-3">{promo.description}</p>
-                    <a
-                      href={promo.link_url}
-                      className="inline-flex items-center text-sm font-bold text-primary-foreground dark:text-white hover:underline px-5 py-2.5 rounded-full"
-                    >
-                      View Details
-                    </a>
                   </div>
                 </div>
               </div>

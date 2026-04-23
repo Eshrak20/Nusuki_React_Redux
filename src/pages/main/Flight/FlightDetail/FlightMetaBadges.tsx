@@ -29,7 +29,8 @@ const FlightMetaBadges = ({ flight }: Props) => {
         ) : (
           <ShieldX className="h-4 w-4 text-amber-500" />
         )}
-        {flight.fare.refundable ? "Refund" : "Non-Refund"}
+        <span className="hidden lg:inline">{flight.fare.refundable ? "Refundable" : "Non-Refundable"}</span>
+        <span className="inline lg:hidden">{flight.fare.refundable ? "Refund" : "Non-Refund"}</span>
       </span>
 
       <span className={badgeClass}>

@@ -29,6 +29,7 @@
   --color-popover: var(--popover);
   --color-popover-foreground: var(--popover-foreground);
   --color-primary: var(--primary);
+  --color-primary-light: var(--primary-light);
   --color-hajj: var(--hajj);
   --color-hajj-secondary: var(--hajj-secondary);
   --color-primary-foreground: var(--primary-foreground);
@@ -70,6 +71,7 @@
 
   /* Primary: #5fc9f3 (Sky Blue) */
   --primary: oklch(29.43% 0.103 265.52);
+  --primary-light: oklch(77.23% 0.115 263.77);
   
   /* Hajj Colors - Light Mode */
   --hajj: oklch(35.74% 0.086 154.39); /* Dark Teal */
