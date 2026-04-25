@@ -73,7 +73,7 @@ const BookingJourneyTimeline = ({ flight }: Props) => {
                     </div>
                   </div>
 
-                  <p className="text-[13px] lg:text-sm text-[#2d2d2d] mr-2 lg:mr-0 dark:text-white/80">
+                  <p className="text-[13px] lg:text-sm text-[#2d2d2d] -mr-2 lg:mr-0 dark:text-white/80">
                     {flight.fare.refundable ? "Refundable" : "Non Refundable"}
                   </p>
                 </div>

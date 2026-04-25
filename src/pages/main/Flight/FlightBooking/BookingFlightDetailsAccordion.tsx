@@ -46,29 +46,29 @@ const BookingFlightDetailsAccordion = ({ open, onToggle, flight }: Props) => {
 
                 <div className="grid gap-2 text-sm text-[#333] dark:text-white/80 md:grid-cols-2">
                   <p>
-                    <span className="font-semibold">Airline:</span>{" "}
+                    <span className="font-semibold mr-1">Airline : </span>{" "}
                     {segment.airline.name}
                   </p>
                   <p>
-                    <span className="font-semibold">Aircraft:</span>{" "}
+                    <span className="font-semibold mr-1">Aircraft : </span>{""}
                     {segment.aircraft.name}
                   </p>
                   <p>
-                    <span className="font-semibold">Departure:</span>{" "}
+                    <span className="font-semibold mr-1">Departure : </span>{" "}
                     {formatFullDate(segment.departure_at)}{" "}
                     {formatTime(segment.departure_at)}
                   </p>
                   <p>
-                    <span className="font-semibold">Arrival:</span>{" "}
+                    <span className="font-semibold mr-1">Arrival : </span>{" "}
                     {formatFullDate(segment.arrival_at)}{" "}
                     {formatTime(segment.arrival_at)}
                   </p>
                   <p>
-                    <span className="font-semibold">Cabin:</span>{" "}
+                    <span className="font-semibold mr-1">Cabin : </span>{" "}
                     {segment.cabin_name}
                   </p>
                   <p>
-                    <span className="font-semibold">Seats:</span>{" "}
+                    <span className="font-semibold mr-1">Seats : </span>{" "}
                     {segment.seats_available}
                   </p>
                 </div>

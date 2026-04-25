@@ -22,7 +22,7 @@ export const FlightMiniLoader = () => {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-background/40 backdrop-blur-md">
+    <div className="fixed hidden inset-0 z-50 lg:flex items-center justify-center bg-background/40 backdrop-blur-md">
       <motion.div
         variants={containerVariants}
         initial="hidden"

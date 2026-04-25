@@ -95,7 +95,7 @@ const FlightBookingDialog = ({
                   </div>
 
                   {/* Mobile: flight info after price. Desktop: left side */}
-                  <div className="order-2 min-h-0 space-y-5 pb-24 xl:order-1 xl:max-h-[70vh] xl:overflow-y-auto xl:pr-2 pb-28 xl:pb-0">
+                  <div className="order-2 min-h-0 space-y-5 pb-4 xl:order-1 xl:max-h-[70vh] xl:overflow-y-auto xl:pr-2 lg:pb-28 xl:pb-0">
                     <BookingJourneyTimeline flight={flight} />
 
                     <BookingFlightDetailsAccordion
