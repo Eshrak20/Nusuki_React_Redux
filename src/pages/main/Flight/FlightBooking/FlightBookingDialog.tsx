@@ -74,7 +74,7 @@ const FlightBookingDialog = ({
             <div className="flex-1 overflow-y-auto px-6 py-6 md:px-8 xl:px-10">
               <div className="mx-auto w-full max-w-7xl">
                 <div className="mb-6">
-                  <h2 className="text-center text-[28px] font-extrabold uppercase tracking-tight text-[#17306f] dark:text-[#8fb4ff] md:text-[34px]">
+                  <h2 className="text-center text-[18px] mx-5 lg:text-[28px] font-extrabold uppercase tracking-tight text-[#17306f] dark:text-[#8fb4ff] md:text-[34px]">
                     {title}
                   </h2>
                 </div>

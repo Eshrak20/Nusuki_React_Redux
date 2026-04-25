@@ -55,15 +55,15 @@ const BookingJourneyTimeline = ({ flight }: Props) => {
 
                 <Separator className="bg-[#e6e8ed] dark:bg-white/10" />
 
-                <div className="flex items-center justify-between py-6">
-                  <div className="flex items-center gap-3">
+                <div className="flex w-86.75 lg:w-full items-center justify-between py-6">
+                  <div className="flex items-center lg:gap-3">
                     <img
                       src={firstSegment?.airline.logo}
                       alt={firstSegment?.airline.name}
                       className="h-10 w-14 object-contain"
                     />
 
-                    <div>
+                    <div className="">
                       <p className="text-[15px] font-medium text-[#222] dark:text-white">
                         {firstSegment?.airline.name}
                       </p>
@@ -73,15 +73,16 @@ const BookingJourneyTimeline = ({ flight }: Props) => {
                     </div>
                   </div>
 
-                  <p className="text-sm text-[#2d2d2d] dark:text-white/80">
+                  <p className="text-[13px] lg:text-sm text-[#2d2d2d] mr-2 lg:mr-0 dark:text-white/80">
                     {flight.fare.refundable ? "Refundable" : "Non Refundable"}
                   </p>
                 </div>
 
                 <Separator className="bg-[#e6e8ed] dark:bg-white/10" />
 
-                <div className="grid grid-cols-[1fr_220px_1fr] items-center gap-3 py-5 xl:grid-cols-[1fr_260px_1fr]">
-                  <div>
+                <div className="flex flex-col gap-4 py-5 md:grid md:grid-cols-[1fr_220px_1fr] md:items-center md:gap-3 xl:grid-cols-[1fr_260px_1fr]">
+                  {/* the origin section */}
+                  <div className="text-center md:text-left">
                     <p className="text-[17px] font-bold text-[#1b3574] dark:text-[#8fb4ff]">
                       {firstSegment?.origin.airport} - {formatTime(firstSegment?.departure_at)}
                     </p>
@@ -93,11 +94,11 @@ const BookingJourneyTimeline = ({ flight }: Props) => {
                     </p>
                   </div>
 
-                  <div className="flex flex-col items-center justify-center">
+                  {/* the divider section */}
+                  <div className="flex flex-col w-1/2 mx-auto lg:w-full items-center justify-center py-2 md:py-0">
                     <p className="mb-1 text-[15px] text-[#2b2b2b] dark:text-white/85">
                       {journey.summary.duration_text}
                     </p>
-
                     <div className="flex w-full items-center gap-2">
                       <span className="h-2 w-2 rounded-full bg-[#c49324]" />
                       <span className="h-0.5 flex-1 bg-[#d6d6d6] dark:bg-white/20" />
@@ -105,7 +106,8 @@ const BookingJourneyTimeline = ({ flight }: Props) => {
                     </div>
                   </div>
 
-                  <div className="text-right">
+                  {/* the destination section */}
+                  <div className="text-center md:text-right">
                     <p className="text-[17px] font-bold text-[#1b3574] dark:text-[#8fb4ff]">
                       {lastSegment?.destination.airport} - {formatTime(lastSegment?.arrival_at)}
                     </p>
