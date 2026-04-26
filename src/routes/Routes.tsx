@@ -26,6 +26,9 @@ import ShopHome from "@/pages/main/Shop/ShopHome/ShopHome";
 import ShopProductDetailsMain from "@/pages/main/Shop/ShopProductDetails/ProductDetailsMain";
 import ShopCartMain from "@/pages/main/Shop/ShopCart/ShopCartMain";
 import FlightDetailsMain from "@/pages/main/Flight/FlightDetail/FlightDetailsMain";
+import HolidayLayout from "@/layouts/HolidayLayout";
+import HolidayHome from "@/pages/main/Holiday/HolidayHome/HolidayHome";
+import HolidayDetails from "@/pages/main/Holiday/HolidayDetails/HolidayDetails";
 // import ShopCheckOutMain from "@/pages/main/Shop/ShopCheckOut/ShopCheckOutMain";
 
 export const router = createBrowserRouter([
@@ -117,12 +120,15 @@ export const router = createBrowserRouter([
       },
       {
         path: "holiday",
-        // Component: HolidayLayout,
+        Component: HolidayLayout,
         children: [
           {
             index: true,
-            // element: <Holiday />,
-            element: <Upcoming title="Holiday Section Upcoming" />,
+            element: <HolidayHome />,
+          },
+          {
+            path: ":id",   // 👈 dynamic id
+            element: <HolidayDetails />,
           },
         ],
       },
