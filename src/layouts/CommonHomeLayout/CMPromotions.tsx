@@ -40,7 +40,7 @@ const CMPromotions = () => {
   };
 
   return (
-    <div className="w-full -mt-14 lg:mt-0 px-4 overflow-hidden" ref={containerRef}>
+    <div className="w-full -mt-14 lg:mt-15 px-4 overflow-hidden" ref={containerRef}>
       <h2 className="text-3xl md:text-4xl mt-20 lg:mt-0 text-center lg:text-left font-bold text-foreground mb-8">
         Exclusive Offers
       </h2>
