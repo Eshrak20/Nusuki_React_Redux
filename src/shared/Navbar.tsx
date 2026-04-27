@@ -30,9 +30,11 @@ import { cn } from "@/lib/utils";
 
 const navigationLinks = [
   { href: "/flight", label: "Flight" },
-  { href: "/hotel", label: "Hotel" },
   { href: "/visa", label: "Visa" },
-  {
+
+  { href: "/holiday", label: "Holiday" },
+  { href: "/education", label: "Education" },
+    {
     label: "Hajj",
     href: "/hajj",
     subLinks: [
@@ -51,8 +53,7 @@ const navigationLinks = [
       { href: "/umrah/packages", label: "Packages" },
     ],
   },
-  { href: "/holiday", label: "Holiday" },
-  { href: "/education", label: "Education" },
+  { href: "/hotel", label: "Hotel" },
   { href: "/shop", label: "Shop" },
 ];
 

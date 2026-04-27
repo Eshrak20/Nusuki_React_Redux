@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { motion, type PanInfo } from "framer-motion";
 import { useFlightPromoListsQuery } from "@/redux/api/flightApi/flightPromo";
 
-const FlightPromotions = () => {
+const CMPromotions = () => {
   const { data } = useFlightPromoListsQuery();
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -109,4 +109,4 @@ const FlightPromotions = () => {
   );
 };
 
-export default FlightPromotions;
+export default CMPromotions;

@@ -26,7 +26,7 @@ const HomeVisa = () => {
     );
 
     window.scrollTo({
-        top: 350,
+        top: 0,
         behavior: "smooth",
     });
 

@@ -9,7 +9,7 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 
-const FlightTourPackages = () => {
+const CMTourPackages = () => {
   const { data } = useFlightTourListsQuery();
 
   const tours = data?.data?.data || [];
@@ -145,4 +145,4 @@ const FlightTourPackages = () => {
   );
 };
 
-export default FlightTourPackages;
+export default CMTourPackages;

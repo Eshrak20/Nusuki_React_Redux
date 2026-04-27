@@ -10,7 +10,7 @@ interface destinationProps {
     dests: TourDestination[]
 }
 
-const FlightDestination = ({ dests }: destinationProps) => {
+const CMDestination = ({ dests }: destinationProps) => {
     return (
         <section className="rounded-[2rem] ">
             {/* Destination Carousel */}
@@ -76,4 +76,4 @@ const FlightDestination = ({ dests }: destinationProps) => {
     );
 };
 
-export default FlightDestination;
+export default CMDestination;

@@ -1,23 +1,54 @@
 import { useEffect } from "react";
 import HolidaySearch from "./HolidaySearch";
-import FlightPromotions from "../../Flight/FlightHome/FlightPromotions";
+import FlightHomeSkeleton from "@/components/skeletons/FlightHomeSkeleton";
+
+import { useFlightDestinationListsQuery } from "@/redux/api/flightApi/flightDest";
+import CommonHomeLayout from "@/layouts/CommonHomeLayout/CommonHomeLayout";
 
 const HolidayHome = () => {
-    useEffect(() => {
-        window.scrollTo({
-            top: 0,
-            behavior: "smooth",
-        });
-    }, []);
+  const { data, isLoading, error } = useFlightDestinationListsQuery();
 
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  }, []);
+
+  if (isLoading) return <FlightHomeSkeleton />;
+
+  if (error) {
     return (
-        <div className="mt-44 mb-20">
-            <HolidaySearch />
-            <div className="max-w-7xl mx-auto space-y-20 mt-16">
-                <FlightPromotions />
-            </div>
-        </div>
+      <div className="pt-44 pb-20 text-center text-destructive">
+        Error loading destinations
+      </div>
     );
+  }
+
+  const destinations = data?.data?.data || [];
+
+  const popularDests = destinations.filter(
+    (destination) => destination.is_popular === "1",
+  );
+
+  const dreamDests = destinations.filter(
+    (destination) => destination.is_dream === "1",
+  );
+
+  return (
+    <CommonHomeLayout
+      popularDests={popularDests}
+      dreamDests={dreamDests}
+      showDestinations={true}
+      searchSection={
+        <div className="absolute top-50 left-0 right-0 bottom-50 translate-y-1/2 z-20">
+          <section className="max-w-screen-2xl mx-auto lg:px-8">
+            <HolidaySearch />
+          </section>
+        </div>
+      }
+    />
+  );
 };
 
 export default HolidayHome;

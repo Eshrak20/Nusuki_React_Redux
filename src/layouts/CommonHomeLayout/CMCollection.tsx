@@ -9,7 +9,7 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 
-const FlightCollection = () => {
+const CMCollection = () => {
     const { data } = useFlightTourCollectionListsQuery();
     const collections: TourCollection[] = data?.data?.data || [];
 
@@ -105,4 +105,4 @@ const FlightCollection = () => {
     );
 };
 
-export default FlightCollection;
+export default CMCollection;
