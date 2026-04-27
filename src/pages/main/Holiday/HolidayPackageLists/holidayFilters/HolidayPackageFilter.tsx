@@ -19,7 +19,6 @@ interface HolidayPackageFilterProps {
 }
 
 const HolidayPackageFilter = ({ filters }: HolidayPackageFilterProps) => {
-  console.log(filters);
   
   const dispatch = useAppDispatch();
   const selectedFilters = useAppSelector((state) => state.holidayPackageFilters);

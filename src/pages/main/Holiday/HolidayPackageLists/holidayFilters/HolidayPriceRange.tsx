@@ -10,8 +10,8 @@ import { setMinPrice, setMaxPrice } from "@/redux/features/holidayPackageFilterS
 import FlightFilterSection from "@/pages/main/Flight/FlightDetail/filters/reusableComponents/FlightFilterSection";
 
 interface PriceRangeData {
-  min: number;
-  max: number;
+  min: number | null;
+  max: number | null;
 }
 
 interface HolidayPriceRangeProps {
