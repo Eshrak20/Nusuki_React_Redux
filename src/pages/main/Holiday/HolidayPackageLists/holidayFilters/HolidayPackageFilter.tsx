@@ -3,8 +3,6 @@ import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import {
   resetHolidayPackageFilters,
   setDurationDays,
-  setMaxPrice,
-  setMinPrice,
   setSearch,
 } from "@/redux/features/holidayPackageFilterSlice";
 
@@ -12,15 +10,17 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
-import { Label } from "@/components/ui/label";
-import type { TourPackageDynamicFilters } from "@/types/holiday/types.tourPackgeLists";
+import type { TourPackageDynamicFilters } from "@/types/holiday/types.tourPackageLists";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import HolidayPriceRange from "./HolidayPriceRange";
 
 interface HolidayPackageFilterProps {
   filters?: TourPackageDynamicFilters;
 }
 
 const HolidayPackageFilter = ({ filters }: HolidayPackageFilterProps) => {
+  console.log(filters);
+  
   const dispatch = useAppDispatch();
   const selectedFilters = useAppSelector((state) => state.holidayPackageFilters);
 
@@ -44,32 +44,10 @@ const HolidayPackageFilter = ({ filters }: HolidayPackageFilterProps) => {
         <div>
           <h3 className="border-b pb-3 font-semibold">Price Range</h3>
 
-          <div className="mt-4 grid grid-cols-2 gap-3">
-            <div>
-              <Label className="text-xs">Minimum Price</Label>
-              <Input
-                type="number"
-                placeholder="Min"
-                value={selectedFilters.min_price}
-                onChange={(e) => dispatch(setMinPrice(e.target.value))}
-                className="mt-2 rounded-md"
-              />
-            </div>
-
-            <div>
-              <Label className="text-xs">Maximum Price</Label>
-              <Input
-                type="number"
-                placeholder="Max"
-                value={selectedFilters.max_price}
-                onChange={(e) => dispatch(setMaxPrice(e.target.value))}
-                className="mt-2 rounded-md"
-              />
-            </div>
-          </div>
+          <HolidayPriceRange data={filters?.price} />
 
           <p className="mt-3 text-xs text-muted-foreground">
-            API Range:{" "}
+            Price Range:{" "}
             {filters?.price?.min ? `BDT ${filters.price.min}` : "Min N/A"} -{" "}
             {filters?.price?.max ? `BDT ${filters.price.max}` : "Max N/A"}
           </p>

@@ -1,4 +1,4 @@
-import type { TourPackageItem } from "@/types/holiday/types.tourPackgeLists";
+import type { TourPackageItem } from "@/types/holiday/types.tourPackageLists";
 import HolidayPackageCard from "./HolidayPackageCard";
 import HolidayPackageEmpty from "./HolidayPackageEmpty";
 

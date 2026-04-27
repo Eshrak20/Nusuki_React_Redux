@@ -1,7 +1,7 @@
 import { laravelApi } from "../laravelApi";
 import type { GetToursParams, ToursApiResponse } from "@/types/holiday/types.tour";
 import type { TourPackageDetailsApiResponse } from "@/types/holiday/types.tourPackage";
-import type { TourPackagesListParams, TourPackagesListResponse } from "@/types/holiday/types.tourPackgeLists";
+import type { TourPackagesListParams, TourPackagesListResponse } from "@/types/holiday/types.tourPackageLists";
 
 export const holidayApi = laravelApi.injectEndpoints({
   endpoints: (builder) => ({

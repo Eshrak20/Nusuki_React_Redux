@@ -1,4 +1,4 @@
-import type { TourPackageItem } from "@/types/holiday/types.tourPackgeLists";
+import type { TourPackageItem } from "@/types/holiday/types.tourPackageLists";
 import { CalendarDays, MapPin, Plane, CircleDollarSign } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 

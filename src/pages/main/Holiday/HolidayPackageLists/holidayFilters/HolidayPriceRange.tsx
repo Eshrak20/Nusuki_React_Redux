@@ -1,24 +1,21 @@
 import { useMemo, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { Slider } from "@/components/ui/slider";
 import { Input } from "@/components/ui/input";
-import type { RootState } from "@/redux/store";
-import { setRangeFilter } from "@/redux/features/flightSearchSlice";
-import FlightFilterSection from "./reusableComponents/FlightFilterSection";
-import PriceRangeFilterSkeleton from "@/components/skeletons/PriceRangeFilterSkeleton";
+
+// Updated to use your custom hooks for correct typings
+import { useAppDispatch, useAppSelector } from "@/redux/hooks"; 
+// Make sure to import your actual actions from your slice
+import { setMinPrice, setMaxPrice } from "@/redux/features/holidayPackageFilterSlice"; 
+
+import FlightFilterSection from "@/pages/main/Flight/FlightDetail/filters/reusableComponents/FlightFilterSection";
 
 interface PriceRangeData {
   min: number;
   max: number;
-  absolute_min: number;
-  absolute_max: number;
-  request_min_key?: string;
-  request_max_key?: string;
 }
 
-interface PriceRangeFilterProps {
+interface HolidayPriceRangeProps {
   data?: PriceRangeData;
-  isLoading: boolean;
 }
 
 type EditingField = "min" | "max" | null;
@@ -36,26 +33,26 @@ const getStep = (min: number, max: number) => {
   return 1000;
 };
 
-const PriceRangeFilter = ({ data, isLoading }: PriceRangeFilterProps) => {
-  
-  const dispatch = useDispatch();
+const HolidayPriceRange = ({ data }: HolidayPriceRangeProps) => {
+  const dispatch = useAppDispatch();
 
-  const selectedMin = useSelector(
-    (state: RootState) => state.flightSearch.filters.price_min,
-  );
-  const selectedMax = useSelector(
-    (state: RootState) => state.flightSearch.filters.price_max,
-  );
+  // Read from holidayPackageFilters instead of flightSearch
+  const selectedMinRaw = useAppSelector((state) => state.holidayPackageFilters.min_price);
+  const selectedMaxRaw = useAppSelector((state) => state.holidayPackageFilters.max_price);
+
+  // Convert to numbers if your slice stores them as strings
+  const selectedMin = selectedMinRaw ? Number(selectedMinRaw) : undefined;
+  const selectedMax = selectedMaxRaw ? Number(selectedMaxRaw) : undefined;
 
   const [dragValue, setDragValue] = useState<[number, number] | null>(null);
   const [editingField, setEditingField] = useState<EditingField>(null);
   const [minDraft, setMinDraft] = useState("");
   const [maxDraft, setMaxDraft] = useState("");
 
-  const fallbackMin = data?.min ?? 0;
-  const fallbackMax = data?.max ?? 0;
-  const absoluteMin = data?.absolute_min ?? 0;
-  const absoluteMax = data?.absolute_max ?? 0;
+  // Since your API returns `min` and `max` (8000 and 500000), 
+  // we treat them as the absolute limits.
+  const absoluteMin = data?.min ?? 0;
+  const absoluteMax = data?.max ?? 0;
 
   const step = useMemo(
     () => getStep(absoluteMin, absoluteMax),
@@ -63,8 +60,8 @@ const PriceRangeFilter = ({ data, isLoading }: PriceRangeFilterProps) => {
   );
 
   const committedValue: [number, number] = [
-    selectedMin ?? fallbackMin,
-    selectedMax ?? fallbackMax,
+    selectedMin ?? absoluteMin,
+    selectedMax ?? absoluteMax,
   ];
 
   const sliderValue = dragValue ?? committedValue;
@@ -78,21 +75,17 @@ const PriceRangeFilter = ({ data, isLoading }: PriceRangeFilterProps) => {
   const commitRange = (min: number, max: number) => {
     if (!data) return;
 
-    const safeMin = clamp(min, data.absolute_min, data.absolute_max);
-    const safeMax = clamp(max, data.absolute_min, data.absolute_max);
+    const safeMin = clamp(min, absoluteMin, absoluteMax);
+    const safeMax = clamp(max, absoluteMin, absoluteMax);
 
     const finalMin = Math.min(safeMin, safeMax);
     const finalMax = Math.max(safeMin, safeMax);
 
     setDragValue(null);
 
-    dispatch(
-      setRangeFilter({
-        category: "price",
-        min: finalMin,
-        max: finalMax,
-      }),
-    );
+    // Dispatching directly to your Holiday Package filter slice
+    dispatch(setMinPrice(finalMin.toString())); 
+    dispatch(setMaxPrice(finalMax.toString()));
   };
 
   const startEditingMin = () => {
@@ -133,14 +126,8 @@ const PriceRangeFilter = ({ data, isLoading }: PriceRangeFilterProps) => {
     setMaxDraft("");
   };
 
-  if (isLoading) {
-    return (
-      <PriceRangeFilterSkeleton/>
-    );
-  }
-
   if (!data) return null;
-  if (data.absolute_max <= data.absolute_min) return null;
+  if (absoluteMax <= absoluteMin) return null;
 
   return (
     <FlightFilterSection value="price-range" title="Price Range">
@@ -148,8 +135,8 @@ const PriceRangeFilter = ({ data, isLoading }: PriceRangeFilterProps) => {
         <div className="rounded-2xl border border-border/60 bg-muted/20 p-4 sm:p-5">
           <div className="px-1">
             <Slider
-              min={data.absolute_min}
-              max={data.absolute_max}
+              min={absoluteMin}
+              max={absoluteMax}
               step={step}
               value={sliderValue}
               onValueChange={(val) => setDragValue([val[0], val[1]])}
@@ -231,4 +218,4 @@ const PriceRangeFilter = ({ data, isLoading }: PriceRangeFilterProps) => {
   );
 };
 
-export default PriceRangeFilter;
+export default HolidayPriceRange;

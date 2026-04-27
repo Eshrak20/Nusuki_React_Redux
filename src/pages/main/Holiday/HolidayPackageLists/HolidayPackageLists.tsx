@@ -6,7 +6,7 @@ import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { setTourId, setPage } from "@/redux/features/holidayPackageFilterSlice";
 
 import HolidayPackageGrid from "./HolidayPackageGrid";
-import HolidayPackageFilter from "./HolidayPackageFilter";
+import HolidayPackageFilter from "./holidayFilters/HolidayPackageFilter";
 import HolidayCustomTourDialog from "./HolidayCustomTourDialog";
 
 import { Button } from "@/components/ui/button";
@@ -42,13 +42,16 @@ const HolidayPackageLists = () => {
 
   const packages = data?.data?.data ?? [];
   const dynamicFilters = data?.data?.filters;
+  console.log(dynamicFilters);
+  
   const pagination = data?.data?.pagination;
 
   return (
-    <div className="mt-32 bg-background pb-16 text-foreground lg:mt-40">
-      <div className="container mx-auto px-4">
-        <div className="mb-8 grid items-center gap-4 rounded-md border bg-linear-to-r from-primary/10 via-card to-primary/5 p-6 shadow-sm md:grid-cols-[1fr_auto]">
-          <div className="flex items-center gap-4">
+    <div className="mt-20 bg-background pb-16 text-foreground lg:mt-22.5">
+<div className=" border bg-linear-to-r mb-14 from-primary/10 via-card to-primary/5 py-8 shadow-sm">
+      <div className=" grid items-center max-w-7xl mx-auto gap-4 px-12 rounded-md md:grid-cols-[1fr_auto]">
+          
+            <div className="flex items-center gap-4">
             <div className="hidden size-14 items-center justify-center rounded-md bg-primary text-primary-foreground md:flex">
               <PlaneTakeoff size={28} />
             </div>
@@ -64,10 +67,15 @@ const HolidayPackageLists = () => {
                 Tell us your destination, budget, and date. Our team will contact you.
               </p>
             </div>
+            
+          </div>
+           <HolidayCustomTourDialog />
           </div>
 
-          <HolidayCustomTourDialog />
+         
         </div>
+      <div className="max-w-7xl mx-auto px-12">
+        
 
         <div className="grid grid-cols-1 gap-7 lg:grid-cols-12">
           <div className="lg:col-span-3">
