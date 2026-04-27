@@ -13,7 +13,7 @@ import { Button } from "@/components/ui/button";
 import { useGetTourPackagesListQuery } from "@/redux/api/holidayApi/holidayApi";
 import HolidayPackageSkeleton from "@/components/skeletons/HolidayPackageSkeleton";
 
-const HolidayPackgeLists = () => {
+const HolidayPackageLists = () => {
   const { tourId } = useParams<{ tourId: string }>();
   console.log(tourId);
   const dispatch = useAppDispatch();
@@ -47,7 +47,7 @@ const HolidayPackgeLists = () => {
   return (
     <div className="mt-32 bg-background pb-16 text-foreground lg:mt-40">
       <div className="container mx-auto px-4">
-        <div className="mb-8 grid items-center gap-4 rounded-md border bg-gradient-to-r from-primary/10 via-card to-primary/5 p-6 shadow-sm md:grid-cols-[1fr_auto]">
+        <div className="mb-8 grid items-center gap-4 rounded-md border bg-linear-to-r from-primary/10 via-card to-primary/5 p-6 shadow-sm md:grid-cols-[1fr_auto]">
           <div className="flex items-center gap-4">
             <div className="hidden size-14 items-center justify-center rounded-md bg-primary text-primary-foreground md:flex">
               <PlaneTakeoff size={28} />
@@ -55,7 +55,7 @@ const HolidayPackgeLists = () => {
 
             <div>
               <p className="text-sm font-medium text-primary">
-                Need a customised tour?
+                Need a customized tour ?
               </p>
               <h1 className="text-2xl font-bold md:text-4xl">
                 Build your dream holiday package
@@ -130,4 +130,4 @@ const HolidayPackgeLists = () => {
   );
 };
 
-export default HolidayPackgeLists;
+export default HolidayPackageLists;

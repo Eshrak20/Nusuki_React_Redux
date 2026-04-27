@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import HolidaySearch from "./HolidaySearch";
+import FlightPromotions from "../../Flight/FlightHome/FlightPromotions";
 
 const HolidayHome = () => {
     useEffect(() => {
@@ -9,10 +10,12 @@ const HolidayHome = () => {
         });
     }, []);
 
-
     return (
-        <div className="mt-44">
-         <HolidaySearch/>
+        <div className="mt-44 mb-20">
+            <HolidaySearch />
+            <div className="max-w-7xl mx-auto space-y-20 mt-16">
+                <FlightPromotions />
+            </div>
         </div>
     );
 };

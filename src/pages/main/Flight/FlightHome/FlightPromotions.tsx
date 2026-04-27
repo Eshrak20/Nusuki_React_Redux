@@ -80,7 +80,7 @@ const FlightPromotions = () => {
 
                 {/* Hover Overlay */}
                 <div className="absolute inset-0 bg-primary/75 dark:bg-black/75 backdrop-blur-[2px] opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-center items-center text-center p-6">
-                   <div className="transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 flex flex-col items-center">
+                  <div className="transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 flex flex-col items-center">
                     <h3 className="font-bold text-xl text-white mb-2 line-clamp-1">{promo.title}</h3>
                     <p className="text-sm font-medium text-white/90 mb-3 line-clamp-1">{promo.subtitle}</p>
                     <p className="text-xs text-gray-300 mb-5 line-clamp-3">{promo.description}</p>
@@ -99,9 +99,8 @@ const FlightPromotions = () => {
             <button
               key={index}
               onClick={() => setCurrentPage(index)}
-              className={`h-2 rounded-full transition-all duration-500 ${
-                activePage === index ? "w-10 bg-primary" : "w-2 bg-primary/20"
-              }`}
+              className={`h-2 rounded-full transition-all duration-500 ${activePage === index ? "w-10 bg-primary" : "w-2 bg-primary/20"
+                }`}
             />
           ))}
         </div>

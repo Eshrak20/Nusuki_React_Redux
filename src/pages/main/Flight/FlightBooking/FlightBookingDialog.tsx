@@ -72,7 +72,7 @@ const FlightBookingDialog = ({
           />
         ) : (
           <div className="flex h-full flex-col">
-              <div className="flex-1 px-4 py-6 md:px-8 xl:px-10 xl:overflow-y-auto">
+            <div className="flex-1 px-4 py-6 md:px-8 xl:px-10 xl:overflow-y-auto">
               <div className="mx-auto w-full max-w-7xl">
                 <div className="mb-6">
                   <h2 className="mx-8 text-center text-[18px] font-extrabold uppercase tracking-tight text-[#17306f] dark:text-[#8fb4ff] md:text-[34px] lg:mx-5 lg:text-[28px]">

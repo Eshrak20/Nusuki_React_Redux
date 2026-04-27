@@ -17,7 +17,7 @@ const FlightSegmentTimeline = ({ segments }: Props) => {
           initial={{ opacity: 0, y: 14 }}
           animate={{ opacity: 1, y: 0 }}
           // Added scale and slight lift on hover for the "jumping" vibe
-          whileHover={{ scale: 1.02, y: -4 }} 
+          whileHover={{ scale: 1.02, y: -4 }}
           transition={{ duration: 0.25, delay: index * 0.06 }}
           // Added 'group', 'hover:shadow-xl', and transition properties
           className="group rounded-2xl border border-border bg-card p-5 shadow-sm transition-all duration-300 hover:border-primary dark:hover:border-primary-light hover:bg-primary dark:hover:bg-primary-light hover:shadow-xl"
