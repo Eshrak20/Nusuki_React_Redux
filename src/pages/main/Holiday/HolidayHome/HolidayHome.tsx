@@ -41,7 +41,7 @@ const HolidayHome = () => {
       dreamDests={dreamDests}
       showDestinations={true}
       searchSection={
-        <div className="absolute top-50 left-0 right-0 bottom-100 translate-y-1/2 z-20">
+        <div className="absolute top-50 left-0 right-0 bottom-0 translate-y-1/2 z-20">
           <section className="max-w-screen-2xl mx-auto lg:px-8">
             <HolidaySearch />
           </section>
