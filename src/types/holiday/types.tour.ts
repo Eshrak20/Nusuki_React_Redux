@@ -58,3 +58,7 @@ export interface ToursApiResponse {
   data: ToursData;
   code: number;
 }
+export interface GetToursParams {
+  tour_type_id: number;
+  tour_region_id?: number;
+}

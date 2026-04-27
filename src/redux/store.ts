@@ -19,8 +19,10 @@ import { laravelApi } from "./api/laravelApi";
 import { medusaApi } from "./api/medusaApi";
 import flightSearchReducer from "@/redux/features/flightSearchSlice";
 import flightSessionReducer from "@/redux/features/flightSessionSlice";
+import holidayPackageFilterReducer from "@/redux/features/holidayPackageFilterSlice";
 
 const rootReducer = combineReducers({
+  holidayPackageFilters: holidayPackageFilterReducer,
   flightSearch: flightSearchReducer,
   flightSession: flightSessionReducer,
   universityFilter: universityFilterReducer,

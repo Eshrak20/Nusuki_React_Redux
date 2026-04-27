@@ -1,4 +1,3 @@
-import { BaggageClaim, BriefcaseBusiness, UserRound } from "lucide-react";
 import type { FlightResultItem } from "@/types/flight/flightResults.types";
 import AvailabilitySegmentCard from "./AvailabilitySegmentCard";
 import { getBaggage } from "@/lib/utils";
@@ -20,8 +19,6 @@ const AvailabilityTab = ({ flight }: Props) => {
     lastSegment?.destination?.city ||
     "N/A";
 
-  const cabinName = firstSegment?.cabin_name || "Not Found";
-  const bookingClass = firstSegment?.booking_code || "K";
 
   const baggage = getBaggage(flight);
 

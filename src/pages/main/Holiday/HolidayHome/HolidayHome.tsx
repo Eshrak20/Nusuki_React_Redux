@@ -1,11 +1,7 @@
-import { useGetToursQuery } from "@/redux/api/holidayApi/holidayApi";
 import { useEffect } from "react";
+import HolidaySearch from "./HolidaySearch";
 
 const HolidayHome = () => {
-    // API call
-    const { data, isLoading, isError } = useGetToursQuery();
-
-    // Scroll to top (only once on mount)
     useEffect(() => {
         window.scrollTo({
             top: 0,
@@ -13,20 +9,10 @@ const HolidayHome = () => {
         });
     }, []);
 
-    // Log API response
-    useEffect(() => {
-        if (data) {
-            console.log("Tours API Response:", data);
-            console.log("Tours:", data.data.tours);
-            console.log("Tour Types:", data.data.tour_types);
-            console.log("Regions:", data.data.regions);
-        }
-    }, [data]);
 
     return (
-        <div>
-            {isLoading && <p>Loading...</p>}
-            {isError && <p>Error fetching tours</p>}
+        <div className="mt-44">
+         <HolidaySearch/>
         </div>
     );
 };
