@@ -1,9 +1,9 @@
-// HolidayCustomTourDialog.tsx
-
 import { useState } from "react";
-import { Loader2, Send } from "lucide-react";
+import { format } from "date-fns";
+import { CalendarIcon, Loader2, Send } from "lucide-react";
 import { usePostContactInfoMutation } from "@/redux/api/formSubApi";
 
+import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -15,9 +15,18 @@ import {
 } from "@/components/ui/dialog";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
+import { Calendar } from "@/components/ui/calendar";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 
 const HolidayCustomTourDialog = () => {
   const [open, setOpen] = useState(false);
+  const [calendarOpen, setCalendarOpen] = useState(false);
+  const [travelDate, setTravelDate] = useState<Date | undefined>();
+
   const [postContactInfo, { isLoading }] = usePostContactInfoMutation();
 
   const [form, setForm] = useState({
@@ -25,7 +34,6 @@ const HolidayCustomTourDialog = () => {
     email: "",
     phone: "",
     destination: "",
-    travelDate: "",
     travelers: "",
     budget: "",
     note: "",
@@ -40,7 +48,7 @@ const HolidayCustomTourDialog = () => {
 Custom Tour Request
 
 Destination: ${form.destination}
-Travel Date: ${form.travelDate}
+Travel Date: ${travelDate ? format(travelDate, "PPP") : "-"}
 Travelers: ${form.travelers}
 Budget: ${form.budget}
 
@@ -57,12 +65,12 @@ ${form.note}
     }).unwrap();
 
     setOpen(false);
+    setTravelDate(undefined);
     setForm({
       name: "",
       email: "",
       phone: "",
       destination: "",
-      travelDate: "",
       travelers: "",
       budget: "",
       note: "",
@@ -71,15 +79,25 @@ ${form.note}
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger>
+      <DialogTrigger asChild>
         <Button size="lg" className="rounded-md px-8">
           Request Now
         </Button>
       </DialogTrigger>
 
-      <DialogContent className="max-w-2xl rounded-md">
+      <DialogContent
+        className="
+          w-[95vw] !max-w-2xl rounded-md
+          [&>button]:text-primary
+          [&>button]:opacity-100
+          [&>button:hover]:bg-primary/10
+          [&>button:hover]:text-primary
+        "
+      >
         <DialogHeader>
-          <DialogTitle>Request a Customised Tour</DialogTitle>
+          <DialogTitle className="text-xl font-bold text-foreground">
+            Request a Customised Tour
+          </DialogTitle>
         </DialogHeader>
 
         <div className="grid gap-4 md:grid-cols-2">
@@ -95,6 +113,7 @@ ${form.note}
           <div>
             <Label>Email</Label>
             <Input
+              type="email"
               className="mt-2 rounded-md"
               value={form.email}
               onChange={(e) => handleChange("email", e.target.value)}
@@ -121,18 +140,42 @@ ${form.note}
 
           <div>
             <Label>Travel Date</Label>
-            <Input
-              type="date"
-              className="mt-2 rounded-md"
-              value={form.travelDate}
-              onChange={(e) => handleChange("travelDate", e.target.value)}
-            />
+
+            <Popover open={calendarOpen} onOpenChange={setCalendarOpen}>
+              <PopoverTrigger asChild>
+                <Button
+                  type="button"
+                  variant="outline"
+                  className={cn(
+                    "mt-2 h-10 w-full justify-start rounded-md text-left font-normal",
+                    !travelDate && "text-muted-foreground",
+                  )}
+                >
+                  <CalendarIcon className="mr-2 h-4 w-4 text-primary" />
+                  {travelDate ? format(travelDate, "PPP") : "Pick a date"}
+                </Button>
+              </PopoverTrigger>
+
+              <PopoverContent className="w-auto rounded-md p-0" align="start">
+                <Calendar
+                  mode="single"
+                  selected={travelDate}
+                  onSelect={(date) => {
+                    setTravelDate(date);
+                    setCalendarOpen(false);
+                  }}
+                  disabled={(date) => date < new Date()}
+                  initialFocus
+                />
+              </PopoverContent>
+            </Popover>
           </div>
 
           <div>
             <Label>Travelers</Label>
             <Input
               type="number"
+              min={1}
               className="mt-2 rounded-md"
               value={form.travelers}
               onChange={(e) => handleChange("travelers", e.target.value)}
@@ -162,7 +205,7 @@ ${form.note}
         <Button
           onClick={handleSubmit}
           disabled={isLoading}
-          className="mt-2 w-full rounded-md"
+          className="mt-2 h-11 w-full text-white! dark:text-black! hover:text-primary! dark:hover:text-red-400! rounded-md"
         >
           {isLoading ? (
             <Loader2 size={18} className="mr-2 animate-spin" />

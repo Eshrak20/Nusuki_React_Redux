@@ -41,6 +41,7 @@ export interface TourPackageDetails {
   cancelation_policy: string;
   tax: string;
   included_service: string;
+  excluded_service: string;
   general_condition: string;
   equated_monthly_installment: string;
   images: TourPackageImage[];

@@ -29,6 +29,7 @@ import FlightDetailsMain from "@/pages/main/Flight/FlightDetail/FlightDetailsMai
 import HolidayLayout from "@/layouts/HolidayLayout";
 import HolidayHome from "@/pages/main/Holiday/HolidayHome/HolidayHome";
 import HolidayPackageLists from "@/pages/main/Holiday/HolidayPackageLists/HolidayPackageLists";
+import HolidayDetails from "@/pages/main/Holiday/HolidayDetails/HolidayDetails";
 // import ShopCheckOutMain from "@/pages/main/Shop/ShopCheckOut/ShopCheckOutMain";
 
 export const router = createBrowserRouter([
@@ -129,6 +130,10 @@ export const router = createBrowserRouter([
           {
             path: ":tourId",
             element: <HolidayPackageLists />,
+          },
+          {
+            path: "package/:tourPacId",
+            element: <HolidayDetails />,
           },
         ],
       },

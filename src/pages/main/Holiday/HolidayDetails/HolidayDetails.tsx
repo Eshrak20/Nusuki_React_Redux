@@ -1,19 +1,28 @@
 import { useParams } from "react-router-dom";
 import { Loader2 } from "lucide-react";
+
 import { useGetTourPackageDetailsQuery } from "@/redux/api/holidayApi/holidayApi";
 
-const HolidayDetails = () => {
-  const { id } = useParams();
+import HolidayHero from "./HolidayHero";
+import HolidayInfoAccordion from "./HolidayInfoAccordion";
+import HolidayOfferSidebar from "./HolidayOfferSidebar";
+import HolidayImageGallery from "./HolidayImageGallery";
 
-  const { data, isLoading, isError } = useGetTourPackageDetailsQuery(id!, {
-    skip: !id,
-  });
+const HolidayDetails = () => {
+  const { tourPacId } = useParams();
+
+  const { data, isLoading, isError } = useGetTourPackageDetailsQuery(
+    tourPacId!,
+    {
+      skip: !tourPacId,
+    },
+  );
 
   const details = data?.data;
 
   if (isLoading) {
     return (
-      <div className="flex min-h-[300px] items-center justify-center gap-2 text-muted-foreground">
+      <div className="flex min-h-[400px] items-center justify-center gap-2 text-muted-foreground">
         <Loader2 className="h-5 w-5 animate-spin" />
         Loading holiday details...
       </div>
@@ -22,30 +31,77 @@ const HolidayDetails = () => {
 
   if (isError || !details) {
     return (
-      <div className="py-20 text-center text-destructive">
+      <div className="py-24 text-center text-destructive">
         Failed to load holiday details.
       </div>
     );
   }
 
+  const infoItems = [
+    {
+      title: "Highlights",
+      content: details.highlights,
+    },
+    {
+      title: "Itinerary",
+      content: details.itinerary,
+    },
+    {
+      title: "Pickup Note",
+      content: details.pickup_note,
+    },
+    {
+      title: "Cancellation Policy",
+      content: details.cancelation_policy,
+    },
+    {
+      title: "Tax",
+      content: details.tax,
+    },
+    {
+      title: "Included Service",
+      content: details.included_service,
+    },
+    {
+      title: "Excluded Service",
+      content: details.excluded_service,
+    },
+    {
+      title: "General Condition",
+      content: details.general_condition,
+    },
+    {
+      title: "Equated Monthly Installment",
+      content: details.equated_monthly_installment,
+    },
+  ];
+
   return (
-    <section className="mx-auto mt-44 max-w-7xl px-4 py-8">
-      <div className="border bg-card p-6 shadow-sm">
-        <h1 className="text-3xl font-bold text-foreground">
-          {details.name}
-        </h1>
+    <>
+      <section className="mx-auto mt-28 max-w-7xl px-4 py-8 sm:mt-36 lg:mt-40">
+        <HolidayImageGallery
+          images={details.images || []}
+          title={details.name}
+        />
 
-        <p className="mt-2 text-muted-foreground">
-          {details.city_name}, {details.country_name}
-        </p>
+        <div className="mt-8">
+          <HolidayHero
+            name={details.name}
+            cityName={details.city_name}
+            countryName={details.country_name}
+            durationDays={details.duration_days}
+          />
+        </div>
 
-        {details.address && (
-          <p className="mt-4 text-sm text-muted-foreground">
-            {details.address}
-          </p>
-        )}
-      </div>
-    </section>
+        <div className="mt-10 grid gap-8 lg:grid-cols-[minmax(0,1fr)_390px]">
+          <div className="min-w-0">
+            <HolidayInfoAccordion items={infoItems} />
+          </div>
+
+          <HolidayOfferSidebar offers={details.offers || []} />
+        </div>
+      </section>
+    </>
   );
 };
 
