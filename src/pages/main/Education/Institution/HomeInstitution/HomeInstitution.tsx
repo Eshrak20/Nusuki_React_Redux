@@ -30,7 +30,7 @@ const HomeInstitution = () => {
   const pagination = data?.data; 
 
   return (
-    <div className="pt-32 pb-3 max-w-7xl mx-auto min-h-screen">
+    <div className="pb-3 max-w-7xl mx-auto min-h-screen">
       {/* Search and Filter Header */}
       <div className="flex flex-col md:flex-row items-center justify-between mb-7 gap-6 md:gap-10 pl-2">
         {/* Showing Results */}

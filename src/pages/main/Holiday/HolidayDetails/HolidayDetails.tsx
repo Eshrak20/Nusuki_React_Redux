@@ -93,7 +93,7 @@ const HolidayDetails = () => {
           />
         </div>
 
-        <div className="mt-10 grid gap-8 lg:grid-cols-[minmax(0,1fr)_390px]">
+          <div className="mt-10 grid items-start gap-8 lg:grid-cols-[minmax(0,1fr)_390px]">
           <div className="min-w-0">
             <HolidayInfoAccordion items={infoItems} />
           </div>

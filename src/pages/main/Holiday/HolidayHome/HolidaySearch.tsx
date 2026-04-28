@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { Search, MapPin, ArrowRight, CheckCircle2 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -13,42 +13,30 @@ const HolidaySearch = () => {
   const [cardTouched, setCardTouched] = useState(false);
 
   const queryParams = useMemo(() => {
-    const params: {
-      tour_type_id: number;
-      tour_region_id?: number;
-    } = {
+    return {
       tour_type_id: tourTypeId,
+      ...(regionId !== null ? { tour_region_id: regionId } : {}),
     };
-
-    if (regionId !== null) {
-      params.tour_region_id = regionId;
-    }
-
-    return params;
   }, [tourTypeId, regionId]);
 
   const { data, isLoading, isError } = useGetToursQuery(queryParams);
 
   const tourData = data?.data;
-  const tours = tourData?.tours ?? [];
   const tourTypes = tourData?.tour_types ?? [];
   const regions = tourData?.regions ?? [];
+  const tours = useMemo(() => {
+    return tourData?.tours ?? [];
+  }, [tourData]);
 
-  useEffect(() => {
-    if (tourData?.selected_tour_region_id) {
-      setRegionId(tourData.selected_tour_region_id);
-    }
-  }, [tourData?.selected_tour_region_id]);
+  const activeRegionId = regionId ?? tourData?.selected_tour_region_id ?? null;
 
-  useEffect(() => {
-    if (tours.length > 0) {
-      setSelectedTourId(tours[0].id);
-    } else {
-      setSelectedTourId(null);
+  const activeTourId = useMemo(() => {
+    if (selectedTourId && tours.some((tour) => tour.id === selectedTourId)) {
+      return selectedTourId;
     }
 
-    setCardTouched(false);
-  }, [tours]);
+    return tours[0]?.id ?? null;
+  }, [selectedTourId, tours]);
 
   const handleTourTypeChange = (id: number) => {
     setTourTypeId(id);
@@ -87,7 +75,7 @@ const HolidaySearch = () => {
       <div
         className={cn(
           "mx-auto max-w-7xl border bg-card p-6 shadow-lg transition-all duration-300",
-          cardTouched && "border-primary/40 shadow-primary/10"
+          cardTouched && "border-primary/40 shadow-primary/10",
         )}
       >
         <div className="flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
@@ -96,11 +84,12 @@ const HolidaySearch = () => {
               {tourTypes.map((type) => (
                 <button
                   key={type.id}
+                  type="button"
                   onClick={() => handleTourTypeChange(type.id)}
                   className={cn(
                     "border px-5 py-3 text-sm font-semibold transition hover:border-primary",
                     tourTypeId === type.id &&
-                      "border-primary bg-primary text-white"
+                      "border-primary bg-primary text-white",
                   )}
                 >
                   {type.name}
@@ -117,11 +106,12 @@ const HolidaySearch = () => {
                 {regions.map((region) => (
                   <button
                     key={region.id}
+                    type="button"
                     onClick={() => handleRegionChange(region.id)}
                     className={cn(
                       "border px-4 py-2 text-sm font-medium transition hover:border-primary hover:text-primary",
-                      regionId === region.id &&
-                        "border-primary bg-primary text-white hover:text-white"
+                      activeRegionId === region.id &&
+                        "border-primary bg-primary text-white hover:text-white",
                     )}
                   >
                     {region.name}
@@ -132,13 +122,13 @@ const HolidaySearch = () => {
           </div>
 
           <Button
-            onClick={() => selectedTourId && goToLists(selectedTourId)}
-            disabled={!selectedTourId}
+            onClick={() => activeTourId && goToLists(activeTourId)}
+            disabled={!activeTourId}
             className={cn(
               "h-16 px-10 text-lg font-bold shadow-lg transition-all duration-300",
-              selectedTourId &&
+              activeTourId &&
                 "hover:-translate-y-0.5 hover:scale-[1.02] hover:shadow-xl",
-              cardTouched && "animate-pulse ring-4 ring-primary/20"
+              cardTouched && "animate-pulse ring-4 ring-primary/20",
             )}
           >
             <Search className="mr-2 h-6 w-6" />
@@ -147,9 +137,9 @@ const HolidaySearch = () => {
           </Button>
         </div>
 
-        <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-5">
+        <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-6">
           {tours.map((tour) => {
-            const isSelected = selectedTourId === tour.id;
+            const isSelected = activeTourId === tour.id;
 
             return (
               <button
@@ -160,7 +150,7 @@ const HolidaySearch = () => {
                   "group relative h-40 overflow-hidden border text-left shadow-sm transition-all duration-300",
                   "hover:-translate-y-1 hover:shadow-xl",
                   isSelected &&
-                    "border-primary shadow-xl ring-4 ring-primary/30"
+                    "border-primary shadow-xl ring-4 ring-primary/30",
                 )}
               >
                 <img
@@ -168,14 +158,14 @@ const HolidaySearch = () => {
                   alt={tour.display_name}
                   className={cn(
                     "h-full w-full object-cover transition duration-500 group-hover:scale-110",
-                    isSelected && "scale-105"
+                    isSelected && "scale-105",
                   )}
                 />
 
                 <div
                   className={cn(
                     "absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent",
-                    isSelected && "bg-primary/15"
+                    isSelected && "bg-primary/15",
                   )}
                 />
 

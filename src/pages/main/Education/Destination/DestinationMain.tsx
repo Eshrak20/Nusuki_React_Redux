@@ -21,7 +21,7 @@ import DestPageNavSkeleton from "@/components/skeletons/DestPageNavSkeleton";
 const DestinationMain = () => {
 
   window.scrollTo({
-    top: 425,
+    top: 720,
     behavior: "smooth",
   });
 
@@ -44,7 +44,7 @@ const DestinationMain = () => {
   const destination = data?.data;
 
   return (
-    <div>
+    <div className="-mt-5">
       <DestHero hero={destination.hero} />
       <div className="max-w-7xl mx-auto space-y-20">
         <DestOnPageNav navItems={destination.on_page_nav} />

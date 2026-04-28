@@ -5,7 +5,7 @@ import { ArrowUp, MenuIcon, Sparkles } from "lucide-react";
 
 import logoWhite from "../../assets/reactAssets/Logo/whiteLogo.png";
 import logoDark from "../../assets/reactAssets/Logo/darkLogo.png";
-import logoEduLight from "../../assets/reactAssets/Logo/eduLight (Edited).jpeg";
+import logoEduLight from "../../assets/reactAssets/Logo/eduLight.png";
 import logoEduDark from "../../assets/reactAssets/Logo/eduDark1.png";
 
 import { Button } from "@/components/ui/button";
@@ -86,12 +86,6 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Close mobile menu on route change
-  useEffect(() => {
-    setIsPopoverOpen(false);
-    setOpenMobileMenu(null);
-  }, [location.pathname]);
-
   const closeMobileMenu = useCallback(() => {
     setIsPopoverOpen(false);
     setOpenMobileMenu(null);
@@ -106,25 +100,25 @@ export default function Navbar() {
       <motion.header
         initial={{ y: -90, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
-        transition={{ 
-          duration: 0.45, 
-          ease: [0.25, 0.46, 0.45, 0.94] // Custom ease for smoother animation
+        transition={{
+          duration: 0.45,
+          ease: [0.25, 0.46, 0.45, 0.94], // Custom ease for smoother animation
         }}
         className={cn(
           "fixed left-0 top-0 z-50 w-full transition-all duration-500",
-          scrolled && "shadow-lg border-border bg-card/95"
+          scrolled && " bg-card/60",
         )}
       >
-        <div className="mx-auto flex h-20 max-w-7xl items-center justify-between gap-4 px-4 md:px-6">
+        <div className="mx-auto flex h-20 max-w-350 items-center justify-between gap-4 px-4 md:px-6">
           {/* Logo with enhanced animation */}
           <motion.div
-            whileHover={{ scale: 1.05 }}
+            whileHover={{ scale: 1.08 }}
             whileTap={{ scale: 0.95 }}
-            transition={{ type: "spring", stiffness: 400, damping: 17 }}
+            transition={{ type: "spring", stiffness: 300, damping: 15 }}
           >
             <Link
               to="/"
-              className="flex h-14 w-44 shrink-0 items-center md:w-52"
+              className="flex h-20 w-56 shrink-0 items-center md:h-24 md:w-64"
             >
               <img
                 src={
@@ -133,7 +127,7 @@ export default function Navbar() {
                     : logoWhite
                 }
                 alt="Logo"
-                className="max-h-12 w-full object-contain dark:hidden"
+                className="h-full w-full object-contain dark:hidden"
               />
               <img
                 src={
@@ -142,7 +136,7 @@ export default function Navbar() {
                     : logoDark
                 }
                 alt="Logo"
-                className="hidden max-h-12 w-full object-contain dark:block"
+                className="hidden h-full w-full object-contain dark:block"
               />
             </Link>
           </motion.div>
@@ -166,9 +160,9 @@ export default function Navbar() {
                             initial={{ opacity: 0, y: 12, scale: 0.96 }}
                             animate={{ opacity: 1, y: 0, scale: 1 }}
                             exit={{ opacity: 0, y: 12, scale: 0.96 }}
-                            transition={{ 
-                              duration: 0.25, 
-                              ease: [0.25, 0.46, 0.45, 0.94] 
+                            transition={{
+                              duration: 0.25,
+                              ease: [0.25, 0.46, 0.45, 0.94],
                             }}
                             className="mt-2 w-64 space-y-1 rounded-2xl border border-border/70 bg-popover p-2 shadow-2xl shadow-black/10 backdrop-blur-xl"
                           >
@@ -177,9 +171,9 @@ export default function Navbar() {
                                 key={sub.href}
                                 initial={{ opacity: 0, x: -10 }}
                                 animate={{ opacity: 1, x: 0 }}
-                                transition={{ 
+                                transition={{
                                   delay: index * 0.05,
-                                  duration: 0.2 
+                                  duration: 0.2,
                                 }}
                               >
                                 <DropdownContentItem
@@ -217,12 +211,9 @@ export default function Navbar() {
           {/* Right section with animated buttons */}
           <div className="flex items-center gap-2">
             <div className="hidden items-center gap-2 sm:flex">
-              <AnimatedAuthButton
-                href="/login"
-                variant="login"
-              >
+              <AnimatedAuthButton href="/login" variant="login">
                 <span className="flex items-center gap-1.5">
-                  <Sparkles size={16} className="opacity-70" />
+                  {/* <Sparkles size={16} className="opacity-70" /> */}
                   Login
                 </span>
               </AnimatedAuthButton>
@@ -234,23 +225,17 @@ export default function Navbar() {
               >
                 <span className="flex items-center gap-1.5">
                   Sign Up
-                  <Sparkles size={16} className="opacity-70" />
+                  {/* <Sparkles size={16} className="opacity-70" /> */}
                 </span>
               </AnimatedAuthButton>
             </div>
 
-            <motion.div
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
-            >
+            <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
               <ModeToggle />
             </motion.div>
 
             {/* Mobile menu button with enhanced animation */}
-            <motion.div 
-              className="md:hidden"
-              whileTap={{ scale: 0.9 }}
-            >
+            <motion.div className="md:hidden" whileTap={{ scale: 0.9 }}>
               <Popover open={isPopoverOpen} onOpenChange={setIsPopoverOpen}>
                 <PopoverTrigger asChild>
                   <Button
@@ -258,7 +243,7 @@ export default function Navbar() {
                     size="icon"
                     className={cn(
                       "relative rounded-xl text-foreground transition-all duration-300",
-                      "hover:bg-primary/10 hover:text-primary overflow-hidden"
+                      "hover:bg-primary/10 hover:text-primary overflow-hidden",
                     )}
                   >
                     <motion.div
@@ -283,7 +268,9 @@ export default function Navbar() {
                     <div className="mb-4 flex items-center justify-between border-b border-border/70 pb-3">
                       <div className="flex items-center gap-2">
                         <Sparkles size={18} className="text-primary" />
-                        <p className="text-sm font-bold text-foreground">Navigation Menu</p>
+                        <p className="text-sm font-bold text-foreground">
+                          Navigation Menu
+                        </p>
                       </div>
                       <p className="text-xs font-medium text-muted-foreground">
                         Nusuki
@@ -294,7 +281,9 @@ export default function Navbar() {
                       {navigationLinks.map((link) => {
                         const hasSubLinks = !!link.subLinks;
                         const isExpanded = openMobileMenu === link.label;
-                        const isActive = location.pathname.startsWith(link.href);
+                        const isActive = location.pathname.startsWith(
+                          link.href,
+                        );
 
                         return (
                           <motion.div
@@ -325,23 +314,26 @@ export default function Navbar() {
                                   initial={{ height: 0, opacity: 0 }}
                                   animate={{ height: "auto", opacity: 1 }}
                                   exit={{ height: 0, opacity: 0 }}
-                                  transition={{ 
-                                    duration: 0.3, 
-                                    ease: [0.25, 0.46, 0.45, 0.94] 
+                                  transition={{
+                                    duration: 0.3,
+                                    ease: [0.25, 0.46, 0.45, 0.94],
                                   }}
                                   className="overflow-hidden"
                                 >
-                                  <motion.div 
+                                  <motion.div
                                     className="ml-3 mt-2 flex flex-col gap-1 border-l-2 border-primary/30 pl-3"
                                     initial="collapsed"
                                     animate="open"
                                     variants={{
                                       open: {
-                                        transition: { staggerChildren: 0.05 }
+                                        transition: { staggerChildren: 0.05 },
                                       },
                                       collapsed: {
-                                        transition: { staggerChildren: 0.05, staggerDirection: -1 }
-                                      }
+                                        transition: {
+                                          staggerChildren: 0.05,
+                                          staggerDirection: -1,
+                                        },
+                                      },
                                     }}
                                   >
                                     {link.subLinks.map((sub) => (
@@ -349,13 +341,15 @@ export default function Navbar() {
                                         key={sub.href}
                                         variants={{
                                           open: { opacity: 1, x: 0 },
-                                          collapsed: { opacity: 0, x: -10 }
+                                          collapsed: { opacity: 0, x: -10 },
                                         }}
                                       >
                                         <MobileSubNavItem
                                           href={sub.href}
                                           label={sub.label}
-                                          active={location.pathname === sub.href}
+                                          active={
+                                            location.pathname === sub.href
+                                          }
                                           onClick={closeMobileMenu}
                                         />
                                       </motion.div>
@@ -369,7 +363,7 @@ export default function Navbar() {
                       })}
                     </div>
 
-                    <motion.div 
+                    <motion.div
                       className="mt-4 grid grid-cols-2 gap-3 border-t border-border/70 pt-3 sm:hidden"
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
@@ -407,27 +401,27 @@ export default function Navbar() {
         {showTopBtn && (
           <motion.button
             initial={{ opacity: 0, scale: 0.5, y: 20 }}
-            animate={{ 
-              opacity: 1, 
-              scale: 1, 
+            animate={{
+              opacity: 1,
+              scale: 1,
               y: 0,
               transition: {
                 type: "spring",
                 stiffness: 260,
-                damping: 20
-              }
+                damping: 20,
+              },
             }}
-            exit={{ 
-              opacity: 0, 
-              scale: 0.5, 
+            exit={{
+              opacity: 0,
+              scale: 0.5,
               y: 20,
               transition: {
-                duration: 0.2
-              }
+                duration: 0.2,
+              },
             }}
-            whileHover={{ 
+            whileHover={{
               scale: 1.1,
-              transition: { type: "spring", stiffness: 400, damping: 10 }
+              transition: { type: "spring", stiffness: 400, damping: 10 },
             }}
             whileTap={{ scale: 0.9 }}
             onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
@@ -435,20 +429,20 @@ export default function Navbar() {
               "fixed bottom-6 right-6 z-50 flex h-14 w-14 items-center justify-center rounded-2xl",
               "text-primary-foreground shadow-2xl",
               "transition-all duration-300",
-              isSpecialRoute 
-                ? "bg-hajj shadow-hajj/25 hover:shadow-hajj/40" 
-                : "bg-primary shadow-primary/25 hover:shadow-primary/40"
+              isSpecialRoute
+                ? "bg-hajj shadow-hajj/25 hover:shadow-hajj/40"
+                : "bg-primary shadow-primary/25 hover:shadow-primary/40",
             )}
             aria-label="Scroll to top"
           >
             <motion.div
-              animate={{ 
+              animate={{
                 y: [0, -3, 0],
               }}
-              transition={{ 
-                repeat: Infinity, 
+              transition={{
+                repeat: Infinity,
                 duration: 2,
-                ease: "easeInOut"
+                ease: "easeInOut",
               }}
             >
               <ArrowUp className="h-6 w-6" />

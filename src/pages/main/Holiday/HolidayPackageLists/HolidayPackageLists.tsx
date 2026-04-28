@@ -1,13 +1,12 @@
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { PlaneTakeoff } from "lucide-react";
 
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { setTourId, setPage } from "@/redux/features/holidayPackageFilterSlice";
 
 import HolidayPackageGrid from "./HolidayPackageGrid";
 import HolidayPackageFilter from "./holidayFilters/HolidayPackageFilter";
-import HolidayCustomTourDialog from "./HolidayCustomTourDialog";
+import HolidayPackageHeader from "./HolidayPackageHeader";
 
 import { Button } from "@/components/ui/button";
 import { useGetTourPackagesListQuery } from "@/redux/api/holidayApi/holidayApi";
@@ -15,7 +14,6 @@ import HolidayPackageSkeleton from "@/components/skeletons/HolidayPackageSkeleto
 
 const HolidayPackageLists = () => {
   const { tourId } = useParams<{ tourId: string }>();
-  console.log(tourId);
   const dispatch = useAppDispatch();
 
   const filters = useAppSelector((state) => state.holidayPackageFilters);
@@ -37,46 +35,20 @@ const HolidayPackageLists = () => {
     filters,
     {
       skip: !filters.tour_id,
-    }
+    },
   );
 
   const packages = data?.data?.data ?? [];
   const dynamicFilters = data?.data?.filters;
-  console.log(dynamicFilters);
-  
   const pagination = data?.data?.pagination;
 
   return (
     <div className="mt-20 bg-background pb-16 text-foreground lg:mt-22.5">
-<div className=" border bg-linear-to-r mb-14 from-primary/10 via-card to-primary/5 py-8 shadow-sm">
-      <div className=" grid items-center max-w-7xl mx-auto gap-4 px-12 rounded-md md:grid-cols-[1fr_auto]">
-          
-            <div className="flex items-center gap-4">
-            <div className="hidden size-14 items-center justify-center rounded-md bg-primary text-primary-foreground md:flex">
-              <PlaneTakeoff size={28} />
-            </div>
+      <HolidayPackageHeader
+        videoUrl="https://assets.sharetrip.net/hero-bg-cover.mp4"
+      />
 
-            <div>
-              <p className="text-sm font-medium text-primary">
-                Need a customized tour ?
-              </p>
-              <h1 className="text-2xl font-bold md:text-4xl">
-                Build your dream holiday package
-              </h1>
-              <p className="mt-1 text-sm text-muted-foreground">
-                Tell us your destination, budget, and date. Our team will contact you.
-              </p>
-            </div>
-            
-          </div>
-           <HolidayCustomTourDialog />
-          </div>
-
-         
-        </div>
-      <div className="max-w-7xl mx-auto px-12">
-        
-
+      <div className="mx-auto max-w-7xl px-5 sm:px-8 lg:px-12">
         <div className="grid grid-cols-1 gap-7 lg:grid-cols-12">
           <div className="lg:col-span-3">
             <HolidayPackageFilter filters={dynamicFilters} />
@@ -92,7 +64,7 @@ const HolidayPackageLists = () => {
               </div>
 
               {isFetching && !isLoading && (
-                <p className="text-sm text-primary">Updating...</p>
+                <p className="text-sm font-medium text-primary">Updating...</p>
               )}
             </div>
 

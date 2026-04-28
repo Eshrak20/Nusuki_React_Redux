@@ -23,7 +23,7 @@ interface Props {
 
 const HolidayOfferSidebar = ({ offers }: Props) => {
   return (
-    <aside className="space-y-5 lg:sticky lg:top-28">
+    <aside className="space-y-5 lg:sticky lg:top-22 self-start lg:max-h-[calc(100vh-8rem)] lg:overflow-y-auto">
       <div className="border bg-primary/10 p-6 shadow-sm">
         <h3 className="text-xl font-bold text-foreground">
           Plan Holiday, Your Way!

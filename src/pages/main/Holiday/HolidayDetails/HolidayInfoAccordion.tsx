@@ -1,4 +1,5 @@
 import { useMemo, useState } from "react";
+import { motion } from "framer-motion";
 import {
   Accordion,
   AccordionContent,
@@ -37,41 +38,92 @@ const HolidayInfoAccordion = ({ items }: Props) => {
     getInitialOpenValues(allValues)
   );
 
-  return (
-    <Accordion
-      type="multiple"
-      value={openValues}
-      onValueChange={setOpenValues}
-      className="space-y-3"
-    >
-      {filteredItems.map((item) => (
-        <AccordionItem
-          key={item.title}
-          value={item.title}
-          className="border bg-card px-5 shadow-sm"
-        >
-          <AccordionTrigger className="text-base font-semibold hover:no-underline">
-            {item.title}
-          </AccordionTrigger>
+  if (!filteredItems.length) return null;
 
-          <AccordionContent>
-            <div
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 24, filter: "blur(10px)" }}
+      animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+      transition={{ duration: 0.55, ease: "easeOut" }}
+      className="space-y-4"
+    >
+      <Accordion
+        type="multiple"
+        value={openValues}
+        onValueChange={setOpenValues}
+        className="space-y-4"
+      >
+        {filteredItems.map((item, index) => (
+          <motion.div
+            key={item.title}
+            initial={{ opacity: 0, y: 18, filter: "blur(8px)" }}
+            animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+            transition={{
+              duration: 0.45,
+              delay: index * 0.08,
+              ease: "easeOut",
+            }}
+          >
+            <AccordionItem
+              value={item.title}
               className="
-                holiday-html
-                max-w-none text-sm leading-7 text-foreground
-                [&_ul]:ml-5 [&_ul]:list-disc [&_ul]:space-y-2
-                [&_ol]:ml-5 [&_ol]:list-decimal [&_ol]:space-y-2
-                [&_li]:pl-1
-                [&_li_p]:m-0
-                [&_p]:my-2
-                [&_strong]:font-semibold
+                overflow-hidden border border-border/70
+                bg-card/80 px-5 shadow-sm backdrop-blur-xl
+                transition-all duration-300
+                hover:border-primary/40 hover:bg-card
+                hover:shadow-lg hover:shadow-primary/5
               "
-              dangerouslySetInnerHTML={{ __html: item.content || "" }}
-            />
-          </AccordionContent>
-        </AccordionItem>
-      ))}
-    </Accordion>
+            >
+              <AccordionTrigger
+                className="
+                  group py-5 text-left text-base font-semibold
+                  text-foreground transition hover:no-underline
+                "
+              >
+                <span className="flex items-center gap-3">
+                  <span
+                    className="
+                      h-2.5 w-2.5 shrink-0 bg-primary
+                      shadow-sm shadow-primary/40 transition-all duration-300
+                      group-hover:scale-125
+                    "
+                  />
+                  <span className="transition-colors duration-300 group-hover:text-primary">
+                    {item.title}
+                  </span>
+                </span>
+              </AccordionTrigger>
+
+              <AccordionContent>
+                <motion.div
+                  initial={{ opacity: 0, y: -6 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.35, ease: "easeOut" }}
+                  className="pb-5"
+                >
+                  <div
+                    className="
+                      holiday-html max-w-none border-l-2 border-primary/30
+                      pl-4 text-sm leading-7 text-muted-foreground
+
+                      [&_ul]:ml-5 [&_ul]:list-disc [&_ul]:space-y-2
+                      [&_ol]:ml-5 [&_ol]:list-decimal [&_ol]:space-y-2
+                      [&_li]:pl-1
+                      [&_li_p]:m-0
+                      [&_p]:my-2
+                      [&_strong]:font-semibold [&_strong]:text-foreground
+                      [&_a]:font-medium [&_a]:text-primary [&_a]:underline-offset-4
+                      [&_a:hover]:underline
+                    "
+                    dangerouslySetInnerHTML={{ __html: item.content || "" }}
+                  />
+                </motion.div>
+              </AccordionContent>
+            </AccordionItem>
+          </motion.div>
+        ))}
+      </Accordion>
+    </motion.div>
   );
 };
 

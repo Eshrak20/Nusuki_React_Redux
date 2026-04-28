@@ -50,7 +50,7 @@ const EducationLayout = () => {
       </div>
 
       <div
-        className={`transition-all min-h-[60vh] ${isSticky ? "pt-32" : "pt-16"}`}
+        className={`transition-all min-h-[60vh] ${isSticky ? "pt-5" : "pt-16"}`}
       >
         <Outlet />
       </div>

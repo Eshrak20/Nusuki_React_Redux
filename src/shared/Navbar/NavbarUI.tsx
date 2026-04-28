@@ -108,7 +108,7 @@ interface MobileNavItemProps {
   href: string;
   label: string;
   active: boolean;
-  onClick: () => void;
+  onClick?: () => void;
 }
 
 export const MobileNavItem = ({
@@ -154,6 +154,7 @@ export const MobileDropdownButton = ({
 }: MobileDropdownButtonProps) => {
   return (
     <button
+      type="button"
       onClick={onClick}
       className={cn(
         "flex w-full items-center justify-between rounded-xl px-4 py-3 text-sm font-semibold transition-all duration-300",
@@ -165,7 +166,10 @@ export const MobileDropdownButton = ({
       <span>{label}</span>
       <ChevronDown
         size={17}
-        className={cn("transition-transform duration-300", expanded && "rotate-180")}
+        className={cn(
+          "transition-transform duration-300",
+          expanded && "rotate-180",
+        )}
       />
     </button>
   );
@@ -175,7 +179,7 @@ interface MobileSubNavItemProps {
   href: string;
   label: string;
   active: boolean;
-  onClick: () => void;
+  onClick?: () => void;
 }
 
 export const MobileSubNavItem = ({

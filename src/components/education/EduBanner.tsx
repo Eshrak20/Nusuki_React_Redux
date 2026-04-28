@@ -1,4 +1,4 @@
-import { motion,type Variants } from "framer-motion";
+import { motion, type Variants } from "framer-motion";
 import { useState, useEffect } from "react";
 import { GraduationCap, BookOpen, ArrowDown } from "lucide-react";
 import bannerVideo from "../../../src/assets/reactAssets/Education/32975-394513987.mp4";
@@ -32,7 +32,7 @@ const EduBanner = () => {
     },
   };
 
-  const itemVariants:Variants = {
+  const itemVariants: Variants = {
     hidden: { opacity: 0, y: 30 },
     visible: {
       opacity: 1,
@@ -50,7 +50,13 @@ const EduBanner = () => {
     { Icon: GraduationCap, delay: 4, x: "15%", y: "75%" },
     { Icon: BookOpen, delay: 1, x: "80%", y: "70%" },
   ];
-
+  const particles = Array.from({ length: 20 }, (_, i) => ({
+    id: i,
+    left: `${(i * 37) % 100}%`,
+    top: `${(i * 53) % 100}%`,
+    duration: 2 + ((i * 17) % 30) / 10,
+    delay: ((i * 11) % 20) / 10,
+  }));
   return (
     <div className="relative mt-20 h-[80vh] min-h-[600px] w-full overflow-hidden flex flex-col justify-center items-center px-8 md:px-20 text-center">
       {/* Video Background */}
@@ -63,43 +69,39 @@ const EduBanner = () => {
         className={`
           absolute top-0 left-0 w-full h-full object-cover z-0
           transition-all duration-1000
-          ${isVideoLoaded ? 'opacity-100 scale-100' : 'opacity-0 scale-105'}
+          ${isVideoLoaded ? "opacity-100 scale-100" : "opacity-0 scale-105"}
         `}
       >
         <source src={bannerVideo} type="video/mp4" />
       </video>
 
       {/* Fallback gradient while video loads */}
-      <div className={`
+      <div
+        className={`
         absolute inset-0 z-0 bg-gradient-to-br from-primary via-primary/90 to-indigo-900
         transition-opacity duration-1000
-        ${isVideoLoaded ? 'opacity-0' : 'opacity-100'}
-      `} />
+        ${isVideoLoaded ? "opacity-0" : "opacity-100"}
+      `}
+      />
 
       {/* Primary Color Overlays */}
       <div className="absolute inset-0 z-10">
-        {/* Main primary overlay */}
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/75 via-primary/65 to-primary/85" />
-        
-        {/* Secondary gradient for depth */}
-        <div className="absolute inset-0 bg-gradient-to-t from-background/30 via-transparent to-transparent" />
-        
-        {/* Animated radial gradient */}
-        <div 
-          className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_transparent_40%,_hsl(var(--primary)/0.5)_100%)]"
-        />
-        
-        {/* Diagonal light sweep */}
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/75 via-primary/55 to-black/85" />
+
+        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
+
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_transparent_35%,_hsl(var(--primary)/0.45)_100%)]" />
+
         <motion.div
-          initial={{ x: '-100%', opacity: 0 }}
-          animate={{ x: '200%', opacity: [0, 0.1, 0] }}
-          transition={{ 
-            duration: 8, 
+          initial={{ x: "-100%", opacity: 0 }}
+          animate={{ x: "200%", opacity: [0, 0.08, 0] }}
+          transition={{
+            duration: 8,
             repeat: Infinity,
             ease: "linear",
-            repeatDelay: 3
+            repeatDelay: 3,
           }}
-          className="absolute inset-0 bg-gradient-to-r from-transparent via-primary-foreground/20 to-transparent skew-x-12"
+          className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent skew-x-12"
         />
       </div>
 
@@ -118,7 +120,7 @@ const EduBanner = () => {
           }}
           className="absolute -top-32 -left-32 w-[500px] h-[500px] bg-primary/20 rounded-full blur-3xl"
         />
-        
+
         {/* Bottom-right blob */}
         <motion.div
           animate={{
@@ -135,22 +137,22 @@ const EduBanner = () => {
 
         {/* Floating particles */}
         <div className="absolute inset-0">
-          {[...Array(20)].map((_, i) => (
+          {particles.map((particle) => (
             <motion.div
-              key={i}
-              className="absolute w-1 h-1 bg-primary-foreground/20 rounded-full"
+              key={particle.id}
+              className="absolute h-1 w-1 rounded-full bg-primary-foreground/20"
               style={{
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
+                left: particle.left,
+                top: particle.top,
               }}
               animate={{
                 y: [0, -30, 0],
                 opacity: [0, 1, 0],
               }}
               transition={{
-                duration: Math.random() * 3 + 2,
+                duration: particle.duration,
                 repeat: Infinity,
-                delay: Math.random() * 2,
+                delay: particle.delay,
               }}
             />
           ))}
@@ -159,15 +161,16 @@ const EduBanner = () => {
 
       {/* Grid Pattern Overlay */}
       <div className="absolute inset-0 z-10 opacity-[0.03]">
-        <div 
+        <div
           className="h-full w-full"
           style={{
             backgroundImage: `
               linear-gradient(to right, hsl(var(--primary-foreground)) 1px, transparent 1px),
               linear-gradient(to bottom, hsl(var(--primary-foreground)) 1px, transparent 1px)
             `,
-            backgroundSize: '80px 80px',
-            maskImage: 'radial-gradient(ellipse at center, black 30%, transparent 70%)',
+            backgroundSize: "80px 80px",
+            maskImage:
+              "radial-gradient(ellipse at center, black 30%, transparent 70%)",
           }}
         />
       </div>
@@ -179,7 +182,7 @@ const EduBanner = () => {
           className="absolute z-15 pointer-events-none"
           style={{ left: x, top: y }}
           initial={{ opacity: 0, scale: 0 }}
-          animate={{ 
+          animate={{
             opacity: [0, 0.3, 0],
             scale: [0.8, 1, 0.8],
             y: [0, -20, 0],
@@ -222,7 +225,8 @@ const EduBanner = () => {
           variants={itemVariants}
           className="text-lg sm:text-xl lg:text-2xl text-primary-foreground/90 max-w-3xl leading-relaxed font-medium"
         >
-          Choose your destination, find your dream institution and get abroad courses & tests at the best price
+          Choose your destination, find your dream institution and get abroad
+          courses & tests at the best price
         </motion.p>
 
         {/* CTA Hint */}
@@ -238,7 +242,9 @@ const EduBanner = () => {
               ease: "easeInOut",
             }}
             className="flex flex-col items-center gap-2 cursor-pointer"
-            onClick={() => window.scrollBy({ top: window.innerHeight, behavior: 'smooth' })}
+            onClick={() =>
+              window.scrollBy({ top: window.innerHeight, behavior: "smooth" })
+            }
           >
             <span className="text-sm font-medium text-primary-foreground/70">
               Explore More
@@ -254,12 +260,14 @@ const EduBanner = () => {
         </motion.div>
       </motion.div>
 
-     
-
       {/* Bottom gradient transition */}
       <div className="absolute bottom-0 left-0 right-0 z-15">
-        <div className="h-32 bg-gradient-to-t from-background via-background/60 to-transparent" />
-        <div className="h-px bg-gradient-to-r from-transparent via-primary/40 to-transparent" />
+        {/* multi-layer cinematic fade */}
+        <div className="h-36 bg-gradient-to-t from-black via-black/85 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-primary/20 via-transparent to-transparent" />
+
+        {/* elegant divider glow */}
+        <div className="h-px bg-gradient-to-r from-transparent via-primary/40 to-transparent opacity-80" />
       </div>
     </div>
   );
