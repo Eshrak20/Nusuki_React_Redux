@@ -9,8 +9,8 @@ import HolidayOfferSidebar from "./HolidayOfferSidebar";
 import HolidayImageGallery from "./HolidayImageGallery";
 
 const HolidayDetails = () => {
+  window.scrollTo({ top: 0, behavior: "smooth" });
   const { tourPacId } = useParams();
-
   const { data, isLoading, isError } = useGetTourPackageDetailsQuery(
     tourPacId!,
     {
@@ -78,7 +78,7 @@ const HolidayDetails = () => {
 
   return (
     <>
-      <section className="mx-auto mt-28 max-w-7xl px-4 py-8 sm:mt-36 lg:mt-40">
+      <section className="mx-auto mt-20 max-w-7xl px-4 py-8">
         <HolidayImageGallery
           images={details.images || []}
           title={details.name}
@@ -93,7 +93,7 @@ const HolidayDetails = () => {
           />
         </div>
 
-          <div className="mt-10 grid items-start gap-8 lg:grid-cols-[minmax(0,1fr)_390px]">
+        <div className="mt-10 grid items-start gap-8 lg:grid-cols-[minmax(0,1fr)_390px]">
           <div className="min-w-0">
             <HolidayInfoAccordion items={infoItems} />
           </div>

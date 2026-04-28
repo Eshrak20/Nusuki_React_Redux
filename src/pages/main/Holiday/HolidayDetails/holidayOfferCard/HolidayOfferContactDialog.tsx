@@ -53,7 +53,7 @@ const HolidayOfferContactDialog = ({
               <Button asChild className="h-12 w-full justify-start rounded-md">
                 <a
                   href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(
-                    `Hello, I am interested in ${offer.name}`,
+                    `Hello, I am interested in ${offer.name} Package of Holiday`,
                   )}`}
                   target="_blank"
                   rel="noreferrer"

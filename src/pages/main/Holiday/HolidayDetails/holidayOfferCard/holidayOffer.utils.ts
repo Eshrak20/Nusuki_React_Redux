@@ -16,7 +16,7 @@ export interface Offer {
 }
 
 export const phoneNumber = "01712345678";
-export const whatsappNumber = "8801712345678";
+export const whatsappNumber = "8801714742454";
 
 export const priceRows = [
   ["Single", "price_per_person_single"],
