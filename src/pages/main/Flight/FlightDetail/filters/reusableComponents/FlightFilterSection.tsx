@@ -32,11 +32,11 @@ const FlightFilterSection = ({
         className
       )}
     >
-      <AccordionItem value={value} className="border-none">
-        <AccordionTrigger className="px-4 py-3 text-sm font-bold hover:no-underline">
+      <AccordionItem value={value} className="border-none px-3">
+        <AccordionTrigger className="pt-5 pb-3 text-sm font-bold hover:no-underline">
           {title}
         </AccordionTrigger>
-        <AccordionContent className="px-3 pb-3">
+        <AccordionContent className="pb-3">
           {children}
         </AccordionContent>
       </AccordionItem>

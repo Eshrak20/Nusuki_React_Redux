@@ -40,7 +40,7 @@ const HolidayPackageLists = () => {
 
   const packages = data?.data?.data ?? [];
   const dynamicFilters = data?.data?.filters;
-  const pagination = data?.data?.pagination;
+  const pagination = data?.data?.pagination; 
 
   return (
     <div className="mt-20 bg-background pb-16 text-foreground lg:mt-22.5">
@@ -51,7 +51,7 @@ const HolidayPackageLists = () => {
       <div className="mx-auto max-w-7xl px-5 sm:px-8 lg:px-12">
         <div className="grid grid-cols-1 gap-7 lg:grid-cols-12">
           <div className="lg:col-span-3">
-            <HolidayPackageFilter filters={dynamicFilters} />
+            <HolidayPackageFilter packages={packages} filters={dynamicFilters} />
           </div>
 
           <div className="lg:col-span-9">

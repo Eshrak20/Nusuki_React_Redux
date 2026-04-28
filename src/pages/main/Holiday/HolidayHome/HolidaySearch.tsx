@@ -89,7 +89,7 @@ const HolidaySearch = () => {
                   className={cn(
                     "border px-5 py-3 text-sm font-semibold transition hover:border-primary",
                     tourTypeId === type.id &&
-                      "border-primary bg-primary text-white",
+                      "border-primary bg-primary text-muted",
                   )}
                 >
                   {type.name}
@@ -164,14 +164,14 @@ const HolidaySearch = () => {
 
                 <div
                   className={cn(
-                    "absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent",
+                    "absolute inset-0 bg-linear-to-t from-black/85 via-black/25 to-transparent",
                     isSelected && "bg-primary/15",
                   )}
                 />
 
                 {isSelected && (
-                  <div className="absolute right-3 top-3 flex items-center gap-1 bg-primary px-2.5 py-1 text-xs font-semibold text-white shadow-md">
-                    <CheckCircle2 className="h-3.5 w-3.5" />
+                  <div className="absolute right-3 top-3 flex items-center gap-1 bg-primary px-2.5 py-1 text-xs font-semibold text-muted shadow-md">
+                    <CheckCircle2 className="h-3.5 w-3.5 text-muted" />
                     Selected
                   </div>
                 )}

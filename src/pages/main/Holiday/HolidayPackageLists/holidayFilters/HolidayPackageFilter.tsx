@@ -10,16 +10,19 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
-import type { TourPackageDynamicFilters } from "@/types/holiday/types.tourPackageLists";
+import type { TourPackageDynamicFilters, TourPackageItem } from "@/types/holiday/types.tourPackageLists";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import HolidayPriceRange from "./HolidayPriceRange";
+import { useState } from "react";
 
 interface HolidayPackageFilterProps {
   filters?: TourPackageDynamicFilters;
+  packages: TourPackageItem[];
 }
 
-const HolidayPackageFilter = ({ filters }: HolidayPackageFilterProps) => {
-  
+const HolidayPackageFilter = ({ filters, packages }: HolidayPackageFilterProps) => {
+  const [suggestions, setSuggestions] = useState<string[]>([]);
+
   const dispatch = useAppDispatch();
   const selectedFilters = useAppSelector((state) => state.holidayPackageFilters);
 
@@ -41,7 +44,6 @@ const HolidayPackageFilter = ({ filters }: HolidayPackageFilterProps) => {
 
       <div className="space-y-6">
         <div>
-          <h3 className="border-b pb-3 font-semibold">Price Range</h3>
 
           <HolidayPriceRange data={filters?.price} />
 
@@ -59,13 +61,45 @@ const HolidayPackageFilter = ({ filters }: HolidayPackageFilterProps) => {
             <Input
               placeholder="Search Package"
               value={selectedFilters.search}
-              onChange={(e) => dispatch(setSearch(e.target.value))}
+              onChange={(e) => {
+                const value = e.target.value;
+                dispatch(setSearch(value));
+
+                if (!value) {
+                  setSuggestions([]);
+                  return;
+                }
+
+                const matched = packages
+                  ?.map((pkg) => pkg.name)
+                  .filter((name) =>
+                    name.toLowerCase().includes(value.toLowerCase())
+                  );
+
+                setSuggestions(matched);
+              }}
               className="rounded-md pr-10"
             />
             <Search
               size={18}
               className="absolute right-3 top-1/2 -translate-y-1/2 text-primary"
             />
+            {suggestions.length > 0 && (
+              <ul className="absolute z-10 mt-1 w-full rounded-md border bg-primary text-muted dark:bg-muted dark:text-foreground shadow-md">
+                {suggestions.map((item, index) => (
+                  <li
+                    key={index}
+                    className="cursor-pointer px-3 py-2 hover:opacity-60"
+                    onClick={() => {
+                      dispatch(setSearch(item));
+                      setSuggestions([]);
+                    }}
+                  >
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            )}
           </div>
         </div>
 

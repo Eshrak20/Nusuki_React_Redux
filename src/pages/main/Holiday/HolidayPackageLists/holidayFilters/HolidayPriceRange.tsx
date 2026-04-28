@@ -34,6 +34,7 @@ const getStep = (min: number, max: number) => {
 };
 
 const HolidayPriceRange = ({ data }: HolidayPriceRangeProps) => {
+  
   const dispatch = useAppDispatch();
 
   // Read from holidayPackageFilters instead of flightSearch
@@ -131,9 +132,9 @@ const HolidayPriceRange = ({ data }: HolidayPriceRangeProps) => {
 
   return (
     <FlightFilterSection value="price-range" title="Price Range">
-      <div className="px-1">
-        <div className="rounded-2xl border border-border/60 bg-muted/20 p-4 sm:p-5">
-          <div className="px-1">
+      <div className="">
+        <div className="rounded-2xl bg-muted/20">
+          <div className="">
             <Slider
               min={absoluteMin}
               max={absoluteMax}
