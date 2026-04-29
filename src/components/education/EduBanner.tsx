@@ -58,7 +58,7 @@ const EduBanner = () => {
     delay: ((i * 11) % 20) / 10,
   }));
   return (
-    <div className="relative mt-20 h-[80vh] min-h-[600px] w-full overflow-hidden flex flex-col justify-center items-center px-8 md:px-20 text-center">
+    <div className="relative mt-20 h-[80vh] min-h-150 w-full overflow-hidden flex flex-col justify-center items-center px-8 md:px-20 text-center">
       {/* Video Background */}
       <video
         autoPlay
@@ -78,7 +78,7 @@ const EduBanner = () => {
       {/* Fallback gradient while video loads */}
       <div
         className={`
-        absolute inset-0 z-0 bg-gradient-to-br from-primary via-primary/90 to-indigo-900
+        absolute inset-0 z-0 bg-linear-to-br from-primary via-primary/90 to-indigo-900
         transition-opacity duration-1000
         ${isVideoLoaded ? "opacity-0" : "opacity-100"}
       `}
@@ -86,11 +86,11 @@ const EduBanner = () => {
 
       {/* Primary Color Overlays */}
       <div className="absolute inset-0 z-10">
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/75 via-primary/55 to-black/85" />
+        <div className="absolute inset-0 bg-linear-to-br from-primary/75 via-primary/55 to-black/85" />
 
-        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
+        <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/30 to-transparent" />
 
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_transparent_35%,_hsl(var(--primary)/0.45)_100%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_35%,hsl(var(--primary)/0.45)_100%)]" />
 
         <motion.div
           initial={{ x: "-100%", opacity: 0 }}
@@ -101,7 +101,7 @@ const EduBanner = () => {
             ease: "linear",
             repeatDelay: 3,
           }}
-          className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent skew-x-12"
+          className="absolute inset-0 bg-linear-to-r from-transparent via-white/5 to-transparent skew-x-12"
         />
       </div>
 

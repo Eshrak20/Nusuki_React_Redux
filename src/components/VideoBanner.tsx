@@ -11,7 +11,7 @@ const VideoBanner = ({ title, subtitle }: VideoBannerProps) => {
   const [isVideoLoaded, setIsVideoLoaded] = useState(false);
 
   return (
-    <div className="relative mt-20 h-[75vh] min-h-[500px] w-full overflow-hidden">
+    <div className="relative mt-20 h-[75vh] min-h-125 w-full overflow-hidden">
       {/* Video Background */}
       <video
         autoPlay
@@ -30,7 +30,7 @@ const VideoBanner = ({ title, subtitle }: VideoBannerProps) => {
 
       {/* Fallback background while video loads */}
       <div className={`
-        absolute inset-0 z-0 bg-gradient-to-br from-primary via-primary/90 to-purple-900
+        absolute inset-0 z-0 bg-linear-to-br from-primary via-primary/90 to-purple-900
         transition-opacity duration-1000
         ${isVideoLoaded ? 'opacity-0' : 'opacity-100'}
       `} />
@@ -38,19 +38,19 @@ const VideoBanner = ({ title, subtitle }: VideoBannerProps) => {
       {/* Primary Color Overlay with Gradient */}
       <div className="absolute inset-0 z-10">
         {/* Main overlay - using shadcn primary color */}
-        <div className="absolute inset-0 bg-gradient-to-r from-primary/80 via-primary/70 to-primary/90 backdrop-blur-[2px]" />
+        <div className="absolute inset-0 bg-linear-to-r from-primary/80 via-primary/70 to-primary/90 backdrop-blur-[2px]" />
         
         {/* Secondary gradient overlay for depth */}
-        <div className="absolute inset-0 bg-gradient-to-t from-background/20 via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-linear-to-t from-background/20 via-transparent to-transparent" />
         
         {/* Animated gradient overlay */}
         <div 
-          className="absolute inset-0 bg-gradient-to-r from-primary/20 via-transparent to-primary/20 animate-pulse"
+          className="absolute inset-0 bg-linear-to-r from-primary/20 via-transparent to-primary/20 animate-pulse"
           style={{ animationDuration: '4s' }}
         />
         
         {/* Radial gradient for vignette effect */}
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_transparent_30%,_rgba(var(--primary-rgb),_0.4)_100%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_30%,rgba(var(--primary-rgb),0.4)_100%)]" />
       </div>
 
       {/* Decorative Elements */}
@@ -72,7 +72,7 @@ const VideoBanner = ({ title, subtitle }: VideoBannerProps) => {
         />
         
         {/* Center decorative glow */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-primary/10 rounded-full blur-2xl" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-150 h-150 bg-primary/10 rounded-full blur-2xl" />
       </div>
 
       {/* Animated Grid Pattern */}
@@ -122,19 +122,19 @@ const VideoBanner = ({ title, subtitle }: VideoBannerProps) => {
                 initial={{ scaleX: 0 }}
                 animate={{ scaleX: 1 }}
                 transition={{ duration: 0.8, delay: 0.6 }}
-                className="h-0.5 w-16 bg-gradient-to-r from-transparent via-primary-foreground/50 to-transparent"
+                className="h-0.5 w-16 bg-linear-to-r from-transparent via-primary-foreground/50 dark:via-foreground to-transparent"
               />
               <motion.div
                 initial={{ scale: 0, rotate: -180 }}
                 animate={{ scale: 1, rotate: 0 }}
                 transition={{ duration: 0.5, delay: 0.8, type: "spring" }}
-                className="w-2 h-2 bg-primary-foreground rounded-full shadow-lg shadow-primary-foreground/50"
+                className="w-2 h-2 bg-primary-foreground dark:bg-foreground rounded-full shadow-lg shadow-primary-foreground/50"
               />
               <motion.div
                 initial={{ scaleX: 0 }}
                 animate={{ scaleX: 1 }}
                 transition={{ duration: 0.8, delay: 0.6 }}
-                className="h-0.5 w-16 bg-gradient-to-r from-transparent via-primary-foreground/50 to-transparent"
+                className="h-0.5 w-16 bg-linear-to-r from-transparent via-primary-foreground/50 dark:via-foreground to-transparent"
               />
             </div>
 
@@ -142,7 +142,7 @@ const VideoBanner = ({ title, subtitle }: VideoBannerProps) => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.8, delay: 0.8 }}
-              className="text-base sm:text-lg lg:text-2xl text-primary-foreground/90 max-w-2xl mx-auto leading-relaxed font-medium"
+              className="text-base sm:text-lg lg:text-2xl text-primary-foreground/90 dark:text-foreground max-w-2xl mx-auto leading-relaxed font-medium"
             >
               {subtitle}
             </motion.p>
@@ -151,10 +151,10 @@ const VideoBanner = ({ title, subtitle }: VideoBannerProps) => {
       </div>
 
       {/* Bottom gradient fade to next section */}
-      <div className="absolute bottom-0 left-0 right-0 z-15 h-32 bg-gradient-to-t from-background to-transparent" />
+      <div className="absolute bottom-0 left-0 right-0 z-15 h-32 bg-linear-to-t from-background to-transparent" />
 
       {/* Subtle border glow at bottom */}
-      <div className="absolute bottom-0 left-0 right-0 z-15 h-px bg-gradient-to-r from-transparent via-primary/50 to-transparent" />
+      <div className="absolute bottom-0 left-0 right-0 z-15 h-px bg-linear-to-r from-transparent via-primary/50 to-transparent" />
     </div>
   );
 };

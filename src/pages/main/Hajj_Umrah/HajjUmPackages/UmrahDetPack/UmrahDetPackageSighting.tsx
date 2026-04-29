@@ -1,5 +1,6 @@
 import { CheckCircle2, Circle, CircleDollarSign, Clock } from "lucide-react";
 import type { PackageSight } from "@/types/hajj/types.pack";
+import { formatDuration } from "@/lib/utils";
 
 interface HajjUmDetPackageSightingProps {
   sight: PackageSight[];
@@ -8,6 +9,9 @@ interface HajjUmDetPackageSightingProps {
 const UmrahDetPackageSighting = ({
   sight,
 }: HajjUmDetPackageSightingProps) => {
+
+  
+  
   return (
     <div className="mx-8 lg:mx-24 space-y-8 mb-12 lg:mb-20 bg-background text-foreground p-6 rounded-lg border border-border/50">
       {/* Title */}
@@ -62,7 +66,8 @@ const UmrahDetPackageSighting = ({
                   <div className="flex items-center gap-3 pl-8 text-sm text-muted-foreground">
                     <Clock className="w-4 h-4 text-muted-foreground/60" />
                     <span>
-                      Average activity duration: ~{activity.activity_duration}
+                      Average activity duration: ~
+                      {formatDuration(activity.activity_duration)}
                     </span>
                   </div>
                 </li>

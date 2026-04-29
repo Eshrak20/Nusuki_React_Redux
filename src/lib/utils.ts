@@ -24,6 +24,12 @@ export const getCountdownParts = (totalSeconds: number) => {
   };
 };
 
+export const formatDuration = (minutes: number) => {
+  if (minutes >= 60) {
+    return `${Math.floor(minutes / 60)} hour ${minutes % 60} min`;
+  }
+  return `${minutes} min`;
+};
 
 export function doubleLineBreaker(des: string) {
   const splittedDescription = des?.split(/\.\s+/).map((p) => p.trim()).filter(Boolean);
@@ -132,7 +138,7 @@ export const generatePaginationPages = ({
   pages.push(totalPages);
 
   return pages;
-};  
+};
 
 export interface FlightLoadingStateParams {
   isLoading: boolean;
