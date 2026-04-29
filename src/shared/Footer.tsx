@@ -1,7 +1,8 @@
 import { Link } from "react-router-dom";
 import logoWhite from "../assets/reactAssets/Logo/whiteLogo.png";
 import logoDark from "../assets/reactAssets/Logo/darkLogo.png";
-import footerImg from "@/assets/reactAssets/Footer/footer.webp";
+import footerLight from "@/assets/reactAssets/Footer/footer.webp";
+import footerDark from "@/assets/reactAssets/Footer/footer-dark.jpeg";
 import { footerPayImages } from "@/data/footerPayImages";
 import {
   Facebook,
@@ -282,7 +283,9 @@ const Footer = () => {
             </div>
           </div>
         </div> */}
-        <img src={footerImg} alt="footer" />
+        <img src={footerLight} alt="footer" className="block dark:hidden" />
+
+        <img src={footerDark} alt="footer dark" className="dark:block hidden" />
 
         <hr className="border-border my-10" />
 
