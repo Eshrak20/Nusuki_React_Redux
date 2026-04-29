@@ -5,7 +5,6 @@ import CMDestination from "@/layouts/CommonHomeLayout/CMDestination";
 import CMPromotions from "@/layouts/CommonHomeLayout/CMPromotions";
 import CMTourPackages from "@/layouts/CommonHomeLayout/CMTourPackages";
 import type {
-  TourCollection,
   TourDestination,
 } from "@/types/flight/flightHome.types";
 import { useLocation } from "react-router-dom";
@@ -40,7 +39,7 @@ const CommonHomeLayout = ({
 
       <section
         className={`max-w-7xl mx-auto px-4 pt-96 mt-44 md:mt-0 ${
-          isFlightPage ? "md:pt-32" : isHolidayPage ? "pt-72" : "md:pt-32" // default fallback
+          isFlightPage ? "md:pt-32" : isHolidayPage ? "pt-32" : "md:pt-72" // default fallback
         }`}
       >
         <CMPromotions />
