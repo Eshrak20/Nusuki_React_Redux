@@ -21,28 +21,43 @@ import flightSearchReducer from "@/redux/features/flightSearchSlice";
 import flightSessionReducer from "@/redux/features/flightSessionSlice";
 import holidayPackageFilterReducer from "@/redux/features/holidayPackageFilterSlice";
 
+
+// ✅ Persist ONLY selected fields of flightSearch
+const flightSearchPersistConfig = {
+  key: "flightSearch",
+  storage,
+  blacklist: ["departureDate", "returnDate", "segments", "ui"],
+};
+
+
+// ✅ Root reducer
 const rootReducer = combineReducers({
   holidayPackageFilters: holidayPackageFilterReducer,
-  flightSearch: flightSearchReducer,
+
+  flightSearch: persistReducer(
+    flightSearchPersistConfig,
+    flightSearchReducer
+  ),
+
   flightSession: flightSessionReducer,
   universityFilter: universityFilterReducer,
   courseFilter: courseFilterReducer,
   visaFilter: visaFilterReducer,
   testFilter: testFilterReducer,
+
   [laravelApi.reducerPath]: laravelApi.reducer,
   [medusaApi.reducerPath]: medusaApi.reducer,
 });
 
-const persistConfig = {
-  key: "root",
-  storage,
-  whitelist: ["flightSearch"], // only persist flight search
-};
 
-const persistedReducer = persistReducer(persistConfig, rootReducer);
+// ❌ REMOVE root persist (very important)
+// const persistConfig = {...}
+// const persistedReducer = persistReducer(...)
 
+
+// ✅ Store
 export const store = configureStore({
-  reducer: persistedReducer,
+  reducer: rootReducer, // ✅ NOT persistedReducer
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: {
@@ -51,7 +66,11 @@ export const store = configureStore({
     }).concat(laravelApi.middleware, medusaApi.middleware),
 });
 
+
+// ✅ Persistor (still needed)
 export const persistor = persistStore(store);
 
+
+// ✅ Types
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
