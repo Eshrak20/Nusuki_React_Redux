@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import logoWhite from "../assets/reactAssets/Logo/whiteLogo.png";
 import logoDark from "../assets/reactAssets/Logo/darkLogo.png";
+import footerImg from "@/assets/reactAssets/Footer/footer.webp";
 import { footerPayImages } from "@/data/footerPayImages";
 import {
   Facebook,
@@ -14,8 +15,6 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
-
-
 const Footer = () => {
   const socialLinks = [
     { icon: Facebook, link: "https://facebook.com/yourpage" },
@@ -27,8 +26,6 @@ const Footer = () => {
 
   return (
     <footer className="w-full bg-background border-t border-border pt-12 pb-8">
-
-
       <div className="max-w-360 mx-auto px-4">
         {/* ==================================================
             TOP SECTION : BRAND + NAV LINKS
@@ -36,8 +33,16 @@ const Footer = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-12 gap-6 mb-12">
           {/* Brand */}
           <div className="lg:col-span-3 space-y-3">
-            <img src={logoWhite} alt="Logo" className="dark:hidden h-20 w-fit -ml-7" />
-            <img src={logoDark} alt="Logo" className="hidden dark:block h-20 w-fit -ml-7" />
+            <img
+              src={logoWhite}
+              alt="Logo"
+              className="dark:hidden h-20 w-fit -ml-7"
+            />
+            <img
+              src={logoDark}
+              alt="Logo"
+              className="hidden dark:block h-20 w-fit -ml-7"
+            />
             <div className="text-sm text-muted-foreground uppercase space-y-1">
               <p>MOCAT CERTIFICATE NO : 0013878</p>
               <p>ATAB CERTIFICATE NO : MN-00005396</p>
@@ -277,10 +282,7 @@ const Footer = () => {
             </div>
           </div>
         </div> */}
-        <img src="/src/assets/reactAssets/Footer/footer.webp" alt="" className="block dark:hidden" />
-
-        <img src="/src/assets/reactAssets/Footer/footer-dark.jpeg" alt="" className="dark:block hidden" />
-
+        <img src={footerImg} alt="footer" />
 
         <hr className="border-border my-10" />
 

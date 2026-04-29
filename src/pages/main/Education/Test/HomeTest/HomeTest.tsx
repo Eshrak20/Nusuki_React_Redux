@@ -1,7 +1,10 @@
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import type { RootState } from "@/redux/store";
-import { useGetExpertsQuery, useGetTestsQuery } from "@/redux/api/educationApi/testApi";
+import {
+  useGetExpertsQuery,
+  useGetTestsQuery,
+} from "@/redux/api/educationApi/testApi";
 import { setPage } from "@/redux/features/testFilterSlice";
 import EduFilter from "@/components/education/EduFilter";
 import EduPagination from "@/components/education/EduPagination";
@@ -16,12 +19,12 @@ const HomeTest = () => {
   const dispatch = useDispatch();
 
   const { examType, page } = useSelector(
-    (state: RootState) => state.testFilter
+    (state: RootState) => state.testFilter,
   );
 
   useEffect(() => {
     window.scrollTo({
-      top: 0,
+      top: 1350,
       behavior: "smooth",
     });
   }, [examType, page]);
@@ -35,7 +38,7 @@ const HomeTest = () => {
 
   const tests = data?.data?.data ?? [];
   const pagination = data?.data;
-  const experts = expertsData?.data
+  const experts = expertsData?.data;
 
   return (
     <>
@@ -43,7 +46,6 @@ const HomeTest = () => {
         <TestBanner />
       </div>
       <div className="lg:pt-16 pt-10 pb-3 max-w-7xl mx-auto min-h-screen">
-
         {/* Search and Filter Header */}
         <div className="flex flex-col md:flex-row items-center justify-between mb-7 gap-6 md:gap-10 pl-2 lg:px-5">
           {/* Showing Results Info */}
@@ -105,8 +107,7 @@ const HomeTest = () => {
             <div>
               <OurExpertTeam experts={experts} />
             </div>
-          )
-          }
+          )}
         </div>
       </div>
     </>

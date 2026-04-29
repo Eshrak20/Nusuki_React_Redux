@@ -18,12 +18,10 @@ const HolidayPackageLists = () => {
 
   const filters = useAppSelector((state) => state.holidayPackageFilters);
 
-  useEffect(() => {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
-  }, []);
+  window.scrollTo({
+    top: 400,
+    behavior: "smooth",
+  });
 
   useEffect(() => {
     if (tourId) {
@@ -40,18 +38,19 @@ const HolidayPackageLists = () => {
 
   const packages = data?.data?.data ?? [];
   const dynamicFilters = data?.data?.filters;
-  const pagination = data?.data?.pagination; 
+  const pagination = data?.data?.pagination;
 
   return (
     <div className="mt-20 bg-background pb-16 text-foreground lg:mt-22.5">
-      <HolidayPackageHeader
-        videoUrl="https://assets.sharetrip.net/hero-bg-cover.mp4"
-      />
+      <HolidayPackageHeader videoUrl="https://assets.sharetrip.net/hero-bg-cover.mp4" />
 
       <div className="mx-auto max-w-7xl px-5 sm:px-8 lg:px-12">
         <div className="grid grid-cols-1 gap-7 lg:grid-cols-12">
           <div className="lg:col-span-3">
-            <HolidayPackageFilter packages={packages} filters={dynamicFilters} />
+            <HolidayPackageFilter
+              packages={packages}
+              filters={dynamicFilters}
+            />
           </div>
 
           <div className="lg:col-span-9">

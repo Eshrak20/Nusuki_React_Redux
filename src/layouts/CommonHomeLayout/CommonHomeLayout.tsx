@@ -4,14 +4,19 @@ import CMCollection from "@/layouts/CommonHomeLayout/CMCollection";
 import CMDestination from "@/layouts/CommonHomeLayout/CMDestination";
 import CMPromotions from "@/layouts/CommonHomeLayout/CMPromotions";
 import CMTourPackages from "@/layouts/CommonHomeLayout/CMTourPackages";
-
+import type {
+  TourCollection,
+  TourDestination,
+} from "@/types/flight/flightHome.types";
+import { useLocation } from "react-router-dom";
 
 interface Props {
   searchSection?: React.ReactNode;
-  popularDests?: any[];
-  dreamDests?: any[];
+  popularDests?: TourDestination[];
+  dreamDests?: TourDestination[];
   showDestinations?: boolean;
 }
+const isHolidayPage = location.pathname.startsWith("/holiday");
 
 const CommonHomeLayout = ({
   searchSection,
@@ -19,6 +24,9 @@ const CommonHomeLayout = ({
   dreamDests = [],
   showDestinations = true,
 }: Props) => {
+  const location = useLocation();
+
+  const isFlightPage = location.pathname.startsWith("/flight");
   return (
     <div className="bg-white dark:bg-gray-950">
       <div className="relative">
@@ -30,7 +38,11 @@ const CommonHomeLayout = ({
         {searchSection}
       </div>
 
-      <section className="max-w-7xl mx-auto px-4 pt-96 mt-44 md:mt-0 md:pt-72">
+      <section
+        className={`max-w-7xl mx-auto px-4 pt-96 mt-44 md:mt-0 ${
+          isFlightPage ? "md:pt-32" : isHolidayPage ? "pt-72" : "md:pt-32" // default fallback
+        }`}
+      >
         <CMPromotions />
       </section>
 
