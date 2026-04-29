@@ -90,7 +90,7 @@ const CMTourPackages = () => {
                     className="h-full w-full object-cover transition-transform duration-700 group-hover/card:scale-110"
                   />
 
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+                  <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/20 to-transparent" />
 
                   <div className="absolute bottom-4 left-4 right-4">
                     <h3 className="line-clamp-1 text-2xl font-bold text-white">
@@ -124,7 +124,7 @@ const CMTourPackages = () => {
                         "noopener,noreferrer"
                       )
                     }
-                    className="flex h-12 w-12 items-center justify-center border bg-muted text-foreground transition-all duration-300 hover:bg-primary hover:text-white"
+                    className="flex h-12 w-12 items-center justify-center border bg-muted text-foreground transition-all duration-300 hover:bg-primary hover:text-muted"
                   >
                     <ArrowRight className="h-5 w-5" />
                   </button>
@@ -134,11 +134,11 @@ const CMTourPackages = () => {
           ))}
         </Swiper>
 
-        <button className="prev-popular-tour absolute -left-5 top-[40%] z-20 hidden h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border bg-white/95 text-slate-800 shadow-xl transition-all duration-300 hover:scale-110 hover:bg-primary hover:text-white lg:flex">
+        <button className="prev-popular-tour absolute -left-5 top-[40%] z-20 hidden h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border bg-white/95 text-slate-800 shadow-xl transition-all duration-300 hover:scale-110 hover:bg-primary hover:text-muted lg:flex">
           <ChevronLeft size={24} />
         </button>
 
-        <button className="next-popular-tour absolute -right-5 top-[40%] z-20 hidden h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border bg-white/95 text-slate-800 shadow-xl transition-all duration-300 hover:scale-110 hover:bg-primary hover:text-white lg:flex">
+        <button className="next-popular-tour absolute -right-5 top-[40%] z-20 hidden h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border bg-white/95 text-slate-800 shadow-xl transition-all duration-300 hover:scale-110 hover:bg-primary hover:text-muted lg:flex">
           <ChevronRight size={24} />
         </button>
       </div>

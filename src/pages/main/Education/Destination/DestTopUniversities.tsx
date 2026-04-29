@@ -84,7 +84,7 @@ const DestTopUniversities = ({ universities, id = "universities" }: Props) => {
               whileHover={{ y: -6, scale: 1.03 }}
               transition={{ type: "spring", stiffness: 300 }}
               className={`
-                group bg-card border rounded-xl px-6 pt-6 pb-3 flex flex-col items-center justify-center text-center shadow-sm hover:shadow-xl transition duration-300 cursor-pointer ${activeIndex === i ? "border-primary shadow-lg ring-2 ring-primary/40" : "border-border"}
+                group bg-card border rounded-xl h-36 px-6 pt-6 pb-3 flex flex-col items-center justify-center text-center shadow-sm hover:shadow-xl transition duration-300 cursor-pointer ${activeIndex === i ? "border-primary shadow-lg ring-2 ring-primary/40" : "border-border"}
               `}
             >
               {/* Logo Container */}

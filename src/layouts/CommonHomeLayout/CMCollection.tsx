@@ -80,7 +80,7 @@ const CMCollection = () => {
                                                 {item.subtitle}
                                             </p>
                                         </div>
-                                        <div className="h-10 w-10 rounded-full bg-primary text-white flex items-center justify-center -rotate-45 group-hover/card:rotate-0 transition-transform duration-500 shadow-lg shadow-primary/30">
+                                        <div className="h-10 w-10 rounded-full bg-primary text-muted flex items-center justify-center -rotate-45 group-hover/card:rotate-0 transition-transform duration-500 shadow-lg shadow-primary/30">
                                             <ChevronRight size={20} />
                                         </div>
                                     </div>

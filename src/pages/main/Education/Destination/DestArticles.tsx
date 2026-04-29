@@ -49,7 +49,7 @@ const DestArticles = ({ articles, id = "articles" }: Props) => {
               </div>
 
               {/* Article Title */}
-              <h3 className="text-xl md:text-2xl font-bold text-foreground leading-snug mb-3 group-hover:text-primary transition-colors duration-300 line-clamp-3">
+              <h3 className="text-xl md:text-2xl h-24.75 font-bold text-foreground leading-snug mb-3 group-hover:text-primary transition-colors duration-300 line-clamp-3">
                 {article.title}
               </h3>
 

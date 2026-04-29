@@ -103,7 +103,7 @@ const VisaBanner = () => {
                 onChange={(e) => setSearchTerm(e.target.value)}
                 onKeyDown={handleKeyDown} 
                 placeholder="Search by country name..."
-                className="h-12 w-full rounded-full border-none bg-background/95 px-8 pr-1 dark:bg-primary text-foreground shadow-2xl backdrop-blur-sm ring-1 ring-white/20 transition-all focus-visible:ring-2 focus-visible:ring-primary-foreground lg:h-14"
+                className="h-12 w-full rounded-full border-none bg-background/95 px-8 pr-1 dark:bg-primary dark:text-muted shadow-2xl backdrop-blur-sm ring-1 ring-white/20 transition-all focus-visible:ring-2 focus-visible:ring-primary-foreground lg:h-14"
               />
               <Button 
                 onClick={handleSearch} 
