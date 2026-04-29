@@ -199,7 +199,7 @@ export default function Navbar() {
 
               {/* Active indicator bar */}
               <motion.div
-                className="absolute bottom-0 left-0 right-0 h-0.5 rounded-full bg-gradient-to-r from-primary via-purple-500 to-primary"
+                className="absolute bottom-0 left-0 right-0 h-0.5 rounded-full bg-linear-to-r from-primary via-purple-500 to-primary"
                 layoutId="navbar-indicator"
                 transition={{ type: "spring", stiffness: 300, damping: 30 }}
                 style={{ opacity: 0 }}

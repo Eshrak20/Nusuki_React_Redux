@@ -62,7 +62,7 @@ const HajjUmDetPackageSighting = ({
                   <div className="flex items-center gap-3 pl-8 text-sm text-muted-foreground">
                     <Clock className="w-4 h-4 text-muted-foreground/60" />
                     <span>
-                      Average activity duration: ~{activity.activity_duration}h
+                      Average activity duration: ~{activity.activity_duration}
                     </span>
                   </div>
                 </li>

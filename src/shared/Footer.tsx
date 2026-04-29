@@ -214,9 +214,9 @@ const Footer = () => {
             </Link>
           </div>
 
-          {/* Mohammedpur Office */}
+          {/* Mohammadpur Office */}
           <div className="space-y-3">
-            <h4 className="font-bold text-xl uppercase">Mohammedpur Office</h4>
+            <h4 className="font-bold text-xl uppercase">Mohammadpur Office</h4>
             <p className="text-sm text-muted-foreground">
               15/1/C Block-F <br />
               Hazi Chinu Mia Road <br />
@@ -277,7 +277,10 @@ const Footer = () => {
             </div>
           </div>
         </div> */}
-        <img src="/src/assets/reactAssets/Footer/footer.webp" alt="" />
+        <img src="/src/assets/reactAssets/Footer/footer.webp" alt="" className="block dark:hidden" />
+
+        <img src="/src/assets/reactAssets/Footer/footer-dark.jpeg" alt="" className="dark:block hidden" />
+
 
         <hr className="border-border my-10" />
 
