@@ -118,7 +118,7 @@ const EduBanner = () => {
             repeat: Infinity,
             ease: "linear",
           }}
-          className="absolute -top-32 -left-32 w-[500px] h-[500px] bg-primary/20 rounded-full blur-3xl"
+          className="absolute -top-32 -left-32 w-125 h-125 bg-primary/20 rounded-full blur-3xl"
         />
 
         {/* Bottom-right blob */}
@@ -132,7 +132,7 @@ const EduBanner = () => {
             repeat: Infinity,
             ease: "linear",
           }}
-          className="absolute -bottom-32 -right-32 w-[500px] h-[500px] bg-primary/15 rounded-full blur-3xl"
+          className="absolute -bottom-32 -right-32 w-125 h-125 bg-primary/15 rounded-full blur-3xl"
         />
 
         {/* Floating particles */}
@@ -213,7 +213,7 @@ const EduBanner = () => {
           variants={itemVariants}
           className="text-4xl sm:text-5xl lg:text-7xl font-black mb-6 tracking-tight mt-32"
         >
-          <span className="bg-clip-text text-transparent bg-gradient-to-r from-white via-primary-foreground to-white">
+          <span className="bg-clip-text text-transparent bg-linear-to-r from-white via-primary-foreground dark:via-foreground to-white">
             Welcome to Nusuki Education!
           </span>
           {/* Title glow */}
@@ -223,7 +223,7 @@ const EduBanner = () => {
         {/* Subtitle with animated typing effect */}
         <motion.p
           variants={itemVariants}
-          className="text-lg sm:text-xl lg:text-2xl text-primary-foreground/90 max-w-3xl leading-relaxed font-medium"
+          className="text-lg sm:text-xl lg:text-2xl text-primary-foreground/90 dark:text-foreground max-w-3xl leading-relaxed font-medium"
         >
           Choose your destination, find your dream institution and get abroad
           courses & tests at the best price
@@ -246,15 +246,15 @@ const EduBanner = () => {
               window.scrollBy({ top: window.innerHeight, behavior: "smooth" })
             }
           >
-            <span className="text-sm font-medium text-primary-foreground/70">
+            <span className="text-sm font-medium text-primary-foreground/70 dark:text-foreground">
               Explore More
             </span>
             <motion.div
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
-              className="p-2 rounded-full bg-primary-foreground/10 backdrop-blur-sm border border-primary-foreground/20"
+              className="p-2 rounded-full bg-primary-foreground/10 dark:bg-primary backdrop-blur-sm border border-primary-foreground/20"
             >
-              <ArrowDown className="w-5 h-5 text-primary-foreground/80" />
+              <ArrowDown className="w-5 h-5 text-primary-foreground/80 dark:text-foreground" />
             </motion.div>
           </motion.div>
         </motion.div>
@@ -263,11 +263,11 @@ const EduBanner = () => {
       {/* Bottom gradient transition */}
       <div className="absolute bottom-0 left-0 right-0 z-15">
         {/* multi-layer cinematic fade */}
-        <div className="h-36 bg-gradient-to-t from-black via-black/85 to-transparent" />
-        <div className="absolute inset-0 bg-gradient-to-t from-primary/20 via-transparent to-transparent" />
+        <div className="h-36 bg-linear-to-t from-black via-black/85 to-transparent" />
+        <div className="absolute inset-0 bg-linear-to-t from-primary/20 via-transparent to-transparent" />
 
         {/* elegant divider glow */}
-        <div className="h-px bg-gradient-to-r from-transparent via-primary/40 to-transparent opacity-80" />
+        <div className="h-px bg-linear-to-r from-transparent via-primary/40 to-transparent opacity-80" />
       </div>
     </div>
   );

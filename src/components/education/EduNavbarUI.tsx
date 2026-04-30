@@ -109,7 +109,7 @@ const EduNavbarUI = ({
                 </Link>
 
                 {item.hasSubmenu && (
-                  <div className="invisible absolute left-0 top-full w-[680px] translate-y-3 opacity-0 transition-all duration-300 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100">
+                  <div className="invisible absolute left-0 top-full w-170 translate-y-3 opacity-0 transition-all duration-300 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100">
                     <div className="rounded-2xl border bg-background/95 p-5 shadow-2xl shadow-black/10 backdrop-blur-xl">
                       <div className="mb-4 flex items-center justify-between border-b pb-4">
                         <div>
