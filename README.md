@@ -95,6 +95,13 @@ Add to VS Code Settings (File > Preferences > Configure User Snippets > typescri
   }
 }
 
+Ctrl + Shift + P
+Type:
+snippets
+Click:
+
+👉 “Preferences: Configure User Snippets”
+
 ```
 
 # Important Links
