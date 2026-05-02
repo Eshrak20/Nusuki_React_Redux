@@ -50,11 +50,6 @@ const rootReducer = combineReducers({
 });
 
 
-// ❌ REMOVE root persist (very important)
-// const persistConfig = {...}
-// const persistedReducer = persistReducer(...)
-
-
 // ✅ Store
 export const store = configureStore({
   reducer: rootReducer, // ✅ NOT persistedReducer
