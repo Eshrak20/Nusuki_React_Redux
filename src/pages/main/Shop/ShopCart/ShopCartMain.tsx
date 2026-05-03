@@ -9,7 +9,8 @@ export interface CartItem {
   id: string;
   unit_price: number;
   quantity: number;
-  // Add other properties if needed (e.g., name, image)
+  thumbnail: string;
+  title: string;
 }
 
 const ShopCartMain = () => {
@@ -28,7 +29,8 @@ const ShopCartMain = () => {
   if (isLoading) return <p>Loading...</p>;
 
   // Safe fallback if data is undefined
-  const items: CartItem[] = data?.cart?.items || [];
+  const items: CartItem[] = data?.cart?.items || [];;
+
 
   // 3. DERIVED STATE (Replaces useEffect)
   // If manualSelection is null, default to selecting all items.

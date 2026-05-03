@@ -20,7 +20,7 @@ interface CartResponse {
 }
 
 const ProAddToCart = ({ product, selectedVariant }: Props) => {
-  console.log(selectedVariant);
+  // console.log(selectedVariant);
   
   const [qty, setQty] = useState(1);
   const navigate = useNavigate();
@@ -46,6 +46,7 @@ const ProAddToCart = ({ product, selectedVariant }: Props) => {
   if (!cartId) {
     // Cast the unwrapped result to our interface
     const res = await createCart().unwrap() as CartResponse;
+    
     cartId = res.cart.id;
     localStorage.setItem("cart_id", cartId);
   }

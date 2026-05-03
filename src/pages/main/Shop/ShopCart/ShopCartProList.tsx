@@ -1,24 +1,39 @@
+interface CartItem {
+  id: string;
+  thumbnail: string;
+  title: string;
+  unit_price: number;
+  quantity: number;
+}
+
+interface ShopCartProListProps {
+  items: CartItem[];
+  selectedItems: string[];
+  onSelect: (id: string) => void;
+  onSelectAll: () => void;
+}
+
 const ShopCartProList = ({
   items,
   selectedItems,
   onSelect,
   onSelectAll,
-}: any) => {
+}: ShopCartProListProps) => {
   return (
     <div>
       {/* Select All */}
-      <div>
+      <div className="flex items-center gap-2 mb-4 font-medium">
         <input
           type="checkbox"
-          checked={selectedItems.length === items.length}
+          checked={items.length > 0 && selectedItems.length === items.length}
           onChange={onSelectAll}
         />
-        Select All
+        <span>Select All</span>
       </div>
 
       {/* Items */}
-      {items.map((item: any) => (
-        <div key={item.id} className="flex gap-4 border p-3 my-2">
+      {items.map((item: CartItem) => (
+        <div key={item.id} className="flex gap-4 border p-3 my-2 items-center">
           <input
             type="checkbox"
             checked={selectedItems.includes(item.id)}
@@ -27,13 +42,14 @@ const ShopCartProList = ({
 
           <img
             src={item.thumbnail}
-            className="w-20 h-20 object-cover"
+            alt={item.title}
+            className="w-20 h-20 object-cover rounded"
           />
 
           <div>
-            <h3>{item.title}</h3>
-            <p>৳ {item.unit_price}</p>
-            <p>Qty: {item.quantity}</p>
+            <h3 className="font-semibold">{item.title}</h3>
+            <p className="text-gray-600">৳ {item.unit_price}</p>
+            <p className="text-sm text-gray-500">Qty: {item.quantity}</p>
           </div>
         </div>
       ))}

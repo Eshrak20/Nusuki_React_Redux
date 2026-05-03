@@ -1,50 +1,65 @@
 import { useState } from "react";
 import {
-  useCreatePaymentSessionsMutation,
-  useSetPaymentSessionMutation,
-  useCompleteCartMutation,
   useAddShippingMethodMutation,
+  useGetShippingOptionsQuery,
 } from "@/redux/api/shopApi/shopCartApi";
 
 const Payment = ({ cartId }: { cartId: string | undefined }) => {
   const [loading, setLoading] = useState(false);
+
+  // Fetch available shipping options for this cart
+  const { data: shippingData, isLoading: fetchingOptions } = useGetShippingOptionsQuery(
+    cartId as string,
+    { skip: !cartId }
+  );
+
+  console.log("shippingData:", shippingData);
+
   const [addShippingMethod] = useAddShippingMethodMutation();
-  const [createPaymentSessions] = useCreatePaymentSessionsMutation();
-  const [setPaymentSession] = useSetPaymentSessionMutation();
-  const [completeCart] = useCompleteCartMutation();
 
   const handlePayment = async () => {
     if (!cartId) return;
 
+    // Get the first available shipping option dynamically
+    const shippingOptions = shippingData?.shipping_options || [];
+    if (shippingOptions.length === 0) {
+      alert("No shipping options available for this address.");
+      return;
+    }
+
     try {
       setLoading(true);
-      await addShippingMethod({
+
+      // 1️⃣ Add the dynamically fetched shipping method
+
+      const res = await addShippingMethod({
         cartId,
-        option_id: "so_01H...", // Get this from useGetShippingOptionsQuery
+        option_id: import.meta.env.VITE_MEDUSA_OPTION_ID,
       }).unwrap();
 
-      // 1️⃣ Create payment sessions
-      await createPaymentSessions(cartId).unwrap();
+      // // 2️⃣ Create payment sessions
+      // await createPaymentSessions(cartId).unwrap();
 
-      // 2️⃣ Select payment provider
-      // 👉 IMPORTANT: provider_id depends on your Medusa setup
-      await setPaymentSession({
-        cartId,
-        provider_id: "manual", // or "stripe", "sslcommerz"
-      }).unwrap();
+      // // 3️⃣ Select payment provider
+      // await setPaymentSession({
+      //   cartId,
+      //   provider_id: "manual",
+      // }).unwrap();
 
-      // 3️⃣ Complete cart → ORDER CREATED
-      const res = await completeCart(cartId).unwrap();
+      // // 4️⃣ Complete cart → ORDER CREATED
+      // const res = await completeCart(cartId).unwrap();
 
       console.log("ORDER SUCCESS:", res);
       alert("Order placed successfully!");
     } catch (err) {
       console.log("Payment Error:", err);
-      alert("Payment failed!");
+      alert("Payment failed! Check console for details.");
     } finally {
       setLoading(false);
     }
   };
+
+  if (fetchingOptions) return <p>Loading shipping options...</p>;
 
   return (
     <div>
@@ -52,8 +67,8 @@ const Payment = ({ cartId }: { cartId: string | undefined }) => {
 
       <button
         onClick={handlePayment}
-        disabled={loading}
-        className="bg-green-600 text-white px-4 py-2 mt-4"
+        disabled={loading || !cartId}
+        className="bg-green-600 text-white px-4 py-2 mt-4 disabled:bg-gray-400"
       >
         {loading ? "Processing..." : "Place Order"}
       </button>
