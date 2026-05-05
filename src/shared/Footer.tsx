@@ -13,17 +13,56 @@ import {
   MapPin,
   Phone,
   Mail,
+  Globe,
+  Share2,
+  type LucideIcon,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useGetAddressesQuery, useGetSocialLinksQuery } from "@/redux/api/settingsApi/settingApi";
+
+
+const socialIconMap: Record<string, LucideIcon> = {
+  facebook: Facebook,
+  fafacebook: Facebook,
+  twitter: Twitter,
+  fatwitter: Twitter,
+  instagram: Instagram,
+  fainstagram: Instagram,
+  youtube: Youtube,
+  fayoutube: Youtube,
+  linkedin: Linkedin,
+  falinkedin: Linkedin,
+};
+
+const getSocialIcon = (icon?: string | null, platform?: string | null) => {
+  const iconKey = icon?.toLowerCase();
+  const platformKey = platform?.toLowerCase();
+
+  return (
+    socialIconMap[iconKey || ""] ||
+    socialIconMap[platformKey || ""] ||
+    Share2
+  );
+};
+
+const cleanGoogleMapUrl = (embed?: string | null) => {
+  if (!embed) return "#";
+
+  const srcMatch = embed.match(/src=["']([^"']+)["']/);
+  if (srcMatch?.[1]) return srcMatch[1];
+
+  return embed
+    .replace(/^"+|"+$/g, "")
+    .split('"')[0]
+    .trim();
+};
 
 const Footer = () => {
-  const socialLinks = [
-    { icon: Facebook, link: "https://facebook.com/yourpage" },
-    { icon: Twitter, link: "https://twitter.com/yourprofile" },
-    { icon: Instagram, link: "https://instagram.com/yourprofile" },
-    { icon: Youtube, link: "https://youtube.com/@yourchannel" },
-    { icon: Linkedin, link: "https://linkedin.com/company/yourcompany" },
-  ];
+  const { data: socialLinksResponse } = useGetSocialLinksQuery();
+  const { data: addressesResponse } = useGetAddressesQuery();
+
+  const socialLinks = socialLinksResponse?.data ?? [];
+  const addresses = addressesResponse?.data ?? [];
 
   return (
     <footer className="w-full bg-background border-t border-border pt-12 pb-8">
@@ -184,105 +223,69 @@ const Footer = () => {
               </a>
             </p>
 
-            <div className="flex gap-2">
-              {socialLinks.map(({ icon: Icon, link }, i) => (
-                <a
-                  key={i}
-                  href={link}
-                  target="_blank"
-                  rel="noopener noreferrer"
+            <div className="flex flex-wrap gap-2">
+              {socialLinks.length > 0 ? (
+                socialLinks.map((item) => {
+                  const Icon = getSocialIcon(item.icon, item.platform);
+
+                  return (
+                    <a
+                      key={item.id}
+                      href={item.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={item.platform}
+                    >
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        className="rounded-full bg-secondary/50 hover:bg-primary hover:text-white h-9 w-9"
+                      >
+                        <Icon size={16} />
+                      </Button>
+                    </a>
+                  );
+                })
+              ) : (
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="rounded-full bg-secondary/50 h-9 w-9"
+                  disabled
                 >
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    className="rounded-full bg-secondary/50 hover:bg-primary hover:text-white h-9 w-9"
-                  >
-                    <Icon size={16} />
-                  </Button>
-                </a>
-              ))}
+                  <Globe size={16} />
+                </Button>
+              )}
             </div>
           </div>
 
-          {/* Front Office */}
-          <div className="space-y-3">
-            <h4 className="font-bold text-xl uppercase">Front Office</h4>
-            <p className="text-sm text-muted-foreground">
-              Tropicana Tower, 2nd Floor, Flat-F2 <br />
-              218 Shahid Syed Nazrul Islam Sharani <br />
-              Dhaka-1000, Bangladesh
-            </p>
-            <Link
-              to="#"
-              className="flex items-center gap-2 text-primary text-sm"
-            >
-              <MapPin size={16} /> View Map
-            </Link>
-          </div>
+          {/* Dynamic Addresses */}
+          {addresses.map((item) => (
+            <div key={item.id} className="space-y-3">
+              <h4 className="font-bold text-xl uppercase">
+                {item.title || "Office Address"}
+              </h4>
 
-          {/* Mohammadpur Office */}
-          <div className="space-y-3">
-            <h4 className="font-bold text-xl uppercase">Mohammadpur Office</h4>
-            <p className="text-sm text-muted-foreground">
-              15/1/C Block-F <br />
-              Hazi Chinu Mia Road <br />
-              Mohammadpur, Dhaka-1207
-            </p>
-            <Link
-              to="#"
-              className="flex items-center gap-2 text-primary text-sm"
-            >
-              <MapPin size={16} /> View Map
-            </Link>
-          </div>
+              <p className="text-sm text-muted-foreground whitespace-pre-line">
+                {item.address}
+              </p>
+
+              {item.google_map_embed && (
+                <a
+                  href={cleanGoogleMapUrl(item.google_map_embed)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2 text-primary text-sm"
+                >
+                  <MapPin size={16} /> View Map
+                </a>
+              )}
+            </div>
+          ))}
         </div>
 
         <hr className="border-border my-10" />
 
-        {/* ==================================================
-          //! Todo  SISTER CONCERN + MEMBERSHIP
-        ================================================== */}
-        {/* <div className="flex flex-col md:flex-row items-center justify-between py-10">
-          <div className="flex-1 flex flex-col items-center gap-6">
-            <h5 className="font-bold text-xl uppercase">Our Sister Concern</h5>
-            <div className="flex gap-10">
-              <img
-                src="/path-to/padma.png"
-                alt="Padma Air"
-                className={logoStyle}
-              />
-              <img
-                src="/path-to/universal.png"
-                alt="Universal Travel"
-                className={logoStyle}
-              />
-              <img
-                src="/path-to/nusuki-edu.png"
-                alt="Nusuki Education"
-                className={logoStyle}
-              />
-            </div>
-          </div>
-
-          <div className="hidden md:flex flex-col items-center px-16 space-y-3">
-            <div className="w-0.5 h-12" style={{ backgroundColor: grayGold }} />
-            <div
-              className="w-3.5 h-3.5 rotate-45 border-2"
-              style={{ borderColor: grayGold }}
-            />
-            <div className="w-0.5 h-12" style={{ backgroundColor: grayGold }} />
-          </div>
-
-          <div className="flex-1 flex flex-col items-center gap-6">
-            <h5 className="font-bold text-xl uppercase">We Are Members Of</h5>
-            <div className="flex gap-10">
-              <img src="/path-to/iata.png" alt="IATA" className={logoStyle} />
-              <img src="/path-to/haab.png" alt="HAAB" className={logoStyle} />
-              <img src="/path-to/facd.png" alt="FACD" className={logoStyle} />
-              <img src="/path-to/atab.png" alt="ATAB" className={logoStyle} />
-            </div>
-          </div>
-        </div> */}
         <img src={footerLight} alt="footer" className="block dark:hidden" />
 
         <img src={footerDark} alt="footer dark" className="dark:block hidden" />

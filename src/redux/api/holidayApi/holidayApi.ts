@@ -5,14 +5,14 @@ import type { TourPackagesListParams, TourPackagesListResponse } from "@/types/h
 
 export const holidayApi = laravelApi.injectEndpoints({
   endpoints: (builder) => ({
-      getTours: builder.query<ToursApiResponse, GetToursParams>({
-        query: (params) => ({
-          url: "/tours",
-          method: "GET",
-          params,
-        }),
+    getTours: builder.query<ToursApiResponse, GetToursParams>({
+      query: (params) => ({
+        url: "/tours",
+        method: "GET",
+        params,
       }),
- getTourPackagesList: builder.query<TourPackagesListResponse,  TourPackagesListParams>({
+    }),
+    getTourPackagesList: builder.query<TourPackagesListResponse, TourPackagesListParams>({
       query: (params) => {
         const cleanParams = Object.fromEntries(
           Object.entries(params).filter(
