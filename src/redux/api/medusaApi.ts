@@ -3,8 +3,8 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 export const medusaApi = createApi({
   reducerPath: "medusaApi",
   baseQuery: fetchBaseQuery({
-    // baseUrl: "http://localhost:9000/store",
-    baseUrl: "http://192.168.10.120:9000/store",
+    baseUrl: "http://localhost:9000/store",
+    // baseUrl: "http://192.168.10.120:9000/store",
 
     prepareHeaders: (headers) => {
       headers.set(
@@ -14,6 +14,6 @@ export const medusaApi = createApi({
       return headers;
     },
   }),
-  tagTypes: ['Cart'], 
+  tagTypes: ['Cart'],
   endpoints: () => ({}),
 });

@@ -1,6 +1,12 @@
 import { useNavigate } from "react-router-dom";
 
-const ShopCartCheckOut = ({ total, count, cartId }: any) => {
+interface ShopCartCheckOutProps {
+  total: number;
+  count: number;
+  cartId : string | null;
+}
+
+const ShopCartCheckOut = ({ total, count, cartId }: ShopCartCheckOutProps) => {
   const navigate = useNavigate();
 
   return (
@@ -10,7 +16,6 @@ const ShopCartCheckOut = ({ total, count, cartId }: any) => {
 
       <button
         onClick={() => navigate(`/shop/checkout/${cartId}`)}
-        
         className="bg-primary text-white w-full py-2 mt-3"
       >
         Proceed to Checkout

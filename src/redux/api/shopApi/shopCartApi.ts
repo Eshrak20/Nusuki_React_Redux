@@ -9,6 +9,9 @@ export const shopCartApi = medusaApi.injectEndpoints({
       query: () => ({
         url: "/carts",
         method: "POST",
+        body:{
+          region_id: import.meta.env.VITE_MEDUSA_REGION_ID,
+        }
       }),
     }),
 
@@ -46,7 +49,7 @@ export const shopCartApi = medusaApi.injectEndpoints({
       query: ({ cartId, lineId }) => ({
         url: `/carts/${cartId}/line-items/${lineId}`,
         method: "DELETE",
-      }),
+      }), 
       invalidatesTags: ["Cart"],
     }),
 
@@ -70,7 +73,7 @@ export const shopCartApi = medusaApi.injectEndpoints({
     }),
     getShippingOptions: builder.query<any, string>({
       query: (cartId) => ({
-        url: `/shipping-options/${cartId}`,
+        url: `/shipping-options?cart_id=${cartId}`,
         method: "GET",
       }),
     }),

@@ -34,6 +34,7 @@ import {
   MobileSubNavItem,
 } from "./NavbarUI";
 import { ModeToggle } from "../ModeToggler";
+import { FaCartShopping } from "react-icons/fa6";
 
 const navigationLinks = [
   { href: "/flight", label: "Flight" },
@@ -211,6 +212,15 @@ export default function Navbar() {
           {/* Right section with animated buttons */}
           <div className="flex items-center gap-2">
             <div className="hidden items-center gap-2 sm:flex">
+              {location.pathname.startsWith("/shop") && (
+                <Link
+                  to="/shop/cart" /* Use href="/shop/cart" if using Next.js */
+                  className="p-2 rounded-full hover:bg-gray-100/10 transition-colors flex items-center justify-center"
+                  aria-label="Shopping Cart"
+                >
+                  <FaCartShopping size={20} className="text-foreground opacity-80 hover:opacity-100 transition-opacity" />
+                </Link>
+              )}
               <AnimatedAuthButton href="/login" variant="login">
                 <span className="flex items-center gap-1.5">
                   {/* <Sparkles size={16} className="opacity-70" /> */}
@@ -364,16 +374,29 @@ export default function Navbar() {
                     </div>
 
                     <motion.div
-                      className="mt-4 grid grid-cols-2 gap-3 border-t border-border/70 pt-3 sm:hidden"
+                      // 1. Changed "grid grid-cols-2" to "flex items-center"
+                      className="mt-4 flex items-center justify-between gap-3 border-t border-border/70 pt-3 sm:hidden"
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: 0.2 }}
                     >
+                      {location.pathname.startsWith("/shop") && (
+                        <Link
+                          to="/shop/cart"
+                          // 2. Added "shrink-0" so the icon button doesn't get squished
+                          className="shrink-0 p-2 rounded-full hover:bg-gray-100/10 transition-colors flex items-center justify-center"
+                          aria-label="Shopping Cart"
+                        >
+                          <FaCartShopping size={20} className="text-foreground opacity-80 hover:opacity-100 transition-opacity" />
+                        </Link>
+                      )}
+
                       <AnimatedAuthButton
                         href="/login"
                         variant="login"
                         onClick={closeMobileMenu}
-                        className="w-full"
+                        // 3. Added "flex-1" so it takes up half of the remaining space
+                        className="flex-1 w-full"
                       >
                         Login
                       </AnimatedAuthButton>
@@ -383,7 +406,8 @@ export default function Navbar() {
                         variant="signup"
                         specialRoute={isSpecialRoute}
                         onClick={closeMobileMenu}
-                        className="w-full"
+                        // 4. Added "flex-1" so it takes up the other half of the remaining space
+                        className="flex-1 w-full"
                       >
                         Sign Up
                       </AnimatedAuthButton>
