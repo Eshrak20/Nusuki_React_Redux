@@ -31,6 +31,7 @@ import HolidayHome from "@/pages/main/Holiday/HolidayHome/HolidayHome";
 import HolidayPackageLists from "@/pages/main/Holiday/HolidayPackageLists/HolidayPackageLists";
 import HolidayDetails from "@/pages/main/Holiday/HolidayDetails/HolidayDetails";
 import ShopCheckOutMain from "@/pages/main/Shop/ShopCheckOut/ShopCheckOutMain";
+import BookingFlightPNR from "@/pages/main/Flight/FlightBooking/BookingFlightPNR";
 // import ShopCheckOutMain from "@/pages/main/Shop/ShopCheckOut/ShopCheckOutMain";
 
 export const router = createBrowserRouter([
@@ -54,6 +55,10 @@ export const router = createBrowserRouter([
             path: "details",
             element: <FlightDetailsMain />,
           },
+          {
+            path: "booking",
+            element: <BookingFlightPNR />
+          }
         ],
       },
       {

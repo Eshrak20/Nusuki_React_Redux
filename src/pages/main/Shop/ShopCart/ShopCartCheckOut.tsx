@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 interface ShopCartCheckOutProps {
   total: number;
   count: number;
-  cartId : string | null;
+  cartId: string | null;
 }
 
 const ShopCartCheckOut = ({ total, count, cartId }: ShopCartCheckOutProps) => {

@@ -68,7 +68,7 @@ const ShopCartMain = () => {
   );
 
   return (
-    /* 1. Added container for centering and responsive padding */
+  
     <div className="container mx-auto px-4 mt-20 lg:mt-32 mb-20">
       <h1 className="text-2xl font-bold mb-8">Shopping Cart</h1>
 

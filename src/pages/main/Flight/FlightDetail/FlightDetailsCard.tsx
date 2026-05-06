@@ -9,12 +9,14 @@ import FlightPriceInfo from "./FlightPriceInfo";
 import FlightMetaBadges from "./FlightMetaBadges";
 import FlightTabsDetails from "./table/FlightTabsDetails";
 import FlightBookingDialog from "../FlightBooking/FlightBookingDialog";
+import { useNavigate } from "react-router-dom";
 
 interface Props {
   flight: FlightResultItem;
 }
 
 const FlightDetailsCard = ({ flight }: Props) => {
+  const navigate = useNavigate()
   const [open, setOpen] = useState(false);
   const [bookingOpen, setBookingOpen] = useState(false);
 
@@ -78,8 +80,7 @@ const FlightDetailsCard = ({ flight }: Props) => {
         flightId={flight.flight_id}
         searchId={flight.search_id}
         onContinue={() => {
-          // eslint-disable-next-line no-console
-          console.log("continue booking is clicked from FlightBookingDialog to FlightDetailsCard");
+          navigate("/flight/booking")
         }}
       />
     </>
