@@ -13,10 +13,8 @@ const Payment = ({ cartId }: { cartId: string | undefined }) => {
     { skip: !cartId }
   );
 
-  console.log("shippingData:", shippingData);
-
   const [addShippingMethod] = useAddShippingMethodMutation();
-
+console.log(import.meta.env.VITE_MEDUSA_OPTION_ID);
   const handlePayment = async () => {
     if (!cartId) return;
 
@@ -36,6 +34,7 @@ const Payment = ({ cartId }: { cartId: string | undefined }) => {
         cartId,
         option_id: import.meta.env.VITE_MEDUSA_OPTION_ID,
       }).unwrap();
+
 
       // // 2️⃣ Create payment sessions
       // await createPaymentSessions(cartId).unwrap();

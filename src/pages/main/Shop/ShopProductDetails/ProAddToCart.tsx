@@ -9,13 +9,13 @@ import type { Product, Variant } from "@/types/shop/types.productDetail";
 
 interface Props {
   product: Product;
-  selectedVariant: Variant // Changed from any to Product
+  selectedVariant: Variant 
 }
 
 interface CartResponse {
   cart: {
     id: string;
-    [key: string]: unknown; // For other cart properties
+    [key: string]: unknown; 
   };
 }
 
