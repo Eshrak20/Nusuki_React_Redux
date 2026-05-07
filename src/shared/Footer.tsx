@@ -18,8 +18,10 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useGetAddressesQuery, useGetSocialLinksQuery } from "@/redux/api/settingsApi/settingApi";
-
+import {
+  useGetAddressesQuery,
+  useGetSocialLinksQuery,
+} from "@/redux/api/settingsApi/settingApi";
 
 const socialIconMap: Record<string, LucideIcon> = {
   facebook: Facebook,
@@ -39,9 +41,7 @@ const getSocialIcon = (icon?: string | null, platform?: string | null) => {
   const platformKey = platform?.toLowerCase();
 
   return (
-    socialIconMap[iconKey || ""] ||
-    socialIconMap[platformKey || ""] ||
-    Share2
+    socialIconMap[iconKey || ""] || socialIconMap[platformKey || ""] || Share2
   );
 };
 
@@ -298,7 +298,8 @@ const Footer = () => {
         <div className="flex flex-col md:flex-row items-center justify-between gap-4 py-6 text-sm text-muted-foreground">
           <div className="flex flex-wrap gap-4">
             <span>© {new Date().getFullYear()}</span>
-            <Link to="/support">Support Center</Link>
+
+            <Link to="/support-center">Support Center</Link>
             <Link to="/payment">Payment</Link>
             <Link to="/security">Security</Link>
             <Link to="/privacy-policy">Privacy Policy</Link>

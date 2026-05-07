@@ -56,6 +56,11 @@ import Significance from "@/pages/main/Hajj_Umrah/Significance/Significance";
 import HajjUmPackages from "@/pages/main/Hajj_Umrah/HajjUmPackages/HajjUmPackages";
 import HajjUmMainDetPack from "@/pages/main/Hajj_Umrah/HajjUmPackages/HajjUmDetPack/HajjUmMainDetPack";
 import UmrahMainDetPack from "@/pages/main/Hajj_Umrah/HajjUmPackages/UmrahDetPack/UmrahMainDetPack";
+import Payment from "@/shared/Footer/Payment";
+import Security from "@/shared/Footer/Security";
+import PrivacyPolicy from "@/shared/Footer/PrivacyPolicy";
+import Emi from "@/shared/Footer/Emi";
+import SupportCenter from "@/shared/Footer/SupportCenter";
 
 export const router = createBrowserRouter([
   {
@@ -272,6 +277,27 @@ export const router = createBrowserRouter([
             element: <UmrahMainDetPack />,
           },
         ],
+      },
+      //Footer Pages
+      {
+        path: "support-center",
+        element: <SupportCenter />,
+      },
+      {
+        path: "payment",
+        element: <Payment />,
+      },
+      {
+        path: "security",
+        element: <Security />,
+      },
+      {
+        path: "privacy-policy",
+        element: <PrivacyPolicy />,
+      },
+      {
+        path: "emi",
+        element: <Emi />,
       },
     ],
   },
