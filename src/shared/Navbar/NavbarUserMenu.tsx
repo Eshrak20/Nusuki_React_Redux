@@ -1,9 +1,5 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { LogOut, LayoutDashboard, UserRound } from "lucide-react";
-import { useDispatch } from "react-redux";
-import { toast } from "sonner";
-
-import { logout as clearAuth } from "@/redux/features/auth/authSlice";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -15,7 +11,9 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { useLogoutMutation } from "@/redux/api/authApi/authApi";
+
+import { useAuthLogout } from "@/hooks/useAuthLogout";
+import { getFirstLetter } from "@/lib/authUser";
 
 type NavbarUserMenuProps = {
   name?: string | null;
@@ -24,34 +22,15 @@ type NavbarUserMenuProps = {
   onAction?: () => void;
 };
 
-const getFirstLetter = (name?: string | null, email?: string | null) => {
-  const value = name || email || "U";
-  return value.charAt(0).toUpperCase();
-};
-
 const NavbarUserMenu = ({
   name,
   email,
   imageUrl,
   onAction,
 }: NavbarUserMenuProps) => {
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-
-  const [logoutApi, { isLoading }] = useLogoutMutation();
-
-  const handleLogout = async () => {
-    try {
-      await logoutApi().unwrap();
-      toast.success("Logout successful");
-    } catch {
-      toast.error("Logout API failed. Local session cleared.");
-    } finally {
-      dispatch(clearAuth());
-      onAction?.();
-      navigate("/login", { replace: true });
-    }
-  };
+  const { handleLogout, isLogoutLoading } = useAuthLogout({
+    onSuccess: onAction,
+  });
 
   return (
     <DropdownMenu>
@@ -95,7 +74,11 @@ const NavbarUserMenu = ({
         </DropdownMenuItem>
 
         <DropdownMenuItem asChild>
-          <Link to="/profile" onClick={onAction} className="cursor-pointer">
+          <Link
+            to="/dashboard/profile"
+            onClick={onAction}
+            className="cursor-pointer"
+          >
             <UserRound className="mr-2 h-4 w-4" />
             Profile
           </Link>
@@ -105,11 +88,11 @@ const NavbarUserMenu = ({
 
         <DropdownMenuItem
           onClick={handleLogout}
-          disabled={isLoading}
+          disabled={isLogoutLoading}
           className="cursor-pointer text-destructive focus:text-destructive"
         >
           <LogOut className="mr-2 h-4 w-4" />
-          {isLoading ? "Logging out..." : "Logout"}
+          {isLogoutLoading ? "Logging out..." : "Logout"}
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
