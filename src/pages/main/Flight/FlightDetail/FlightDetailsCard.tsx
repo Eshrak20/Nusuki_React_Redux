@@ -1,24 +1,48 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { ChevronDown, ChevronUp } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+
 import type { FlightResultItem } from "@/types/flight/flightResults.types";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+
 import FlightJourneySummary from "./FlightJourneySummary";
 import FlightPriceInfo from "./FlightPriceInfo";
 import FlightMetaBadges from "./FlightMetaBadges";
 import FlightTabsDetails from "./table/FlightTabsDetails";
 import FlightBookingDialog from "../FlightBooking/FlightBookingDialog";
-import { useNavigate } from "react-router-dom";
 
 interface Props {
   flight: FlightResultItem;
 }
 
 const FlightDetailsCard = ({ flight }: Props) => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+
   const [open, setOpen] = useState(false);
   const [bookingOpen, setBookingOpen] = useState(false);
+
+  const flightId = useMemo(() => {
+    return flight.flight_id ?? flight.id ?? "";
+  }, [flight]);
+
+  const searchId = useMemo(() => {
+    return flight.search_id ?? "";
+  }, [flight]);
+
+  const handleContinueBooking = (params: {
+    flightId: string;
+    searchId: string;
+  }) => {
+    setBookingOpen(false);
+
+    navigate(
+      `/flight/booking?flight_id=${encodeURIComponent(
+        params.flightId,
+      )}&search_id=${encodeURIComponent(params.searchId)}`,
+    );
+  };
 
   return (
     <>
@@ -31,6 +55,7 @@ const FlightDetailsCard = ({ flight }: Props) => {
           <CardContent className="p-0">
             <div className="grid grid-cols-1 gap-8 p-5 sm:p-6 xl:grid-cols-[minmax(0,1fr)_260px] xl:items-center">
               <FlightJourneySummary flight={flight} />
+
               <FlightPriceInfo
                 pricing={flight.pricing}
                 onBookNow={() => setBookingOpen(true)}
@@ -44,9 +69,10 @@ const FlightDetailsCard = ({ flight }: Props) => {
                 <Button
                   variant="ghost"
                   onClick={() => setOpen((prev) => !prev)}
-                  className="group w-fit gap-2 px-0 text-sm font-semibold mx-auto lg:mx-0 text-muted-foreground hover:bg-transparent hover:text-primary"
+                  className="group mx-auto w-fit gap-2 px-0 text-sm font-semibold text-muted-foreground hover:bg-transparent hover:text-primary lg:mx-0"
                 >
                   {open ? "Hide Flight Details" : "View Flight Details"}
+
                   {open ? (
                     <ChevronUp className="h-4 w-4 transition-transform duration-200 group-hover:-translate-y-0.5" />
                   ) : (
@@ -57,7 +83,7 @@ const FlightDetailsCard = ({ flight }: Props) => {
             </div>
 
             <AnimatePresence initial={false}>
-              {open && (
+              {open ? (
                 <motion.div
                   key="flight-details"
                   initial={{ height: 0, opacity: 0 }}
@@ -68,7 +94,7 @@ const FlightDetailsCard = ({ flight }: Props) => {
                 >
                   <FlightTabsDetails flight={flight} />
                 </motion.div>
-              )}
+              ) : null}
             </AnimatePresence>
           </CardContent>
         </Card>
@@ -77,11 +103,9 @@ const FlightDetailsCard = ({ flight }: Props) => {
       <FlightBookingDialog
         open={bookingOpen}
         onOpenChange={setBookingOpen}
-        flightId={flight.flight_id}
-        searchId={flight.search_id}
-        onContinue={() => {
-          navigate("/flight/booking")
-        }}
+        flightId={flightId}
+        searchId={searchId}
+        onContinue={handleContinueBooking}
       />
     </>
   );

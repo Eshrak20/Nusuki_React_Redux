@@ -1,225 +1,195 @@
+import { useState } from "react";
 import {
   ArrowRight,
   CalendarDays,
-  Clock3,
   CreditCard,
-  Luggage,
   Plane,
-  Ticket,
+  Route,
+  TicketX,
   UserRound,
 } from "lucide-react";
 
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { Separator } from "@/components/ui/separator";
+import { Button } from "@/components/ui/button";
+import type { FlightBooking } from "@/types/flight/flightTicketPayment.types";
+import { useCancelAirTicketMutation } from "@/redux/api/fligtBookingApi/flightBookingApi";
 
 import BookingStatusBadge from "./BookingStatusBadge";
-import type { FlightBookingItem } from "@/types/flight/flightBooking.types";
-import {
-  cabinClassLabel,
-  formatBookingDate,
-  formatBookingDateTime,
-  formatDuration,
-  formatMoney,
-  getBaggageLabel,
-  tripTypeLabel,
-} from "@/lib/utils.flightBooking";
-import { Button } from "@/components/ui/button";
+import FlightTicketPaymentModal from "./FlightTicketPaymentModal";
+import CancelTicketConfirmDialog from "./modals/CancelTicketConfirmDialog";
 import { Link } from "react-router-dom";
 
-type FlightBookingCardProps = {
-  booking: FlightBookingItem;
+type Props = {
+  booking: FlightBooking;
 };
 
-const InfoRow = ({
-  icon: Icon,
-  label,
-  value,
-}: {
-  icon: React.ElementType;
-  label: string;
-  value: React.ReactNode;
-}) => {
+const FlightBookingCard = ({ booking }: Props) => {
+  const [paymentOpen, setPaymentOpen] = useState(false);
+  const [cancelOpen, setCancelOpen] = useState(false);
+
+  const [cancelAirTicket, { isLoading: isCancelling }] =
+    useCancelAirTicketMutation();
+
+  const passenger = booking.passengers?.[0];
+
+  const isTicketed = booking.booking_status === "ticketed";
+  const isCancelled = booking.booking_status === "cancelled";
+  const isPaid = booking.payment_status === "paid";
+
+  const canPay = Boolean(booking.pnr) && !isTicketed && !isCancelled;
+  const canCancel = Boolean(booking.pnr) && !isCancelled;
+
+  const cardHighlightClass = isCancelled
+    ? "border-red-500/30 bg-red-500/[0.03]"
+    : isTicketed || isPaid
+      ? "border-emerald-500/30 bg-emerald-500/[0.03]"
+      : "border-amber-500/30 bg-amber-500/[0.04]";
+
+  const contactEmail = passenger?.email || "eshrakg62@gmail.com";
+
+  const handleConfirmCancel = async () => {
+    if (!booking.pnr) {
+      alert("PNR not found.");
+      return;
+    }
+
+    try {
+      const payload = {
+        pnr: booking.pnr,
+        retrieveBooking: true,
+        cancelAll: true,
+        flightTicketOperation: "VOID" as const,
+        errorHandlingPolicy: "ALLOW_PARTIAL_CANCEL" as const,
+        contact: {
+          email: contactEmail,
+        },
+        send_email: true,
+      };
+
+      console.log("Cancel Ticket Payload:", JSON.stringify(payload, null, 2));
+
+      const response = await cancelAirTicket(payload).unwrap();
+
+      if (!response.success) {
+        alert(response.message || "Ticket cancel failed.");
+        return;
+      }
+
+      alert(response.message || "Air ticket cancelled successfully.");
+      setCancelOpen(false);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
+      console.error("Cancel Ticket Error:", error);
+
+      const message =
+        error?.data?.data?.friendly_reason ||
+        error?.data?.message ||
+        "Ticket cancel failed. Please try again.";
+
+      alert(message);
+    }
+  };
+
   return (
-    <div className="flex items-start gap-3 rounded-xl bg-muted/50 p-3 dark:bg-muted/30">
-      <div className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-background text-primary shadow-sm dark:bg-background/70">
-        <Icon className="h-4 w-4" />
-      </div>
+    <>
+      <article
+        className={`overflow-hidden rounded-2xl border bg-card shadow-sm transition hover:shadow-md dark:bg-card/80 ${cardHighlightClass}`}
+      >
+        <div className="border-b bg-muted/40 p-5">
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+            <div>
+              <p className="text-xs font-semibold uppercase text-muted-foreground">
+                Booking Code
+              </p>
 
-      <div className="min-w-0">
-        <p className="text-xs font-medium text-muted-foreground">{label}</p>
-        <div className="mt-0.5 text-sm font-semibold text-foreground">
-          {value}
-        </div>
-      </div>
-    </div>
-  );
-};
-
-const FlightBookingCard = ({ booking }: FlightBookingCardProps) => {
-  const firstSegment = booking.segments[0];
-  const firstPassenger = booking.passengers[0];
-  const firstTicket = booking.tickets[0];
-
-  return (
-    <Card className="group overflow-hidden rounded-2xl border-border/70 bg-card shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl dark:bg-card/80">
-      <CardHeader className="space-y-4 border-b bg-muted/30 p-5 dark:bg-muted/10">
-        <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
-          <div>
-            <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
-              <Plane className="h-4 w-4 text-primary" />
-              {tripTypeLabel(booking.trip_type)}
-            </div>
-
-            <h3 className="mt-2 text-xl font-bold tracking-tight text-foreground">
-              {booking.route}
-            </h3>
-
-            <p className="mt-1 text-sm text-muted-foreground">
-              Booking Code:{" "}
-              <span className="font-semibold text-foreground">
+              <h3 className="mt-1 text-lg font-extrabold text-foreground">
                 {booking.booking_code}
-              </span>
-            </p>
-          </div>
+              </h3>
 
-          <div className="flex flex-wrap gap-2 sm:justify-end">
-            <BookingStatusBadge status={booking.booking_status} />
-            <BookingStatusBadge status={booking.payment_status} />
-          </div>
-        </div>
-
-        <div className="flex flex-wrap items-center gap-2 text-sm text-muted-foreground">
-          <span>
-            PNR:{" "}
-            <span className="font-semibold text-foreground">
-              {booking.pnr || "N/A"}
-            </span>
-          </span>
-
-          <span className="hidden text-border sm:inline">|</span>
-
-          <span>
-            Cabin:{" "}
-            <span className="font-semibold text-foreground">
-              {cabinClassLabel(booking.cabin_class)}
-            </span>
-          </span>
-
-          <span className="hidden text-border sm:inline">|</span>
-
-          <span>
-            Traveller:{" "}
-            <span className="font-semibold text-foreground">
-              {booking.traveller_count}
-            </span>
-          </span>
-        </div>
-      </CardHeader>
-
-      <CardContent className="space-y-5 p-5">
-        <div className="grid gap-3 sm:grid-cols-2">
-          <InfoRow
-            icon={CalendarDays}
-            label="Travel Date"
-            value={`${formatBookingDate(
-              booking.travel_start_date,
-            )} - ${formatBookingDate(booking.travel_end_date)}`}
-          />
-
-          <InfoRow
-            icon={CreditCard}
-            label="Total Amount"
-            value={formatMoney(
-              booking.pricing.total_amount,
-              booking.pricing.currency,
-            )}
-          />
-
-          <InfoRow
-            icon={UserRound}
-            label="Passenger"
-            value={
-              firstPassenger
-                ? `${firstPassenger.given_name} ${firstPassenger.surname}`
-                : "N/A"
-            }
-          />
-
-          <InfoRow
-            icon={Ticket}
-            label="Ticket"
-            value={
-              firstTicket ? (
-                <span>
-                  {firstTicket.ticket_number}
-                  <span className="ml-2 text-xs text-muted-foreground">
-                    ({firstTicket.status})
-                  </span>
+              <div className="mt-3 flex flex-wrap items-center gap-2">
+                <span className="rounded-full bg-primary/10 px-3 py-1 text-xs font-bold text-primary">
+                  PNR: {booking.pnr || "N/A"}
                 </span>
-              ) : (
-                "Not issued yet"
-              )
-            }
-          />
-        </div>
 
-        {firstSegment ? (
-          <>
-            <Separator />
-
-            <div className="rounded-2xl border bg-background p-4 dark:bg-background/50">
-              <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-                <div>
-                  <p className="text-sm font-semibold text-foreground">
-                    {firstSegment.airline_name}
-                  </p>
-                  <p className="mt-1 text-xs text-muted-foreground">
-                    {firstSegment.flight_number} · Booking Class{" "}
-                    {firstSegment.booking_class}
-                  </p>
-                </div>
-
-                <div className="text-left sm:text-right">
-                  <p className="text-sm font-bold text-foreground">
-                    {firstSegment.origin} → {firstSegment.destination}
-                  </p>
-                  <p className="mt-1 text-xs text-muted-foreground">
-                    {formatDuration(firstSegment.duration_minutes)}
-                  </p>
-                </div>
-              </div>
-
-              <div className="mt-4 grid gap-3 sm:grid-cols-3">
-                <InfoRow
-                  icon={Clock3}
-                  label="Departure"
-                  value={formatBookingDateTime(firstSegment.departure_at)}
-                />
-
-                <InfoRow
-                  icon={Clock3}
-                  label="Arrival"
-                  value={formatBookingDateTime(firstSegment.arrival_at)}
-                />
-
-                <InfoRow
-                  icon={Luggage}
-                  label="Baggage"
-                  value={getBaggageLabel(firstSegment.baggage)}
+                <BookingStatusBadge
+                  bookingStatus={booking.booking_status}
+                  paymentStatus={booking.payment_status}
                 />
               </div>
             </div>
-          </>
-        ) : null}
 
-        {booking.ttl_at && booking.is_ticketable ? (
-          <div className="rounded-xl border border-amber-500/20 bg-amber-500/10 p-3 text-sm text-amber-700 dark:text-amber-300">
-            Ticket time limit:{" "}
-            <span className="font-semibold">
-              {formatBookingDateTime(booking.ttl_at)}
-            </span>
+            <div className="text-left sm:text-right">
+              <p className="text-xs font-semibold uppercase text-muted-foreground">
+                Total
+              </p>
+              <p className="mt-1 text-2xl font-extrabold text-primary">
+                {booking.pricing?.currency}{" "}
+                {Number(booking.pricing?.total_amount ?? 0).toLocaleString()}
+              </p>
+            </div>
           </div>
-        ) : null}
+        </div>
+
+        <div className="space-y-4 p-5">
+          <div className="grid gap-3 sm:grid-cols-2">
+            <div className="flex gap-3 rounded-xl border bg-background p-3">
+              <Route className="mt-0.5 h-4 w-4 text-primary" />
+              <div>
+                <p className="text-xs text-muted-foreground">Route</p>
+                <p className="font-bold">{booking.route}</p>
+              </div>
+            </div>
+
+            <div className="flex gap-3 rounded-xl border bg-background p-3">
+              <CalendarDays className="mt-0.5 h-4 w-4 text-primary" />
+              <div>
+                <p className="text-xs text-muted-foreground">Travel Date</p>
+                <p className="font-bold">{booking.travel_start_date}</p>
+              </div>
+            </div>
+
+            <div className="flex gap-3 rounded-xl border bg-background p-3">
+              <UserRound className="mt-0.5 h-4 w-4 text-primary" />
+              <div>
+                <p className="text-xs text-muted-foreground">Passenger</p>
+                <p className="font-bold">
+                  {passenger
+                    ? `${passenger.given_name} ${passenger.surname}`
+                    : "N/A"}
+                </p>
+              </div>
+            </div>
+
+            <div className="flex gap-3 rounded-xl border bg-background p-3">
+              <Plane className="mt-0.5 h-4 w-4 text-primary" />
+              <div>
+                <p className="text-xs text-muted-foreground">Trip Type</p>
+                <p className="font-bold">{booking.trip_type}</p>
+              </div>
+            </div>
+          </div>
+
+          <div className="grid gap-3 border-t pt-4 sm:grid-cols-2">
+            <Button
+              onClick={() => setPaymentOpen(true)}
+              disabled={!canPay}
+              className="h-11 rounded-xl font-bold"
+            >
+              <CreditCard className="mr-2 h-4 w-4" />
+              {isPaid || isTicketed ? "Paid" : "Pay Now"}
+            </Button>
+
+            <Button
+              type="button"
+              variant="destructive"
+              onClick={() => setCancelOpen(true)}
+              disabled={!canCancel || isCancelling}
+              className="h-11 rounded-xl font-bold"
+            >
+              <TicketX className="mr-2 h-4 w-4" />
+              Cancel Ticket
+            </Button>
+          </div>
+        </div>
         <div className="flex justify-end">
           <Button asChild className="rounded-xl">
             <Link to={`/dashboard/flight-bookings/${booking.id}`}>
@@ -228,8 +198,22 @@ const FlightBookingCard = ({ booking }: FlightBookingCardProps) => {
             </Link>
           </Button>
         </div>
-      </CardContent>
-    </Card>
+      </article>
+
+      <FlightTicketPaymentModal
+        open={paymentOpen}
+        onOpenChange={setPaymentOpen}
+        booking={booking}
+      />
+
+      <CancelTicketConfirmDialog
+        open={cancelOpen}
+        onOpenChange={setCancelOpen}
+        pnr={booking.pnr}
+        isLoading={isCancelling}
+        onConfirm={handleConfirmCancel}
+      />
+    </>
   );
 };
 

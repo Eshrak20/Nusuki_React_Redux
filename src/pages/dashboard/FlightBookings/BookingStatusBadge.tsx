@@ -1,44 +1,42 @@
-import { Badge } from "@/components/ui/badge";
-import { cn } from "@/lib/utils";
-
-type BookingStatusBadgeProps = {
-  status: string;
-  type?: "booking" | "payment" | "ticket";
+type Props = {
+  bookingStatus: string;
+  paymentStatus: string;
 };
 
-const statusStyles: Record<string, string> = {
-  pnr_created:
-    "border-emerald-500/25 bg-emerald-500/10 text-emerald-700 dark:text-emerald-300",
-  unpaid:
-    "border-amber-500/25 bg-amber-500/10 text-amber-700 dark:text-amber-300",
-  cancelled:
-    "border-red-500/25 bg-red-500/10 text-red-700 dark:text-red-300",
-  voided:
-    "border-zinc-500/25 bg-zinc-500/10 text-zinc-700 dark:text-zinc-300",
-  paid:
-    "border-emerald-500/25 bg-emerald-500/10 text-emerald-700 dark:text-emerald-300",
-  ticketed:
-    "border-primary/25 bg-primary/10 text-primary",
-};
+const BookingStatusBadge = ({ bookingStatus, paymentStatus }: Props) => {
+  const isTicketed = bookingStatus === "ticketed";
+  const isCancelled = bookingStatus === "cancelled";
+  const isPaid = paymentStatus === "paid";
+  const isUnpaid = paymentStatus === "unpaid" || paymentStatus === "pending";
 
-const formatStatus = (status: string) => {
-  return status
-    .replaceAll("_", " ")
-    .replace(/\b\w/g, (char) => char.toUpperCase());
-};
+  if (isCancelled) {
+    return (
+      <div className="rounded-full border border-red-500/20 bg-red-500/10 px-3 py-1 text-xs font-bold text-red-600 dark:text-red-400">
+        Cancelled
+      </div>
+    );
+  }
 
-const BookingStatusBadge = ({ status }: BookingStatusBadgeProps) => {
+  if (isTicketed || isPaid) {
+    return (
+      <div className="rounded-full border border-emerald-500/20 bg-emerald-500/10 px-3 py-1 text-xs font-bold text-emerald-600 dark:text-emerald-400">
+        Paid / Ticketed
+      </div>
+    );
+  }
+
+  if (isUnpaid) {
+    return (
+      <div className="rounded-full border border-amber-500/20 bg-amber-500/10 px-3 py-1 text-xs font-bold text-amber-600 dark:text-amber-400">
+        Payment Pending
+      </div>
+    );
+  }
+
   return (
-    <Badge
-      variant="outline"
-      className={cn(
-        "rounded-full px-3 py-1 text-xs font-semibold",
-        statusStyles[status] ??
-          "border-muted-foreground/20 bg-muted text-muted-foreground"
-      )}
-    >
-      {formatStatus(status)}
-    </Badge>
+    <div className="rounded-full border border-primary/20 bg-primary/10 px-3 py-1 text-xs font-bold text-primary">
+      {bookingStatus} / {paymentStatus}
+    </div>
   );
 };
 

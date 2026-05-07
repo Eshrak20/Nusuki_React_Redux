@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { X } from "lucide-react";
 
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
@@ -18,7 +18,7 @@ interface Props {
   onOpenChange: (open: boolean) => void;
   flightId: string;
   searchId: string;
-  onContinue?: () => void;
+  onContinue?: (params: { flightId: string; searchId: string }) => void;
 }
 
 const FlightBookingDialog = ({
@@ -31,27 +31,54 @@ const FlightBookingDialog = ({
   const [showDetails, setShowDetails] = useState(false);
   const { timeText } = useSharedFlightTimer();
 
+  const lastTriggeredKeyRef = useRef<string>("");
+
   const [trigger, { data, isFetching, isError }] =
     useLazyFlightDetailTicketQuery();
 
   useEffect(() => {
-    if (open && flightId && searchId) {
-      trigger(
-        {
-          flight_id: flightId,
-          search_id: searchId,
-        },
-        true,
-      );
-    }
+    if (!open || !flightId || !searchId) return;
+
+    const requestKey = `${flightId}-${searchId}`;
+
+    if (lastTriggeredKeyRef.current === requestKey) return;
+
+    lastTriggeredKeyRef.current = requestKey;
+
+    trigger(
+      {
+        flight_id: flightId,
+        search_id: searchId,
+      },
+      true,
+    );
   }, [open, flightId, searchId, trigger]);
 
+  useEffect(() => {
+    if (!open) {
+      lastTriggeredKeyRef.current = "";
+    }
+  }, [open]);
+
   const flight = data?.data?.flight;
+
+  const pnrFlightId = data?.data?.flight_id ?? flightId;
+  const pnrSearchId = data?.data?.search_id ?? searchId;
+
   const title = useMemo(() => getTripTitle(flight), [flight]);
+
+  const handleContinue = () => {
+    if (!pnrFlightId || !pnrSearchId) return;
+
+    onContinue?.({
+      flightId: pnrFlightId,
+      searchId: pnrSearchId,
+    });
+  };
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="h-[94vh] w-[98vw]! max-w-375! overflow-y-auto xl:overflow-hidden border-none p-0 shadow-2xl dark:bg-[#0b1220] sm:rounded-xl">
+      <DialogContent className="h-[94vh] w-[98vw]! max-w-375! overflow-y-auto border-none p-0 shadow-2xl dark:bg-[#0b1220] sm:rounded-xl xl:overflow-hidden">
         <DialogTitle className="sr-only">Flight booking details</DialogTitle>
 
         <button
@@ -72,7 +99,7 @@ const FlightBookingDialog = ({
           />
         ) : (
           <div className="flex h-full flex-col">
-            <div className="flex-1 px-4 py-6 md:px-8 xl:px-10 xl:overflow-y-auto">
+            <div className="flex-1 px-4 py-6 md:px-8 xl:overflow-y-auto xl:px-10">
               <div className="mx-auto w-full max-w-7xl">
                 <div className="mb-6">
                   <h2 className="mx-8 text-center text-[18px] font-extrabold uppercase tracking-tight text-[#17306f] dark:text-[#8fb4ff] md:text-[34px] lg:mx-5 lg:text-[28px]">
@@ -85,7 +112,6 @@ const FlightBookingDialog = ({
                 </div>
 
                 <div className="grid grid-cols-1 gap-5 xl:grid-cols-[minmax(0,1fr)_360px]">
-                  {/* Mobile: price first. Desktop: right sidebar */}
                   <div className="order-1 space-y-5 xl:order-2">
                     <div className="hidden lg:block">
                       <BookingTimerCard timeText={timeText} />
@@ -94,8 +120,7 @@ const FlightBookingDialog = ({
                     <BookingPriceSidebar flight={flight} />
                   </div>
 
-                  {/* Mobile: flight info after price. Desktop: left side */}
-                  <div className="order-2 min-h-0 space-y-5 pb-4 xl:order-1 xl:max-h-[70vh] xl:overflow-y-auto xl:pr-2 lg:pb-28 xl:pb-0">
+                  <div className="order-2 min-h-0 space-y-5 pb-4 lg:pb-28 xl:order-1 xl:max-h-[70vh] xl:overflow-y-auto xl:pb-0 xl:pr-2">
                     <BookingJourneyTimeline flight={flight} />
 
                     <BookingFlightDetailsAccordion
@@ -111,8 +136,9 @@ const FlightBookingDialog = ({
             <div className="border-t border-black/5 bg-[#eef1f5] px-6 py-4 dark:border-white/10 dark:bg-[#0b1220]">
               <div className="mx-auto flex max-w-7xl justify-center">
                 <Button
-                  onClick={onContinue}
-                  className="h-11 min-w-57.5 rounded-md bg-[#17306f] px-8 text-[16px] font-bold text-white hover:bg-[#102558] dark:bg-[#1f4fa3] dark:hover:bg-[#1a438b]"
+                  onClick={handleContinue}
+                  disabled={!pnrFlightId || !pnrSearchId}
+                  className="h-11 min-w-[230px] rounded-md bg-[#17306f] px-8 text-[16px] font-bold text-white hover:bg-[#102558] disabled:cursor-not-allowed disabled:opacity-60 dark:bg-[#1f4fa3] dark:hover:bg-[#1a438b]"
                 >
                   Next - Continue Booking
                 </Button>

@@ -23,7 +23,7 @@ import Upcoming from "@/components/Upcoming";
 // Flight Pages
 import FlightHome from "@/pages/main/Flight/FlightHome/FlightHome";
 import FlightDetailsMain from "@/pages/main/Flight/FlightDetail/FlightDetailsMain";
-import BookingFlightPNR from "@/pages/main/Flight/FlightBooking/BookingFlightPNR";
+import BookingFlightPNR from "@/pages/main/Flight/FlightBooking/BookingFlightPNR/BookingFlightPNR";
 
 // Education Pages
 import HomeEducation from "@/pages/main/Education/HomeEducation/HomeEducation";
@@ -103,11 +103,6 @@ export const router = createBrowserRouter([
             path: "details",
             element: <FlightDetailsMain />,
           },
-          {
-            path: "booking",
-            element: <BookingFlightPNR />,
-          },
-       
         ],
       },
 

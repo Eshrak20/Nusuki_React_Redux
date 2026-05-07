@@ -6,22 +6,17 @@ import { useGetFlightBookingsQuery } from "@/redux/api/fligtBookingApi/flightBoo
 import FlightBookingCardSkeleton from "@/components/skeletons/FlightBookingCardSkeleton";
 import FlightBookingEmptyState from "./FlightBookingEmptyState";
 import FlightBookingCard from "./FlightBookingCard";
-
+import FlightBookingStats from "./FlightBookingStats";
 
 const FlightBookings = () => {
   const [page, setPage] = useState(1);
   const size = 10;
 
-  const {
-    data,
-    isLoading,
-    isFetching,
-    isError,
-    refetch,
-  } = useGetFlightBookingsQuery({
-    page,
-    size,
-  });
+  const { data, isLoading, isFetching, isError, refetch } =
+    useGetFlightBookingsQuery({
+      page,
+      size,
+    });
 
   const bookings = data?.data.items ?? [];
   const pagination = data?.data.pagination;
@@ -60,6 +55,10 @@ const FlightBookings = () => {
           Refresh
         </Button>
       </div>
+
+      {!isLoading && !isError && bookings.length > 0 ? (
+        <FlightBookingStats bookings={bookings} />
+      ) : null}
 
       {isError ? (
         <div className="rounded-2xl border border-destructive/20 bg-destructive/10 p-6 text-center">
