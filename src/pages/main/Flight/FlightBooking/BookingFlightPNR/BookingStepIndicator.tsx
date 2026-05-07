@@ -28,11 +28,10 @@ const BookingStepIndicator = () => {
         <div key={step.key} className="flex items-center gap-3">
           <div className="flex items-center gap-2">
             <div
-              className={`flex h-6 w-6 items-center justify-center rounded-full border ${
-                step.active
+              className={`flex h-6 w-6 items-center justify-center rounded-full border ${step.active
                   ? "border-primary text-primary"
                   : "border-muted-foreground"
-              }`}
+                }`}
             >
               {step.key}
             </div>

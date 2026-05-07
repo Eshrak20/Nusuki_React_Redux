@@ -5,7 +5,6 @@ import UpdateUserProfile from "@/pages/dashboard/UpdateUserProfile/UpdateUserPro
 import ChangePassword from "@/pages/dashboard/ChangePass/ChangePassword";
 import FlightBookings from "@/pages/dashboard/FlightBookings/FlightBookings";
 import FlightBookingDetails from "@/pages/dashboard/FlightBookingDetails/FlightBookingDetails";
-import BookingFlightPNR from "@/pages/main/Flight/FlightBooking/BookingFlightPNR/BookingFlightPNR";
 
 export const dashboardRoutes = [
   {
@@ -33,11 +32,5 @@ export const dashboardRoutes = [
         element: <FlightBookingDetails />,
       },
     ],
-  },
-
-  // ✅ Protected, but NOT inside DashboardLayout
-  {
-    path: "flight/booking",
-    element: <BookingFlightPNR />,
   },
 ];

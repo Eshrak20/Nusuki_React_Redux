@@ -10,12 +10,10 @@ const ProtectedRoute = () => {
     (state: RootState) => state.auth,
   );
 
-  const { data, isLoading, isFetching, isError } = useGetUserProfileQuery(
-    undefined,
-    {
+  const { isLoading, isFetching, isError } =
+    useGetUserProfileQuery(undefined, {
       skip: !token,
-    },
-  );
+    });
 
   const currentPath = location.pathname + location.search;
 
@@ -31,7 +29,7 @@ const ProtectedRoute = () => {
     );
   }
 
-  if (isError || !data) {
+  if (isError) {
     return <Navigate to="/login" replace state={{ from: currentPath }} />;
   }
 

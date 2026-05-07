@@ -98,7 +98,7 @@ const PassportUploadBox = ({
           </label>
         </Button>
 
-        <span className="max-w-[200px] truncate text-sm text-muted-foreground">
+        <span className="max-w-50 truncate text-sm text-muted-foreground">
           {isScanning ? "Processing image..." : fileName}
         </span>
       </div>

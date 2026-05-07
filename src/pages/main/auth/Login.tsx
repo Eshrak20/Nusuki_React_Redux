@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
-
+import { flushSync } from "react-dom";
 import { setCredentials } from "@/redux/features/auth/authSlice";
 import { useLoginMutation } from "@/redux/api/authApi/authApi";
 import type { LoginErrors, LoginFormData } from "./AuthComponents/LoginForm";
@@ -27,6 +27,7 @@ const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
+
 
   const [login, { isLoading }] = useLoginMutation();
 
@@ -92,16 +93,17 @@ const Login = () => {
     try {
       const res = await login(formData).unwrap();
 
-      dispatch(
-        setCredentials({
-          token: res.data.token,
-          user: res.data.user,
-        }),
-      );
-
-      toast.success(res.message || "Login successful");
+      flushSync(() => {
+        dispatch(
+          setCredentials({
+            token: res.data.token,
+            user: res.data.user,
+          }),
+        );
+      });
 
       navigate(from, { replace: true });
+
     } catch (error) {
       toast.error(getErrorMessage(error));
     }

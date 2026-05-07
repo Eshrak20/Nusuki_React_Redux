@@ -1,5 +1,4 @@
 import { Calendar } from "lucide-react";
-
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -22,17 +21,15 @@ export type PnrFormState = {
   gender: "M" | "F";
   passengerType: "ADT" | "CNN" | "INF";
   travelerPhone: string;
-
   contactEmail: string;
   contactPhone: string;
-
   passportNumber: string;
   nationality: string;
   issuingCountry: string;
   passportExpiryDate: string;
-
   sendBookingEmail: boolean;
 };
+
 type PassengerFormProps = {
   form: PnrFormState;
   fileUploaded: boolean;
@@ -58,57 +55,52 @@ const PassengerForm = ({
   updateForm,
 }: PassengerFormProps) => {
   return (
-    <div className="space-y-6">
-      <PassportUploadBox
-        fileUploaded={fileUploaded}
-        fileName={fileName}
-        isScanning={isScanning}
-        setFileUploaded={setFileUploaded}
-        setFileName={setFileName}
-        setIsScanning={setIsScanning}
-        setPassportNumber={(value) => updateForm("passportNumber", value)}
-      />
-
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-4">
-        <div className="space-y-2">
+    <div className="w-full space-y-6">
+      {/* Row 1: Names and DOB */}
+      <div className="grid w-full grid-cols-1 gap-4 md:grid-cols-3">
+        <div className="w-full space-y-2">
           <Label className="text-xs font-semibold uppercase text-muted-foreground">
             First Name *
           </Label>
           <Input
+            className="w-full h-10"
             value={form.givenName}
             onChange={(e) => updateForm("givenName", e.target.value)}
             placeholder="Enter First Name"
           />
         </div>
 
-        <div className="space-y-2">
+        <div className="w-full space-y-2">
           <Label className="text-xs font-semibold uppercase text-muted-foreground">
             Last Name *
           </Label>
           <Input
+            className="w-full h-10"
             value={form.surname}
             onChange={(e) => updateForm("surname", e.target.value)}
             placeholder="Enter Last Name"
           />
         </div>
 
-        <div className="space-y-2">
+        <div className="w-full space-y-2">
           <Label className="text-xs font-semibold uppercase text-muted-foreground">
             Date of Birth *
           </Label>
-          <div className="relative">
+          <div className="relative w-full">
             <Input
               type="date"
+              className="w-full h-10 pr-10"
               value={form.dateOfBirth}
               onChange={(e) => updateForm("dateOfBirth", e.target.value)}
             />
-            <Calendar className="pointer-events-none absolute right-3 top-3 h-4 w-4 text-muted-foreground" />
+            <Calendar className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
           </div>
         </div>
       </div>
 
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
-        <div className="space-y-2">
+      {/* Row 2: Selects and Phone */}
+      <div className="grid w-full grid-cols-1 gap-4 md:grid-cols-3">
+        <div className="w-full space-y-2">
           <Label className="text-xs font-semibold uppercase text-muted-foreground">
             Gender *
           </Label>
@@ -116,7 +108,7 @@ const PassengerForm = ({
             value={form.gender}
             onValueChange={(value: "M" | "F") => updateForm("gender", value)}
           >
-            <SelectTrigger>
+            <SelectTrigger className="w-full h-10">
               <SelectValue placeholder="Select gender" />
             </SelectTrigger>
             <SelectContent>
@@ -126,7 +118,7 @@ const PassengerForm = ({
           </Select>
         </div>
 
-        <div className="space-y-2">
+        <div className="w-full space-y-2">
           <Label className="text-xs font-semibold uppercase text-muted-foreground">
             Passenger Type *
           </Label>
@@ -136,7 +128,7 @@ const PassengerForm = ({
               updateForm("passengerType", value)
             }
           >
-            <SelectTrigger>
+            <SelectTrigger className="w-full h-10">
               <SelectValue placeholder="Select passenger type" />
             </SelectTrigger>
             <SelectContent>
@@ -147,11 +139,12 @@ const PassengerForm = ({
           </Select>
         </div>
 
-        <div className="space-y-2">
+        <div className="w-full space-y-2">
           <Label className="text-xs font-semibold uppercase text-muted-foreground">
             Traveler Phone *
           </Label>
           <Input
+            className="w-full h-10"
             value={form.travelerPhone}
             onChange={(e) => updateForm("travelerPhone", e.target.value)}
             placeholder="Enter traveler phone"
@@ -159,6 +152,7 @@ const PassengerForm = ({
         </div>
       </div>
 
+      {/* Sub-components */}
       <ContactInfoBox
         email={form.contactEmail}
         phone={form.contactPhone}
@@ -176,13 +170,15 @@ const PassengerForm = ({
         isScanning={isScanning}
         onChange={(field, value) => {
           if (field === "passportNumber") updateForm("passportNumber", value);
-          if (field === "passportExpiryDate") updateForm("passportExpiryDate", value);
+          if (field === "passportExpiryDate")
+            updateForm("passportExpiryDate", value);
           if (field === "nationality") updateForm("nationality", value);
           if (field === "issuingCountry") updateForm("issuingCountry", value);
         }}
       />
 
-      <div className="flex items-center gap-2 pt-2">
+      {/* Footer Checkbox */}
+      <div className="flex w-full items-center gap-2 pt-2">
         <Checkbox
           id="send-booking-email"
           checked={form.sendBookingEmail}

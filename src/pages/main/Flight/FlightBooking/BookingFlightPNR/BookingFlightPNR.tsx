@@ -117,6 +117,7 @@ const BookingFlightPNR = () => {
     try {
       const payload = buildPayload();
 
+      // eslint-disable-next-line no-console
       console.log("PNR Payload:", JSON.stringify(payload, null, 2));
 
       const response = await createPnr(payload).unwrap();
@@ -140,7 +141,7 @@ const BookingFlightPNR = () => {
       }
 
       navigate("/dashboard/flight-bookings");
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       console.error("Create PNR Error:", error);
 
@@ -185,7 +186,7 @@ const BookingFlightPNR = () => {
                 Expand All
               </Label>
 
-              <Checkbox id="expand-all" checked onCheckedChange={() => {}} />
+              <Checkbox id="expand-all" checked onCheckedChange={() => { }} />
             </div>
           </div>
 
@@ -226,7 +227,7 @@ const BookingFlightPNR = () => {
             <Button
               onClick={handleCreatePnr}
               disabled={isLoading || isScanning || isFormInvalid}
-              className="h-11 min-w-[230px] rounded-md bg-[#17306f] px-8 text-[16px] font-bold text-white hover:bg-[#102558] disabled:cursor-not-allowed disabled:opacity-60 dark:bg-[#1f4fa3] dark:hover:bg-[#1a438b]"
+              className="h-11 min-w-57.5 rounded-md bg-[#17306f] px-8 text-[16px] font-bold text-white hover:bg-[#102558] disabled:cursor-not-allowed disabled:opacity-60 dark:bg-[#1f4fa3] dark:hover:bg-[#1a438b]"
             >
               {isLoading ? "Creating PNR..." : "Next - Continue Booking"}
             </Button>
