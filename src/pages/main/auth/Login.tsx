@@ -1,0 +1,124 @@
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { useLocation, useNavigate } from "react-router-dom";
+import { toast } from "sonner";
+
+import { setCredentials } from "@/redux/features/auth/authSlice";
+import { useLoginMutation } from "@/redux/api/authApi/authApi";
+import type { LoginErrors, LoginFormData } from "./AuthComponents/LoginForm";
+import LoginForm from "./AuthComponents/LoginForm";
+
+
+
+const getErrorMessage = (error: unknown) => {
+  if (
+    typeof error === "object" &&
+    error !== null &&
+    "data" in error &&
+    typeof error.data === "object" &&
+    error.data !== null &&
+    "message" in error.data
+  ) {
+    return String(error.data.message);
+  }
+
+  return "Something went wrong. Please try again.";
+};
+
+const Login = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const [login, { isLoading }] = useLoginMutation();
+
+  const [showPassword, setShowPassword] = useState(false);
+
+  const [formData, setFormData] = useState<LoginFormData>({
+    email: "",
+    password: "",
+  });
+
+  const [errors, setErrors] = useState<LoginErrors>({});
+
+  const from = location.state?.from?.pathname || "/";
+
+  const validateForm = () => {
+    const newErrors: LoginErrors = {};
+
+    if (!formData.email.trim()) {
+      newErrors.email = "Email is required";
+    } else if (!/^\S+@\S+\.\S+$/.test(formData.email)) {
+      newErrors.email = "Please enter a valid email address";
+    }
+
+    if (!formData.password.trim()) {
+      newErrors.password = "Password is required";
+    }
+
+    setErrors(newErrors);
+
+    if (Object.keys(newErrors).length > 0) {
+      toast.error(Object.values(newErrors)[0]);
+      return false;
+    }
+
+    return true;
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { id, value } = e.target;
+
+    setFormData((prev) => ({
+      ...prev,
+      [id]: value,
+    }));
+
+    setErrors((prev) => ({
+      ...prev,
+      [id]: "",
+    }));
+  };
+
+  const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    if (!validateForm()) return;
+
+    try {
+      const res = await login(formData).unwrap();
+
+      dispatch(
+        setCredentials({
+          token: res.data.token,
+          user: res.data.user,
+        })
+      );
+
+      toast.success(res.message || "Login successful");
+      navigate(from, { replace: true });
+    } catch (error) {
+      toast.error(getErrorMessage(error));
+    }
+  };
+
+  return (
+    <div className="relative flex min-h-svh w-full items-center justify-center overflow-hidden bg-background px-4 py-8 sm:px-6 md:p-10">
+      <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_top,hsl(var(--primary)/0.20),transparent_35%),radial-gradient(circle_at_bottom_right,hsl(var(--primary)/0.12),transparent_35%)]" />
+      <div className="absolute left-10 top-10 -z-10 h-32 w-32 rounded-full bg-primary/10 blur-3xl" />
+      <div className="absolute bottom-10 right-10 -z-10 h-40 w-40 rounded-full bg-primary/10 blur-3xl" />
+
+      <LoginForm
+        formData={formData}
+        errors={errors}
+        isLoading={isLoading}
+        showPassword={showPassword}
+        onChange={handleChange}
+        onSubmit={handleLogin}
+        onTogglePassword={() => setShowPassword((prev) => !prev)}
+      />
+    </div>
+  );
+};
+
+export default Login;

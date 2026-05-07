@@ -20,7 +20,7 @@ import { medusaApi } from "./api/medusaApi";
 import flightSearchReducer from "@/redux/features/flightSearchSlice";
 import flightSessionReducer from "@/redux/features/flightSessionSlice";
 import holidayPackageFilterReducer from "@/redux/features/holidayPackageFilterSlice";
-
+import authReducer from "./features/auth/authSlice";
 
 // ✅ Persist ONLY selected fields of flightSearch
 const flightSearchPersistConfig = {
@@ -32,6 +32,7 @@ const flightSearchPersistConfig = {
 
 // ✅ Root reducer
 const rootReducer = combineReducers({
+  auth: authReducer,
   holidayPackageFilters: holidayPackageFilterReducer,
 
   flightSearch: persistReducer(

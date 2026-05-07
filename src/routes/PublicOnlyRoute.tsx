@@ -32,6 +32,11 @@ import HolidayPackageLists from "@/pages/main/Holiday/HolidayPackageLists/Holida
 import HolidayDetails from "@/pages/main/Holiday/HolidayDetails/HolidayDetails";
 import ShopCheckOutMain from "@/pages/main/Shop/ShopCheckOut/ShopCheckOutMain";
 import BookingFlightPNR from "@/pages/main/Flight/FlightBooking/BookingFlightPNR";
+import Login from "@/pages/main/auth/Login";
+import Signup from "@/pages/main/auth/Signup";
+import ForgotPassword from "@/pages/main/auth/ForgotPassword";
+import CheckOtp from "@/pages/main/auth/CheckOtp";
+import ResetPassword from "@/pages/main/auth/ResetPassword";
 // import ShopCheckOutMain from "@/pages/main/Shop/ShopCheckOut/ShopCheckOutMain";
 
 export const router = createBrowserRouter([
@@ -44,6 +49,28 @@ export const router = createBrowserRouter([
         index: true,
         element: <Navigate to="/flight" replace />,
       },
+
+      {
+        path: "login",
+        element: <Login />,
+      },
+      {
+        path: "signup",
+        element: <Signup />,
+      },
+      {
+        path: "forgot-password",
+        element: <ForgotPassword />,
+      },
+      {
+        path: "check-otp",
+        element: <CheckOtp />,
+      },
+      {
+        path: "reset-password",
+        element: <ResetPassword />,
+      },
+
       {
         path: "flight",
         children: [
@@ -57,8 +84,8 @@ export const router = createBrowserRouter([
           },
           {
             path: "booking",
-            element: <BookingFlightPNR />
-          }
+            element: <BookingFlightPNR />,
+          },
         ],
       },
       {
