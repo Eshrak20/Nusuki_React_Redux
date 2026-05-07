@@ -1,7 +1,7 @@
 import DashboardLayout from "@/layouts/DashboardLayout";
 
 import DashboardHome from "@/pages/dashboard/DashboardHome";
-import UpdateUserProfile from "@/pages/dashboard/UpdateUserProfile";
+import UpdateUserProfile from "@/pages/dashboard/UpdateUserProfile/UpdateUserProfile";
 import ChangePassword from "@/pages/dashboard/ChangePassword";
 import FlightBookingHistory from "@/pages/dashboard/FlightBookingHistory";
 import FlightBookingDetails from "@/pages/dashboard/FlightBookingDetails";

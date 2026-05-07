@@ -1,5 +1,6 @@
 import type { ApiResponse, AuthData, AuthUser, ChangePasswordRequest, CheckOtpData, CheckOtpRequest, LoginRequest, ResetPasswordRequest, SendResetPasswordOtpData, SendResetPasswordOtpRequest, SignupRequest, UpdateUserProfileRequest } from "@/types/auth/authApi";
 import { laravelApi } from "../laravelApi";
+import type { GetUserProfileResponse } from "@/pages/dashboard/UpdateUserProfile/types";
 
 export const authApi = laravelApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -19,7 +20,7 @@ export const authApi = laravelApi.injectEndpoints({
       }),
     }),
 
-    changePassword: builder.mutation<ApiResponse<null>,ChangePasswordRequest>({
+    changePassword: builder.mutation<ApiResponse<null>, ChangePasswordRequest>({
       query: (body) => ({
         url: "/change-password",
         method: "POST",
@@ -27,12 +28,20 @@ export const authApi = laravelApi.injectEndpoints({
       }),
     }),
 
-    updateUserProfile: builder.mutation<ApiResponse<AuthUser>,UpdateUserProfileRequest>({
+    getUserProfile: builder.query<GetUserProfileResponse, void>({
+      query: () => ({
+        url: "/get-userprofile",
+        method: "GET",
+      }),
+      providesTags: ["UserProfile"],
+    }),
+
+    updateUserProfile: builder.mutation<ApiResponse<AuthUser>, UpdateUserProfileRequest>({
       query: (body) => {
         const formData = new FormData();
 
         Object.entries(body).forEach(([key, value]) => {
-          if (value !== undefined && value !== null) {
+          if (value !== undefined && value !== null && value !== "") {
             formData.append(key, value);
           }
         });
@@ -43,8 +52,8 @@ export const authApi = laravelApi.injectEndpoints({
           body: formData,
         };
       },
+      invalidatesTags: ["UserProfile"],
     }),
-
     logout: builder.mutation<ApiResponse<null>, void>({
       query: () => ({
         url: "/logout",
@@ -52,7 +61,7 @@ export const authApi = laravelApi.injectEndpoints({
       }),
     }),
 
-    sendResetPasswordOtp: builder.mutation<ApiResponse<SendResetPasswordOtpData>,SendResetPasswordOtpRequest>({
+    sendResetPasswordOtp: builder.mutation<ApiResponse<SendResetPasswordOtpData>, SendResetPasswordOtpRequest>({
       query: (body) => ({
         url: "/send-reset-password-otp",
         method: "POST",
@@ -83,6 +92,7 @@ export const {
   useLoginMutation,
   useChangePasswordMutation,
   useUpdateUserProfileMutation,
+  useGetUserProfileQuery,
   useLogoutMutation,
   useSendResetPasswordOtpMutation,
   useCheckOtpMutation,
