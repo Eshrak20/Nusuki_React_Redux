@@ -94,19 +94,20 @@ const FlightBookingCard = ({ booking }: Props) => {
       <article
         className={`overflow-hidden rounded-2xl border bg-card shadow-sm transition hover:shadow-md dark:bg-card/80 ${cardHighlightClass}`}
       >
-        <div className="border-b bg-muted/40 p-5">
+        {/* Header Section: Adjusted to p-6 pb-4 */}
+        <div className="border-b bg-muted/40 p-6 pb-4">
           <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
             <div>
-              <p className="text-xs font-semibold uppercase text-muted-foreground">
+              <p className="text-[11px] font-bold uppercase tracking-wider text-muted-foreground/80">
                 Booking Code
               </p>
 
-              <h3 className="mt-1 text-lg font-extrabold text-foreground">
+              <h3 className="mt-1 text-xl font-extrabold text-foreground">
                 {booking.booking_code}
               </h3>
 
               <div className="mt-3 flex flex-wrap items-center gap-2">
-                <span className="rounded-full bg-primary/10 px-3 py-1 text-xs font-bold text-primary">
+                <span className="rounded-lg bg-primary/10 px-3 py-1 text-xs font-bold text-primary border border-primary/20">
                   PNR: {booking.pnr || "N/A"}
                 </span>
 
@@ -118,85 +119,76 @@ const FlightBookingCard = ({ booking }: Props) => {
             </div>
 
             <div className="text-left sm:text-right">
-              <p className="text-xs font-semibold uppercase text-muted-foreground">
-                Total
+              <p className="text-[11px] font-bold uppercase tracking-wider text-muted-foreground/80">
+                Total Amount
               </p>
-              <p className="mt-1 text-2xl font-extrabold text-primary">
-                {booking.pricing?.currency}{" "}
+              <p className="mt-1 text-2xl font-black text-primary">
+                <span className="text-sm font-bold mr-1">{booking.pricing?.currency}</span>
                 {Number(booking.pricing?.total_amount ?? 0).toLocaleString()}
               </p>
             </div>
           </div>
         </div>
 
-        <div className="space-y-4 p-5">
+        {/* Content Section: Adjusted to p-6 pt-4 */}
+        <div className="p-6 pt-4 space-y-6">
           <div className="grid gap-3 sm:grid-cols-2">
-            <div className="flex gap-3 rounded-xl border bg-background p-3">
-              <Route className="mt-0.5 h-4 w-4 text-primary" />
-              <div>
-                <p className="text-xs text-muted-foreground">Route</p>
-                <p className="font-bold">{booking.route}</p>
+            {[
+              { icon: Route, label: "Route", value: booking.route },
+              { icon: CalendarDays, label: "Travel Date", value: booking.travel_start_date },
+              {
+                icon: UserRound,
+                label: "Passenger",
+                value: passenger ? `${passenger.given_name} ${passenger.surname}` : "N/A"
+              },
+              { icon: Plane, label: "Trip Type", value: booking.trip_type },
+            ].map((item, idx) => (
+              <div key={idx} className="flex gap-3 rounded-xl border bg-muted/5 p-3 shadow-sm">
+                <item.icon className="mt-0.5 h-4 w-4 text-primary shrink-0" />
+                <div>
+                  <p className="text-[10px] font-bold uppercase tracking-tighter text-muted-foreground">
+                    {item.label}
+                  </p>
+                  <p className="text-sm font-bold leading-tight">{item.value}</p>
+                </div>
               </div>
-            </div>
-
-            <div className="flex gap-3 rounded-xl border bg-background p-3">
-              <CalendarDays className="mt-0.5 h-4 w-4 text-primary" />
-              <div>
-                <p className="text-xs text-muted-foreground">Travel Date</p>
-                <p className="font-bold">{booking.travel_start_date}</p>
-              </div>
-            </div>
-
-            <div className="flex gap-3 rounded-xl border bg-background p-3">
-              <UserRound className="mt-0.5 h-4 w-4 text-primary" />
-              <div>
-                <p className="text-xs text-muted-foreground">Passenger</p>
-                <p className="font-bold">
-                  {passenger
-                    ? `${passenger.given_name} ${passenger.surname}`
-                    : "N/A"}
-                </p>
-              </div>
-            </div>
-
-            <div className="flex gap-3 rounded-xl border bg-background p-3">
-              <Plane className="mt-0.5 h-4 w-4 text-primary" />
-              <div>
-                <p className="text-xs text-muted-foreground">Trip Type</p>
-                <p className="font-bold">{booking.trip_type}</p>
-              </div>
-            </div>
+            ))}
           </div>
 
-          <div className="grid gap-3 border-t pt-4 sm:grid-cols-2">
-            <Button
-              onClick={() => setPaymentOpen(true)}
-              disabled={!canPay}
-              className="h-11 rounded-xl font-bold"
-            >
-              <CreditCard className="mr-2 h-4 w-4" />
-              {isPaid || isTicketed ? "Paid" : "Pay Now"}
-            </Button>
+          {/* Action Buttons */}
+          <div className="space-y-3">
+            <div className="grid gap-3 sm:grid-cols-2">
+              <Button
+                onClick={() => setPaymentOpen(true)}
+                disabled={!canPay}
+                className="h-11 rounded-xl font-bold shadow-sm"
+              >
+                <CreditCard className="mr-2 h-4 w-4" />
+                {isPaid || isTicketed ? "Paid" : "Pay Now"}
+              </Button>
 
-            <Button
-              type="button"
-              variant="destructive"
-              onClick={() => setCancelOpen(true)}
-              disabled={!canCancel || isCancelling}
-              className="h-11 rounded-xl font-bold"
-            >
-              <TicketX className="mr-2 h-4 w-4" />
-              Cancel Ticket
-            </Button>
+              <Button
+                type="button"
+                variant="destructive"
+                onClick={() => setCancelOpen(true)}
+                disabled={!canCancel || isCancelling}
+                className="h-11 rounded-xl font-bold shadow-sm"
+              >
+                <TicketX className="mr-2 h-4 w-4" />
+                Cancel Ticket
+              </Button>
+            </div>
+
+            {/* Footer View Details - Padded correctly */}
+            <div className="flex justify-center pt-2">
+              <Button asChild variant="ghost" className="rounded-xl w-full text-muted-foreground hover:text-primary hover:bg-primary/5">
+                <Link to={`/dashboard/flight-bookings/${booking.id}`}>
+                  View Full Details
+                  <ArrowRight className="ml-2 h-4 w-4" />
+                </Link>
+              </Button>
+            </div>
           </div>
-        </div>
-        <div className="flex justify-end">
-          <Button asChild className="rounded-xl">
-            <Link to={`/dashboard/flight-bookings/${booking.id}`}>
-              View Details
-              <ArrowRight className="ml-2 h-4 w-4" />
-            </Link>
-          </Button>
         </div>
       </article>
 

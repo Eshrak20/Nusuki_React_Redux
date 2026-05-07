@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { Loader2, LockKeyhole, Save } from "lucide-react";
-
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -43,20 +42,22 @@ const ChangePasswordForm = ({
   };
 
   return (
-    <Card className="rounded-2xl shadow-sm">
-      <CardHeader>
-        <CardTitle className="flex items-center gap-2 text-lg">
+    <Card className="rounded-2xl shadow-sm overflow-hidden">
+      {/* Standardized Header Padding */}
+      <CardHeader className="p-6 pb-2">
+        <CardTitle className="flex items-center gap-2 text-lg font-semibold">
           <LockKeyhole className="h-5 w-5 text-primary" />
           Password Information
         </CardTitle>
 
-        <CardDescription>
+        <CardDescription className="text-sm">
           Enter your current password and set a new password.
         </CardDescription>
       </CardHeader>
 
-      <CardContent>
-        <form onSubmit={onSubmit} className="space-y-5">
+      {/* Standardized Content Padding */}
+      <CardContent className="p-6 pt-2">
+        <form onSubmit={onSubmit} className="space-y-6">
           <PasswordInput
             label="Current Password"
             value={form.current_password}
@@ -66,9 +67,11 @@ const ChangePasswordForm = ({
             onChange={(value) => onChange("current_password", value)}
           />
 
-          <Separator />
+          <div className="py-2">
+            <Separator />
+          </div>
 
-          <div className="grid gap-5 sm:grid-cols-2">
+          <div className="grid gap-x-4 gap-y-6 sm:grid-cols-2">
             <PasswordInput
               label="New Password"
               value={form.new_password}
@@ -90,18 +93,23 @@ const ChangePasswordForm = ({
             />
           </div>
 
-          <div className="flex flex-col-reverse gap-3 pt-2 sm:flex-row sm:justify-end">
+          {/* Action Buttons */}
+          <div className="flex flex-col-reverse gap-3 pt-4 sm:flex-row sm:justify-end">
             <Button
               type="button"
               variant="outline"
               onClick={onReset}
               disabled={isLoading}
-              className="h-11 rounded-xl"
+              className="h-11 px-8 rounded-xl font-medium"
             >
               Reset
             </Button>
 
-            <Button type="submit" disabled={isLoading} className="h-11 rounded-xl">
+            <Button 
+              type="submit" 
+              disabled={isLoading} 
+              className="h-11 px-8 rounded-xl font-semibold shadow-sm"
+            >
               {isLoading ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />

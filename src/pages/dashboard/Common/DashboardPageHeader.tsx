@@ -18,7 +18,7 @@ const DashboardPageHeader = ({
   imageUrl,
 }: DashboardPageHeaderProps) => {
   return (
-    <div className="overflow-hidden rounded-2xl border bg-card shadow-sm">
+    <div className="overflow-hidden rounded-2xl -mt-4 border bg-card shadow-sm">
       <div className="relative bg-primary px-5 py-8 text-primary-foreground sm:px-8">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.22),transparent_35%)]" />
 

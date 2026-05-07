@@ -102,7 +102,7 @@ const UpdateUserProfile = () => {
   if (isProfileLoading) {
     return (
       <div className="min-h-screen bg-background px-4 py-6 text-foreground">
-        <div className="mx-auto max-w-6xl">
+        <div className="w-full">
           <div className="rounded-2xl border bg-card p-8 shadow-sm">
             <div className="h-7 w-56 animate-pulse rounded bg-muted" />
             <div className="mt-4 h-4 w-80 animate-pulse rounded bg-muted" />
@@ -144,8 +144,8 @@ const UpdateUserProfile = () => {
   }
 
   return (
-    <div className="min-h-screen bg-background px-4 py-6 text-foreground sm:px-6 lg:px-8">
-      <div className="mx-auto max-w-6xl space-y-6">
+    <div className="min-h-screen bg-background py-6 text-foreground">
+      <div className="w-full space-y-6">
         {/* <ProfileUpdateHeader
           profilePreview={profilePreview}
           title={isEditing ? "Update User Profile" : "User Profile"}

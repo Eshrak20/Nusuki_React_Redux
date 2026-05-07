@@ -23,22 +23,23 @@ const ProfileViewCard = ({ userData, onEdit }: ProfileViewCardProps) => {
   const profile = userData.profile;
 
   return (
-    <div className="grid gap-6 lg:grid-cols-[1fr_340px]">
+    <div className="grid w-full gap-6 lg:grid-cols-[1fr_340px]">
       <div className="space-y-6">
-        <Card className="rounded-2xl shadow-sm">
-          <CardHeader className="flex flex-row items-center justify-between gap-4">
-            <CardTitle className="flex items-center gap-2 text-lg">
+        {/* Personal Information */}
+        <Card className="rounded-2xl shadow-sm overflow-hidden">
+          <CardHeader className="flex flex-row items-center justify-between gap-4 p-6 pb-2">
+            <CardTitle className="flex items-center gap-2 text-lg font-semibold">
               <UserRound className="h-5 w-5 text-primary" />
               Personal Information
             </CardTitle>
 
-            <Button onClick={onEdit} className="rounded-xl">
+            <Button onClick={onEdit} className="rounded-xl h-9">
               <Edit3 className="mr-2 h-4 w-4" />
               Edit Profile
             </Button>
           </CardHeader>
 
-          <CardContent className="grid gap-4 sm:grid-cols-2">
+          <CardContent className="grid gap-4 sm:grid-cols-2 p-6 pt-2">
             <InfoItem label="Full Name" value={userData.name} icon={UserRound} />
             <InfoItem label="Email" value={userData.email} icon={Mail} />
             <InfoItem label="Given Name" value={profile?.given_name} />
@@ -53,20 +54,19 @@ const ProfileViewCard = ({ userData, onEdit }: ProfileViewCardProps) => {
           </CardContent>
         </Card>
 
-        <Card className="rounded-2xl shadow-sm">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2 text-lg">
+        {/* Contact Information */}
+        <Card className="rounded-2xl shadow-sm overflow-hidden">
+          <CardHeader className="p-6 pb-2">
+            <CardTitle className="flex items-center gap-2 text-lg font-semibold">
               <Phone className="h-5 w-5 text-primary" />
               Contact Information
             </CardTitle>
           </CardHeader>
 
-          <CardContent className="grid gap-4 sm:grid-cols-2">
+          <CardContent className="grid gap-4 sm:grid-cols-2 p-6 pt-2">
             <InfoItem
               label="Phone"
-              value={`${profile?.phone_country_code ?? ""} ${
-                profile?.phone_number ?? ""
-              }`}
+              value={`${profile?.phone_country_code ?? ""} ${profile?.phone_number ?? ""}`}
               icon={Phone}
             />
             <InfoItem label="Post Code" value={profile?.post_code} />
@@ -79,19 +79,17 @@ const ProfileViewCard = ({ userData, onEdit }: ProfileViewCardProps) => {
           </CardContent>
         </Card>
 
-        <Card className="rounded-2xl shadow-sm">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2 text-lg">
+        {/* Travel Information */}
+        <Card className="rounded-2xl shadow-sm overflow-hidden">
+          <CardHeader className="p-6 pb-2">
+            <CardTitle className="flex items-center gap-2 text-lg font-semibold">
               <ShieldCheck className="h-5 w-5 text-primary" />
               Travel Information
             </CardTitle>
           </CardHeader>
 
-          <CardContent className="grid gap-4 sm:grid-cols-2">
-            <InfoItem
-              label="Frequent Flyer No"
-              value={profile?.frequent_flyer_no}
-            />
+          <CardContent className="grid gap-4 sm:grid-cols-2 p-6 pt-2">
+            <InfoItem label="Frequent Flyer No" value={profile?.frequent_flyer_no} />
             <InfoItem label="Passport No" value={profile?.passport_no} />
             <InfoItem
               label="Passport Expire Date"
@@ -103,26 +101,36 @@ const ProfileViewCard = ({ userData, onEdit }: ProfileViewCardProps) => {
         </Card>
       </div>
 
-      <Card className="h-fit rounded-2xl shadow-sm lg:sticky lg:top-6">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-lg">
+      {/* Sidebar: Documents */}
+      <Card className="h-fit rounded-2xl shadow-sm lg:sticky lg:top-6 overflow-hidden">
+        <CardHeader className="p-6 pb-2">
+          <CardTitle className="flex items-center gap-2 text-lg font-semibold">
             <FileText className="h-5 w-5 text-primary" />
-            Uploaded Documents
+            Documents
           </CardTitle>
         </CardHeader>
 
-        <CardContent className="space-y-4">
-          <DocumentPreview
-            label="Profile Photo"
-            imageUrl={profile?.profile_photo_url}
-          />
-          <DocumentPreview
-            label="Passport Image"
-            imageUrl={profile?.passport_image_url}
-          />
+        <CardContent className="space-y-4 p-6 pt-2">
+          <DocumentPreview label="Profile Photo" imageUrl={profile?.profile_photo_url} />
+          <DocumentPreview label="Passport Image" imageUrl={profile?.passport_image_url} />
           <DocumentPreview label="Visa Image" imageUrl={profile?.visa_image_url} />
         </CardContent>
       </Card>
+    </div>
+  );
+};
+
+const InfoItem = ({ label, value, icon: Icon, className }: InfoItemProps) => {
+  return (
+    <div className={`rounded-xl border bg-muted/20 p-3 transition-colors hover:bg-muted/40 ${className ?? ""}`}>
+      <div className="mb-1 flex items-center gap-2 text-[10px] font-bold uppercase tracking-wider text-muted-foreground/80">
+        {Icon ? <Icon className="h-3 w-3" /> : null}
+        {label}
+      </div>
+
+      <p className="wrap-break-word text-sm font-semibold text-foreground">
+        {value?.trim() ? value : "—"}
+      </p>
     </div>
   );
 };
@@ -134,21 +142,6 @@ type InfoItemProps = {
   value?: string | null;
   icon?: React.ElementType;
   className?: string;
-};
-
-const InfoItem = ({ label, value, icon: Icon, className }: InfoItemProps) => {
-  return (
-    <div className={`rounded-xl border bg-muted/30 p-4 ${className ?? ""}`}>
-      <div className="mb-1 flex items-center gap-2 text-xs font-medium uppercase tracking-wide text-muted-foreground">
-        {Icon ? <Icon className="h-3.5 w-3.5" /> : null}
-        {label}
-      </div>
-
-      <p className="break-words text-sm font-semibold text-foreground">
-        {value?.trim() ? value : "Not provided"}
-      </p>
-    </div>
-  );
 };
 
 type DocumentPreviewProps = {

@@ -6,6 +6,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { cn } from "@/lib/utils"; 
 
 type SelectOption = {
   label: string;
@@ -30,11 +31,15 @@ const ProfileSelectField = ({
   className,
 }: ProfileSelectFieldProps) => {
   return (
-    <div className={className ? `space-y-2 ${className}` : "space-y-2"}>
-      <Label>{label}</Label>
+    <div className={cn("w-full space-y-2", className)}>
+      {/* Matching the label style of ProfileInputField for consistency */}
+      <Label className="text-xs font-bold uppercase tracking-wider text-muted-foreground/80 ml-1">
+        {label}
+      </Label>
 
       <Select value={value} onValueChange={onChange}>
-        <SelectTrigger className="h-11 rounded-xl">
+        {/* Added w-full here to fix the width issue */}
+        <SelectTrigger className="w-full h-11 rounded-xl bg-muted/5 border-muted-foreground/20 focus:ring-primary">
           <SelectValue placeholder={placeholder} />
         </SelectTrigger>
 

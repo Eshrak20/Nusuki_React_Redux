@@ -5,7 +5,6 @@ import DashboardHeader from "./DashboardComponents/DashboardHeader";
 import DashboardMobileNav from "./DashboardComponents/DashboardMobileNav";
 
 
-
 const DashboardLayout = () => {
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
 
@@ -19,8 +18,8 @@ const DashboardLayout = () => {
             onOpenMobileSidebar={() => setMobileSidebarOpen(true)}
           />
 
-          <main className="flex-1 px-4 py-6 md:px-6 lg:px-8">
-            <div className="mx-auto w-full max-w-7xl">
+          <main className="flex-1 py-6 px-4 lg:px-14">
+            <div className="w-full">
               <Outlet />
             </div>
           </main>

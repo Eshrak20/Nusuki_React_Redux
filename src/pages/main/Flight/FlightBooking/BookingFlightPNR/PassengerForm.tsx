@@ -56,6 +56,19 @@ const PassengerForm = ({
 }: PassengerFormProps) => {
   return (
     <div className="w-full space-y-6">
+
+      {/*
+       <PassportUploadBox
+        fileUploaded={fileUploaded}
+        fileName={fileName}
+        isScanning={isScanning}
+        setFileUploaded={setFileUploaded}
+        setFileName={setFileName}
+        setIsScanning={setIsScanning}
+        setPassportNumber={(value) => updateForm("passportNumber", value)}
+      /> 
+      */}
+
       {/* Row 1: Names and DOB */}
       <div className="grid w-full grid-cols-1 gap-4 md:grid-cols-3">
         <div className="w-full space-y-2">
@@ -185,7 +198,7 @@ const PassengerForm = ({
           onCheckedChange={(checked) =>
             updateForm("sendBookingEmail", Boolean(checked))
           }
-          className="border-green-600 data-[state=checked]:bg-green-600"
+          className="border-primary data-[state=checked]:bg-primary"
         />
         <Label
           htmlFor="send-booking-email"

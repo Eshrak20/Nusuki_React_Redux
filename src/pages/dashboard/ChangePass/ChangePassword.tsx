@@ -79,8 +79,8 @@ const ChangePassword = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background px-4 py-6 text-foreground sm:px-6 lg:px-8">
-      <div className="mx-auto max-w-5xl space-y-6">
+    <div className="min-h-screen bg-background py-6 text-foreground">
+      <div className="w-full space-y-6">
         <DashboardPageHeader
           title="Change Password"
           subtitle="Update your password to keep your account secure."
