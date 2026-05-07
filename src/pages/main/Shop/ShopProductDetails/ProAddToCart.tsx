@@ -19,7 +19,7 @@ interface CartResponse {
   };
 }
 
-const ProAddToCart = ({ product, selectedVariant }: Props) => {
+const ProAddToCart = ({ product }: Props) => {
   // console.log(selectedVariant);
   
   const [qty, setQty] = useState(1);

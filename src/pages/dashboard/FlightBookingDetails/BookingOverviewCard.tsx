@@ -39,8 +39,10 @@ const BookingOverviewCard = ({ booking }: BookingOverviewCardProps) => {
           </div>
 
           <div className="flex flex-wrap gap-2 sm:justify-end">
-            <BookingStatusBadge status={booking.booking_status} />
-            <BookingStatusBadge status={booking.payment_status} />
+            <BookingStatusBadge
+              bookingStatus={booking.booking_status}
+              paymentStatus={booking.payment_status}
+            />
           </div>
         </div>
       </CardHeader>
@@ -50,7 +52,7 @@ const BookingOverviewCard = ({ booking }: BookingOverviewCardProps) => {
           icon={CalendarDays}
           label="Travel Date"
           value={`${formatBookingDate(
-            booking.travel_start_date
+            booking.travel_start_date,
           )} - ${formatBookingDate(booking.travel_end_date)}`}
         />
 

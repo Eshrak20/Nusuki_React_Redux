@@ -23,7 +23,6 @@ import Upcoming from "@/components/Upcoming";
 // Flight Pages
 import FlightHome from "@/pages/main/Flight/FlightHome/FlightHome";
 import FlightDetailsMain from "@/pages/main/Flight/FlightDetail/FlightDetailsMain";
-import BookingFlightPNR from "@/pages/main/Flight/FlightBooking/BookingFlightPNR/BookingFlightPNR";
 
 // Education Pages
 import HomeEducation from "@/pages/main/Education/HomeEducation/HomeEducation";
@@ -56,7 +55,6 @@ import Significance from "@/pages/main/Hajj_Umrah/Significance/Significance";
 import HajjUmPackages from "@/pages/main/Hajj_Umrah/HajjUmPackages/HajjUmPackages";
 import HajjUmMainDetPack from "@/pages/main/Hajj_Umrah/HajjUmPackages/HajjUmDetPack/HajjUmMainDetPack";
 import UmrahMainDetPack from "@/pages/main/Hajj_Umrah/HajjUmPackages/UmrahDetPack/UmrahMainDetPack";
-import FlightBookingDetails from "@/pages/dashboard/FlightBookingDetails/FlightBookingDetails";
 
 export const router = createBrowserRouter([
   {

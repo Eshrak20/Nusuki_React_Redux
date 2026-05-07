@@ -42,7 +42,7 @@ const ShippingAddress = ({ onNext, cartId }: ShippingAddressProps) => {
     }
 
     try {
-      const result = await setShippingAddress({
+      await setShippingAddress({
         cartId,
         data: {
           shipping_address: form,
@@ -50,7 +50,6 @@ const ShippingAddress = ({ onNext, cartId }: ShippingAddressProps) => {
         },
       }).unwrap();
 
-      // console.log("Success:", result);
       onNext();
     } catch (err) {
       console.error("Shipping error:", err);

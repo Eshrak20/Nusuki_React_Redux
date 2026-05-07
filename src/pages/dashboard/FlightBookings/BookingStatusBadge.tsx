@@ -4,10 +4,15 @@ type Props = {
 };
 
 const BookingStatusBadge = ({ bookingStatus, paymentStatus }: Props) => {
-  const isTicketed = bookingStatus === "ticketed";
-  const isCancelled = bookingStatus === "cancelled";
-  const isPaid = paymentStatus === "paid";
-  const isUnpaid = paymentStatus === "unpaid" || paymentStatus === "pending";
+  const normalizedBookingStatus = bookingStatus?.toLowerCase();
+  const normalizedPaymentStatus = paymentStatus?.toLowerCase();
+
+  const isTicketed = normalizedBookingStatus === "ticketed";
+  const isCancelled = normalizedBookingStatus === "cancelled";
+  const isPaid = normalizedPaymentStatus === "paid";
+  const isUnpaid =
+    normalizedPaymentStatus === "unpaid" ||
+    normalizedPaymentStatus === "pending";
 
   if (isCancelled) {
     return (

@@ -11,7 +11,6 @@ import {
   useGetUserProfileQuery,
   useUpdateUserProfileMutation,
 } from "@/redux/api/authApi/authApi";
-import ProfileUpdateHeader from "./ProfileUpdateHeader";
 import ProfileEditForm from "./ProfileEditForm";
 import ProfileViewCard from "./ProfileViewCard";
 import DashboardPageHeader from "../Common/DashboardPageHeader";
