@@ -56,6 +56,7 @@ import Significance from "@/pages/main/Hajj_Umrah/Significance/Significance";
 import HajjUmPackages from "@/pages/main/Hajj_Umrah/HajjUmPackages/HajjUmPackages";
 import HajjUmMainDetPack from "@/pages/main/Hajj_Umrah/HajjUmPackages/HajjUmDetPack/HajjUmMainDetPack";
 import UmrahMainDetPack from "@/pages/main/Hajj_Umrah/HajjUmPackages/UmrahDetPack/UmrahMainDetPack";
+import FlightBookingDetails from "@/pages/dashboard/FlightBookingDetails/FlightBookingDetails";
 
 export const router = createBrowserRouter([
   {
@@ -106,6 +107,7 @@ export const router = createBrowserRouter([
             path: "booking",
             element: <BookingFlightPNR />,
           },
+       
         ],
       },
 

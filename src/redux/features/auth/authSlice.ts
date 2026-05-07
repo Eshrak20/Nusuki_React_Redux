@@ -12,6 +12,7 @@ const initialState = {
 const authSlice = createSlice({
   name: "auth",
   initialState,
+
   reducers: {
     setCredentials: (state, action) => {
       const { user, token } = action.payload;
@@ -31,6 +32,9 @@ const authSlice = createSlice({
 
       localStorage.removeItem("user");
       localStorage.removeItem("token");
+
+      sessionStorage.removeItem("user");
+      sessionStorage.removeItem("token");
     },
   },
 });

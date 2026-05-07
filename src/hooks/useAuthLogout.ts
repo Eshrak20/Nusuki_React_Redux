@@ -24,7 +24,9 @@ export const useAuthLogout = (options?: UseAuthLogoutOptions) => {
     } finally {
       dispatch(clearAuth());
       options?.onSuccess?.();
-      navigate("/login", { replace: true });
+
+      // Manual logout should go home page
+      navigate("/", { replace: true });
     }
   };
 

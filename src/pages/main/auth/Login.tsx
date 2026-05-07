@@ -8,8 +8,6 @@ import { useLoginMutation } from "@/redux/api/authApi/authApi";
 import type { LoginErrors, LoginFormData } from "./AuthComponents/LoginForm";
 import LoginForm from "./AuthComponents/LoginForm";
 
-
-
 const getErrorMessage = (error: unknown) => {
   if (
     typeof error === "object" &&
@@ -41,7 +39,13 @@ const Login = () => {
 
   const [errors, setErrors] = useState<LoginErrors>({});
 
-  const from = location.state?.from?.pathname || "/";
+  const searchParams = new URLSearchParams(location.search);
+  const redirectFromQuery = searchParams.get("redirect");
+
+  const from =
+    typeof location.state?.from === "string"
+      ? location.state.from
+      : redirectFromQuery || "/";
 
   const validateForm = () => {
     const newErrors: LoginErrors = {};
@@ -92,10 +96,11 @@ const Login = () => {
         setCredentials({
           token: res.data.token,
           user: res.data.user,
-        })
+        }),
       );
 
       toast.success(res.message || "Login successful");
+
       navigate(from, { replace: true });
     } catch (error) {
       toast.error(getErrorMessage(error));

@@ -1,18 +1,21 @@
 import { useMemo, useState } from "react";
 import { toast } from "sonner";
 
-
-
 import {
   initialProfileForm,
   mapProfileToForm,
   type UpdateProfileForm,
   type UploadFieldName,
 } from "./types";
-import { useGetUserProfileQuery, useUpdateUserProfileMutation } from "@/redux/api/authApi/authApi";
+import {
+  useGetUserProfileQuery,
+  useUpdateUserProfileMutation,
+} from "@/redux/api/authApi/authApi";
 import ProfileUpdateHeader from "./ProfileUpdateHeader";
 import ProfileEditForm from "./ProfileEditForm";
 import ProfileViewCard from "./ProfileViewCard";
+import DashboardPageHeader from "../Common/DashboardPageHeader";
+import { UserRound } from "lucide-react";
 
 const UpdateUserProfile = () => {
   const [isEditing, setIsEditing] = useState(false);
@@ -86,7 +89,7 @@ const UpdateUserProfile = () => {
       await refetch();
 
       setIsEditing(false);
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       const message =
         error?.data?.message ||
@@ -144,7 +147,7 @@ const UpdateUserProfile = () => {
   return (
     <div className="min-h-screen bg-background px-4 py-6 text-foreground sm:px-6 lg:px-8">
       <div className="mx-auto max-w-6xl space-y-6">
-        <ProfileUpdateHeader
+        {/* <ProfileUpdateHeader
           profilePreview={profilePreview}
           title={isEditing ? "Update User Profile" : "User Profile"}
           subtitle={
@@ -152,8 +155,15 @@ const UpdateUserProfile = () => {
               ? "Edit your personal, passport and travel information."
               : "View your saved personal, passport and travel information."
           }
+        /> */}
+        <DashboardPageHeader
+          title="User Profile"
+          subtitle="View your saved personal, passport and travel information."
+          icon={UserRound}
+          imageUrl={profilePreview}
+          badgeTitle="Profile Status"
+          badgeText="Information saved"
         />
-
         {isEditing ? (
           <ProfileEditForm
             form={form}

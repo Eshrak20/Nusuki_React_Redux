@@ -16,7 +16,7 @@ import { useAuthLogout } from "@/hooks/useAuthLogout";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import { getFirstLetter } from "@/lib/authUser";
+import { getFirstLetter } from "@/lib/utiils.authUser";
 import { ModeToggle } from "@/shared/ModeToggler";
 
 const dashboardLinks = [
@@ -46,7 +46,11 @@ const DashboardSidebar = () => {
   const location = useLocation();
 
   const { user } = useSelector((state: RootState) => state.auth);
-  const { handleLogout, isLogoutLoading } = useAuthLogout();
+  const { handleLogout, isLogoutLoading } = useAuthLogout({
+    onSuccess: () => {
+      window.location.replace("/");
+    },
+  });
 
   const imageUrl = user?.profile?.profile_photo_url || undefined;
 
@@ -118,7 +122,7 @@ const DashboardSidebar = () => {
                 "group flex items-center justify-between rounded-xl px-4 py-3 text-sm font-semibold uppercase tracking-wide transition-all",
                 isActive
                   ? "bg-primary text-primary-foreground shadow-lg shadow-primary/20"
-                  : "text-muted-foreground hover:bg-primary/10 hover:text-primary"
+                  : "text-muted-foreground hover:bg-primary/10 hover:text-primary",
               )}
             >
               <span className="flex items-center gap-3">
@@ -131,7 +135,7 @@ const DashboardSidebar = () => {
                   "h-4 w-4 transition-all",
                   isActive
                     ? "translate-x-0 opacity-100"
-                    : "-translate-x-1 opacity-60 group-hover:translate-x-0 group-hover:opacity-100"
+                    : "-translate-x-1 opacity-60 group-hover:translate-x-0 group-hover:opacity-100",
                 )}
               />
             </Link>

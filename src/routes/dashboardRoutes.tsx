@@ -2,9 +2,9 @@ import DashboardLayout from "@/layouts/DashboardLayout";
 
 import DashboardHome from "@/pages/dashboard/DashboardHome";
 import UpdateUserProfile from "@/pages/dashboard/UpdateUserProfile/UpdateUserProfile";
-import ChangePassword from "@/pages/dashboard/ChangePassword";
-import FlightBookingHistory from "@/pages/dashboard/FlightBookingHistory";
-import FlightBookingDetails from "@/pages/dashboard/FlightBookingDetails";
+import ChangePassword from "@/pages/dashboard/ChangePass/ChangePassword";
+import FlightBookings from "@/pages/dashboard/FlightBookings/FlightBookings";
+import FlightBookingDetails from "@/pages/dashboard/FlightBookingDetails/FlightBookingDetails";
 
 export const dashboardRoutes = [
   {
@@ -25,7 +25,7 @@ export const dashboardRoutes = [
       },
       {
         path: "flight-bookings",
-        element: <FlightBookingHistory />,
+        element: <FlightBookings />,
       },
       {
         path: "flight-bookings/:bookingId",
