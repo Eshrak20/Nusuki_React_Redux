@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
-import bannerVideo from "../../src/assets/reactAssets/Education/32975-394513987.mp4";
+import bannerVideo from "../../src/assets/reactAssets/Education/PlaneVideo.mp4";
 
 interface VideoBannerProps {
   title: string;

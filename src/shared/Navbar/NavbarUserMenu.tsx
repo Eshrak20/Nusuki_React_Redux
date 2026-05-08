@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { LogOut, LayoutDashboard, UserRound } from "lucide-react";
+import { LogOut, LayoutDashboard, UserRound, Plane } from "lucide-react";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -33,7 +33,7 @@ const NavbarUserMenu = ({
   });
 
   return (
-    <DropdownMenu modal={false} >
+    <DropdownMenu modal={false}>
       <DropdownMenuTrigger asChild>
         <Button
           variant="ghost"
@@ -81,6 +81,16 @@ const NavbarUserMenu = ({
           >
             <UserRound className="mr-2 h-4 w-4" />
             Profile
+          </Link>
+        </DropdownMenuItem>
+        <DropdownMenuItem asChild>
+          <Link
+            to="/dashboard/flight-bookings"
+            onClick={onAction}
+            className="cursor-pointer"
+          >
+            <Plane className="mr-2 h-4 w-4" />
+            Flights
           </Link>
         </DropdownMenuItem>
 

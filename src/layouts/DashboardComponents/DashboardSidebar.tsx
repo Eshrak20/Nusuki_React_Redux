@@ -18,6 +18,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { getFirstLetter } from "@/lib/utiils.authUser";
 import { ModeToggle } from "@/shared/ModeToggler";
+import NavbarLogo from "@/shared/Navbar/NavbarLogo";
 
 const dashboardLinks = [
   {
@@ -51,26 +52,14 @@ const DashboardSidebar = () => {
       window.location.replace("/");
     },
   });
+  const isEducationRoute = location.pathname.startsWith("/education");
 
   const imageUrl = user?.profile?.profile_photo_url || undefined;
 
   return (
     <aside className="hidden h-screen w-72 shrink-0 border-r border-border/70 bg-card/80 backdrop-blur-xl lg:sticky lg:top-0 lg:flex lg:flex-col">
       {/* Logo */}
-      <div className="flex h-16 items-center border-b border-border/70 px-5">
-        <Link to="/" className="flex items-center gap-2">
-          <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary text-sm font-black text-primary-foreground">
-            N
-          </div>
-
-          <div className="leading-tight">
-            <p className="text-base font-bold text-foreground">Nusuki</p>
-            <p className="text-[11px] font-medium text-muted-foreground">
-              Travel Dashboard
-            </p>
-          </div>
-        </Link>
-      </div>
+      <NavbarLogo isEducationRoute={isEducationRoute} />
 
       {/* User Info */}
       <div className="border-b border-border/70 px-5 py-5">

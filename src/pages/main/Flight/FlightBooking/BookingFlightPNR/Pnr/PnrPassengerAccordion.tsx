@@ -1,5 +1,3 @@
-import { Checkbox } from "@/components/ui/checkbox";
-import { Label } from "@/components/ui/label";
 import {
   Accordion,
   AccordionContent,
@@ -36,21 +34,6 @@ const PnrPassengerAccordion = ({
 }: PnrPassengerAccordionProps) => {
   return (
     <div className="space-y-4">
-      <div className="flex items-center justify-between gap-4">
-        <h2 className="text-xl font-semibold">Passenger Details</h2>
-
-        <div className="flex items-center gap-2">
-          <Label
-            htmlFor="expand-all"
-            className="cursor-pointer text-sm font-medium"
-          >
-            Expand All
-          </Label>
-
-          <Checkbox id="expand-all" checked onCheckedChange={() => {}} />
-        </div>
-      </div>
-
       <Accordion
         type="single"
         collapsible

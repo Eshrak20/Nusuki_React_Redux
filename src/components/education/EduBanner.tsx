@@ -1,7 +1,7 @@
 import { motion, type Variants } from "framer-motion";
 import { useState, useEffect } from "react";
 import { GraduationCap, BookOpen, ArrowDown } from "lucide-react";
-import bannerVideo from "../../../src/assets/reactAssets/Education/32975-394513987.mp4";
+import bannerVideo from "../../../src/assets/reactAssets/Education/PlaneVideo.mp4";
 
 const EduBanner = () => {
   const [isVideoLoaded, setIsVideoLoaded] = useState(false);

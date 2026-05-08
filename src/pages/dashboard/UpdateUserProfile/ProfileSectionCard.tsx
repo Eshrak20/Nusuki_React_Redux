@@ -12,7 +12,6 @@ const ProfileSectionCard = ({
   title,
   icon: Icon,
   children,
-  className,
 }: ProfileSectionCardProps) => {
   return (
     <Card className="rounded-2xl shadow-sm overflow-hidden">

@@ -3,20 +3,30 @@ import { initialPnrFormState } from "./pnrFormDefaults";
 
 export type UserProfile = {
   name?: string;
-  first_name?: string;
-  last_name?: string;
+  email?: string;
+
   given_name?: string;
   surname?: string;
-  email?: string;
-  phone?: string;
-  mobile?: string;
-  date_of_birth?: string;
-  dob?: string;
   gender?: string;
-  passport_number?: string;
+
+  phone_country_code?: string;
+  phone_number?: string;
+
+  date_of_birth?: string;
   nationality?: string;
-  issuing_country?: string;
-  passport_expiry_date?: string;
+  address?: string;
+  post_code?: string;
+
+  frequent_flyer_no?: string;
+
+  passport_no?: string;
+  passport_expire_date?: string;
+
+  meal_type?: string;
+
+  profile_photo_url?: string;
+  passport_image_url?: string;
+  visa_image_url?: string;
 };
 
 const splitFullName = (name?: string) => {
@@ -30,7 +40,16 @@ const splitFullName = (name?: string) => {
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const getProfileFromResponse = (response: any): UserProfile | null => {
-  return response?.data?.user ?? response?.data ?? response?.user ?? null;
+  const user = response?.data;
+
+  if (!user) return null;
+
+  return {
+    name: user.name,
+    email: user.email,
+
+    ...user.profile,
+  };
 };
 
 const normalizeGender = (gender?: string): PnrFormState["gender"] => {
@@ -44,6 +63,14 @@ const normalizeGender = (gender?: string): PnrFormState["gender"] => {
   return "M";
 };
 
+const buildPhoneNumber = (countryCode?: string, phoneNumber?: string) => {
+  if (!phoneNumber) return "";
+
+  if (!countryCode) return phoneNumber;
+
+  return `${countryCode}${phoneNumber}`;
+};
+
 export const mapProfileToPnrForm = (
   profile: UserProfile | null,
 ): PnrFormState => {
@@ -51,13 +78,13 @@ export const mapProfileToPnrForm = (
 
   const fullName = splitFullName(profile.name);
 
-  const givenName =
-    profile.given_name || profile.first_name || fullName.givenName || "";
+  const givenName = profile.given_name || fullName.givenName || "";
+  const surname = profile.surname || fullName.surname || "";
 
-  const surname =
-    profile.surname || profile.last_name || fullName.surname || "";
-
-  const phone = profile.phone || profile.mobile || "";
+  const phone = buildPhoneNumber(
+    profile.phone_country_code,
+    profile.phone_number,
+  );
 
   return {
     ...initialPnrFormState,
@@ -65,17 +92,17 @@ export const mapProfileToPnrForm = (
     givenName,
     surname,
 
-    dateOfBirth: profile.date_of_birth || profile.dob || "",
+    dateOfBirth: profile.date_of_birth || "",
     gender: normalizeGender(profile.gender),
 
     travelerPhone: phone,
     contactEmail: profile.email || "",
     contactPhone: phone,
 
-    passportNumber: profile.passport_number || "",
+    passportNumber: profile.passport_no || "",
     nationality: profile.nationality || "BD",
-    issuingCountry: profile.issuing_country || "BD",
-    passportExpiryDate: profile.passport_expiry_date || "",
+    issuingCountry: profile.nationality || "BD",
+    passportExpiryDate: profile.passport_expire_date || "",
 
     sendBookingEmail: true,
   };

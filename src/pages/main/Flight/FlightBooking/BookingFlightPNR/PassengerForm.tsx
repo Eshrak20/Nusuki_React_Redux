@@ -12,7 +12,6 @@ import {
 
 import ContactInfoBox from "./ContactInfoBox";
 import PassportInfoBox from "./PassportInfoBox";
-import PassportUploadBox from "./PassportUploadBox";
 
 export type PnrFormState = {
   givenName: string;
@@ -46,12 +45,7 @@ type PassengerFormProps = {
 
 const PassengerForm = ({
   form,
-  fileUploaded,
-  fileName,
   isScanning,
-  setFileUploaded,
-  setFileName,
-  setIsScanning,
   updateForm,
 }: PassengerFormProps) => {
   return (

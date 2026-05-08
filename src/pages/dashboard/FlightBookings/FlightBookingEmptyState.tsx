@@ -2,7 +2,7 @@ import { PlaneTakeoff } from "lucide-react";
 
 const FlightBookingEmptyState = () => {
   return (
-    <div className="flex min-h-[360px] flex-col items-center justify-center rounded-2xl border border-dashed bg-card p-8 text-center">
+    <div className="flex min-h-90 flex-col items-center justify-center rounded-2xl border border-dashed bg-card p-8 text-center">
       <div className="flex h-16 w-16 items-center justify-center rounded-full bg-primary/10 text-primary">
         <PlaneTakeoff className="h-8 w-8" />
       </div>

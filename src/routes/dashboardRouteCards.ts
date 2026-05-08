@@ -7,9 +7,9 @@ import {
 
 export const dashboardRouteCards = [
   {
-    title: "Dashboard",
-    description: "Your account summary and quick actions.",
-    href: "/dashboard",
+    title: "Home",
+    description: "Go to home page",
+    href: "/",
     icon: LayoutDashboard,
   },
   {

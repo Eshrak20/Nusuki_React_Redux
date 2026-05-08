@@ -8,6 +8,7 @@ import {
   TicketX,
   UserRound,
 } from "lucide-react";
+import { Link } from "react-router-dom";
 
 import { Button } from "@/components/ui/button";
 import type { FlightBooking } from "@/types/flight/flightTicketPayment.types";
@@ -16,15 +17,29 @@ import { useCancelAirTicketMutation } from "@/redux/api/fligtBookingApi/flightBo
 import BookingStatusBadge from "./BookingStatusBadge";
 import FlightTicketPaymentModal from "./FlightTicketPaymentModal";
 import CancelTicketConfirmDialog from "./modals/CancelTicketConfirmDialog";
-import { Link } from "react-router-dom";
+import BookingPaymentTimer from "./BookingPaymentTimer";
 
 type Props = {
   booking: FlightBooking;
+  onBookingExpired?: () => void;
 };
 
-const FlightBookingCard = ({ booking }: Props) => {
+const isExpiredByTtl = (ttlAt?: string | null) => {
+  if (!ttlAt) return false;
+
+  const ttlTime = new Date(ttlAt).getTime();
+
+  if (Number.isNaN(ttlTime)) return false;
+
+  return ttlTime <= Date.now();
+};
+
+const FlightBookingCard = ({ booking, onBookingExpired }: Props) => {
   const [paymentOpen, setPaymentOpen] = useState(false);
   const [cancelOpen, setCancelOpen] = useState(false);
+  const [isPaymentExpired, setIsPaymentExpired] = useState(() =>
+    isExpiredByTtl(booking.ttl_at),
+  );
 
   const [cancelAirTicket, { isLoading: isCancelling }] =
     useCancelAirTicketMutation();
@@ -35,16 +50,31 @@ const FlightBookingCard = ({ booking }: Props) => {
   const isCancelled = booking.booking_status === "cancelled";
   const isPaid = booking.payment_status === "paid";
 
-  const canPay = Boolean(booking.pnr) && !isTicketed && !isCancelled;
+  const isPendingPayment =
+    booking.payment_status === "unpaid" || booking.payment_status === "pending";
+
+  const canPay =
+    Boolean(booking.pnr) &&
+    isPendingPayment &&
+    !isTicketed &&
+    !isCancelled &&
+    !isPaymentExpired;
+
   const canCancel = Boolean(booking.pnr) && !isCancelled;
 
-  const cardHighlightClass = isCancelled
-    ? "border-red-500/30 bg-red-500/[0.03]"
-    : isTicketed || isPaid
-      ? "border-emerald-500/30 bg-emerald-500/[0.03]"
-      : "border-amber-500/30 bg-amber-500/[0.04]";
+  //TODO If needed then will be used for dynamic border in card
+  // const cardHighlightClass = isCancelled
+  //   ? "border-red-500/30 bg-red-500/[0.03]"
+  //   : isTicketed || isPaid
+  //     ? "border-emerald-500/30 bg-emerald-500/[0.03]"
+  //     : "border-amber-500/30 bg-amber-500/[0.04]";
 
   const contactEmail = passenger?.email || "eshrakg62@gmail.com";
+
+  const handlePaymentTimerExpired = () => {
+    setIsPaymentExpired(true);
+    onBookingExpired?.();
+  };
 
   const handleConfirmCancel = async () => {
     if (!booking.pnr) {
@@ -64,8 +94,6 @@ const FlightBookingCard = ({ booking }: Props) => {
         },
         send_email: true,
       };
-
-      console.log("Cancel Ticket Payload:", JSON.stringify(payload, null, 2));
 
       const response = await cancelAirTicket(payload).unwrap();
 
@@ -92,9 +120,8 @@ const FlightBookingCard = ({ booking }: Props) => {
   return (
     <>
       <article
-        className={`overflow-hidden rounded-2xl border bg-card shadow-sm transition hover:shadow-md dark:bg-card/80 ${cardHighlightClass}`}
+        className={`overflow-hidden rounded-2xl border bg-card shadow-sm transition hover:shadow-md dark:bg-card/80`}
       >
-        {/* Header Section: Adjusted to p-6 pb-4 */}
         <div className="border-b bg-muted/40 p-6 pb-4">
           <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
             <div>
@@ -107,7 +134,7 @@ const FlightBookingCard = ({ booking }: Props) => {
               </h3>
 
               <div className="mt-3 flex flex-wrap items-center gap-2">
-                <span className="rounded-lg bg-primary/10 px-3 py-1 text-xs font-bold text-primary border border-primary/20">
+                <span className="rounded-lg border border-primary/20 bg-primary/10 px-3 py-1 text-xs font-bold text-primary">
                   PNR: {booking.pnr || "N/A"}
                 </span>
 
@@ -122,40 +149,69 @@ const FlightBookingCard = ({ booking }: Props) => {
               <p className="text-[11px] font-bold uppercase tracking-wider text-muted-foreground/80">
                 Total Amount
               </p>
+
               <p className="mt-1 text-2xl font-black text-primary">
-                <span className="text-sm font-bold mr-1">{booking.pricing?.currency}</span>
+                <span className="mr-1 text-sm font-bold">
+                  {booking.pricing?.currency}
+                </span>
                 {Number(booking.pricing?.total_amount ?? 0).toLocaleString()}
               </p>
             </div>
           </div>
         </div>
 
-        {/* Content Section: Adjusted to p-6 pt-4 */}
-        <div className="p-6 pt-4 space-y-6">
+        <div className="space-y-6 p-6 pt-4">
+          <BookingPaymentTimer
+            ttlAt={booking.ttl_at}
+            paymentStatus={booking.payment_status}
+            bookingStatus={booking.booking_status}
+            onExpired={handlePaymentTimerExpired}
+          />
+
           <div className="grid gap-3 sm:grid-cols-2">
             {[
-              { icon: Route, label: "Route", value: booking.route },
-              { icon: CalendarDays, label: "Travel Date", value: booking.travel_start_date },
+              {
+                icon: Route,
+                label: "Route",
+                value: booking.route,
+              },
+              {
+                icon: CalendarDays,
+                label: "Travel Date",
+                value: booking.travel_start_date,
+              },
               {
                 icon: UserRound,
                 label: "Passenger",
-                value: passenger ? `${passenger.given_name} ${passenger.surname}` : "N/A"
+                value: passenger
+                  ? `${passenger.given_name} ${passenger.surname}`
+                  : "N/A",
               },
-              { icon: Plane, label: "Trip Type", value: booking.trip_type },
+              {
+                icon: Plane,
+                label: "Trip Type",
+                value: booking.trip_type,
+              },
             ].map((item, idx) => (
-              <div key={idx} className="flex gap-3 rounded-xl border bg-muted/5 p-3 shadow-sm">
-                <item.icon className="mt-0.5 h-4 w-4 text-primary shrink-0" />
+              <div
+                key={idx}
+                className="flex gap-3 rounded-xl border bg-muted/5 p-3 shadow-sm"
+              >
+                <item.icon className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
+
                 <div>
                   <p className="text-[10px] font-bold uppercase tracking-tighter text-muted-foreground">
                     {item.label}
                   </p>
-                  <p className="text-sm font-bold leading-tight">{item.value}</p>
+
+                  <p className="text-sm font-bold leading-tight">
+                    {item.value}
+                  </p>
                 </div>
               </div>
             ))}
           </div>
 
-          {/* Action Buttons */}
           <div className="space-y-3">
             <div className="grid gap-3 sm:grid-cols-2">
               <Button
@@ -164,12 +220,16 @@ const FlightBookingCard = ({ booking }: Props) => {
                 className="h-11 rounded-xl font-bold shadow-sm"
               >
                 <CreditCard className="mr-2 h-4 w-4" />
-                {isPaid || isTicketed ? "Paid" : "Pay Now"}
+                {isPaid || isTicketed
+                  ? "Paid"
+                  : isPaymentExpired && isPendingPayment
+                    ? "Payment Expired"
+                    : "Pay Now"}
               </Button>
 
               <Button
                 type="button"
-                variant="destructive"
+                variant="outline"
                 onClick={() => setCancelOpen(true)}
                 disabled={!canCancel || isCancelling}
                 className="h-11 rounded-xl font-bold shadow-sm"
@@ -179,9 +239,12 @@ const FlightBookingCard = ({ booking }: Props) => {
               </Button>
             </div>
 
-            {/* Footer View Details - Padded correctly */}
             <div className="flex justify-center pt-2">
-              <Button asChild variant="ghost" className="rounded-xl w-full text-muted-foreground hover:text-primary hover:bg-primary/5">
+              <Button
+                asChild
+                variant="ghost"
+                className="w-full rounded-xl text-muted-foreground hover:bg-primary/5 hover:text-primary"
+              >
                 <Link to={`/dashboard/flight-bookings/${booking.id}`}>
                   View Full Details
                   <ArrowRight className="ml-2 h-4 w-4" />

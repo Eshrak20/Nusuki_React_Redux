@@ -28,7 +28,7 @@ const CancelTicketConfirmDialog = ({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
-          <div className="mb-2 flex h-12 w-12 items-center justify-center rounded-full bg-red-500/10 text-red-600 dark:text-red-400">
+          <div className="mb-2 flex h-12 w-12 items-center justify-center rounded-full bg-primary/10 text-primary dark:text-primary/80">
             <AlertTriangle className="h-6 w-6" />
           </div>
 
@@ -44,7 +44,7 @@ const CancelTicketConfirmDialog = ({
         <div className="flex flex-col-reverse gap-3 pt-2 sm:flex-row sm:justify-end">
           <Button
             type="button"
-            variant="outline"
+            variant="default"
             onClick={() => onOpenChange(false)}
             disabled={isLoading}
             className="rounded-xl"
@@ -54,7 +54,7 @@ const CancelTicketConfirmDialog = ({
 
           <Button
             type="button"
-            variant="destructive"
+            variant="outline"
             onClick={onConfirm}
             disabled={isLoading}
             className="rounded-xl font-bold"

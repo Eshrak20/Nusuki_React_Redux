@@ -8,8 +8,6 @@ import { useSignupMutation } from "@/redux/api/authApi/authApi";
 import type { SignupErrors, SignupFormData } from "./AuthComponents/SignupForm";
 import SignupForm from "./AuthComponents/SignupForm";
 
-
-
 const getErrorMessage = (error: unknown) => {
   if (
     typeof error === "object" &&
@@ -23,6 +21,10 @@ const getErrorMessage = (error: unknown) => {
   }
 
   return "Something went wrong. Please try again.";
+};
+
+const isValidBangladeshiPhone = (phone: string) => {
+  return /^01[3-9]\d{8}$/.test(phone);
 };
 
 const Signup = () => {
@@ -49,6 +51,8 @@ const Signup = () => {
   const validateForm = () => {
     const newErrors: SignupErrors = {};
 
+    const trimmedPhoneNumber = formData.phone_number.trim();
+
     if (!formData.name.trim()) {
       newErrors.name = "Full name is required";
     }
@@ -68,11 +72,17 @@ const Signup = () => {
     }
 
     if (!formData.phone_country_code.trim()) {
-      newErrors.phone_country_code = "Phone country code is required";
+      newErrors.phone_country_code = "Please select your country code";
     }
 
-    if (!formData.phone_number.trim()) {
+    if (!trimmedPhoneNumber) {
       newErrors.phone_number = "Phone number is required";
+    } else if (
+      formData.phone_country_code === "+880" &&
+      !isValidBangladeshiPhone(trimmedPhoneNumber)
+    ) {
+      newErrors.phone_number =
+        "Please enter a valid Bangladeshi phone number like 01812345678";
     }
 
     if (!formData.password.trim()) {
@@ -91,7 +101,10 @@ const Signup = () => {
     setErrors(newErrors);
 
     if (Object.keys(newErrors).length > 0) {
-      toast.error(Object.values(newErrors)[0]);
+      const firstError = Object.values(newErrors)[0];
+
+      toast.error(firstError || "Please check your information");
+
       return false;
     }
 
@@ -101,14 +114,34 @@ const Signup = () => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target;
 
+    let nextValue = value;
+
+    if (id === "phone_number") {
+      nextValue = value.replace(/\D/g, "");
+    }
+
     setFormData((prev) => ({
       ...prev,
-      [id]: value,
+      [id]: nextValue,
     }));
 
     setErrors((prev) => ({
       ...prev,
       [id]: "",
+    }));
+  };
+
+  const handleCountryCodeChange = (value: string) => {
+    setFormData((prev) => ({
+      ...prev,
+      phone_country_code: value,
+      phone_number: "",
+    }));
+
+    setErrors((prev) => ({
+      ...prev,
+      phone_country_code: "",
+      phone_number: "",
     }));
   };
 
@@ -118,7 +151,12 @@ const Signup = () => {
     if (!validateForm()) return;
 
     try {
-      const res = await signup(formData).unwrap();
+      const payload: SignupFormData = {
+        ...formData,
+        phone_number: formData.phone_number.trim(),
+      };
+
+      const res = await signup(payload).unwrap();
 
       dispatch(
         setCredentials({
@@ -147,11 +185,10 @@ const Signup = () => {
         showPassword={showPassword}
         showConfirmPassword={showConfirmPassword}
         onChange={handleChange}
+        onCountryCodeChange={handleCountryCodeChange}
         onSubmit={handleSignup}
         onTogglePassword={() => setShowPassword((prev) => !prev)}
-        onToggleConfirmPassword={() =>
-          setShowConfirmPassword((prev) => !prev)
-        }
+        onToggleConfirmPassword={() => setShowConfirmPassword((prev) => !prev)}
       />
     </div>
   );

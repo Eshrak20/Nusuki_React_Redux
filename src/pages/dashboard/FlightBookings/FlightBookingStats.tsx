@@ -38,21 +38,21 @@ const FlightBookingStats = ({ bookings }: Props) => {
       value: paid,
       icon: CheckCircle2,
       className:
-        "border-emerald-500/20 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400",
+        "border-primary/20 bg-primary/10 text-primary dark:bg-primary/15",
     },
     {
       label: "Payment Pending",
       value: pending,
       icon: Clock3,
       className:
-        "border-amber-500/20 bg-amber-500/10 text-amber-600 dark:text-amber-400",
+        "border-primary/20 bg-primary/10 text-primary dark:bg-primary/15",
     },
     {
       label: "Cancelled",
       value: cancelled,
       icon: Ban,
       className:
-        "border-red-500/20 bg-red-500/10 text-red-600 dark:text-red-400",
+        "border-primary/20 bg-primary/10 text-primary dark:bg-primary/15",
     },
   ];
 

@@ -10,7 +10,7 @@ import FlightBookingStats from "./FlightBookingStats";
 
 const FlightBookings = () => {
   const [page, setPage] = useState(1);
-  const size = 10;
+  const size = 12;
 
   const { data, isLoading, isFetching, isError, refetch } =
     useGetFlightBookingsQuery({
@@ -23,7 +23,11 @@ const FlightBookings = () => {
 
   const hasPreviousPage = page > 1;
   const hasNextPage = pagination ? page < pagination.last_page : false;
+  const handleBookingExpired = () => {
+    if (!data || isLoading || isFetching) return;
 
+    refetch();
+  };
   return (
     <section className="space-y-6">
       <div className="flex flex-col gap-4 rounded-2xl border bg-card p-5 shadow-sm dark:bg-card/80 sm:flex-row sm:items-center sm:justify-between">
@@ -55,7 +59,44 @@ const FlightBookings = () => {
           Refresh
         </Button>
       </div>
+      {pagination ? (
+        <div className="flex flex-col gap-3 rounded-2xl border bg-card p-4 shadow-sm dark:bg-card/80 sm:flex-row sm:items-center sm:justify-between">
+          <p className="text-sm text-muted-foreground">
+            Showing page{" "}
+            <span className="font-semibold text-foreground">
+              {pagination.current_page}
+            </span>{" "}
+            of{" "}
+            <span className="font-semibold text-foreground">
+              {pagination.last_page}
+            </span>{" "}
+            · Total{" "}
+            <span className="font-semibold text-foreground">
+              {pagination.total}
+            </span>{" "}
+            bookings
+          </p>
 
+          <div className="flex items-center gap-2">
+            <Button
+              variant="outline"
+              disabled={!hasPreviousPage || isFetching}
+              onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
+              className="rounded-xl"
+            >
+              Previous
+            </Button>
+
+            <Button
+              disabled={!hasNextPage || isFetching}
+              onClick={() => setPage((prev) => prev + 1)}
+              className="rounded-xl"
+            >
+              Next
+            </Button>
+          </div>
+        </div>
+      ) : null}
       {!isLoading && !isError && bookings.length > 0 ? (
         <FlightBookingStats bookings={bookings} />
       ) : null}
@@ -90,53 +131,17 @@ const FlightBookings = () => {
       {!isLoading && !isError && bookings.length === 0 ? (
         <FlightBookingEmptyState />
       ) : null}
-
       {!isLoading && !isError && bookings.length > 0 ? (
         <>
-          <div className="grid gap-5 xl:grid-cols-2">
+          <div className="grid gap-5 lg:grid-cols-2 xl:grid-cols-2 2xl:grid-cols-3">
             {bookings.map((booking) => (
-              <FlightBookingCard key={booking.id} booking={booking} />
+              <FlightBookingCard
+                key={booking.id}
+                booking={booking}
+                onBookingExpired={handleBookingExpired}
+              />
             ))}
           </div>
-
-          {pagination ? (
-            <div className="flex flex-col gap-3 rounded-2xl border bg-card p-4 shadow-sm dark:bg-card/80 sm:flex-row sm:items-center sm:justify-between">
-              <p className="text-sm text-muted-foreground">
-                Showing page{" "}
-                <span className="font-semibold text-foreground">
-                  {pagination.current_page}
-                </span>{" "}
-                of{" "}
-                <span className="font-semibold text-foreground">
-                  {pagination.last_page}
-                </span>{" "}
-                · Total{" "}
-                <span className="font-semibold text-foreground">
-                  {pagination.total}
-                </span>{" "}
-                bookings
-              </p>
-
-              <div className="flex items-center gap-2">
-                <Button
-                  variant="outline"
-                  disabled={!hasPreviousPage || isFetching}
-                  onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
-                  className="rounded-xl"
-                >
-                  Previous
-                </Button>
-
-                <Button
-                  disabled={!hasNextPage || isFetching}
-                  onClick={() => setPage((prev) => prev + 1)}
-                  className="rounded-xl"
-                >
-                  Next
-                </Button>
-              </div>
-            </div>
-          ) : null}
         </>
       ) : null}
     </section>

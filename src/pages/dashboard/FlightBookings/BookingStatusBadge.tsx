@@ -16,7 +16,7 @@ const BookingStatusBadge = ({ bookingStatus, paymentStatus }: Props) => {
 
   if (isCancelled) {
     return (
-      <div className="rounded-full border border-red-500/20 bg-red-500/10 px-3 py-1 text-xs font-bold text-red-600 dark:text-red-400">
+      <div className="rounded-full border border-primary/20 bg-primary/20 px-3 py-1 text-xs font-bold text-primary">
         Cancelled
       </div>
     );
@@ -24,7 +24,7 @@ const BookingStatusBadge = ({ bookingStatus, paymentStatus }: Props) => {
 
   if (isTicketed || isPaid) {
     return (
-      <div className="rounded-full border border-emerald-500/20 bg-emerald-500/10 px-3 py-1 text-xs font-bold text-emerald-600 dark:text-emerald-400">
+      <div className="rounded-full border-primary/20 bg-primary/20 px-3 py-1 text-xs font-bold texttext-primary">
         Paid / Ticketed
       </div>
     );
@@ -32,7 +32,7 @@ const BookingStatusBadge = ({ bookingStatus, paymentStatus }: Props) => {
 
   if (isUnpaid) {
     return (
-      <div className="rounded-full border border-amber-500/20 bg-amber-500/10 px-3 py-1 text-xs font-bold text-amber-600 dark:text-amber-400">
+      <div className="rounded-full border-primary/20 bg-primary/20 px-3 py-1 text-xs font-bold text-primary">
         Payment Pending
       </div>
     );
