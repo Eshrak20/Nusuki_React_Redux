@@ -30,7 +30,7 @@ const CommonHomeLayout = ({
     <div className="bg-white dark:bg-gray-950">
       <div className="relative">
         <VideoBanner
-          title="Welcome to Nusuki BD"
+          title="Welcome to Nusuki"
           subtitle="Book flights, visa & holiday packages at the best prices"
         />
 

@@ -6,6 +6,7 @@ interface QuickInfoProps {
 }
 
 const QuickInfo = ({ details }: QuickInfoProps) => {
+    
     const infoCards = [
         {
             title: 'Processing Time',
