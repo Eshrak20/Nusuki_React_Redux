@@ -18,8 +18,6 @@ import { dashboardRoutes } from "@/routes/dashboardRoutes";
 
 // Common Pages
 import ErrorPage from "@/components/ErrorPage";
-import Upcoming from "@/components/Upcoming";
-
 // Flight Pages
 import FlightHome from "@/pages/main/Flight/FlightHome/FlightHome";
 import FlightDetailsMain from "@/pages/main/Flight/FlightDetail/FlightDetailsMain";
@@ -61,6 +59,8 @@ import Security from "@/shared/Footer/Security";
 import PrivacyPolicy from "@/shared/Footer/PrivacyPolicy";
 import Emi from "@/shared/Footer/Emi";
 import SupportCenter from "@/shared/Footer/SupportCenter";
+import HotelLayout from "@/layouts/HotelLayout";
+import HotelHome from "@/pages/main/Hotel/HotelHome";
 
 export const router = createBrowserRouter([
   {
@@ -172,18 +172,17 @@ export const router = createBrowserRouter([
           },
         ],
       },
-
       // Hotel Routes
       {
         path: "hotel",
+        Component: HotelLayout,
         children: [
           {
             index: true,
-            element: <Upcoming title="Hotel Section Upcoming" />,
+            element: <HotelHome />,
           },
         ],
       },
-
       // Holiday Routes
       {
         path: "holiday",
