@@ -9,6 +9,11 @@ export type HotelDetailPayload = {
   hotel_id: string;
 };
 
+export type PlaceAutocompleteArgs = {
+  keyword: string;
+  limit?: number; 
+};
+
 export const hotelApi = laravelApi.injectEndpoints({
   endpoints: (builder) => ({
     searchHotels: builder.mutation<HotelSearchResponse, HotelSearchPayload>({
@@ -26,10 +31,23 @@ export const hotelApi = laravelApi.injectEndpoints({
         body,
       }),
     }),
+
+    getPlaceAutoComplete: builder.query<any, PlaceAutocompleteArgs>({
+      query: ({ keyword, limit = 20 }) => ({
+        url: "/hotels/place-autocomplete",
+        method: "GET",
+        params: {
+          keyword,
+          limit,
+        },
+      }),
+    }),
   }),
 });
 
 export const {
   useSearchHotelsMutation,
   useGetHotelDetailMutation,
+  // CHANGED TO LAZY FOR ON-CHANGE TYPING EVENTS:
+  useLazyGetPlaceAutoCompleteQuery, 
 } = hotelApi;

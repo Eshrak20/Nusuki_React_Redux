@@ -4,9 +4,7 @@ import CMCollection from "@/layouts/CommonHomeLayout/CMCollection";
 import CMDestination from "@/layouts/CommonHomeLayout/CMDestination";
 import CMPromotions from "@/layouts/CommonHomeLayout/CMPromotions";
 import CMTourPackages from "@/layouts/CommonHomeLayout/CMTourPackages";
-import type {
-  TourDestination,
-} from "@/types/flight/flightHome.types";
+import type { TourDestination } from "@/types/flight/flightHome.types";
 import { useLocation } from "react-router-dom";
 
 interface Props {
@@ -15,7 +13,6 @@ interface Props {
   dreamDests?: TourDestination[];
   showDestinations?: boolean;
 }
-const isHolidayPage = location.pathname.startsWith("/holiday");
 
 const CommonHomeLayout = ({
   searchSection,
@@ -25,7 +22,11 @@ const CommonHomeLayout = ({
 }: Props) => {
   const location = useLocation();
 
+  // MOVE BOTH ROUTE CHECKS INSIDE THE COMPONENT FUNCTION BODY:
   const isFlightPage = location.pathname.startsWith("/flight");
+  const isHolidayPage = location.pathname.startsWith("/holiday");
+  const isHotelPage = location.pathname.startsWith("/hotel");
+
   return (
     <div className="bg-white dark:bg-gray-950">
       <div className="relative">
@@ -37,9 +38,10 @@ const CommonHomeLayout = ({
         {searchSection}
       </div>
 
+      {/* This padding calculation will now run perfectly */}
       <section
         className={`max-w-7xl mx-auto px-4 pt-96 mt-44 md:mt-0 ${
-          isFlightPage ? "md:pt-32" : isHolidayPage ? "pt-32" : "md:pt-72" // default fallback
+          isFlightPage ? "md:pt-32" : isHolidayPage ? "pt-32" : isHotelPage ? "md:pt-14" : "md:pt-72"
         }`}
       >
         <CMPromotions />

@@ -39,8 +39,17 @@ const HotelHome = () => {
   );
   return (
     <>
-      {/* <CommonHomeLayout popularDests={popularDests} dreamDests={dreamDests} /> */}
-      <HotelSearch />
+      <CommonHomeLayout
+        popularDests={popularDests}
+        dreamDests={dreamDests}
+        searchSection={
+          <div className="absolute top-70 left-0 right-0 bottom-0 translate-y-1/2 z-20">
+            <section className="max-w-screen-2xl mx-auto lg:px-8">
+              <HotelSearch />
+            </section>
+          </div>
+        }
+      />
     </>
   );
 };
