@@ -61,6 +61,7 @@ import Emi from "@/shared/Footer/Emi";
 import SupportCenter from "@/shared/Footer/SupportCenter";
 import HotelLayout from "@/layouts/HotelLayout";
 import HotelHome from "@/pages/main/Hotel/HotelHome";
+import HotelLists from "@/pages/main/Hotel/HotelLists/HotelLists";
 
 export const router = createBrowserRouter([
   {
@@ -180,6 +181,10 @@ export const router = createBrowserRouter([
           {
             index: true,
             element: <HotelHome />,
+          },
+          {
+            path: "lists",
+            element: <HotelLists />,
           },
         ],
       },

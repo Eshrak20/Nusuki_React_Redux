@@ -1,18 +1,10 @@
-"use client";
-
 import { useState } from "react";
-import {
-  CalendarDays,
-  Hotel,
-  MapPin,
-  Search,
-  UsersRound,
-} from "lucide-react";
+import { CalendarDays, Hotel, MapPin, Search, UsersRound } from "lucide-react";
 
-import HotelSearchTabs from "./HotelSearchTabs";
 import RoomSelector from "./RoomSelector";
 import { useSearchHotelsMutation } from "@/redux/api/hotelApi/hotelApi";
 import type { HotelRoom, HotelSearchPayload } from "@/types/hotel/types.hotel";
+import { useNavigate } from "react-router-dom";
 
 const HotelSearch = () => {
   const [searchHotels, { isLoading }] = useSearchHotelsMutation();
@@ -38,9 +30,9 @@ const HotelSearch = () => {
 
   const totalGuests = rooms.reduce(
     (total, room) => total + room.adults + room.children,
-    0
+    0,
   );
-
+  const navigate = useNavigate();
   const handleSearch = async () => {
     const payload: HotelSearchPayload = {
       check_in: checkIn,
@@ -53,7 +45,7 @@ const HotelSearch = () => {
       currency_code: currencyCode,
       rooms,
       page: 1,
-      size: 40,
+      size: 20,
       sort_by: "AverageNightlyRate",
       sort_order: "ASC",
       include_images: true,
@@ -61,7 +53,15 @@ const HotelSearch = () => {
 
     try {
       const result = await searchHotels(payload).unwrap();
+
       console.log("Hotel Search Result:", result);
+
+      navigate("/hotel/lists", {
+        state: {
+          hotelResponse: result,
+          searchPayload: payload,
+        },
+      });
     } catch (error) {
       console.error("Hotel Search Error:", error);
     }
@@ -231,7 +231,6 @@ const HotelSearch = () => {
           </div>
         </div>
       </div>
-  
     </section>
   );
 };

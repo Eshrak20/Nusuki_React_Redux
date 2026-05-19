@@ -19,6 +19,7 @@ import { laravelApi } from "./api/laravelApi";
 import { medusaApi } from "./api/medusaApi";
 import flightSearchReducer from "@/redux/features/flightSearchSlice";
 import flightSessionReducer from "@/redux/features/flightSessionSlice";
+import hotelSearchReducer from "@/redux/features/hotel/hotelSearchSlice";
 import holidayPackageFilterReducer from "@/redux/features/holidayPackageFilterSlice";
 import authReducer from "./features/auth/authSlice";
 
@@ -41,6 +42,7 @@ const rootReducer = combineReducers({
   ),
 
   flightSession: flightSessionReducer,
+  hotelSearch: hotelSearchReducer,
   universityFilter: universityFilterReducer,
   courseFilter: courseFilterReducer,
   visaFilter: visaFilterReducer,
