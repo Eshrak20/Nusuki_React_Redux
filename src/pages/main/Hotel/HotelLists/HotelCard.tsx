@@ -1,5 +1,13 @@
 import type { HotelAddress, HotelItem } from "@/types/hotel/types.hotelList";
-import { MapPin, RefreshCcw, WalletCards, Wifi } from "lucide-react";
+import {
+  MapPin,
+  RefreshCcw,
+  WalletCards,
+  Wifi,
+  Coffee,
+  ParkingCircle,
+  Dumbbell,
+} from "lucide-react";
 
 type Props = {
   hotel: HotelItem;
@@ -8,38 +16,73 @@ type Props = {
 
 const formatAddress = (
   address?: string | HotelAddress,
-  fallback?: string | HotelAddress
+  fallback?: string,
 ) => {
-  const source = address || fallback;
+  if (!address) return fallback || "Location not available";
 
-  if (!source) return "Location not available";
-
-  if (typeof source === "string") return source;
+  if (typeof address === "string") return address;
 
   return (
-    source.full_address ||
-    [source.line1, source.line2, source.city, source.state, source.postal_code, source.country]
+    address.full_address ||
+    [
+      address.line1,
+      address.line2,
+      address.city?.name,
+      address.state?.name,
+      address.postal_code,
+      address.country?.name,
+    ]
       .filter(Boolean)
       .join(", ") ||
-    source.location ||
     "Location not available"
   );
 };
 
+const formatMoney = (value?: number | null) => {
+  if (!value) return "N/A";
+
+  return new Intl.NumberFormat("en-US", {
+    maximumFractionDigits: 0,
+  }).format(value);
+};
+
+const getAmenityIcon = (name: string) => {
+  const lower = name.toLowerCase();
+
+  if (lower.includes("wifi") || lower.includes("internet")) return <Wifi size={14} />;
+  if (lower.includes("breakfast") || lower.includes("meal")) return <Coffee size={14} />;
+  if (lower.includes("parking")) return <ParkingCircle size={14} />;
+  if (lower.includes("health") || lower.includes("fitness")) return <Dumbbell size={14} />;
+
+  return <Wifi size={14} />;
+};
+
 const HotelCard = ({ hotel, currency }: Props) => {
-  const hotelName = hotel.name || hotel.hotel_name || "Hotel Name";
+  const hotelName = hotel.name || "Hotel Name";
 
   const hotelImage =
-    hotel.image ||
     hotel.images?.[0] ||
+    hotel.logo ||
     "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=900&q=80";
 
-  const price = hotel.average_nightly_rate || hotel.total_price || 0;
+  const averageNightlyRate = hotel.rate?.average_nightly_rate;
+  const totalPrice = hotel.rate?.total_price;
+
+  const isPrepaid = hotel.rate?.prepaid ?? false;
+  const isRefundable =
+    hotel.rate?.cancellation_policy?.is_refundable ?? false;
 
   const addressText = formatAddress(
     hotel.address,
-    hotel.location || `${hotel.city || "New York"}, ${hotel.country || "US"}`
+    `${hotel.address?.city?.name || ""}, ${hotel.address?.country?.name || ""}`,
   );
+
+  const amenities = [
+    ...(hotel.promotional_amenities ?? []),
+    ...(hotel.amenities ?? []),
+  ]
+    .filter((item) => item.name)
+    .slice(0, 4);
 
   return (
     <article className="overflow-hidden rounded-[24px] border border-slate-200 bg-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-md">
@@ -52,7 +95,7 @@ const HotelCard = ({ hotel, currency }: Props) => {
           />
 
           <div className="absolute left-3 top-3 rounded-full bg-white/90 px-3 py-1 text-xs font-bold text-[#13275f] backdrop-blur">
-            {hotel.star_rating || hotel.rating || 4} Star
+            {hotel.star_rating || "N/A"} Star
           </div>
         </div>
 
@@ -69,16 +112,22 @@ const HotelCard = ({ hotel, currency }: Props) => {
               </p>
 
               <div className="mt-3 flex flex-wrap gap-2">
-                <Badge icon={<Wifi size={14} />} text="Free WiFi" />
+                {amenities.map((amenity) => (
+                  <Badge
+                    key={`${amenity.code}-${amenity.name}`}
+                    icon={getAmenityIcon(amenity.name)}
+                    text={amenity.name}
+                  />
+                ))}
 
                 <Badge
                   icon={<WalletCards size={14} />}
-                  text={hotel.prepaid ? "Prepaid" : "Pay at hotel"}
+                  text={isPrepaid ? "Prepaid" : "Pay at hotel"}
                 />
 
                 <Badge
                   icon={<RefreshCcw size={14} />}
-                  text={hotel.refundable ? "Refundable" : "Non refundable"}
+                  text={isRefundable ? "Refundable" : "Non refundable"}
                 />
               </div>
             </div>
@@ -89,10 +138,16 @@ const HotelCard = ({ hotel, currency }: Props) => {
               </p>
 
               <h4 className="mt-1 text-2xl font-extrabold text-[#13275f]">
-                {currency} {price || "N/A"}
+                {currency} {formatMoney(averageNightlyRate)}
               </h4>
 
               <p className="text-xs text-slate-400">per night</p>
+
+              {totalPrice ? (
+                <p className="mt-1 text-xs font-semibold text-slate-500">
+                  Total: {currency} {formatMoney(totalPrice)}
+                </p>
+              ) : null}
 
               <button className="mt-4 h-10 w-full rounded-xl bg-[#13275f] px-4 text-sm font-bold text-white transition hover:bg-[#0f1f4c]">
                 View Details

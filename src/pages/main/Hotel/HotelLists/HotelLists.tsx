@@ -1,5 +1,3 @@
-"use client";
-
 import { useMemo, useState } from "react";
 import { Navigate, useLocation } from "react-router-dom";
 
@@ -10,37 +8,36 @@ import HotelCard from "./HotelCard";
 import NoHotelFound from "./NoHotelFound";
 import Pagination from "./Pagination";
 import SearchSummary from "./SearchSummary";
-import type { HotelSearchPayload, HotelSearchResponse } from "@/types/hotel/types.hotel";
-import type { HotelSearchData } from "@/types/hotel/types.hotelList";
 
+import { useAppSelector } from "@/redux/hooks";
+import { useSearchHotelsMutation } from "@/redux/api/hotelApi/hotelApi";
+import type {
+  HotelSearchPayload,
+  HotelSearchResponse,
+} from "@/types/hotel/types.hotel";
+import type { HotelItem, HotelSearchData } from "@/types/hotel/types.hotelList";
 
 type HotelLocationState = {
   hotelResponse?: HotelSearchResponse;
   searchPayload?: HotelSearchPayload;
 };
 
+const PAGE_SIZE = 20;
+
 const HotelLists = () => {
   const location = useLocation();
-
   const state = location.state as HotelLocationState | null;
 
-  const hotelResponse = state?.hotelResponse;
+  const initialData = state?.hotelResponse?.data as HotelSearchData | undefined;
   const searchPayload = state?.searchPayload;
 
-  const data = hotelResponse?.data as HotelSearchData | undefined;
+  const [searchHotels, { isLoading }] = useSearchHotelsMutation();
 
-  const [page, setPage] = useState<number>(data?.search?.page || 1);
+  const [data, setData] = useState<HotelSearchData | undefined>(initialData);
+  const [page, setPage] = useState(initialData?.search.page ?? 1);
+  const [sortBy, setSortBy] = useState("cheapest");
 
-  const size = searchPayload?.size || data?.search?.size || 20;
-
-  const totalPages = useMemo(() => {
-    if (!data) return 1;
-
-    return Math.max(
-      1,
-      Math.ceil(data.total_available_hotels_with_filter / size)
-    );
-  }, [data, size]);
+  const selectedFilters = useAppSelector((state) => state.hotelSearch.filters);
 
   const nights = useMemo(() => {
     if (!data) return 1;
@@ -52,6 +49,151 @@ const HotelLists = () => {
     return Math.max(1, Math.ceil(diff / (1000 * 60 * 60 * 24)));
   }, [data]);
 
+  const filteredHotels = useMemo(() => {
+    if (!data) return [];
+
+    let hotels: HotelItem[] = [...data.available_hotels];
+
+    const {
+      price_min,
+      price_max,
+      star_ratings,
+      chain_codes,
+      amenity_codes,
+      meal_plan,
+      refundable,
+      prepaid,
+    } = selectedFilters;
+
+    hotels = hotels.filter((hotel) => {
+      const price =
+        hotel.rate?.total_price ??
+        hotel.total_price ??
+        hotel.rate?.average_nightly_rate ??
+        hotel.average_nightly_rate ??
+        0;
+
+      const star = hotel.star_rating ?? hotel.rating ?? 0;
+      const chainCode = hotel.chain?.code ?? hotel.chain_code;
+
+      const hotelAmenityCodes =
+        hotel.amenities?.map((item) => String(item.code)) ?? [];
+
+      const mealId = hotel.rate?.meal?.id ?? hotel.meal_plan;
+
+      const isRefundable =
+        hotel.rate?.cancellation_policy?.is_refundable ??
+        hotel.refundable ??
+        false;
+
+      const isPrepaid = hotel.rate?.prepaid ?? hotel.prepaid ?? false;
+
+      if (price_min !== null && price < price_min) return false;
+      if (price_max !== null && price > price_max) return false;
+
+      if (star_ratings.length > 0 && !star_ratings.includes(star)) {
+        return false;
+      }
+
+      if (
+        chain_codes.length > 0 &&
+        (!chainCode || !chain_codes.includes(chainCode))
+      ) {
+        return false;
+      }
+
+      if (
+        amenity_codes.length > 0 &&
+        !amenity_codes.every((code) => hotelAmenityCodes.includes(String(code)))
+      ) {
+        return false;
+      }
+
+      if (meal_plan.length > 0 && (!mealId || !meal_plan.includes(mealId))) {
+        return false;
+      }
+
+      if (refundable !== null && isRefundable !== refundable) {
+        return false;
+      }
+
+      if (prepaid !== null && isPrepaid !== prepaid) {
+        return false;
+      }
+
+      return true;
+    });
+
+    hotels.sort((a, b) => {
+      const priceA =
+        a.rate?.average_nightly_rate ??
+        a.average_nightly_rate ??
+        a.rate?.total_price ??
+        a.total_price ??
+        0;
+
+      const priceB =
+        b.rate?.average_nightly_rate ??
+        b.average_nightly_rate ??
+        b.rate?.total_price ??
+        b.total_price ??
+        0;
+
+      if (sortBy === "cheapest") return priceA - priceB;
+
+      if (sortBy === "highest-rating") {
+        return (b.star_rating ?? b.rating ?? 0) - (a.star_rating ?? a.rating ?? 0);
+      }
+
+      if (sortBy === "nearest") {
+        return (a.distance ?? 0) - (b.distance ?? 0);
+      }
+
+      if (sortBy === "refundable") {
+        const aRefundable =
+          a.rate?.cancellation_policy?.is_refundable ?? a.refundable ?? false;
+        const bRefundable =
+          b.rate?.cancellation_policy?.is_refundable ?? b.refundable ?? false;
+
+        return Number(bRefundable) - Number(aRefundable);
+      }
+
+      return 0;
+    });
+
+    return hotels;
+  }, [data, selectedFilters, sortBy]);
+
+  const totalPages = useMemo(() => {
+    if (!data) return 1;
+
+    return Math.max(1, Math.ceil(data.total_hotels_in_region / PAGE_SIZE));
+  }, [data]);
+
+  const handlePageChange = async (nextPage: number) => {
+    if (!searchPayload) return;
+
+    setPage(nextPage);
+
+    const payload: HotelSearchPayload = {
+      ...searchPayload,
+      page: nextPage,
+      size: PAGE_SIZE,
+    };
+
+    try {
+      const result = await searchHotels(payload).unwrap();
+      setData(result.data as HotelSearchData);
+
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
+    } catch (error) {
+      console.error("Hotel pagination error:", error);
+    }
+  };
+
   if (!data) {
     return <Navigate to="/hotel" replace />;
   }
@@ -62,18 +204,28 @@ const HotelLists = () => {
         <SearchSummary data={data} nights={nights} />
 
         <div className="mt-5 grid grid-cols-1 gap-5 lg:grid-cols-[320px_1fr]">
-          <HotelFilterSidebar filters={data.filters} />
+          <HotelFilterSidebar
+            filters={data.filters}
+            onChange={() => setPage(1)}
+          />
 
           <main className="space-y-4 overflow-hidden">
-            <HotelResultHeader data={data} />
+            <HotelResultHeader
+              data={data}
+              totalFilteredHotels={filteredHotels.length}
+            />
 
-            <HotelSortBar />
+            <HotelSortBar value={sortBy} onChange={setSortBy} />
 
-            {data.available_hotels.length > 0 ? (
+            {isLoading ? (
+              <div className="rounded-[24px] bg-white p-10 text-center font-bold text-slate-500">
+                Loading hotels...
+              </div>
+            ) : filteredHotels.length > 0 ? (
               <div className="space-y-4">
-                {data.available_hotels.map((hotel, index) => (
+                {filteredHotels.map((hotel, index) => (
                   <HotelCard
-                    key={hotel.id || hotel.hotel_id || index}
+                    key={hotel.hotel_id ?? hotel.id ?? hotel.hotel_code ?? index}
                     hotel={hotel}
                     currency={data.search.currency_code}
                   />
@@ -86,8 +238,8 @@ const HotelLists = () => {
             <Pagination
               page={page}
               totalPages={totalPages}
-              onPrev={() => setPage((prev) => Math.max(1, prev - 1))}
-              onNext={() => setPage((prev) => Math.min(totalPages, prev + 1))}
+              onPrev={() => handlePageChange(Math.max(1, page - 1))}
+              onNext={() => handlePageChange(Math.min(totalPages, page + 1))}
             />
           </main>
         </div>

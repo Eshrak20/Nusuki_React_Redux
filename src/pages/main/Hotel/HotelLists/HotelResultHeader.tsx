@@ -2,15 +2,16 @@ import type { HotelSearchData } from "@/types/hotel/types.hotelList";
 
 type Props = {
   data: HotelSearchData;
+  totalFilteredHotels: number;
 };
 
-const HotelResultHeader = ({ data }: Props) => {
+const HotelResultHeader = ({ data, totalFilteredHotels }: Props) => {
   return (
     <div className="rounded-[22px] border border-slate-200 bg-white p-4 shadow-sm">
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h2 className="text-xl font-extrabold text-slate-950">
-            {data.total_available_hotels_with_filter} Available Hotels
+            {totalFilteredHotels} Available Hotels
           </h2>
 
           <p className="mt-1 text-sm text-slate-500">

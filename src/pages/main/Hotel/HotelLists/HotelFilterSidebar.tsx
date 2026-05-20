@@ -1,23 +1,31 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-// src/components/hotel/HotelFilterSidebar.tsx
-
 "use client";
 
-import { resetHotelFilters, setHotelBooleanFilter, setHotelPriceFilter, toggleHotelArrayFilter } from "@/redux/features/hotel/hotelSearchSlice";
+import {
+  resetHotelFilters,
+  setHotelBooleanFilter,
+  setHotelPriceFilter,
+  toggleHotelArrayFilter,
+} from "@/redux/features/hotel/hotelSearchSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 
 import type { RootState } from "@/redux/store";
+import type { HotelFilters } from "@/types/hotel/types.hotelList";
 
 type Props = {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  filters: any;
+  filters: HotelFilters;
+  onChange?: () => void;
 };
 
-const HotelFilterSidebar = ({ filters }: Props) => {
+const HotelFilterSidebar = ({ filters, onChange }: Props) => {
   const dispatch = useAppDispatch();
+
   const selectedFilters = useAppSelector(
     (state: RootState) => state.hotelSearch.filters,
   );
+
+  const handleChange = () => {
+    onChange?.();
+  };
 
   if (!filters) return null;
 
@@ -28,7 +36,10 @@ const HotelFilterSidebar = ({ filters }: Props) => {
 
         <button
           type="button"
-          onClick={() => dispatch(resetHotelFilters())}
+          onClick={() => {
+            dispatch(resetHotelFilters());
+            handleChange();
+          }}
           className="text-xs font-medium text-blue-600 hover:text-blue-700"
         >
           Reset
@@ -43,155 +54,167 @@ const HotelFilterSidebar = ({ filters }: Props) => {
             <input
               type="number"
               placeholder="Min"
-              defaultValue={filters.price_range.min}
-              onChange={(e) =>
+              defaultValue={filters.price_range.min ?? ""}
+              onChange={(e) => {
                 dispatch(
                   setHotelPriceFilter({
                     min: e.target.value ? Number(e.target.value) : null,
                   }),
-                )
-              }
+                );
+                handleChange();
+              }}
               className="w-full rounded-lg border px-3 py-2 text-sm outline-none focus:border-blue-500"
             />
 
             <input
               type="number"
               placeholder="Max"
-              defaultValue={filters.price_range.max}
-              onChange={(e) =>
+              defaultValue={filters.price_range.max ?? ""}
+              onChange={(e) => {
                 dispatch(
                   setHotelPriceFilter({
                     max: e.target.value ? Number(e.target.value) : null,
                   }),
-                )
-              }
+                );
+                handleChange();
+              }}
               className="w-full rounded-lg border px-3 py-2 text-sm outline-none focus:border-blue-500"
             />
           </div>
         </div>
       )}
 
-      {filters.star_ratings?.length > 0 && (
+      {filters.star_ratings.length > 0 && (
         <FilterGroup title="Star Rating">
-          {filters.star_ratings.map((item: any) => (
+          {filters.star_ratings.map((item) => (
             <CheckboxFilter
               key={item.value}
               label={item.label}
               count={item.count}
               checked={selectedFilters.star_ratings.includes(item.value)}
-              onChange={() =>
+              onChange={() => {
                 dispatch(
                   toggleHotelArrayFilter({
-                    key: item.request_key,
+                    key: item.request_key ?? "star_ratings",
                     value: item.value,
                   }),
-                )
-              }
+                );
+                handleChange();
+              }}
             />
           ))}
         </FilterGroup>
       )}
 
-      {filters.chains?.length > 0 && (
+      {filters.chains.length > 0 && (
         <FilterGroup title="Hotel Chain">
-          {filters.chains.map((item: any) => (
+          {filters.chains.map((item) => (
             <CheckboxFilter
               key={item.code}
               label={item.name}
               count={item.count}
               checked={selectedFilters.chain_codes.includes(item.code)}
-              onChange={() =>
+              onChange={() => {
                 dispatch(
                   toggleHotelArrayFilter({
-                    key: item.request_key,
+                    key: item.request_key ?? "chain_codes",
                     value: item.code,
                   }),
-                )
-              }
+                );
+                handleChange();
+              }}
             />
           ))}
         </FilterGroup>
       )}
 
-      {filters.amenities?.length > 0 && (
+      {filters.amenities.length > 0 && (
         <FilterGroup title="Amenities" scroll>
-          {filters.amenities.map((item: any) => (
-            <CheckboxFilter
-              key={item.code}
-              label={item.name}
-              count={item.count}
-              checked={selectedFilters.amenity_codes.includes(item.code)}
-              onChange={() =>
-                dispatch(
-                  toggleHotelArrayFilter({
-                    key: item.request_key,
-                    value: item.code,
-                  }),
-                )
-              }
-            />
-          ))}
+          {filters.amenities.map((item) => {
+            const amenityCode = String(item.code);
+
+            return (
+              <CheckboxFilter
+                key={amenityCode}
+                label={item.name}
+                count={item.count}
+                checked={selectedFilters.amenity_codes.includes(amenityCode)}
+                onChange={() => {
+                  dispatch(
+                    toggleHotelArrayFilter({
+                      key: item.request_key ?? "amenity_codes",
+                      value: amenityCode,
+                    }),
+                  );
+                  handleChange();
+                }}
+              />
+            );
+          })}
         </FilterGroup>
       )}
 
-      {filters.meal_plans?.length > 0 && (
+      {filters.meal_plans.length > 0 && (
         <FilterGroup title="Meal Plan">
-          {filters.meal_plans.map((item: any) => (
+          {filters.meal_plans.map((item) => (
             <CheckboxFilter
               key={item.id}
               label={item.name}
               count={item.count}
               checked={selectedFilters.meal_plan.includes(item.id)}
-              onChange={() =>
+              onChange={() => {
                 dispatch(
                   toggleHotelArrayFilter({
-                    key: item.request_key,
+                    key: item.request_key ?? "meal_plan",
                     value: item.id,
                   }),
-                )
-              }
+                );
+                handleChange();
+              }}
             />
           ))}
         </FilterGroup>
       )}
 
-      {filters.refundability?.length > 0 && (
+      {filters.refundability.length > 0 && (
         <FilterGroup title="Refundability">
-          {filters.refundability.map((item: any) => (
+          {filters.refundability.map((item) => (
             <CheckboxFilter
               key={String(item.value)}
               label={item.label}
               count={item.count}
               checked={selectedFilters.refundable === item.value}
-              onChange={() =>
+              onChange={() => {
                 dispatch(
                   setHotelBooleanFilter({
-                    key: item.request_key,
+                    key: item.request_key ?? "refundable",
                     value: item.value,
                   }),
-                )
-              }
+                );
+                handleChange();
+              }}
             />
           ))}
         </FilterGroup>
       )}
 
-      {filters.payment_types?.length > 0 && (
+      {filters.payment_types.length > 0 && (
         <FilterGroup title="Payment Type">
-          {filters.payment_types.map((item: any) => (
+          {filters.payment_types.map((item) => (
             <CheckboxFilter
               key={String(item.value)}
               label={item.label}
               count={item.count}
               checked={selectedFilters.prepaid === item.value}
-              onChange={() =>
+              onChange={() => {
                 dispatch(
                   setHotelBooleanFilter({
-                    key: item.request_key,
+                    key: item.request_key ?? "prepaid",
                     value: item.value,
                   }),
-                )
-              }
+                );
+                handleChange();
+              }}
             />
           ))}
         </FilterGroup>
@@ -240,7 +263,7 @@ const CheckboxFilter = ({
           type="checkbox"
           checked={checked}
           onChange={onChange}
-          className="h-4 w-4 rounded border-gray-300"
+          className="h-4 w-4 rounded border-gray-300 accent-[#13275f]"
         />
 
         <span className="truncate">{label}</span>
