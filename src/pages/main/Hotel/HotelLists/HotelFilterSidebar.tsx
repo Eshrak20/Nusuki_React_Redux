@@ -1,5 +1,3 @@
-"use client";
-
 import {
   resetHotelFilters,
   setHotelBooleanFilter,
@@ -30,9 +28,11 @@ const HotelFilterSidebar = ({ filters, onChange }: Props) => {
   if (!filters) return null;
 
   return (
-    <aside className="h-fit space-y-5 rounded-2xl border border-gray-200 bg-white p-4 shadow-sm">
+    <aside className="h-fit space-y-5 rounded-2xl border border-border bg-background p-4 shadow-sm">
+      
+      {/* Sidebar Header */}
       <div className="flex items-center justify-between">
-        <h2 className="text-base font-semibold text-gray-900">Filter</h2>
+        <h2 className="text-base font-semibold text-foreground">Filter</h2>
 
         <button
           type="button"
@@ -40,15 +40,16 @@ const HotelFilterSidebar = ({ filters, onChange }: Props) => {
             dispatch(resetHotelFilters());
             handleChange();
           }}
-          className="text-xs font-medium text-blue-600 hover:text-blue-700"
+          className="text-xs font-medium text-primary hover:opacity-90 transition-opacity"
         >
           Reset
         </button>
       </div>
 
+      {/* Price Range Fields */}
       {filters.price_range && (
-        <div className="space-y-3 border-t pt-4">
-          <h3 className="text-sm font-semibold text-gray-800">Price Range</h3>
+        <div className="space-y-3 border-t border-border pt-4">
+          <h3 className="text-sm font-semibold text-foreground">Price Range</h3>
 
           <div className="grid grid-cols-2 gap-2">
             <input
@@ -63,7 +64,7 @@ const HotelFilterSidebar = ({ filters, onChange }: Props) => {
                 );
                 handleChange();
               }}
-              className="w-full rounded-lg border px-3 py-2 text-sm outline-none focus:border-blue-500"
+              className="w-full rounded-lg border border-input bg-transparent px-3 py-2 text-sm text-foreground outline-none placeholder:text-muted-foreground focus:border-primary transition-colors"
             />
 
             <input
@@ -78,12 +79,13 @@ const HotelFilterSidebar = ({ filters, onChange }: Props) => {
                 );
                 handleChange();
               }}
-              className="w-full rounded-lg border px-3 py-2 text-sm outline-none focus:border-blue-500"
+              className="w-full rounded-lg border border-input bg-transparent px-3 py-2 text-sm text-foreground outline-none placeholder:text-muted-foreground focus:border-primary transition-colors"
             />
           </div>
         </div>
       )}
 
+      {/* Star Ratings */}
       {filters.star_ratings.length > 0 && (
         <FilterGroup title="Star Rating">
           {filters.star_ratings.map((item) => (
@@ -106,6 +108,7 @@ const HotelFilterSidebar = ({ filters, onChange }: Props) => {
         </FilterGroup>
       )}
 
+      {/* Hotel Chain */}
       {filters.chains.length > 0 && (
         <FilterGroup title="Hotel Chain">
           {filters.chains.map((item) => (
@@ -128,6 +131,7 @@ const HotelFilterSidebar = ({ filters, onChange }: Props) => {
         </FilterGroup>
       )}
 
+      {/* Amenities */}
       {filters.amenities.length > 0 && (
         <FilterGroup title="Amenities" scroll>
           {filters.amenities.map((item) => {
@@ -154,6 +158,7 @@ const HotelFilterSidebar = ({ filters, onChange }: Props) => {
         </FilterGroup>
       )}
 
+      {/* Meal Plans */}
       {filters.meal_plans.length > 0 && (
         <FilterGroup title="Meal Plan">
           {filters.meal_plans.map((item) => (
@@ -176,6 +181,7 @@ const HotelFilterSidebar = ({ filters, onChange }: Props) => {
         </FilterGroup>
       )}
 
+      {/* Refundability */}
       {filters.refundability.length > 0 && (
         <FilterGroup title="Refundability">
           {filters.refundability.map((item) => (
@@ -198,6 +204,7 @@ const HotelFilterSidebar = ({ filters, onChange }: Props) => {
         </FilterGroup>
       )}
 
+      {/* Payment Type */}
       {filters.payment_types.length > 0 && (
         <FilterGroup title="Payment Type">
           {filters.payment_types.map((item) => (
@@ -225,6 +232,10 @@ const HotelFilterSidebar = ({ filters, onChange }: Props) => {
 
 export default HotelFilterSidebar;
 
+/* ==========================================
+   SUB-COMPONENTS (With Semantic Layout Changes)
+   ========================================== */
+
 const FilterGroup = ({
   title,
   children,
@@ -235,10 +246,10 @@ const FilterGroup = ({
   scroll?: boolean;
 }) => {
   return (
-    <div className="space-y-3 border-t pt-4">
-      <h3 className="text-sm font-semibold text-gray-800">{title}</h3>
+    <div className="space-y-3 border-t border-border pt-4">
+      <h3 className="text-sm font-semibold text-foreground">{title}</h3>
 
-      <div className={scroll ? "max-h-56 space-y-2 overflow-y-auto pr-1" : "space-y-2"}>
+      <div className={scroll ? "max-h-56 space-y-2 overflow-y-auto pr-1 custom-scrollbar" : "space-y-2"}>
         {children}
       </div>
     </div>
@@ -257,20 +268,22 @@ const CheckboxFilter = ({
   onChange: () => void;
 }) => {
   return (
-    <label className="flex cursor-pointer items-center justify-between gap-3 text-sm text-gray-700">
-      <span className="flex min-w-0 items-center gap-2">
+    <label className="flex cursor-pointer items-center justify-between gap-3 text-sm text-muted-foreground hover:text-foreground transition-colors group">
+      <span className="flex min-w-0 items-center gap-2.5">
         <input
           type="checkbox"
           checked={checked}
           onChange={onChange}
-          className="h-4 w-4 rounded border-gray-300 accent-[#13275f]"
+          className="h-4 w-4 shrink-0 rounded border-input bg-transparent text-primary accent-primary dark:accent-foreground focus:ring-ring focus:ring-offset-background"
         />
 
-        <span className="truncate">{label}</span>
+        <span className="truncate group-hover:text-foreground transition-colors">{label}</span>
       </span>
 
       {typeof count === "number" && (
-        <span className="shrink-0 text-xs text-gray-400">{count}</span>
+        <span className="shrink-0 text-xs text-muted-foreground/70 font-medium bg-muted/50 px-1.5 py-0.5 rounded-md">
+          {count}
+        </span>
       )}
     </label>
   );

@@ -8,6 +8,7 @@ import {
   ParkingCircle,
   Dumbbell,
 } from "lucide-react";
+import { Link } from "react-router-dom";
 
 type Props = {
   hotel: HotelItem;
@@ -61,9 +62,9 @@ const HotelCard = ({ hotel, currency }: Props) => {
   const hotelName = hotel.name || "Hotel Name";
 
   const hotelImage =
-    hotel.images?.[0] ||
-    hotel.logo ||
-    "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=900&q=80";
+    hotel?.images?.[0]?.url ||
+    hotel?.logo
+  //  || "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=900&q=80";
 
   const averageNightlyRate = hotel.rate?.average_nightly_rate;
   const totalPrice = hotel.rate?.total_price;
@@ -83,6 +84,10 @@ const HotelCard = ({ hotel, currency }: Props) => {
   ]
     .filter((item) => item.name)
     .slice(0, 4);
+
+  const search_id = hotel?.search_id
+  const hotel_id = hotel?.hotel_id
+
 
   return (
     <article className="overflow-hidden rounded-[24px] border border-slate-200 bg-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-md">
@@ -144,14 +149,14 @@ const HotelCard = ({ hotel, currency }: Props) => {
               <p className="text-xs text-slate-400">per night</p>
 
               {totalPrice ? (
-                <p className="mt-1 text-xs font-semibold text-slate-500">
+                <p className="mt-1 mb-6 text-xs font-semibold text-slate-500">
                   Total: {currency} {formatMoney(totalPrice)}
                 </p>
               ) : null}
 
-              <button className="mt-4 h-10 w-full rounded-xl bg-[#13275f] px-4 text-sm font-bold text-white transition hover:bg-[#0f1f4c]">
+              <Link to={`/hotel/detail/${search_id}/${hotel_id}`} className="mt-19 h-10 w-full rounded-xl bg-[#13275f] px-4 py-3 text-sm font-bold text-white transition hover:bg-[#0f1f4c]">
                 View Details
-              </button>
+              </Link>
             </div>
           </div>
         </div>

@@ -1,4 +1,4 @@
-import { Building2, MapPin, Star } from "lucide-react";
+import { Building2, MapPin } from "lucide-react";
 
 const HotelDetailsHero = ({ hotel }: { hotel: any }) => {
   const address = hotel?.address?.full_address || "Address not available";
@@ -15,7 +15,7 @@ const HotelDetailsHero = ({ hotel }: { hotel: any }) => {
               className="h-full w-full object-cover"
             />
           ) : (
-            <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-slate-100 to-slate-200">
+            <div className="flex h-full w-full items-center justify-center bg-linear-to-br from-slate-100 to-slate-200">
               <Building2 className="h-16 w-16 text-slate-400" />
             </div>
           )}

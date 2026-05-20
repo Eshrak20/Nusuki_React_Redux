@@ -62,6 +62,7 @@ import SupportCenter from "@/shared/Footer/SupportCenter";
 import HotelLayout from "@/layouts/HotelLayout";
 import HotelHome from "@/pages/main/Hotel/HotelHome";
 import HotelLists from "@/pages/main/Hotel/HotelLists/HotelLists";
+import HotelDetails from "@/pages/main/Hotel/HotelDetails/HotelDetails";
 
 export const router = createBrowserRouter([
   {
@@ -186,6 +187,10 @@ export const router = createBrowserRouter([
             path: "lists",
             element: <HotelLists />,
           },
+          {
+            path: "detail/:search_id/:hotel_id",
+            element: <HotelDetails/>
+          }
         ],
       },
       // Holiday Routes

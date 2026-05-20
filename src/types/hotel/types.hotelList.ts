@@ -108,6 +108,7 @@ export type HotelRate = {
 export type HotelItem = {
   id?: string | number;
   hotel_id?: string | number;
+  search_id?: string | number;
   hotel_code?: string;
   sabre_hotel_code?: string;
   name?: string;
@@ -118,7 +119,19 @@ export type HotelItem = {
   direction?: string;
   distance_uom?: string;
   logo?: string;
-  images?: string[];
+  images?: {
+    caption: string;
+    category: {
+      code: number;
+      description: string
+    };
+    height: number;
+    id: string;
+    source: string;
+    type: string;
+    url: string;
+    width: number;
+  }[];
   image?: string;
 
   address?: HotelAddress;

@@ -1,15 +1,19 @@
-"use client";
-
 import { useEffect } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
 import { Loader2 } from "lucide-react";
 import { useGetHotelDetailMutation } from "@/redux/api/hotelApi/hotelApi";
+import HotelDetailsHero from "./HotelDetailsHero";
+import HotelStaySummary from "./HotelStaySummary";
+import HotelDescriptionSection from "./HotelDescriptionSection";
+import HotelAmenitiesSection from "./HotelAmenitiesSection";
+import HotelRoomsSection from "./HotelRoomsSection";
+import HotelContactCard from "./HotelContactCard";
 
 const HotelDetails = () => {
-  const [searchParams] = useSearchParams();
-
-  const searchId = searchParams.get("search_id");
-  const hotelId = searchParams.get("hotel_id");
+  const { search_id: searchId, hotel_id: hotelId } = useParams<{
+    search_id: string;
+    hotel_id: string;
+  }>();
 
   const [getHotelDetail, { data, isLoading, isError }] =
     useGetHotelDetailMutation();

@@ -199,7 +199,7 @@ const HotelLists = () => {
   }
 
   return (
-    <section className="min-h-screen bg-[#f3f6fb] px-3 py-4 sm:px-5 lg:px-8">
+    <section className="min-h-screen bg-[#f3f6fb] dark:bg-background px-3 py-4 mt-20 sm:px-5 lg:px-8">
       <div className="mx-auto max-w-7xl">
         <SearchSummary data={data} nights={nights} />
 
