@@ -1,18 +1,13 @@
 import type {
+  HotelDetailPayload,
   HotelSearchPayload,
   HotelSearchResponse,
+  PlaceAutocompleteArgs,
+  PlaceAutocompleteResponse,
 } from "@/types/hotel/types.hotel";
 import { laravelApi } from "../laravelApi";
 
-export type HotelDetailPayload = {
-  search_id: string;
-  hotel_id: string;
-};
 
-export type PlaceAutocompleteArgs = {
-  keyword: string;
-  limit?: number; 
-};
 
 export const hotelApi = laravelApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -24,7 +19,7 @@ export const hotelApi = laravelApi.injectEndpoints({
       }),
     }),
 
-    getHotelDetail: builder.mutation<any, HotelDetailPayload>({
+    getHotelDetail: builder.mutation<void, HotelDetailPayload>({
       query: (body) => ({
         url: "/hotels/detail",
         method: "POST",
@@ -32,7 +27,7 @@ export const hotelApi = laravelApi.injectEndpoints({
       }),
     }),
 
-    getPlaceAutoComplete: builder.query<any, PlaceAutocompleteArgs>({
+    getPlaceAutoComplete: builder.query<PlaceAutocompleteResponse, PlaceAutocompleteArgs>({
       query: ({ keyword, limit = 20 }) => ({
         url: "/hotels/place-autocomplete",
         method: "GET",
