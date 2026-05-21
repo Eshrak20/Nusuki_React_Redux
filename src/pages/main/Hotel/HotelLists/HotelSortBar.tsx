@@ -12,7 +12,7 @@ const sortItems = [
 
 const HotelSortBar = ({ value, onChange }: Props) => {
   return (
-    <div className="overflow-x-auto rounded-[22px] border border-slate-200 bg-white p-3 shadow-sm">
+    <div className="overflow-x-auto rounded-[22px] border border-border bg-background p-3 shadow-sm custom-scrollbar">
       <div className="flex min-w-max gap-3">
         {sortItems.map((item) => {
           const active = value === item.value;
@@ -22,10 +22,10 @@ const HotelSortBar = ({ value, onChange }: Props) => {
               key={item.value}
               type="button"
               onClick={() => onChange(item.value)}
-              className={`h-11 min-w-40 rounded-xl px-5 text-sm font-semibold transition ${
+              className={`h-11 min-w-40 rounded-xl px-5 text-sm font-semibold transition-all duration-200 outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ${
                 active
-                  ? "bg-[#13275f] text-white shadow"
-                  : "border border-slate-200 bg-white text-slate-700 hover:bg-slate-50"
+                  ? "bg-primary text-primary-foreground shadow-sm hover:opacity-90"
+                  : "border border-input bg-background text-muted-foreground hover:bg-muted hover:text-foreground"
               }`}
             >
               {item.label}

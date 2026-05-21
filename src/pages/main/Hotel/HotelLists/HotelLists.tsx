@@ -1,12 +1,13 @@
 import { useMemo, useState } from "react";
 import { Navigate, useLocation } from "react-router-dom";
+import { Loader2 } from "lucide-react"; // Imported for a clean modern spinner element
 
 import HotelFilterSidebar from "./HotelFilterSidebar";
 import HotelResultHeader from "./HotelResultHeader";
 import HotelSortBar from "./HotelSortBar";
 import HotelCard from "./HotelCard";
 import NoHotelFound from "./NoHotelFound";
-import Pagination from "./Pagination";
+import EduPagination from "../../../../components/education/EduPagination";
 import SearchSummary from "./SearchSummary";
 
 import { useAppSelector } from "@/redux/hooks";
@@ -31,6 +32,7 @@ const HotelLists = () => {
   const initialData = state?.hotelResponse?.data as HotelSearchData | undefined;
   const searchPayload = state?.searchPayload;
 
+  // Destructured 'isLoading' directly from RTK Query mutation hook options state tracking
   const [searchHotels, { isLoading }] = useSearchHotelsMutation();
 
   const [data, setData] = useState<HotelSearchData | undefined>(initialData);
@@ -173,6 +175,12 @@ const HotelLists = () => {
   const handlePageChange = async (nextPage: number) => {
     if (!searchPayload) return;
 
+    // 1. SCROLL TO TOP IMMEDIATELY (Instantly reacts when the pagination option is clicked)
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+
     setPage(nextPage);
 
     const payload: HotelSearchPayload = {
@@ -184,11 +192,6 @@ const HotelLists = () => {
     try {
       const result = await searchHotels(payload).unwrap();
       setData(result.data as HotelSearchData);
-
-      window.scrollTo({
-        top: 0,
-        behavior: "smooth",
-      });
     } catch (error) {
       console.error("Hotel pagination error:", error);
     }
@@ -209,7 +212,7 @@ const HotelLists = () => {
             onChange={() => setPage(1)}
           />
 
-          <main className="space-y-4 overflow-hidden">
+          <main className="space-y-4 overflow-hidden relative">
             <HotelResultHeader
               data={data}
               totalFilteredHotels={filteredHotels.length}
@@ -217,9 +220,13 @@ const HotelLists = () => {
 
             <HotelSortBar value={sortBy} onChange={setSortBy} />
 
+            {/* 2. DYNAMIC LOADING FEEDBACK LOGIC */}
             {isLoading ? (
-              <div className="rounded-[24px] bg-white p-10 text-center font-bold text-slate-500">
-                Loading hotels...
+              <div className="flex flex-col items-center justify-center gap-3 rounded-[24px] border border-border bg-background p-20 text-center shadow-sm min-h-[400px]">
+                <Loader2 className="h-8 w-8 animate-spin text-primary" />
+                <p className="text-sm font-bold text-muted-foreground animate-pulse">
+                  Fetching next page results...
+                </p>
               </div>
             ) : filteredHotels.length > 0 ? (
               <div className="space-y-4">
@@ -235,14 +242,16 @@ const HotelLists = () => {
               <NoHotelFound messages={data.raw_meta?.messages} />
             )}
 
-            <Pagination
-              page={page}
-              totalPages={totalPages}
-              onPrev={() => handlePageChange(Math.max(1, page - 1))}
-              onNext={() => handlePageChange(Math.min(totalPages, page + 1))}
-            />
           </main>
+           
         </div>
+         <EduPagination
+              pagination={{
+                current_page: page,
+                last_page: totalPages,
+              }}
+              onPageChange={handlePageChange}
+            />
       </div>
     </section>
   );

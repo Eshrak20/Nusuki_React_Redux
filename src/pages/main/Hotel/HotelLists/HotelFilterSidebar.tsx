@@ -1,18 +1,19 @@
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import {
   resetHotelFilters,
   setHotelBooleanFilter,
-  setHotelPriceFilter,
   toggleHotelArrayFilter,
 } from "@/redux/features/hotel/hotelSearchSlice";
-import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 
-import type { RootState } from "@/redux/store";
-import type { HotelFilters } from "@/types/hotel/types.hotelList";
+import HotelPriceRangeFilter from "./HotelPriceRangeFilter";
 
 type Props = {
   filters: HotelFilters;
   onChange?: () => void;
 };
+
+import type { RootState } from "@/redux/store";
+import type { HotelFilters } from "@/types/hotel/types.hotelList";
 
 const HotelFilterSidebar = ({ filters, onChange }: Props) => {
   const dispatch = useAppDispatch();
@@ -27,9 +28,25 @@ const HotelFilterSidebar = ({ filters, onChange }: Props) => {
 
   if (!filters) return null;
 
+  // Map your hotel price range keys to match what PriceRangeFilter expects
+  const priceMin = filters.price_range?.min;
+  const priceMax = filters.price_range?.max;
+
+  const adaptedPriceData =
+    typeof priceMin === "number" && typeof priceMax === "number"
+      ? {
+        min: priceMin,
+        max: priceMax,
+        absolute_min: priceMin,
+        absolute_max: priceMax,
+        request_min_key: "price_min",
+        request_max_key: "price_max",
+      }
+      : undefined;
+
   return (
     <aside className="h-fit space-y-5 rounded-2xl border border-border bg-background p-4 shadow-sm">
-      
+
       {/* Sidebar Header */}
       <div className="flex items-center justify-between">
         <h2 className="text-base font-semibold text-foreground">Filter</h2>
@@ -46,42 +63,14 @@ const HotelFilterSidebar = ({ filters, onChange }: Props) => {
         </button>
       </div>
 
-      {/* Price Range Fields */}
-      {filters.price_range && (
-        <div className="space-y-3 border-t border-border pt-4">
-          <h3 className="text-sm font-semibold text-foreground">Price Range</h3>
-
-          <div className="grid grid-cols-2 gap-2">
-            <input
-              type="number"
-              placeholder="Min"
-              defaultValue={filters.price_range.min ?? ""}
-              onChange={(e) => {
-                dispatch(
-                  setHotelPriceFilter({
-                    min: e.target.value ? Number(e.target.value) : null,
-                  }),
-                );
-                handleChange();
-              }}
-              className="w-full rounded-lg border border-input bg-transparent px-3 py-2 text-sm text-foreground outline-none placeholder:text-muted-foreground focus:border-primary transition-colors"
-            />
-
-            <input
-              type="number"
-              placeholder="Max"
-              defaultValue={filters.price_range.max ?? ""}
-              onChange={(e) => {
-                dispatch(
-                  setHotelPriceFilter({
-                    max: e.target.value ? Number(e.target.value) : null,
-                  }),
-                );
-                handleChange();
-              }}
-              className="w-full rounded-lg border border-input bg-transparent px-3 py-2 text-sm text-foreground outline-none placeholder:text-muted-foreground focus:border-primary transition-colors"
-            />
-          </div>
+      {/* Direct use of your PriceRangeFilter Component */}
+      {adaptedPriceData && (
+        <div className="border-t border-border pt-4">
+          <HotelPriceRangeFilter
+            data={adaptedPriceData}
+            isLoading={false}
+            onChange={handleChange}
+          />
         </div>
       )}
 
@@ -97,7 +86,7 @@ const HotelFilterSidebar = ({ filters, onChange }: Props) => {
               onChange={() => {
                 dispatch(
                   toggleHotelArrayFilter({
-                    key: item.request_key ?? "star_ratings",
+                    key: "star_ratings",
                     value: item.value,
                   }),
                 );
@@ -120,7 +109,7 @@ const HotelFilterSidebar = ({ filters, onChange }: Props) => {
               onChange={() => {
                 dispatch(
                   toggleHotelArrayFilter({
-                    key: item.request_key ?? "chain_codes",
+                    key: "chain_codes",
                     value: item.code,
                   }),
                 );
@@ -146,7 +135,7 @@ const HotelFilterSidebar = ({ filters, onChange }: Props) => {
                 onChange={() => {
                   dispatch(
                     toggleHotelArrayFilter({
-                      key: item.request_key ?? "amenity_codes",
+                      key: "amenity_codes",
                       value: amenityCode,
                     }),
                   );
@@ -170,7 +159,7 @@ const HotelFilterSidebar = ({ filters, onChange }: Props) => {
               onChange={() => {
                 dispatch(
                   toggleHotelArrayFilter({
-                    key: item.request_key ?? "meal_plan",
+                    key: "meal_plan",
                     value: item.id,
                   }),
                 );
@@ -193,7 +182,7 @@ const HotelFilterSidebar = ({ filters, onChange }: Props) => {
               onChange={() => {
                 dispatch(
                   setHotelBooleanFilter({
-                    key: item.request_key ?? "refundable",
+                    key: "refundable",
                     value: item.value,
                   }),
                 );
@@ -216,7 +205,7 @@ const HotelFilterSidebar = ({ filters, onChange }: Props) => {
               onChange={() => {
                 dispatch(
                   setHotelBooleanFilter({
-                    key: item.request_key ?? "prepaid",
+                    key: "prepaid",
                     value: item.value,
                   }),
                 );
@@ -233,7 +222,7 @@ const HotelFilterSidebar = ({ filters, onChange }: Props) => {
 export default HotelFilterSidebar;
 
 /* ==========================================
-   SUB-COMPONENTS (With Semantic Layout Changes)
+   REUSABLE LAYOUT PRIMITIVES
    ========================================== */
 
 const FilterGroup = ({
@@ -276,7 +265,6 @@ const CheckboxFilter = ({
           onChange={onChange}
           className="h-4 w-4 shrink-0 rounded border-input bg-transparent text-primary accent-primary dark:accent-foreground focus:ring-ring focus:ring-offset-background"
         />
-
         <span className="truncate group-hover:text-foreground transition-colors">{label}</span>
       </span>
 

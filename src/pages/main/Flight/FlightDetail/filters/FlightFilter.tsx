@@ -68,7 +68,7 @@ const FlightFilter = ({
             variant="ghost"
             size="sm"
             className="rounded-xl"
-            onClick={() => dispatch(resetFilters())}
+            onClick={() => dispatch(resetFilters())} 
           >
             <RotateCcw className="mr-2 h-4 w-4" />
             Reset

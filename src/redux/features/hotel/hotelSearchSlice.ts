@@ -102,19 +102,12 @@ const hotelSearchSlice = createSlice({
     setHotelPriceFilter: (
       state,
       action: PayloadAction<{
-        min?: number | null;
-        max?: number | null;
+        min: number;
+        max: number;
       }>,
     ) => {
-      if (action.payload.min !== undefined) {
-        state.filters.price_min = action.payload.min;
-      }
-
-      if (action.payload.max !== undefined) {
-        state.filters.price_max = action.payload.max;
-      }
-
-      state.clientPage = 1;
+      state.filters.price_min = action.payload.min;
+      state.filters.price_max = action.payload.max;
     },
 
     toggleHotelArrayFilter: (
