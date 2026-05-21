@@ -74,7 +74,7 @@ const HotelDetails = () => {
       </div>
     );
   }
-
+console.log(detail.search_id)
   return (
     <main className="min-h-screen bg-slate-50 px-3 py-5 sm:px-5 lg:px-8">
       <div className="mx-auto max-w-7xl space-y-5">
@@ -85,7 +85,10 @@ const HotelDetails = () => {
             <HotelStaySummary stay={stay} />
             <HotelDescriptionSection descriptions={hotel.descriptions} />
             <HotelAmenitiesSection amenities={hotel.amenities} />
-            <HotelRoomsSection rooms={rooms} />
+            <HotelRoomsSection
+              rooms={rooms || []}
+              searchId={detail?.search_id}
+            />
           </div>
 
           <div className="space-y-5">

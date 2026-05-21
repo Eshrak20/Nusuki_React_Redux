@@ -5,9 +5,25 @@ import type {
   PlaceAutocompleteArgs,
   PlaceAutocompleteResponse,
 } from "@/types/hotel/types.hotel";
+
 import { laravelApi } from "../laravelApi";
 
+import type {
+  HotelPriceCheckResponse,
+  PriceCheckRequest,
+} from "@/types/hotel/type.room.types";
 
+export type HotelDetailResponse = {
+  success: boolean;
+  message: string;
+  code: number;
+  data?: {
+    search_id?: string;
+    hotel?: any;
+    stay?: any;
+    rooms?: any[];
+  };
+};
 
 export const hotelApi = laravelApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -19,7 +35,7 @@ export const hotelApi = laravelApi.injectEndpoints({
       }),
     }),
 
-    getHotelDetail: builder.mutation<void, HotelDetailPayload>({
+    getHotelDetail: builder.mutation<HotelDetailResponse, HotelDetailPayload>({
       query: (body) => ({
         url: "/hotels/detail",
         method: "POST",
@@ -27,7 +43,10 @@ export const hotelApi = laravelApi.injectEndpoints({
       }),
     }),
 
-    getPlaceAutoComplete: builder.query<PlaceAutocompleteResponse, PlaceAutocompleteArgs>({
+    getPlaceAutoComplete: builder.query<
+      PlaceAutocompleteResponse,
+      PlaceAutocompleteArgs
+    >({
       query: ({ keyword, limit = 20 }) => ({
         url: "/hotels/place-autocomplete",
         method: "GET",
@@ -37,12 +56,24 @@ export const hotelApi = laravelApi.injectEndpoints({
         },
       }),
     }),
+
+    getPriceCheck: builder.mutation<HotelPriceCheckResponse, PriceCheckRequest>(
+      {
+        query: (body) => ({
+          url: "/hotels/price-check",
+          method: "POST",
+          body,
+        }),
+      },
+    ),
   }),
+
+  overrideExisting: true,
 });
 
 export const {
   useSearchHotelsMutation,
   useGetHotelDetailMutation,
-  // CHANGED TO LAZY FOR ON-CHANGE TYPING EVENTS:
-  useLazyGetPlaceAutoCompleteQuery, 
+  useGetPriceCheckMutation,
+  useLazyGetPlaceAutoCompleteQuery,
 } = hotelApi;
