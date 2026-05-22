@@ -112,7 +112,7 @@ const HotelCard = ({ hotel, currency }: Props) => {
                 {hotelName}
               </h3>
 
-              <p className="mt-1 flex items-center gap-2 max-w-[475px] text-sm text-muted-foreground">
+              <p className="mt-1 flex items-center gap-2 max-w-118.75 text-sm text-muted-foreground">
                 <MapPin size={15} className="shrink-0" />
                 <span className="truncate">{addressText}</span>
               </p>

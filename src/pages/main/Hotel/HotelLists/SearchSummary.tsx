@@ -1,5 +1,7 @@
 import type { HotelSearchData } from "@/types/hotel/types.hotelList";
-import { BedDouble, CalendarDays, MapPin, Users } from "lucide-react";
+import { BedDouble, CalendarDays, MapPin, Settings2, Users } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import { Button } from "@/components/ui/button";
 
 type Props = {
   data: HotelSearchData;
@@ -7,52 +9,64 @@ type Props = {
 };
 
 const SearchSummary = ({ data, nights }: Props) => {
+  const navigate = useNavigate();
+
   const totalGuests = data.search.rooms.reduce(
     (sum, room) => sum + room.adults + room.children,
     0,
   );
 
+  const handleModifySearch = () => {
+    navigate(-1);
+  };
+
   return (
-    <div className="rounded-[22px] border border-slate-200 dark:border-slate-800 bg-background p-4 shadow-sm md:p-5">
-      {/* Responsive layout grid:
-        - 1 column on default mobile
-        - 2 columns on small screens (sm:)
-        - 3 columns on medium screens (md:)
-        - 5 columns on large screens (lg:)
-      */}
-      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
-        <SummaryItem
-          icon={<CalendarDays size={17} />}
-          label="Check In"
-          value={formatDate(data.search.check_in)}
-        />
-
-        <SummaryItem
-          icon={<CalendarDays size={17} />}
-          label="Check Out"
-          value={formatDate(data.search.check_out)}
-        />
-
-        <SummaryItem
-          icon={<BedDouble size={17} />}
-          label="Stay"
-          value={`${nights} ${nights > 1 ? "Nights" : "Night"}`}
-        />
-
-        <SummaryItem
-          icon={<Users size={17} />}
-          label="Guests"
-          value={`${totalGuests} ${totalGuests > 1 ? "Travelers" : "Traveler"}`}
-        />
-
-        {/* The last element spans 2 columns on medium viewports to keep the layout grid balanced */}
-        <div className="sm:col-span-2 md:col-span-1">
+    <div className="rounded-[22px] border border-slate-200 bg-background p-4 shadow-sm dark:border-slate-800 md:p-5">
+      <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+        <div className="grid flex-1 grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
           <SummaryItem
-            icon={<MapPin size={17} />}
-            label="Location"
-            value={`${data.search.radius} ${data.search.uom} radius`}
+            icon={<CalendarDays size={17} />}
+            label="Check In"
+            value={formatDate(data.search.check_in)}
           />
+
+          <SummaryItem
+            icon={<CalendarDays size={17} />}
+            label="Check Out"
+            value={formatDate(data.search.check_out)}
+          />
+
+          <SummaryItem
+            icon={<BedDouble size={17} />}
+            label="Stay"
+            value={`${nights} ${nights > 1 ? "Nights" : "Night"}`}
+          />
+
+          <SummaryItem
+            icon={<Users size={17} />}
+            label="Guests"
+            value={`${totalGuests} ${totalGuests > 1 ? "Travelers" : "Traveler"
+              }`}
+          />
+
+          <div className="sm:col-span-2 md:col-span-1">
+            <SummaryItem
+              icon={<MapPin size={17} />}
+              label="Location"
+              value={`${data.search.radius} ${data.search.uom} radius`}
+            />
+          </div>
         </div>
+
+        <Button
+          type="button"
+          variant="secondary"
+          onClick={handleModifySearch}
+          className="h-11 cursor-pointer hover:bg-primary hover:text-primary-foreground w-full shrink-0 rounded-xl px-4 text-sm font-semibold sm:w-auto lg:h-12"
+        >
+          <Settings2 className="mr-2 h-4 w-4" />
+          Modify Search
+        </Button>
       </div>
     </div>
   );
@@ -70,9 +84,8 @@ const SummaryItem = ({
   value: string;
 }) => {
   return (
-    <div className="flex items-center gap-3 rounded-2xl bg-muted/40 dark:bg-muted/20 px-4 py-3 h-full">
-      {/* Icon Wrapper utilizing semantic Shadcn primary theme colors */}
-      <div className="grid size-9 shrink-0 place-items-center rounded-full bg-primary/10 dark:bg-primary/20 text-primary">
+    <div className="flex h-full items-center gap-3 rounded-2xl bg-muted/40 px-4 py-3 dark:bg-muted/20">
+      <div className="grid size-9 shrink-0 place-items-center rounded-full bg-primary/10 text-primary dark:bg-primary/20">
         {icon}
       </div>
 
@@ -80,7 +93,11 @@ const SummaryItem = ({
         <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-muted-foreground">
           {label}
         </p>
-        <h4 className="truncate text-sm font-bold text-foreground" title={value}>
+
+        <h4
+          className="truncate text-sm font-bold text-foreground"
+          title={value}
+        >
           {value}
         </h4>
       </div>
@@ -90,6 +107,7 @@ const SummaryItem = ({
 
 const formatDate = (date: string) => {
   if (!date) return "";
+
   return new Intl.DateTimeFormat("en-GB", {
     day: "2-digit",
     month: "short",
