@@ -15,8 +15,17 @@ const HotelDetails = () => {
     hotel_id: string;
   }>();
 
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  }, [searchId, hotelId]);
+
+
   const [getHotelDetail, { data, isLoading, isError }] =
     useGetHotelDetailMutation();
+
 
   useEffect(() => {
     if (!searchId || !hotelId) return;
@@ -62,7 +71,7 @@ const HotelDetails = () => {
 
   if (isError || !hotel) {
     return (
-      <div className="min-h-screen bg-slate-50 px-4 py-10">
+      <div className="min-h-screen bg-slate-50 mt-20 px-4 py-10">
         <div className="mx-auto max-w-6xl rounded-2xl border bg-white p-8 text-center">
           <h2 className="text-xl font-bold text-slate-900">
             Hotel details not found
@@ -76,7 +85,7 @@ const HotelDetails = () => {
   }
   return (
     <main className="min-h-screen bg-slate-50 px-3 py-5 sm:px-5 lg:px-8">
-      <div className="mx-auto max-w-7xl space-y-5">
+      <div className="mx-auto max-w-7xl mt-20 space-y-5">
         <HotelDetailsHero hotel={hotel} />
 
         <div className="grid grid-cols-1 gap-5 lg:grid-cols-[1fr_330px]">

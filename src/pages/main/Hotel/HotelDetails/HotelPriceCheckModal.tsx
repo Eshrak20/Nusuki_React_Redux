@@ -37,10 +37,10 @@ const HotelPriceCheckModal = ({
     navigate(
       `/hotel/pnr?booking_key=${encodeURIComponent(
         priceData.booking_key
-      )}&search_id=${encodeURIComponent(searchId)}`
+      )}&search_id=${encodeURIComponent(searchId)}&guests=${room?.adults}`
     );
   };
-
+console.log(room?.adults);
   return (
     <div className="fixed inset-0 z-999 flex items-center justify-center bg-black/60 px-4 backdrop-blur-sm">
       <div className="relative max-h-[90vh] w-full max-w-2xl overflow-y-auto rounded-3xl border bg-card p-5 text-card-foreground shadow-2xl">
@@ -130,6 +130,7 @@ const HotelPriceCheckModal = ({
                     : "Bed info not available"
                 }
               />
+
 
               <InfoBox
                 label="Guest"

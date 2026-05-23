@@ -4,7 +4,7 @@ import type {
   CreateHotelBookingPayment,
   HotelPaymentType,
 } from "@/types/hotel/hotelBooking.types";
-import { type FormEvent, useState } from "react";
+import { type FormEvent, useMemo, useState } from "react";
 
 import ContactInfoFields from "./ContactInfoFields";
 import GuestInfoFields from "./GuestInfoFields";
@@ -14,29 +14,50 @@ import type { HotelBookingSuccessResponse } from "@/types/hotel/hoteBookingSuces
 
 type HotelPNRFormProps = {
   searchId: string;
+  guestCount: number | string | null;
   bookingKey: string;
 };
 
-const HotelPNRForm = ({ searchId, bookingKey }: HotelPNRFormProps) => {
+const createEmptyGuest = (): CreateHotelBookingGuest => ({
+  type: "adult",
+  first_name: "",
+  last_name: "",
+  email: "",
+  phone: "",
+});
+
+const createGuestsByCount = (count: number): CreateHotelBookingGuest[] => {
+  return Array.from({ length: count }, () => createEmptyGuest());
+};
+
+const HotelPNRForm = ({
+  searchId,
+  guestCount,
+  bookingKey,
+}: HotelPNRFormProps) => {
   const [createHotelBooking, { isLoading }] = useCreateHotelBookingMutation();
 
   const [successData, setSuccessData] =
     useState<HotelBookingSuccessResponse | null>(null);
+
+  const totalGuests = useMemo(() => {
+    const parsedGuestCount = Number(guestCount);
+
+    if (!Number.isFinite(parsedGuestCount) || parsedGuestCount <= 0) {
+      return 1;
+    }
+
+    return parsedGuestCount;
+  }, [guestCount]);
 
   const [contact, setContact] = useState({
     email: "",
     phone: "",
   });
 
-  const [guests, setGuests] = useState<CreateHotelBookingGuest[]>([
-    {
-      type: "adult",
-      first_name: "",
-      last_name: "",
-      email: "",
-      phone: "",
-    },
-  ]);
+  const [guests, setGuests] = useState<CreateHotelBookingGuest[]>(() =>
+    createGuestsByCount(totalGuests),
+  );
 
   const [payment, setPayment] = useState<CreateHotelBookingPayment>({
     type: "DEPOSIT",
@@ -50,20 +71,15 @@ const HotelPNRForm = ({ searchId, bookingKey }: HotelPNRFormProps) => {
   });
 
   const addGuest = () => {
-    setGuests((prev) => [
-      ...prev,
-      {
-        type: "adult",
-        first_name: "",
-        last_name: "",
-        email: "",
-        phone: "",
-      },
-    ]);
+    setGuests((prev) => [...prev, createEmptyGuest()]);
   };
 
   const removeGuest = (index: number) => {
-    setGuests((prev) => prev.filter((_, guestIndex) => guestIndex !== index));
+    setGuests((prev) => {
+      if (prev.length <= 1) return prev;
+
+      return prev.filter((_, guestIndex) => guestIndex !== index);
+    });
   };
 
   const updateGuest = (
@@ -105,9 +121,6 @@ const HotelPNRForm = ({ searchId, bookingKey }: HotelPNRFormProps) => {
 
     try {
       const response = await createHotelBooking(body).unwrap();
-
-      // Navigate removed.
-      // Success result will show inside modal.
       setSuccessData(response);
     } catch (error) {
       console.error("Hotel booking failed:", error);
@@ -145,6 +158,7 @@ const HotelPNRForm = ({ searchId, bookingKey }: HotelPNRFormProps) => {
 
         <GuestInfoFields
           guests={guests}
+          guestCount={String(guests.length)}
           addGuest={addGuest}
           removeGuest={removeGuest}
           updateGuest={updateGuest}

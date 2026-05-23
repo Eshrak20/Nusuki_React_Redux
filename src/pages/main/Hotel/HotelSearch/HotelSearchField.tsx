@@ -17,7 +17,7 @@ const HotelSearchField = ({
 }: HotelSearchFieldProps) => {
   return (
     <div
-      className={`flex min-h-[56px] items-center gap-4 rounded-lg border border-slate-200 bg-white px-4 py-3 transition hover:border-orange-400 ${className}`}
+      className={`flex min-h-14 items-center gap-4 rounded-lg border border-slate-200 bg-white px-4 py-3 transition hover:border-orange-400 ${className}`}
     >
       <div className="border-r border-slate-200 pr-4">
         <Icon className="h-5 w-5 text-slate-400" />

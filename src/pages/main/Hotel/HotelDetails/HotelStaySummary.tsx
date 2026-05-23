@@ -1,6 +1,7 @@
 import { CalendarDays, UsersRound } from "lucide-react";
 
 const HotelStaySummary = ({ stay }: { stay: any }) => {
+  
   if (!stay) return null;
 
   const room = stay?.rooms?.[0];

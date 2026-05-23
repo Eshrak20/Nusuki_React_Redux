@@ -29,7 +29,6 @@ const HotelRoomsSection = ({ rooms, searchId }: HotelRoomsSectionProps) => {
     room: HotelAvailableRoom,
     ratePlan: HotelRatePlan,
   ) => {
-    console.log("Selected room:", room);
 
     const rateKey = ratePlan.rate_key || ratePlan.rate_info?.rate_key;
 

@@ -2,6 +2,7 @@ import type { CreateHotelBookingGuest } from "@/types/hotel/hotelBooking.types";
 
 type GuestInfoFieldsProps = {
   guests: CreateHotelBookingGuest[];
+  guestCount : string |null;
   addGuest: () => void;
   removeGuest: (index: number) => void;
   updateGuest: (
@@ -13,10 +14,13 @@ type GuestInfoFieldsProps = {
 
 const GuestInfoFields = ({
   guests,
+  guestCount,
   addGuest,
   removeGuest,
   updateGuest,
 }: GuestInfoFieldsProps) => {
+  console.log(guests);
+  
   return (
     <div className="rounded-2xl border bg-card p-5 text-card-foreground shadow-sm sm:p-6">
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">

@@ -1,13 +1,21 @@
 import { useEffect, useMemo, useState } from "react";
 import { addDays, format, startOfMonth } from "date-fns";
-import { Loader2, MapPin, Search } from "lucide-react";
+import { Loader2, MapPin, Search, Compass } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+
 import { Button } from "@/components/ui/button";
+
 import {
   useLazyGetPlaceAutoCompleteQuery,
   useSearchHotelsMutation,
 } from "@/redux/api/hotelApi/hotelApi";
+
 import type { HotelRoom, HotelSearchPayload } from "@/types/hotel/types.hotel";
 
 import { DateField } from "./DateField";
@@ -30,7 +38,19 @@ type PlaceSuggestion = {
   };
 };
 
-const DEFAULT_DESTINATION = "Dhaka";
+const DEFAULT_PLACE: PlaceSuggestion = {
+  id: "default-dhaka",
+  name: "Dhaka",
+  fullAddress: "Dhaka",
+  countryCode: "BD",
+  searchHint: {
+    latitude: 23.8103,
+    longitude: 90.4125,
+    country_code: "BD",
+  },
+};
+
+const DEFAULT_DESTINATION = DEFAULT_PLACE.fullAddress;
 const DEFAULT_CURRENCY = "BDT";
 const AUTOCOMPLETE_LIMIT = 20;
 
@@ -38,26 +58,34 @@ export default function HotelSearch() {
   const navigate = useNavigate();
 
   const [searchHotels, { isLoading }] = useSearchHotelsMutation();
+
   const [triggerAutocomplete, { isFetching: isSearchingDest }] =
     useLazyGetPlaceAutoCompleteQuery();
 
   const defaultCheckIn = useMemo(() => addDays(new Date(), 2), []);
+
   const defaultCheckOut = useMemo(
     () => addDays(defaultCheckIn, 2),
     [defaultCheckIn],
   );
 
   const [destination, setDestination] = useState(DEFAULT_DESTINATION);
+
   const [selectedPlace, setSelectedPlace] = useState<PlaceSuggestion | null>(
-    null,
+    DEFAULT_PLACE,
   );
+
   const [suggestions, setSuggestions] = useState<PlaceSuggestion[]>([]);
 
   const [checkIn, setCheckIn] = useState(defaultCheckIn);
   const [checkOut, setCheckOut] = useState(defaultCheckOut);
+
   const [checkoutMonth, setCheckoutMonth] = useState(
     startOfMonth(defaultCheckIn),
   );
+
+  const [radius, setRadius] = useState<string>("50");
+  const [openRadius, setOpenRadius] = useState(false);
 
   const [openPopover, setOpenPopover] = useState<
     "checkIn" | "checkOut" | "guests" | null
@@ -69,6 +97,7 @@ export default function HotelSearch() {
 
   useEffect(() => {
     const keyword = destination.trim();
+
     const shouldSearch =
       keyword.length > 0 && selectedPlace?.fullAddress !== keyword;
 
@@ -130,7 +159,7 @@ export default function HotelSearch() {
       latitude: selectedPlace.searchHint.latitude,
       longitude: selectedPlace.searchHint.longitude,
       country_code: selectedPlace.searchHint.country_code,
-      radius: 50,
+      radius: Number(radius),
       uom: "MI",
       currency_code: DEFAULT_CURRENCY,
       rooms,
@@ -160,7 +189,7 @@ export default function HotelSearch() {
       <div className="relative mx-auto max-w-6xl px-4">
         <div className="overflow-visible rounded-xl bg-white shadow-xl lg:shadow-2xl">
           <div className="p-4 sm:p-6 md:p-8">
-            <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-[1.3fr_1fr_1fr_1.2fr_auto]">
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-[1.2fr_1fr_1fr_1fr_0.8fr_auto]">
               <div className="relative">
                 <SearchField
                   label="Destination"
@@ -194,6 +223,7 @@ export default function HotelSearch() {
                         <p className="text-sm font-semibold text-slate-800">
                           {place.name}
                         </p>
+
                         <p className="text-xs text-slate-500">
                           {place.fullAddress}
                         </p>
@@ -234,16 +264,54 @@ export default function HotelSearch() {
                 onOpenChange={(open) => setOpenPopover(open ? "guests" : null)}
               />
 
+              <Popover open={openRadius} onOpenChange={setOpenRadius}>
+                <PopoverTrigger asChild>
+                  <div className="cursor-pointer">
+                    <SearchField
+                      label="Radius"
+                      icon={<Compass className="h-5 w-5 text-slate-400" />}
+                    >
+                      <div className="mt-1 flex items-center justify-between">
+                        <span className="text-sm font-semibold text-slate-800">
+                          {radius} Miles
+                        </span>
+                      </div>
+                    </SearchField>
+                  </div>
+                </PopoverTrigger>
+
+                <PopoverContent className="w-48 p-2" align="start">
+                  <div className="space-y-1">
+                    {["10", "20", "30", "40", "50"].map((value) => (
+                      <button
+                        key={value}
+                        type="button"
+                        onClick={() => {
+                          setRadius(value);
+                          setOpenRadius(false);
+                        }}
+                        className={`w-full rounded-md px-3 py-2 text-left text-sm transition-colors ${
+                          radius === value
+                            ? "bg-primary text-primary-foreground"
+                            : "hover:bg-slate-100"
+                        }`}
+                      >
+                        {value} Miles
+                      </button>
+                    ))}
+                  </div>
+                </PopoverContent>
+              </Popover>
+
               <Button
                 type="button"
                 onClick={handleSearch}
                 disabled={isLoading}
-                className="min-h-15 px-8 md:w-full lg:w-auto"
+                className="min-h-15 px-10 md:w-18"
               >
                 {isLoading ? (
                   <>
                     <Loader2 className="h-4 w-4 animate-spin" />
-                    <span className="text-sm font-semibold">Searching...</span>
                   </>
                 ) : (
                   <>

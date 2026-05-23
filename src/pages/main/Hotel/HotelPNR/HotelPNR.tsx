@@ -10,6 +10,13 @@ const HotelPNR = () => {
 
   const bookingKey = searchParams.get("booking_key");
   const searchId = searchParams.get("search_id");
+  const guests = searchParams.get("guests");
+  
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth",
+  });
+
 
   useEffect(() => {
     const token =
@@ -30,7 +37,7 @@ const HotelPNR = () => {
 
   if (!bookingKey || !searchId) {
     return (
-      <section className="min-h-screen bg-background px-4 py-10 text-foreground">
+      <section className="min-h-screen bg-background mt-20 px-4 py-10 text-foreground">
         <div className="mx-auto max-w-3xl rounded-2xl border bg-card p-6 text-card-foreground shadow-sm">
           <h1 className="text-xl font-semibold">Invalid booking URL</h1>
           <p className="mt-2 text-sm text-muted-foreground">
@@ -42,8 +49,8 @@ const HotelPNR = () => {
   }
 
   return (
-    <section className="min-h-screen bg-background px-4 py-8 text-foreground sm:px-6 lg:px-8">
-      <div className="mx-auto w-full max-w-5xl">
+    <section className="min-h-screen bg-background mt-20 px-4 py-8 text-foreground sm:px-6 lg:px-8">
+      <div className="mx-auto w-full max-w-7xl">
         <div className="mb-8">
           <p className="text-sm font-medium text-primary">Hotel Booking</p>
           <h1 className="mt-2 text-2xl font-bold tracking-tight sm:text-3xl">
@@ -54,7 +61,7 @@ const HotelPNR = () => {
           </p>
         </div>
 
-        <HotelPNRForm searchId={searchId} bookingKey={bookingKey} />
+        <HotelPNRForm searchId={searchId} guestCount={guests} bookingKey={bookingKey} />
       </div>
     </section>
   );

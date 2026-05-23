@@ -26,6 +26,11 @@ type HotelLocationState = {
 const PAGE_SIZE = 20;
 
 const HotelLists = () => {
+
+  window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
   const location = useLocation();
   const state = location.state as HotelLocationState | null;
 

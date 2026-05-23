@@ -40,9 +40,8 @@ const CommonHomeLayout = ({
 
       {/* This padding calculation will now run perfectly */}
       <section
-        className={`max-w-7xl mx-auto px-4 pt-96 mt-44 md:mt-0 ${
-          isFlightPage ? "md:pt-32" : isHolidayPage ? "pt-32" : isHotelPage ? "md:pt-14" : "md:pt-72"
-        }`}
+        className={`max-w-7xl mx-auto px-4 pt-96 mt-44 md:mt-0 ${isFlightPage ? "md:pt-32" : isHolidayPage ? "pt-32" : isHotelPage ? "md:pt-14" : "md:pt-72"
+          }`}
       >
         <CMPromotions />
       </section>
