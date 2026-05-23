@@ -1,13 +1,10 @@
 import FlightHomeSkeleton from "@/components/skeletons/FlightHomeSkeleton";
 import CommonHomeLayout from "@/layouts/CommonHomeLayout/CommonHomeLayout";
 import { useFlightDestinationListsQuery } from "@/redux/api/flightApi/flightDest";
-import { useFlightSearchListsQuery } from "@/redux/api/flightApi/flightSearch";
 import { useEffect } from "react";
 import HotelSearch from "./HotelSearch/HotelSearch";
 
 const HotelHome = () => {
-  const { data: searchList } = useFlightSearchListsQuery();
-  const searchDestinationList = searchList?.data?.data || [];
 
   const { data, isLoading, error } = useFlightDestinationListsQuery();
 

@@ -63,6 +63,7 @@ import HotelLayout from "@/layouts/HotelLayout";
 import HotelHome from "@/pages/main/Hotel/HotelHome";
 import HotelLists from "@/pages/main/Hotel/HotelLists/HotelLists";
 import HotelDetails from "@/pages/main/Hotel/HotelDetails/HotelDetails";
+import HotelPNR from "@/pages/main/Hotel/HotelPNR/HotelPNR";
 
 export const router = createBrowserRouter([
   {
@@ -189,8 +190,12 @@ export const router = createBrowserRouter([
           },
           {
             path: "detail/:search_id/:hotel_id",
-            element: <HotelDetails/>
-          }
+            element: <HotelDetails />,
+          },
+          {
+            path: "pnr",
+            element: <HotelPNR />,
+          },
         ],
       },
       // Holiday Routes

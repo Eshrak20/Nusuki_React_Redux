@@ -41,6 +41,11 @@ const dashboardLinks = [
     href: "/dashboard/flight-bookings",
     icon: Plane,
   },
+  {
+    label: "Hotel Bookings",
+    href: "/dashboard/hotel-bookings",
+    icon: Plane,
+  },
 ];
 
 const DashboardSidebar = () => {

@@ -5,6 +5,8 @@ import UpdateUserProfile from "@/pages/dashboard/UpdateUserProfile/UpdateUserPro
 import ChangePassword from "@/pages/dashboard/ChangePass/ChangePassword";
 import FlightBookings from "@/pages/dashboard/FlightBookings/FlightBookings";
 import FlightBookingDetails from "@/pages/dashboard/FlightBookingDetails/FlightBookingDetails";
+import HotelBookings from "@/pages/dashboard/HotelBookings/HotelBookings";
+import HotelBookingDetails from "@/pages/dashboard/HotelBookingDetails/HotelBookingDetails";
 
 export const dashboardRoutes = [
   {
@@ -30,6 +32,14 @@ export const dashboardRoutes = [
       {
         path: "flight-bookings/:bookingId",
         element: <FlightBookingDetails />,
+      },
+      {
+        path: "hotel-bookings",
+        element: <HotelBookings />,
+      },
+      {
+        path: "/dashboard/hotel-bookings/:id",
+        element: <HotelBookingDetails />,
       },
     ],
   },

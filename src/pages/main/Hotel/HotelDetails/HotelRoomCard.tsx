@@ -6,12 +6,12 @@ import {
   ShieldCheck,
   Users,
 } from "lucide-react";
-import type { HotelRoom, RatePlan } from "./HotelRoomsSection";
+import type { HotelAvailableRoom, HotelRatePlan } from "@/types/hotel/hotelDetail.types";
 
 type HotelRoomCardProps = {
-  room: HotelRoom;
+  room: HotelAvailableRoom;
   index: number;
-  onPriceCheck: (room: HotelRoom, ratePlan: RatePlan) => void;
+  onPriceCheck: (room: HotelAvailableRoom, ratePlan: HotelRatePlan) => void;
 };
 
 const HotelRoomCard = ({ room, index, onPriceCheck }: HotelRoomCardProps) => {

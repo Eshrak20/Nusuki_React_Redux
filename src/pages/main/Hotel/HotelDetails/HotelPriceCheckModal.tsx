@@ -1,6 +1,6 @@
+import type { HotelPriceCheckResponse } from "@/types/hotel/type.room.types";
 import { AlertCircle, CheckCircle, X } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import type { HotelPriceCheckResponse } from "./HotelRoomsSection";
 
 type HotelPriceCheckModalProps = {
   open: boolean;
@@ -35,14 +35,14 @@ const HotelPriceCheckModal = ({
     if (!priceData?.booking_key || !searchId) return;
 
     navigate(
-      `/pnr?booking_key=${encodeURIComponent(
+      `/hotel/pnr?booking_key=${encodeURIComponent(
         priceData.booking_key
       )}&search_id=${encodeURIComponent(searchId)}`
     );
   };
 
   return (
-    <div className="fixed inset-0 z-[999] flex items-center justify-center bg-black/60 px-4 backdrop-blur-sm">
+    <div className="fixed inset-0 z-999 flex items-center justify-center bg-black/60 px-4 backdrop-blur-sm">
       <div className="relative max-h-[90vh] w-full max-w-2xl overflow-y-auto rounded-3xl border bg-card p-5 text-card-foreground shadow-2xl">
         <button
           type="button"
@@ -53,7 +53,7 @@ const HotelPriceCheckModal = ({
         </button>
 
         {loading && (
-          <div className="flex min-h-[260px] flex-col items-center justify-center text-center">
+          <div className="flex min-h-65 flex-col items-center justify-center text-center">
             <div className="h-10 w-10 animate-spin rounded-full border-4 border-muted border-t-primary" />
 
             <h3 className="mt-4 text-lg font-bold">
@@ -67,7 +67,7 @@ const HotelPriceCheckModal = ({
         )}
 
         {!loading && error && (
-          <div className="flex min-h-[240px] flex-col items-center justify-center text-center">
+          <div className="flex min-h-60 flex-col items-center justify-center text-center">
             <AlertCircle className="text-destructive" size={42} />
 
             <h3 className="mt-4 text-lg font-bold">Price check failed</h3>

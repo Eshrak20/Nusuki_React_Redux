@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useParams, useSearchParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { Loader2 } from "lucide-react";
 import { useGetHotelDetailMutation } from "@/redux/api/hotelApi/hotelApi";
 import HotelDetailsHero from "./HotelDetailsHero";
@@ -74,7 +74,6 @@ const HotelDetails = () => {
       </div>
     );
   }
-console.log(detail.search_id)
   return (
     <main className="min-h-screen bg-slate-50 px-3 py-5 sm:px-5 lg:px-8">
       <div className="mx-auto max-w-7xl space-y-5">

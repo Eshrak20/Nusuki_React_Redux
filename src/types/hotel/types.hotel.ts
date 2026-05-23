@@ -1,4 +1,6 @@
 export type HotelRoom = {
+  room_id?: number;
+  room_index?: number;
   adults: number;
   children: number;
   child_ages?: number[];
@@ -28,10 +30,7 @@ export type HotelSearchResponse = {
 };
 
 
-export type HotelDetailPayload = {
-  search_id: string;
-  hotel_id: string;
-};
+
 
 export type PlaceAutocompleteArgs = {
   keyword: string;

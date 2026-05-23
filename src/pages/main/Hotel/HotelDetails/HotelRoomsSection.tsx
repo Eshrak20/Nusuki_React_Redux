@@ -3,14 +3,14 @@ import HotelRoomCard from "./HotelRoomCard";
 import HotelPriceCheckModal from "./HotelPriceCheckModal";
 import { useGetPriceCheckMutation } from "@/redux/api/hotelApi/hotelApi";
 
+import type { HotelPriceCheckResponse } from "@/types/hotel/type.room.types";
 import type {
-  HotelPriceCheckResponse,
-  HotelRoom,
-  RatePlan,
-} from "@/types/hotel/type.room.types";
+  HotelAvailableRoom,
+  HotelRatePlan,
+} from "@/types/hotel/hotelDetail.types";
 
 type HotelRoomsSectionProps = {
-  rooms: HotelRoom[];
+  rooms: HotelAvailableRoom[];
   searchId?: string;
 };
 
@@ -25,7 +25,12 @@ const HotelRoomsSection = ({ rooms, searchId }: HotelRoomsSectionProps) => {
 
   if (!rooms?.length) return null;
 
-  const handlePriceCheck = async (room: HotelRoom, ratePlan: RatePlan) => {
+  const handlePriceCheck = async (
+    room: HotelAvailableRoom,
+    ratePlan: HotelRatePlan,
+  ) => {
+    console.log("Selected room:", room);
+
     const rateKey = ratePlan.rate_key || ratePlan.rate_info?.rate_key;
 
     setModalOpen(true);
@@ -51,9 +56,7 @@ const HotelRoomsSection = ({ rooms, searchId }: HotelRoomsSectionProps) => {
       setPriceCheckData(result);
     } catch (error) {
       const message =
-        error instanceof Error
-          ? error.message
-          : "Unable to check room price.";
+        error instanceof Error ? error.message : "Unable to check room price.";
 
       setPriceCheckError(message);
     }
