@@ -187,44 +187,42 @@ export default function HotelSearch() {
   return (
     <section className="relative z-30 w-full">
       <div className="relative mx-auto max-w-6xl px-4">
-        <div className="overflow-visible rounded-xl bg-white shadow-xl lg:shadow-2xl">
+        <div className="overflow-visible rounded-xl border border-slate-200 bg-white shadow-xl dark:border-[#272047] dark:bg-[#050018] lg:shadow-2xl">
           <div className="p-4 sm:p-6 md:p-8">
             <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-[1.2fr_1fr_1fr_1fr_0.8fr_auto]">
               <div className="relative">
                 <SearchField
                   label="Destination"
-                  icon={<MapPin className="h-5 w-5 text-slate-400" />}
+                  icon={<MapPin className="h-5 w-5 text-slate-600 dark:text-[#8B93FF]" />}
                 >
                   <div className="flex items-center gap-1">
                     <input
                       value={destination}
-                      onChange={(event) =>
-                        handleDestinationChange(event.target.value)
-                      }
-                      className="mt-1 w-full bg-transparent text-sm font-semibold text-slate-800 outline-none"
+                      onChange={(event) => handleDestinationChange(event.target.value)}
+                      className="mt-1 w-full bg-transparent text-sm font-semibold text-slate-800 outline-none placeholder:text-slate-400 dark:text-white dark:placeholder:text-slate-500"
                       placeholder="Where are you going?"
                     />
 
                     {isSearchingDest && (
-                      <Loader2 className="mt-1 h-4 w-4 animate-spin text-primary" />
+                      <Loader2 className="mt-1 h-4 w-4 animate-spin text-primary dark:text-[#8B93FF]" />
                     )}
                   </div>
                 </SearchField>
 
                 {suggestions.length > 0 && (
-                  <div className="absolute left-0 top-full z-50 mt-2 max-h-72 w-full overflow-y-auto rounded-xl border bg-white shadow-xl">
+                  <div className="absolute left-0 top-full z-50 mt-2 max-h-72 w-full overflow-y-auto rounded-xl border border-slate-200 bg-white shadow-xl dark:border-[#2B2544] dark:bg-[#0B0B10]">
                     {suggestions.map((place) => (
                       <button
                         key={place.id}
                         type="button"
                         onClick={() => handlePlaceSelect(place)}
-                        className="block w-full px-4 py-3 text-left transition hover:bg-slate-50"
+                        className="block w-full px-4 py-3 text-left transition hover:bg-slate-50 dark:hover:bg-[#151222]"
                       >
-                        <p className="text-sm font-semibold text-slate-800">
+                        <p className="text-sm font-semibold text-slate-800 dark:text-white">
                           {place.name}
                         </p>
 
-                        <p className="text-xs text-slate-500">
+                        <p className="text-xs text-slate-500 dark:text-slate-400">
                           {place.fullAddress}
                         </p>
                       </button>
@@ -269,10 +267,10 @@ export default function HotelSearch() {
                   <div className="cursor-pointer">
                     <SearchField
                       label="Radius"
-                      icon={<Compass className="h-5 w-5 text-slate-400" />}
+                      icon={<Compass className="h-5 w-5 text-slate-400 dark:text-[#8B93FF]" />}
                     >
                       <div className="mt-1 flex items-center justify-between">
-                        <span className="text-sm font-semibold text-slate-800">
+                        <span className="text-sm font-semibold text-slate-800 dark:text-white">
                           {radius} Miles
                         </span>
                       </div>
@@ -280,7 +278,10 @@ export default function HotelSearch() {
                   </div>
                 </PopoverTrigger>
 
-                <PopoverContent className="w-48 p-2" align="start">
+                <PopoverContent
+                  className="w-48 border-slate-200 bg-white p-2 dark:border-[#2B2544] dark:bg-[#0B0B10]"
+                  align="start"
+                >
                   <div className="space-y-1">
                     {["10", "20", "30", "40", "50"].map((value) => (
                       <button
@@ -290,11 +291,10 @@ export default function HotelSearch() {
                           setRadius(value);
                           setOpenRadius(false);
                         }}
-                        className={`w-full rounded-md px-3 py-2 text-left text-sm transition-colors ${
-                          radius === value
-                            ? "bg-primary text-primary-foreground"
-                            : "hover:bg-slate-100"
-                        }`}
+                        className={`w-full rounded-md px-3 py-2 text-left text-sm transition-colors ${radius === value
+                            ? "bg-primary text-primary-foreground dark:bg-[#8B93FF] dark:text-[#050018]"
+                            : "text-slate-700 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-[#151222]"
+                          }`}
                       >
                         {value} Miles
                       </button>
@@ -307,7 +307,7 @@ export default function HotelSearch() {
                 type="button"
                 onClick={handleSearch}
                 disabled={isLoading}
-                className="min-h-15 px-10 md:w-18"
+                className="min-h-15 bg-primary px-10 text-primary-foreground hover:bg-primary/90 dark:bg-[#8B93FF] dark:text-[#050018] dark:hover:bg-[#9AA1FF] md:w-18"
               >
                 {isLoading ? (
                   <>

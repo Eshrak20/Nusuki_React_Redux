@@ -1,35 +1,36 @@
 import { cn } from "@/lib/utils";
-import type { ReactNode } from "react";
 
-type Props = {
-  icon: ReactNode;
-  label?: string;
-  children: ReactNode;
+type SearchFieldProps = {
+  label: string;
+  icon: React.ReactNode;
+  children: React.ReactNode;
   className?: string;
-  asButton?: boolean;
 };
 
-export function SearchField({ icon, label, children, className }: Props) {
+export function SearchField({
+  label,
+  icon,
+  children,
+  className,
+}: SearchFieldProps) {
   return (
     <div
       className={cn(
-        "rounded-lg border border-slate-200 bg-white px-4 py-3 transition-colors focus-within:border-primary hover:border-primary",
-        className
+        "flex min-h-[58px] items-center gap-3 rounded-lg border border-slate-200 bg-white px-4 py-3 transition",
+        "dark:border-[#2B2544] dark:bg-[#0B0B10]",
+        className,
       )}
     >
-      <div className="flex items-center gap-4">
-        <div className="hidden border-r border-slate-200 pr-4 sm:block">
-          {icon}
-        </div>
+      <div className="flex shrink-0 items-center text-slate-500 dark:text-[#8B93FF]">
+        {icon}
+      </div>
 
-        <div className="min-w-0 flex-1">
-          {label && (
-            <label className="block text-xs font-medium text-slate-400">
-              {label}
-            </label>
-          )}
-          {children}
-        </div>
+      <div className="min-w-0 flex-1 border-l border-slate-200 pl-3 dark:border-[#2B2544]">
+        <p className="text-xs font-medium text-slate-500 dark:text-slate-400">
+          {label}
+        </p>
+
+        {children}
       </div>
     </div>
   );

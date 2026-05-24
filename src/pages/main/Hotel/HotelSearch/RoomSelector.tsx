@@ -56,11 +56,11 @@ const RoomSelector = ({ rooms, setRooms, onClose }: RoomSelectorProps) => {
   };
 
   return (
-    <div className="w-full bg-white p-5 rounded-xl shadow-lg border border-slate-100">
+    <div className="w-full bg-white dark:bg-background p-5 rounded-xl shadow-lg border border-slate-100">
       {/* Header */}
       <div className="mb-6 flex items-start justify-between">
         <div>
-          <h3 className="text-lg font-bold text-slate-800">Guest's & Rooms</h3>
+          <h3 className="text-lg font-bold text-slate-800 dark:text-foreground">Guest's & Rooms</h3>
           <p className="text-xs text-slate-400">Choose a person to join you on your journey</p>
         </div>
         <Button 
@@ -72,13 +72,13 @@ const RoomSelector = ({ rooms, setRooms, onClose }: RoomSelectorProps) => {
       </div>
 
       {/* Room List Scrollable */}
-      <div className="max-h-[360px] overflow-y-auto pr-2 space-y-6 custom-scrollbar">
+      <div className="max-h-90 overflow-y-auto pr-2 space-y-6 custom-scrollbar">
         {rooms.map((room, index) => (
           <div key={index} className="space-y-4">
             {/* Room Title with Remove Button */}
-            <div className="flex items-center justify-between border-b border-slate-100 pb-2">
+            <div className="flex items-center justify-between pb-2">
               <div className="flex items-center gap-4">
-                <span className="font-bold text-slate-700">Room {index + 1}</span>
+                <span className="font-bold text-slate-700 dark:text-foreground">Room {index + 1}</span>
                 {rooms.length > 1 && (
                   <button 
                     onClick={() => removeRoom(index)} 
@@ -96,7 +96,7 @@ const RoomSelector = ({ rooms, setRooms, onClose }: RoomSelectorProps) => {
             {/* Adults Selector */}
             <div className="flex items-center justify-between">
               <div>
-                <p className="font-bold text-slate-800">Adults</p>
+                <p className="font-bold text-slate-800 dark:text-foreground">Adults</p>
                 <p className="text-xs text-slate-400">17+ years</p>
               </div>
               <div className="flex items-center gap-4">
@@ -107,7 +107,7 @@ const RoomSelector = ({ rooms, setRooms, onClose }: RoomSelectorProps) => {
                 >
                   <Minus className="h-5 w-5" />
                 </button>
-                <span className="w-4 text-center font-bold text-slate-800 text-lg">{room.adults}</span>
+                <span className="w-4 text-center font-bold text-slate-800 text-lg dark:text-foreground/60">{room.adults}</span>
                 <button
                   onClick={() => updateRoom(index, "adults", room.adults + 1)}
                   disabled={room.adults >= MAX_ADULTS}
@@ -121,7 +121,7 @@ const RoomSelector = ({ rooms, setRooms, onClose }: RoomSelectorProps) => {
             {/* Children Selector */}
             <div className="flex items-center justify-between">
               <div>
-                <p className="font-bold text-slate-800">Children</p>
+                <p className="font-bold text-slate-800 dark:text-foreground">Children</p>
                 <p className="text-xs text-slate-400">1 - 17 years</p>
               </div>
               <div className="flex items-center gap-4">
@@ -132,7 +132,7 @@ const RoomSelector = ({ rooms, setRooms, onClose }: RoomSelectorProps) => {
                 >
                   <Minus className="h-5 w-5" />
                 </button>
-                <span className="w-4 text-center font-bold text-slate-800 text-lg">{room.children}</span>
+                <span className="w-4 text-center font-bold text-slate-800 text-lg dark:text-foreground/60">{room.children}</span>
                 <button
                   onClick={() => updateRoom(index, "children", room.children + 1)}
                   disabled={room.children >= MAX_CHILDREN}

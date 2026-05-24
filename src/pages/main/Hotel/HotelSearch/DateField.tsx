@@ -34,20 +34,30 @@ export function DateField({
   return (
     <Popover open={open} onOpenChange={onOpenChange}>
       <PopoverTrigger asChild>
-        <button type="button" className="text-left">
+        <button type="button" className="w-full text-left">
           <SearchField
             label={label}
-            icon={<CalendarDays className="h-5 w-5 text-slate-400" />}
+            icon={
+              <CalendarDays className="h-5 w-5 text-slate-600 dark:text-[#8B93FF]" />
+            }
             className="cursor-pointer"
           >
-            <p className={cn("mt-1 text-sm font-semibold", !date && "text-muted-foreground")}>
+            <p
+              className={cn(
+                "mt-1 text-sm font-semibold text-slate-800 dark:text-white",
+                !date && "text-slate-400 dark:text-slate-500",
+              )}
+            >
               {date ? format(date, "PP") : "Pick a date"}
             </p>
           </SearchField>
         </button>
       </PopoverTrigger>
 
-      <PopoverContent className="w-auto p-0" align="start">
+      <PopoverContent
+        className="w-auto border-slate-200 bg-white p-0 text-slate-950 dark:border-[#2B2544] dark:bg-[#0B0B10] dark:text-white"
+        align="start"
+      >
         <Calendar
           mode="single"
           selected={date}
