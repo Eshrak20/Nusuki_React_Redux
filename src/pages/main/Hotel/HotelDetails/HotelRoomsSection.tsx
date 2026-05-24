@@ -1,6 +1,12 @@
+"use client";
+
 import { useState } from "react";
+import { motion } from "framer-motion";
+import { BedDouble } from "lucide-react";
+
 import HotelRoomCard from "./HotelRoomCard";
 import HotelPriceCheckModal from "./HotelPriceCheckModal";
+
 import { useGetPriceCheckMutation } from "@/redux/api/hotelApi/hotelApi";
 
 import type { HotelPriceCheckResponse } from "@/types/hotel/type.room.types";
@@ -8,13 +14,14 @@ import type {
   HotelAvailableRoom,
   HotelRatePlan,
 } from "@/types/hotel/hotelDetail.types";
+import { getApiErrorMessage } from "@/lib/apiError";
 
 type HotelRoomsSectionProps = {
-  rooms: HotelAvailableRoom[];
+  rooms?: HotelAvailableRoom[];
   searchId?: string;
 };
 
-const HotelRoomsSection = ({ rooms, searchId }: HotelRoomsSectionProps) => {
+const HotelRoomsSection = ({ rooms = [], searchId }: HotelRoomsSectionProps) => {
   const [modalOpen, setModalOpen] = useState(false);
   const [priceCheckData, setPriceCheckData] =
     useState<HotelPriceCheckResponse | null>(null);
@@ -23,13 +30,12 @@ const HotelRoomsSection = ({ rooms, searchId }: HotelRoomsSectionProps) => {
   const [getPriceCheck, { isLoading: priceCheckLoading }] =
     useGetPriceCheckMutation();
 
-  if (!rooms?.length) return null;
+  if (!rooms.length) return null;
 
   const handlePriceCheck = async (
     room: HotelAvailableRoom,
     ratePlan: HotelRatePlan,
   ) => {
-
     const rateKey = ratePlan.rate_key || ratePlan.rate_info?.rate_key;
 
     setModalOpen(true);
@@ -54,44 +60,73 @@ const HotelRoomsSection = ({ rooms, searchId }: HotelRoomsSectionProps) => {
 
       setPriceCheckData(result);
     } catch (error) {
-      const message =
-        error instanceof Error ? error.message : "Unable to check room price.";
-
-      setPriceCheckError(message);
+      setPriceCheckError(
+        getApiErrorMessage(error, "Unable to check room price."),
+      );
     }
+  };
+
+  const handleModalClose = () => {
+    setModalOpen(false);
+    setPriceCheckData(null);
+    setPriceCheckError(null);
   };
 
   return (
     <>
-      <section className="rounded-3xl border bg-card p-5 text-card-foreground shadow-sm">
-        <div className="flex flex-wrap items-center justify-between gap-3">
-          <div>
-            <h2 className="text-lg font-bold">Available Rooms</h2>
-            <p className="mt-1 text-sm text-muted-foreground">
-              Choose your preferred room and rate plan.
-            </p>
+      <motion.section
+        initial={{ opacity: 0, y: 14 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.35, ease: "easeOut" }}
+        className="rounded-3xl border border-border bg-card p-5 text-card-foreground shadow-sm md:p-6"
+      >
+        <div className="flex flex-wrap items-center justify-between gap-4">
+          <div className="flex items-start gap-3">
+            <div className="flex size-10 shrink-0 items-center justify-center rounded-2xl bg-primary/10 text-primary">
+              <BedDouble className="size-5" />
+            </div>
+
+            <div>
+              <h2 className="text-lg font-bold tracking-tight text-foreground">
+                Available Rooms
+              </h2>
+
+              <p className="mt-1 text-sm leading-6 text-muted-foreground">
+                Choose your preferred room and rate plan.
+              </p>
+            </div>
           </div>
 
-          <span className="rounded-full bg-primary/10 px-3 py-1 text-xs font-bold text-primary">
-            {rooms.length} rooms
+          <span className="inline-flex items-center rounded-full border border-primary/15 bg-primary/10 px-3 py-1 text-xs font-bold text-primary">
+            {rooms.length} {rooms.length > 1 ? "rooms" : "room"}
           </span>
         </div>
 
-        <div className="mt-5 space-y-4">
+        <div className="mt-6 space-y-4">
           {rooms.map((room, index) => (
-            <HotelRoomCard
+            <motion.div
               key={`${room.room_id || room.room_index || "room"}-${index}`}
-              room={room}
-              index={index}
-              onPriceCheck={handlePriceCheck}
-            />
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{
+                duration: 0.25,
+                delay: index * 0.04,
+                ease: "easeOut",
+              }}
+            >
+              <HotelRoomCard
+                room={room}
+                index={index}
+                onPriceCheck={handlePriceCheck}
+              />
+            </motion.div>
           ))}
         </div>
-      </section>
+      </motion.section>
 
       <HotelPriceCheckModal
         open={modalOpen}
-        onClose={() => setModalOpen(false)}
+        onClose={handleModalClose}
         loading={priceCheckLoading}
         data={priceCheckData}
         error={priceCheckError}

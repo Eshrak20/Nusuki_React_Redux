@@ -1,35 +1,63 @@
-import { CalendarDays, UsersRound } from "lucide-react";
+"use client";
 
-const HotelStaySummary = ({ stay }: { stay: any }) => {
-  
+import type { ReactNode } from "react";
+import { motion } from "framer-motion";
+import { CalendarCheck2, CalendarDays, UsersRound } from "lucide-react";
+
+import type { HotelStay } from "@/types/hotel/hotelDetail.types";
+import { formatGuestText, safeText } from "@/lib/util.hotel";
+
+type HotelStaySummaryProps = {
+  stay?: HotelStay | null;
+};
+
+const HotelStaySummary = ({ stay }: HotelStaySummaryProps) => {
   if (!stay) return null;
 
-  const room = stay?.rooms?.[0];
+  const room = stay.rooms?.[0];
 
   return (
-    <section className="rounded-3xl border border-slate-200 bg-white p-5 shadow-sm">
-      <h2 className="text-lg font-bold text-slate-950">Stay Summary</h2>
+    <motion.section
+      initial={{ opacity: 0, y: 14 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.35, ease: "easeOut" }}
+      className="rounded-3xl border border-border bg-card p-5 text-card-foreground shadow-sm md:p-6"
+    >
+      <div className="flex items-start gap-3">
+        <div className="flex size-10 shrink-0 items-center justify-center rounded-2xl bg-primary/10 text-primary">
+          <CalendarCheck2 className="size-5" />
+        </div>
 
-      <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-3">
+        <div>
+          <h2 className="text-lg font-bold tracking-tight text-foreground">
+            Stay Summary
+          </h2>
+          <p className="mt-1 text-sm leading-6 text-muted-foreground">
+            Your selected stay dates and guest details.
+          </p>
+        </div>
+      </div>
+
+      <div className="mt-5 grid grid-cols-1 gap-3 sm:grid-cols-3">
         <SummaryCard
-          icon={<CalendarDays className="h-5 w-5" />}
+          icon={<CalendarDays className="size-5" />}
           label="Check In"
-          value={stay.check_in}
+          value={safeText(stay.check_in)}
         />
 
         <SummaryCard
-          icon={<CalendarDays className="h-5 w-5" />}
+          icon={<CalendarDays className="size-5" />}
           label="Check Out"
-          value={stay.check_out}
+          value={safeText(stay.check_out)}
         />
 
         <SummaryCard
-          icon={<UsersRound className="h-5 w-5" />}
+          icon={<UsersRound className="size-5" />}
           label="Guests"
-          value={`${room?.adults || 0} Adults, ${room?.children || 0} Children`}
+          value={formatGuestText(room?.adults, room?.children)}
         />
       </div>
-    </section>
+    </motion.section>
   );
 };
 
@@ -40,19 +68,23 @@ const SummaryCard = ({
   label,
   value,
 }: {
-  icon: React.ReactNode;
+  icon: ReactNode;
   label: string;
   value: string;
 }) => {
   return (
-    <div className="flex items-center gap-3 rounded-2xl bg-slate-50 p-4">
-      <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#14275f] text-white">
+    <div className="group flex items-center gap-3 rounded-2xl border border-border bg-muted/35 p-4 transition-colors hover:bg-muted/55">
+      <div className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary transition-colors group-hover:bg-primary/15">
         {icon}
       </div>
 
-      <div>
-        <p className="text-xs text-slate-500">{label}</p>
-        <p className="text-sm font-bold text-slate-900">{value}</p>
+      <div className="min-w-0">
+        <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+          {label}
+        </p>
+        <p className="mt-1 wrap-break-word text-sm font-bold leading-6 text-foreground">
+          {value}
+        </p>
       </div>
     </div>
   );

@@ -43,6 +43,16 @@ export type HotelBookingGuestResponse = {
   phone: string | null;
   lead_guest: boolean;
 };
+export type Hotel = {
+  hotel_code: string;
+  sabre_hotel_code: string | null;
+  name: string;
+  chain_code: string | null;
+  chain_name: string | null;
+  city: string;
+  country_code: string;
+  address: string;
+};
 
 export type HotelBookingResponse = {
   success: boolean;
@@ -58,16 +68,7 @@ export type HotelBookingResponse = {
       payment_type: string;
       search_id: string;
       booking_key: string;
-      hotel: {
-        hotel_code: string;
-        sabre_hotel_code: string | null;
-        name: string;
-        chain_code: string | null;
-        chain_name: string | null;
-        city: string;
-        country_code: string;
-        address: string;
-      };
+      hotel: Hotel;
       check_in: string;
       check_out: string;
       room_count: number;
