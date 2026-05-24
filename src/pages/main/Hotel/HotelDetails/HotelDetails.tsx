@@ -92,15 +92,16 @@ const HotelDetails = () => {
       >
         <HotelDetailsHero hotel={hotel} />
 
-        <div className="grid grid-cols-1 gap-5 lg:grid-cols-[minmax(0,1fr)_340px]">
-          <div className="min-w-0 space-y-5">
-            {stay ? <HotelStaySummary stay={stay} /> : null}
-
-            <HotelDescriptionSection descriptions={hotel.descriptions ?? []} />
-
-            <HotelAmenitiesSection amenities={hotel.amenities ?? []} />
-
-            <HotelRoomsSection rooms={rooms} searchId={detail?.search_id} />
+        <div className="grid grid-cols-1 gap-5 lg:grid-cols-[1fr_330px]">
+          <div className="space-y-5">
+            <HotelStaySummary stay={stay} />
+            <HotelDescriptionSection descriptions={hotel.descriptions} />
+            <HotelAmenitiesSection amenities={hotel.amenities} />
+            <HotelRoomsSection
+              rooms={rooms || []}
+              stay={stay}
+              searchId={detail?.search_id}
+            />
           </div>
 
           <div className="min-w-0 space-y-5">

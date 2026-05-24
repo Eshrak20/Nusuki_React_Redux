@@ -14,11 +14,12 @@ import type { HotelBookingSuccessResponse } from "@/types/hotel/hoteBookingSuces
 
 type HotelPNRFormProps = {
   searchId: string;
-  guestCount: number | string | null;
+  adults: number | string | null;
+  children: number | string | null;
   bookingKey: string;
 };
 
-const createEmptyGuest = (): CreateHotelBookingGuest => ({
+const createEmptyAdultGuest = (): CreateHotelBookingGuest => ({
   type: "adult",
   first_name: "",
   last_name: "",
@@ -26,13 +27,24 @@ const createEmptyGuest = (): CreateHotelBookingGuest => ({
   phone: "",
 });
 
-const createGuestsByCount = (count: number): CreateHotelBookingGuest[] => {
-  return Array.from({ length: count }, () => createEmptyGuest());
+const createEmptyChildrenGuest = (): CreateHotelBookingGuest => ({
+  type: "child",
+  first_name: "",
+  last_name: "",
+});
+
+const createAdultsByCount = (count: number): CreateHotelBookingGuest[] => {
+  return Array.from({ length: count }, () => createEmptyAdultGuest());
 };
+const createChildrenByCount = (count: number): CreateHotelBookingGuest[] => {
+  return Array.from({ length: count }, () => createEmptyChildrenGuest());
+};
+
 
 const HotelPNRForm = ({
   searchId,
-  guestCount,
+  adults,
+  children,
   bookingKey,
 }: HotelPNRFormProps) => {
   const [createHotelBooking, { isLoading }] = useCreateHotelBookingMutation();
@@ -40,23 +52,37 @@ const HotelPNRForm = ({
   const [successData, setSuccessData] =
     useState<HotelBookingSuccessResponse | null>(null);
 
-  const totalGuests = useMemo(() => {
-    const parsedGuestCount = Number(guestCount);
 
-    if (!Number.isFinite(parsedGuestCount) || parsedGuestCount <= 0) {
+  const totalAdults = useMemo(() => {
+    const parsedAdults = Number(adults);
+
+    if (!Number.isFinite(parsedAdults) || parsedAdults <= 0) {
       return 1;
     }
 
-    return parsedGuestCount;
-  }, [guestCount]);
+    return parsedAdults;
+  }, [adults]);
+
+  const totalChildren = useMemo(() => {
+    const parsedChildren = Number(children);
+
+    if (!Number.isFinite(parsedChildren) || parsedChildren <= 0) {
+      return 1;
+    }
+
+    return parsedChildren;
+  }, [children]);
+
 
   const [contact, setContact] = useState({
     email: "",
     phone: "",
   });
 
+  const createTotalGuests = [...createAdultsByCount(totalAdults), ...createChildrenByCount(totalChildren)]
+
   const [guests, setGuests] = useState<CreateHotelBookingGuest[]>(() =>
-    createGuestsByCount(totalGuests),
+    createTotalGuests
   );
 
   const [payment, setPayment] = useState<CreateHotelBookingPayment>({
@@ -71,7 +97,7 @@ const HotelPNRForm = ({
   });
 
   const addGuest = () => {
-    setGuests((prev) => [...prev, createEmptyGuest()]);
+    setGuests((prev) => [...prev, createEmptyAdultGuest()]);
   };
 
   const removeGuest = (index: number) => {

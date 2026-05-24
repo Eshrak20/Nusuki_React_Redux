@@ -14,12 +14,10 @@ type GuestInfoFieldsProps = {
 
 const GuestInfoFields = ({
   guests,
-  guestCount,
   addGuest,
   removeGuest,
   updateGuest,
 }: GuestInfoFieldsProps) => {
-  console.log(guests);
   
   return (
     <div className="rounded-2xl border bg-card p-5 text-card-foreground shadow-sm sm:p-6">

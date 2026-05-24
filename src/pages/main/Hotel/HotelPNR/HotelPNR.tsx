@@ -10,8 +10,9 @@ const HotelPNR = () => {
 
   const bookingKey = searchParams.get("booking_key");
   const searchId = searchParams.get("search_id");
-  const guests = searchParams.get("guests");
-  
+  const adults = searchParams.get("adults");
+  const children = searchParams.get("children");
+
   window.scrollTo({
     top: 0,
     behavior: "smooth",
@@ -61,7 +62,7 @@ const HotelPNR = () => {
           </p>
         </div>
 
-        <HotelPNRForm searchId={searchId} guestCount={guests} bookingKey={bookingKey} />
+        <HotelPNRForm searchId={searchId} adults={adults} children={children} bookingKey={bookingKey} />
       </div>
     </section>
   );

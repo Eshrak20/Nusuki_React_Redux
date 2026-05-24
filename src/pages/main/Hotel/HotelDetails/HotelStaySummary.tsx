@@ -1,17 +1,14 @@
-"use client";
-
-import type { ReactNode } from "react";
-import { motion } from "framer-motion";
 import { CalendarCheck2, CalendarDays, UsersRound } from "lucide-react";
-
 import type { HotelStay } from "@/types/hotel/hotelDetail.types";
+import { motion } from "framer-motion";
 import { formatGuestText, safeText } from "@/lib/util.hotel";
+import type { ReactNode } from "react";
 
-type HotelStaySummaryProps = {
-  stay?: HotelStay | null;
-};
+interface HotelStayProps {
+  stay?: HotelStay
+}
+const HotelStaySummary = ({stay}: HotelStayProps) => {
 
-const HotelStaySummary = ({ stay }: HotelStaySummaryProps) => {
   if (!stay) return null;
 
   const room = stay.rooms?.[0];

@@ -13,12 +13,14 @@ import type { HotelPriceCheckResponse } from "@/types/hotel/type.room.types";
 import type {
   HotelAvailableRoom,
   HotelRatePlan,
+  HotelStay,
 } from "@/types/hotel/hotelDetail.types";
 import { getApiErrorMessage } from "@/lib/apiError";
 
 type HotelRoomsSectionProps = {
   rooms?: HotelAvailableRoom[];
   searchId?: string;
+  stay?: HotelStay
 };
 
 const HotelRoomsSection = ({ rooms = [], searchId }: HotelRoomsSectionProps) => {

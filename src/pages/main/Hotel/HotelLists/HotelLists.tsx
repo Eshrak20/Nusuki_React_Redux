@@ -28,9 +28,10 @@ const PAGE_SIZE = 20;
 const HotelLists = () => {
 
   window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
+    top: 0,
+    behavior: "smooth",
+  });
+  
   const location = useLocation();
   const state = location.state as HotelLocationState | null;
 
@@ -227,7 +228,7 @@ const HotelLists = () => {
 
             {/* 2. DYNAMIC LOADING FEEDBACK LOGIC */}
             {isLoading ? (
-              <div className="flex flex-col items-center justify-center gap-3 rounded-[24px] border border-border bg-background p-20 text-center shadow-sm min-h-[400px]">
+              <div className="flex flex-col items-center justify-center gap-3 rounded-[24px] border border-border bg-background p-20 text-center shadow-sm min-h-100">
                 <Loader2 className="h-8 w-8 animate-spin text-primary" />
                 <p className="text-sm font-bold text-muted-foreground animate-pulse">
                   Fetching next page results...
@@ -248,15 +249,15 @@ const HotelLists = () => {
             )}
 
           </main>
-           
+
         </div>
-         <EduPagination
-              pagination={{
-                current_page: page,
-                last_page: totalPages,
-              }}
-              onPageChange={handlePageChange}
-            />
+        <EduPagination
+          pagination={{
+            current_page: page,
+            last_page: totalPages,
+          }}
+          onPageChange={handlePageChange}
+        />
       </div>
     </section>
   );
