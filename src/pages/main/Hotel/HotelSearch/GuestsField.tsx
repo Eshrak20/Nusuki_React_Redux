@@ -123,7 +123,7 @@ export function GuestsField({
         className="w-[320px] border-slate-200 bg-white p-0 text-slate-950 shadow-xl dark:border-[#2B2544] dark:bg-[#0B0B10] dark:text-white"
         align="start"
       >
-        <div className="max-h-[430px] overflow-y-auto p-4">
+        <div className="max-h-107.5 overflow-y-auto p-4">
           <div className="space-y-4">
             {rooms.map((room, roomIndex) => (
               <div
@@ -148,7 +148,7 @@ export function GuestsField({
 
                 <GuestCounter
                   label="Adults"
-                  description="Age 12 or above"
+                  description="Age 18 or above"
                   value={room.adults}
                   min={1}
                   max={4}
@@ -156,14 +156,14 @@ export function GuestsField({
                     updateRoom(roomIndex, "adults", Math.max(1, room.adults - 1))
                   }
                   onIncrease={() =>
-                    updateRoom(roomIndex, "adults", Math.min(8, room.adults + 1))
+                    updateRoom(roomIndex, "adults", Math.min(4, room.adults + 1))
                   }
                 />
 
                 <div className="mt-4">
                   <GuestCounter
                     label="Children"
-                    description="Age 0 - 11"
+                    description="Age 0 - 17"
                     value={room.children}
                     min={0}
                     max={2}
@@ -178,7 +178,7 @@ export function GuestsField({
                       updateRoom(
                         roomIndex,
                         "children",
-                        Math.min(6, room.children + 1),
+                        Math.min(2, room.children + 1),
                       )
                     }
                   />
@@ -203,7 +203,7 @@ export function GuestsField({
                           }
                           className="mt-1 h-10 w-full rounded-lg border border-slate-200 bg-white px-3 text-sm font-medium text-slate-800 outline-none transition focus:border-primary dark:border-[#2B2544] dark:bg-[#0B0B10] dark:text-white"
                         >
-                          {Array.from({ length: 12 }).map((_, age) => (
+                          {Array.from({ length: 18 }).map((_, age) => (
                             <option key={age} value={age}>
                               {age} Year{age > 1 ? "s" : ""}
                             </option>
