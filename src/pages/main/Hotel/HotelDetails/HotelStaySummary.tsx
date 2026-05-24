@@ -1,7 +1,11 @@
 import { CalendarDays, UsersRound } from "lucide-react";
+import type { HotelStay } from "@/types/hotel/hotelDetail.types";
 
-const HotelStaySummary = ({ stay }: { stay: any }) => {
-  
+interface HotelStayProps {
+  stay?: HotelStay
+}
+const HotelStaySummary = ({stay}: HotelStayProps) => {
+
   if (!stay) return null;
 
   const room = stay?.rooms?.[0];

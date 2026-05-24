@@ -95,6 +95,7 @@ const HotelDetails = () => {
             <HotelAmenitiesSection amenities={hotel.amenities} />
             <HotelRoomsSection
               rooms={rooms || []}
+              stay={stay}
               searchId={detail?.search_id}
             />
           </div>

@@ -1,3 +1,4 @@
+import type { HotelStay } from "@/types/hotel/hotelDetail.types";
 import type { HotelPriceCheckResponse } from "@/types/hotel/type.room.types";
 import { AlertCircle, CheckCircle, X } from "lucide-react";
 import { useNavigate } from "react-router-dom";
@@ -9,6 +10,7 @@ type HotelPriceCheckModalProps = {
   data: HotelPriceCheckResponse | null;
   error?: string | null;
   searchId: string;
+  hotelStay?: HotelStay
 };
 
 const HotelPriceCheckModal = ({
@@ -37,10 +39,10 @@ const HotelPriceCheckModal = ({
     navigate(
       `/hotel/pnr?booking_key=${encodeURIComponent(
         priceData.booking_key
-      )}&search_id=${encodeURIComponent(searchId)}&guests=${room?.adults}`
+      )}&search_id=${encodeURIComponent(searchId)}&adults=${room?.adults}&children=${stay?.rooms?.[0]?.children}`
     );
   };
-console.log(room?.adults);
+
   return (
     <div className="fixed inset-0 z-999 flex items-center justify-center bg-black/60 px-4 backdrop-blur-sm">
       <div className="relative max-h-[90vh] w-full max-w-2xl overflow-y-auto rounded-3xl border bg-card p-5 text-card-foreground shadow-2xl">
@@ -134,15 +136,14 @@ console.log(room?.adults);
 
               <InfoBox
                 label="Guest"
-                title={`${room?.adults || stay?.rooms?.[0]?.adults || 0} Adults`}
+                title={`${room?.adults || stay?.rooms?.[0]?.adults || 0} Adults, ${stay?.rooms?.[0]?.children || 0} Children`}
                 description={`Max occupancy: ${room?.occupancy?.max || "N/A"}`}
               />
 
               <InfoBox
                 label="Stay"
-                title={`${stay?.check_in || "N/A"} to ${
-                  stay?.check_out || "N/A"
-                }`}
+                title={`${stay?.check_in || "N/A"} to ${stay?.check_out || "N/A"
+                  }`}
                 description="Check-in / Check-out"
               />
 
