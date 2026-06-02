@@ -1,7 +1,7 @@
 import { laravelApi } from "@/redux/api/laravelApi";
 import type { FlightBookingDetailResponse, FlightBookingHistoryResponse, GetFlightBookingsParams } from "@/types/flight/flightBooking.types";
 import type { CreatePnrResponse } from "@/types/flight/flightBookingPNR.types";
-import type { CancelAirTicketRequest, CancelAirTicketResponse, IssueAirTicketRequest, IssueAirTicketResponse } from "@/types/flight/flightTicketPayment.types";
+import type { CancelAirTicketRequest, CancelAirTicketResponse, InitiateFlightPaymentRequest, InitiateFlightPaymentResponse, IssueAirTicketRequest, IssueAirTicketResponse } from "@/types/flight/flightTicketPayment.types";
 import type { CreatePnrPayload } from "@/types/flight/myTravellers.types";
 
 
@@ -46,6 +46,13 @@ export const flightBookingApi = laravelApi.injectEndpoints({
       }),
       invalidatesTags: ["FlightBookings", "MyTravellers"],
     }),
+    initiateFlightBookingPayment: builder.mutation<InitiateFlightPaymentResponse,InitiateFlightPaymentRequest>({
+      query: ({ bookingCode }) => ({
+        url: `/flights/bookings/${bookingCode}/initiate-payment`,
+        method: "POST",
+      }),
+      invalidatesTags: ["FlightBookings"],
+    }),
     //!This will be deletetd isse ticket
     issueAirTicket: builder.mutation<IssueAirTicketResponse, IssueAirTicketRequest>({
       query: (body) => ({
@@ -64,5 +71,6 @@ export const {
   useGetFlightBookingDetailsQuery,
   useIssueAirTicketMutation,
   useCancelAirTicketMutation,
-  useCreatePnrMutation
+  useCreatePnrMutation,
+  useInitiateFlightBookingPaymentMutation
 } = flightBookingApi;

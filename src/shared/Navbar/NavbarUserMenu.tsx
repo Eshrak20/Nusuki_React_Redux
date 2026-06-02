@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 import { useAuthLogout } from "@/hooks/useAuthLogout";
-import { getFirstLetter } from "@/lib/utiils.authUser";
+import { getFirstLetter } from "@/lib/utils.authUser";
 
 type NavbarUserMenuProps = {
   name?: string | null;

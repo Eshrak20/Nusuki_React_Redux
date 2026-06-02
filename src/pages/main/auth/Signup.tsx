@@ -27,6 +27,22 @@ const isValidBangladeshiPhone = (phone: string) => {
   return /^01[3-9]\d{8}$/.test(phone);
 };
 
+const normalizeBangladeshiPhone = (phone: string) => {
+  let cleanedPhone = phone.replace(/\D/g, "");
+
+  // Example: 8801309176398 -> 1309176398
+  if (cleanedPhone.startsWith("880")) {
+    cleanedPhone = cleanedPhone.slice(3);
+  }
+
+  // Example: 1309176398 -> 01309176398
+  if (cleanedPhone.length === 10 && cleanedPhone.startsWith("1")) {
+    cleanedPhone = `0${cleanedPhone}`;
+  }
+
+  return cleanedPhone;
+};
+
 const Signup = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -38,37 +54,39 @@ const Signup = () => {
   const [errors, setErrors] = useState<SignupErrors>({});
 
   const [formData, setFormData] = useState<SignupFormData>({
-    name: "",
     email: "",
-    password: "",
-    password_confirmation: "",
-    given_name: "",
-    surname: "",
     phone_country_code: "+880",
     phone_number: "",
+    password: "",
+    password_confirmation: "",
   });
+
+  const getNormalizedPhoneNumber = () => {
+    if (formData.phone_country_code === "+880") {
+      return normalizeBangladeshiPhone(formData.phone_number);
+    }
+
+    return formData.phone_number.replace(/\D/g, "").trim();
+  };
 
   const validateForm = () => {
     const newErrors: SignupErrors = {};
+    const trimmedPhoneNumber = getNormalizedPhoneNumber();
 
-    const trimmedPhoneNumber = formData.phone_number.trim();
-
-    if (!formData.name.trim()) {
-      newErrors.name = "Full name is required";
+    if (
+      trimmedPhoneNumber !== formData.phone_number &&
+      formData.phone_country_code === "+880"
+    ) {
+      setFormData((prev) => ({
+        ...prev,
+        phone_number: trimmedPhoneNumber,
+      }));
     }
 
     if (!formData.email.trim()) {
       newErrors.email = "Email is required";
     } else if (!/^\S+@\S+\.\S+$/.test(formData.email)) {
       newErrors.email = "Please enter a valid email address";
-    }
-
-    if (!formData.given_name.trim()) {
-      newErrors.given_name = "Given name is required";
-    }
-
-    if (!formData.surname.trim()) {
-      newErrors.surname = "Surname is required";
     }
 
     if (!formData.phone_country_code.trim()) {
@@ -82,7 +100,7 @@ const Signup = () => {
       !isValidBangladeshiPhone(trimmedPhoneNumber)
     ) {
       newErrors.phone_number =
-        "Please enter a valid Bangladeshi phone number like 01812345678";
+        "Please enter a valid Bangladeshi phone number like 01712345678";
     }
 
     if (!formData.password.trim()) {
@@ -102,9 +120,7 @@ const Signup = () => {
 
     if (Object.keys(newErrors).length > 0) {
       const firstError = Object.values(newErrors)[0];
-
       toast.error(firstError || "Please check your information");
-
       return false;
     }
 
@@ -118,6 +134,20 @@ const Signup = () => {
 
     if (id === "phone_number") {
       nextValue = value.replace(/\D/g, "");
+
+      if (formData.phone_country_code === "+880") {
+        if (nextValue.startsWith("880")) {
+          nextValue = nextValue.slice(3);
+        }
+
+        if (nextValue.length === 10 && nextValue.startsWith("1")) {
+          nextValue = `0${nextValue}`;
+        }
+
+        if (nextValue.length > 11) {
+          nextValue = nextValue.slice(0, 11);
+        }
+      }
     }
 
     setFormData((prev) => ({
@@ -128,6 +158,19 @@ const Signup = () => {
     setErrors((prev) => ({
       ...prev,
       [id]: "",
+    }));
+  };
+
+  const handlePhoneBlur = () => {
+    if (formData.phone_country_code !== "+880") return;
+
+    const normalizedPhoneNumber = normalizeBangladeshiPhone(
+      formData.phone_number
+    );
+
+    setFormData((prev) => ({
+      ...prev,
+      phone_number: normalizedPhoneNumber,
     }));
   };
 
@@ -151,9 +194,14 @@ const Signup = () => {
     if (!validateForm()) return;
 
     try {
+      const normalizedPhoneNumber = getNormalizedPhoneNumber();
+
       const payload: SignupFormData = {
-        ...formData,
-        phone_number: formData.phone_number.trim(),
+        email: formData.email.trim(),
+        phone_country_code: formData.phone_country_code,
+        phone_number: normalizedPhoneNumber,
+        password: formData.password,
+        password_confirmation: formData.password_confirmation,
       };
 
       const res = await signup(payload).unwrap();
@@ -173,10 +221,10 @@ const Signup = () => {
   };
 
   return (
-    <div className="relative flex min-h-svh w-full items-center justify-center overflow-hidden bg-background px-4 py-8 sm:px-6 md:p-10">
-      <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_top,hsl(var(--primary)/0.20),transparent_35%),radial-gradient(circle_at_bottom_left,hsl(var(--primary)/0.12),transparent_35%)]" />
-      <div className="absolute right-10 top-10 -z-10 h-32 w-32 rounded-full bg-primary/10 blur-3xl" />
-      <div className="absolute bottom-10 left-10 -z-10 h-40 w-40 rounded-full bg-primary/10 blur-3xl" />
+    <div className="relative min-h-svh overflow-hidden bg-background">
+      <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_top_left,hsl(var(--primary)/0.22),transparent_34%),radial-gradient(circle_at_bottom_right,hsl(var(--primary)/0.16),transparent_32%)]" />
+      <div className="absolute left-8 top-10 -z-10 h-36 w-36 rounded-full bg-primary/10 blur-3xl" />
+      <div className="absolute bottom-10 right-8 -z-10 h-44 w-44 rounded-full bg-primary/10 blur-3xl" />
 
       <SignupForm
         formData={formData}
@@ -185,6 +233,7 @@ const Signup = () => {
         showPassword={showPassword}
         showConfirmPassword={showConfirmPassword}
         onChange={handleChange}
+        onPhoneBlur={handlePhoneBlur}
         onCountryCodeChange={handleCountryCodeChange}
         onSubmit={handleSignup}
         onTogglePassword={() => setShowPassword((prev) => !prev)}

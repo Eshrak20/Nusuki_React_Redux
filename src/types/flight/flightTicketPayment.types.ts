@@ -124,3 +124,22 @@ export type CancelAirTicketResponse = {
   };
   code: number;
 };
+
+export type InitiateFlightPaymentRequest = {
+  bookingCode: string;
+};
+
+export type InitiateFlightPaymentData = {
+  payment_url: string;
+  tran_id: string;
+  amount: number;
+  currency: string;
+  booking_code: string;
+};
+
+export type InitiateFlightPaymentResponse = {
+  success: boolean;
+  message: string;
+  data: InitiateFlightPaymentData;
+  code: number;
+};

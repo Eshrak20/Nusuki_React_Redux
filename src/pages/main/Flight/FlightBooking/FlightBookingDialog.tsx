@@ -138,7 +138,7 @@ const FlightBookingDialog = ({
                 <Button
                   onClick={handleContinue}
                   disabled={!pnrFlightId || !pnrSearchId}
-                  className="h-11 min-w-[230px] rounded-md bg-[#17306f] px-8 text-[16px] font-bold text-white hover:bg-[#102558] disabled:cursor-not-allowed disabled:opacity-60 dark:bg-[#1f4fa3] dark:hover:bg-[#1a438b]"
+                  className="h-11 min-w-57.5 rounded-md bg-[#17306f] px-8 text-[16px] font-bold text-white hover:bg-[#102558] disabled:cursor-not-allowed disabled:opacity-60 dark:bg-[#1f4fa3] dark:hover:bg-[#1a438b]"
                 >
                   Next - Continue Booking
                 </Button>

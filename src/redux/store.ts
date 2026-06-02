@@ -21,6 +21,7 @@ import flightSearchReducer from "@/redux/features/flightSearchSlice";
 import flightSessionReducer from "@/redux/features/flightSessionSlice";
 import hotelSearchReducer from "@/redux/features/hotel/hotelSearchSlice";
 import holidayPackageFilterReducer from "@/redux/features/holidayPackageFilterSlice";
+import flightPaymentReducer from "@/redux/features/flightPaymentSlice";
 import authReducer from "./features/auth/authSlice";
 
 // ✅ Persist ONLY selected fields of flightSearch
@@ -35,6 +36,7 @@ const flightSearchPersistConfig = {
 const rootReducer = combineReducers({
   auth: authReducer,
   holidayPackageFilters: holidayPackageFilterReducer,
+  flightPayment: flightPaymentReducer,
 
   flightSearch: persistReducer(
     flightSearchPersistConfig,

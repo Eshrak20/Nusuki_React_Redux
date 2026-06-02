@@ -1,5 +1,6 @@
 import { useMemo, useState } from "react";
 import { toast } from "sonner";
+import { useDispatch } from "react-redux";
 
 import {
   initialProfileForm,
@@ -11,12 +12,16 @@ import {
   useGetUserProfileQuery,
   useUpdateUserProfileMutation,
 } from "@/redux/api/authApi/authApi";
+import { updateUser } from "@/redux/features/auth/authSlice";
+
 import ProfileEditForm from "./ProfileEditForm";
 import ProfileViewCard from "./ProfileViewCard";
 import DashboardPageHeader from "../Common/DashboardPageHeader";
 import { UserRound } from "lucide-react";
 
 const UpdateUserProfile = () => {
+  const dispatch = useDispatch();
+
   const [isEditing, setIsEditing] = useState(false);
   const [form, setForm] = useState<UpdateProfileForm>(initialProfileForm);
 
@@ -85,7 +90,24 @@ const UpdateUserProfile = () => {
 
       toast.success(response?.message || "Profile updated successfully");
 
-      await refetch();
+      const refetchResponse = await refetch();
+
+      const latestUserData =
+        refetchResponse?.data?.data || response?.data || userData;
+
+      dispatch(
+        updateUser({
+          name: latestUserData?.name ?? form.name,
+          email: latestUserData?.email ?? userData?.email,
+          profile: {
+            ...(latestUserData?.profile ?? userData?.profile ?? {}),
+            profile_photo_url:
+              latestUserData?.profile?.profile_photo_url ??
+              userData?.profile?.profile_photo_url ??
+              null,
+          },
+        })
+      );
 
       setIsEditing(false);
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -146,15 +168,6 @@ const UpdateUserProfile = () => {
   return (
     <div className="min-h-screen bg-background py-6 text-foreground">
       <div className="w-full space-y-6">
-        {/* <ProfileUpdateHeader
-          profilePreview={profilePreview}
-          title={isEditing ? "Update User Profile" : "User Profile"}
-          subtitle={
-            isEditing
-              ? "Edit your personal, passport and travel information."
-              : "View your saved personal, passport and travel information."
-          }
-        /> */}
         <DashboardPageHeader
           title="User Profile"
           subtitle="View your saved personal, passport and travel information."
@@ -163,6 +176,7 @@ const UpdateUserProfile = () => {
           badgeTitle="Profile Status"
           badgeText="Information saved"
         />
+
         {isEditing ? (
           <ProfileEditForm
             form={form}

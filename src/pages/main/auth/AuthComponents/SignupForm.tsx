@@ -1,11 +1,13 @@
 import {
   ArrowLeft,
+  CheckCircle2,
   Eye,
   EyeOff,
   LockKeyhole,
   Mail,
   Phone,
-  User,
+  ShieldCheck,
+  Sparkles,
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
@@ -35,14 +37,11 @@ import {
 import { countryCodes } from "@/data/countryCodes";
 
 export type SignupFormData = {
-  name: string;
   email: string;
+  phone_number: string;
+  phone_country_code: string;
   password: string;
   password_confirmation: string;
-  given_name: string;
-  surname: string;
-  phone_country_code: string;
-  phone_number: string;
 };
 
 export type SignupErrors = Partial<Record<keyof SignupFormData, string>>;
@@ -54,6 +53,7 @@ type SignupFormProps = {
   showPassword: boolean;
   showConfirmPassword: boolean;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onPhoneBlur: () => void;
   onCountryCodeChange: (value: string) => void;
   onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
   onTogglePassword: () => void;
@@ -67,6 +67,7 @@ const SignupForm = ({
   showPassword,
   showConfirmPassword,
   onChange,
+  onPhoneBlur,
   onCountryCodeChange,
   onSubmit,
   onTogglePassword,
@@ -74,340 +75,329 @@ const SignupForm = ({
 }: SignupFormProps) => {
   const inputErrorClass = (field: keyof SignupFormData) =>
     errors[field]
-      ? "border-destructive ring-destructive/20 focus-visible:ring-destructive"
-      : "border-border/50 focus:border-primary/50";
+      ? "border-destructive bg-destructive/5 ring-destructive/20 focus-visible:ring-destructive"
+      : "border-border/60 bg-background/70 focus:border-primary/60 focus-visible:ring-primary/20";
 
   const selectedCountry = countryCodes.find(
     (country) => country.code === formData.phone_country_code
   );
 
   return (
-    <div className="relative flex min-h-screen w-full items-center justify-center overflow-hidden bg-background p-4 py-12">
-      {/* Animated Background Elements */}
-      <div className="relative z-10 w-full max-w-3xl">
-        {/* Back to Home Button */}
+    <div className="flex min-h-svh w-full items-center justify-center px-4 py-8 sm:px-6 lg:px-8">
+      <div className="w-full max-w-6xl">
         <motion.div
-          initial={{ opacity: 0, x: -20 }}
+          initial={{ opacity: 0, x: -16 }}
           animate={{ opacity: 1, x: 0 }}
           className="mb-6"
         >
           <Link
             to="/"
-            className="group inline-flex items-center gap-2 text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
+            className="group inline-flex items-center gap-2 rounded-full border border-border/60 bg-background/70 px-4 py-2 text-sm font-medium text-muted-foreground shadow-sm backdrop-blur transition-all hover:border-primary/40 hover:text-primary"
           >
             <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-1" />
             Back to home
           </Link>
         </motion.div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-        >
-          <Card className="overflow-hidden border-border/40 bg-card/60 shadow-2xl backdrop-blur-2xl dark:bg-card/40">
-            <div className="h-1.5 w-full bg-gradient-to-r from-transparent via-primary to-transparent opacity-50" />
+        <div className="grid overflow-hidden rounded-[2rem] border border-border/50 bg-card/70 shadow-2xl backdrop-blur-2xl lg:grid-cols-[0.95fr_1.05fr]">
+          <motion.div
+            initial={{ opacity: 0, x: -24 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.45 }}
+            className="relative hidden overflow-hidden bg-primary p-10 text-primary-foreground lg:block"
+          >
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.28),transparent_34%),radial-gradient(circle_at_bottom_right,rgba(255,255,255,0.18),transparent_34%)]" />
+            <div className="absolute -bottom-20 -left-20 h-64 w-64 rounded-full bg-white/10 blur-3xl" />
+            <div className="absolute -right-24 top-20 h-72 w-72 rounded-full bg-white/10 blur-3xl" />
 
-            <CardHeader className="space-y-4 pt-8 text-center">
-              {/* <motion.div
-                whileHover={{ scale: 1.05 }}
-                className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-primary text-2xl font-bold text-primary-foreground shadow-xl shadow-primary/30"
-              >
-                Nusuk
-              </motion.div> */}
+            <div className="relative z-10 flex h-full flex-col justify-between">
+              <div>
+                <div className="mb-8 inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-white/15 shadow-lg backdrop-blur">
+                  <Sparkles className="h-7 w-7" />
+                </div>
 
-              <div className="space-y-1">
-                <CardTitle className="text-3xl font-bold tracking-tight">
-                  Create an Account
-                </CardTitle>
-                <CardDescription className="text-muted-foreground">
-                  Join Nusuki today and start your journey
-                </CardDescription>
+                <h1 className="max-w-sm text-4xl font-black leading-tight tracking-tight">
+                  Create your account in seconds.
+                </h1>
+
+                <p className="mt-4 max-w-md text-sm leading-7 text-primary-foreground/80">
+                  Use your email and phone number to sign up securely. Simple,
+                  fast, and clean signup experience for every device.
+                </p>
               </div>
-            </CardHeader>
 
-            <CardContent className="pb-10">
-              <form onSubmit={onSubmit} className="space-y-8">
-                <FieldGroup className="grid gap-6 md:grid-cols-2">
-                  {/* Full Name */}
-                  <Field className="space-y-2">
-                    <FieldLabel htmlFor="name">Full Name</FieldLabel>
-                    <div className="relative">
-                      <User className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground/70" />
-                      <Input
-                        id="name"
-                        name="name"
-                        placeholder="John Doe"
-                        value={formData.name}
-                        onChange={onChange}
-                        disabled={isLoading}
-                        className={`h-11 pl-10 transition-all ${inputErrorClass(
-                          "name"
-                        )}`}
-                      />
-                    </div>
-                    {errors.name && (
-                      <p className="text-xs font-medium text-destructive">
-                        {errors.name}
-                      </p>
-                    )}
-                  </Field>
+              <div className="mt-10 space-y-4">
+                <div className="flex items-start gap-3 rounded-2xl bg-white/10 p-4 backdrop-blur">
+                  <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0" />
+                  <div>
+                    <p className="font-semibold">Simple information</p>
+                    <p className="mt-1 text-sm text-primary-foreground/75">
+                      Only email, phone number, and password required.
+                    </p>
+                  </div>
+                </div>
 
-                  {/* Email */}
-                  <Field className="space-y-2">
-                    <FieldLabel htmlFor="email">Email</FieldLabel>
-                    <div className="relative">
-                      <Mail className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground/70" />
-                      <Input
-                        id="email"
-                        name="email"
-                        type="email"
-                        placeholder="john@example.com"
-                        value={formData.email}
-                        onChange={onChange}
-                        disabled={isLoading}
-                        className={`h-11 pl-10 transition-all ${inputErrorClass(
-                          "email"
-                        )}`}
-                      />
-                    </div>
-                    {errors.email && (
-                      <p className="text-xs font-medium text-destructive">
-                        {errors.email}
-                      </p>
-                    )}
-                  </Field>
+                <div className="flex items-start gap-3 rounded-2xl bg-white/10 p-4 backdrop-blur">
+                  <ShieldCheck className="mt-0.5 h-5 w-5 shrink-0" />
+                  <div>
+                    <p className="font-semibold">Secure validation</p>
+                    <p className="mt-1 text-sm text-primary-foreground/75">
+                      Password confirmation and Bangladesh phone validation
+                      included.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </motion.div>
 
-                  {/* Given Name */}
-                  <Field className="space-y-2">
-                    <FieldLabel htmlFor="given_name">Given Name</FieldLabel>
-                    <Input
-                      id="given_name"
-                      name="given_name"
-                      placeholder="John"
-                      value={formData.given_name}
-                      onChange={onChange}
-                      disabled={isLoading}
-                      className={`h-11 transition-all ${inputErrorClass(
-                        "given_name"
-                      )}`}
-                    />
-                    {errors.given_name && (
-                      <p className="text-xs font-medium text-destructive">
-                        {errors.given_name}
-                      </p>
-                    )}
-                  </Field>
+          <motion.div
+            initial={{ opacity: 0, y: 18 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.45 }}
+            className="p-4 sm:p-6 md:p-8"
+          >
+            <Card className="border-0 bg-transparent shadow-none">
+              <CardHeader className="px-0 pb-6 pt-2 text-center sm:text-left">
+                <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-primary/10 text-primary sm:mx-0 lg:hidden">
+                  <Sparkles className="h-7 w-7" />
+                </div>
 
-                  {/* Surname */}
-                  <Field className="space-y-2">
-                    <FieldLabel htmlFor="surname">Surname</FieldLabel>
-                    <Input
-                      id="surname"
-                      name="surname"
-                      placeholder="Doe"
-                      value={formData.surname}
-                      onChange={onChange}
-                      disabled={isLoading}
-                      className={`h-11 transition-all ${inputErrorClass(
-                        "surname"
-                      )}`}
-                    />
-                    {errors.surname && (
-                      <p className="text-xs font-medium text-destructive">
-                        {errors.surname}
-                      </p>
-                    )}
-                  </Field>
+                <CardTitle className="text-2xl font-black tracking-tight sm:text-3xl">
+                  Sign up
+                </CardTitle>
 
-                  {/* Country Code & Phone */}
-                  <div className="grid grid-cols-1 gap-3 md:col-span-2 md:grid-cols-3">
+                <CardDescription className="text-muted-foreground">
+                  Enter your details below to create your account.
+                </CardDescription>
+              </CardHeader>
+
+              <CardContent className="px-0 pb-2">
+                <form onSubmit={onSubmit} className="space-y-6">
+                  <FieldGroup className="grid gap-5">
                     <Field className="space-y-2">
-                      <FieldLabel htmlFor="phone_country_code">
-                        Country Code
-                      </FieldLabel>
-
-                      <Select
-                        value={formData.phone_country_code}
-                        onValueChange={onCountryCodeChange}
-                        disabled={isLoading}
-                      >
-                        <SelectTrigger
-                          id="phone_country_code"
-                          className={`h-11 transition-all ${inputErrorClass(
-                            "phone_country_code"
-                          )}`}
-                        >
-                        
-                          <SelectValue placeholder="Select code">
-                            {selectedCountry ? (
-                              <span className="flex items-center gap-2">
-                                <span>{selectedCountry.flag}</span>
-                                <span>{selectedCountry.code}</span>
-                              </span>
-                            ) : null}
-                          </SelectValue>
-                        </SelectTrigger>
-
-                        <SelectContent>
-                          {countryCodes.map((country) => (
-                            <SelectItem
-                              key={`${country.code}-${country.label}`}
-                              value={country.code}
-                            >
-                              <span className="flex items-center gap-2">
-                                <span>{country.flag}</span>
-                                <span className="font-medium">
-                                  {country.code}
-                                </span>
-                                <span className="text-muted-foreground">
-                                  {country.label}
-                                </span>
-                              </span>
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-
-                      {errors.phone_country_code && (
-                        <p className="text-xs font-medium text-destructive">
-                          {errors.phone_country_code}
-                        </p>
-                      )}
-                    </Field>
-
-                    <Field className="space-y-2 md:col-span-2">
-                      <FieldLabel htmlFor="phone_number">
-                        Phone Number
-                      </FieldLabel>
+                      <FieldLabel htmlFor="email">Email address</FieldLabel>
 
                       <div className="relative">
-                        <Phone className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground/70" />
+                        <Mail className="absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
                         <Input
-                          id="phone_number"
-                          name="phone_number"
-                          type="tel"
-                          inputMode="numeric"
-                          placeholder={
-                            formData.phone_country_code === "+880"
-                              ? "01812345678"
-                              : "Phone number"
-                          }
-                          value={formData.phone_number}
+                          id="email"
+                          name="email"
+                          type="email"
+                          autoComplete="email"
+                          placeholder="user@example.com"
+                          value={formData.email}
                           onChange={onChange}
                           disabled={isLoading}
-                          className={`h-11 pl-10 transition-all ${inputErrorClass(
-                            "phone_number"
+                          className={`h-12 rounded-xl pl-10 text-sm transition-all ${inputErrorClass(
+                            "email"
                           )}`}
                         />
                       </div>
 
-                      {errors.phone_number && (
+                      {errors.email && (
                         <p className="text-xs font-medium text-destructive">
-                          {errors.phone_number}
+                          {errors.email}
                         </p>
                       )}
+                    </Field>
 
-                      {formData.phone_country_code === "+880" && (
-                        <FieldDescription>
-                          Use Bangladeshi format: 01812345678
-                        </FieldDescription>
+                    <div className="grid gap-4 sm:grid-cols-[150px_1fr]">
+                      <Field className="space-y-2">
+                        <FieldLabel htmlFor="phone_country_code">
+                          Country code
+                        </FieldLabel>
+
+                        <Select
+                          value={formData.phone_country_code}
+                          onValueChange={onCountryCodeChange}
+                          disabled={isLoading}
+                        >
+                          <SelectTrigger
+                            id="phone_country_code"
+                            className={`h-12 rounded-xl transition-all ${inputErrorClass(
+                              "phone_country_code"
+                            )}`}
+                          >
+                            <SelectValue placeholder="Code">
+                              {selectedCountry ? (
+                                <span className="flex items-center gap-2">
+                                  <span>{selectedCountry.flag}</span>
+                                  <span>{selectedCountry.code}</span>
+                                </span>
+                              ) : null}
+                            </SelectValue>
+                          </SelectTrigger>
+
+                          <SelectContent>
+                            {countryCodes.map((country) => (
+                              <SelectItem
+                                key={`${country.code}-${country.label}`}
+                                value={country.code}
+                              >
+                                <span className="flex items-center gap-2">
+                                  <span>{country.flag}</span>
+                                  <span className="font-medium">
+                                    {country.code}
+                                  </span>
+                                  <span className="text-muted-foreground">
+                                    {country.label}
+                                  </span>
+                                </span>
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+
+                        {errors.phone_country_code && (
+                          <p className="text-xs font-medium text-destructive">
+                            {errors.phone_country_code}
+                          </p>
+                        )}
+                      </Field>
+
+                      <Field className="space-y-2">
+                        <FieldLabel htmlFor="phone_number">
+                          Phone number
+                        </FieldLabel>
+
+                        <div className="relative">
+                          <Phone className="absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+                          <Input
+                            id="phone_number"
+                            name="phone_number"
+                            type="tel"
+                            inputMode="numeric"
+                            autoComplete="tel-national"
+                            maxLength={
+                              formData.phone_country_code === "+880" ? 11 : 20
+                            }
+                            placeholder={
+                              formData.phone_country_code === "+880"
+                                ? "01712345678"
+                                : "Phone number"
+                            }
+                            value={formData.phone_number}
+                            onChange={onChange}
+                            onBlur={onPhoneBlur}
+                            disabled={isLoading}
+                            className={`h-12 rounded-xl pl-10 text-sm transition-all ${inputErrorClass(
+                              "phone_number"
+                            )}`}
+                          />
+                        </div>
+
+                        {errors.phone_number && (
+                          <p className="text-xs font-medium text-destructive">
+                            {errors.phone_number}
+                          </p>
+                        )}
+
+                        {formData.phone_country_code === "+880" && (
+                          <FieldDescription>
+                            Use Bangladeshi format: 01712345678
+                          </FieldDescription>
+                        )}
+                      </Field>
+                    </div>
+
+                    <Field className="space-y-2">
+                      <FieldLabel htmlFor="password">Password</FieldLabel>
+
+                      <div className="relative">
+                        <LockKeyhole className="absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+                        <Input
+                          id="password"
+                          name="password"
+                          type={showPassword ? "text" : "password"}
+                          autoComplete="new-password"
+                          placeholder="Enter your password"
+                          value={formData.password}
+                          onChange={onChange}
+                          disabled={isLoading}
+                          className={`h-12 rounded-xl pl-10 pr-11 text-sm transition-all ${inputErrorClass(
+                            "password"
+                          )}`}
+                        />
+
+                        <button
+                          type="button"
+                          onClick={onTogglePassword}
+                          disabled={isLoading}
+                          className="absolute right-3.5 top-1/2 -translate-y-1/2 text-muted-foreground transition-colors hover:text-foreground disabled:cursor-not-allowed disabled:opacity-60"
+                          aria-label={
+                            showPassword ? "Hide password" : "Show password"
+                          }
+                        >
+                          {showPassword ? (
+                            <EyeOff size={17} />
+                          ) : (
+                            <Eye size={17} />
+                          )}
+                        </button>
+                      </div>
+
+                      {errors.password && (
+                        <p className="text-xs font-medium text-destructive">
+                          {errors.password}
+                        </p>
                       )}
                     </Field>
-                  </div>
 
-                  {/* Password */}
-                  <Field className="space-y-2">
-                    <FieldLabel htmlFor="password">Password</FieldLabel>
-                    <div className="relative">
-                      <LockKeyhole className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground/70" />
-                      <Input
-                        id="password"
-                        name="password"
-                        type={showPassword ? "text" : "password"}
-                        placeholder="••••••••"
-                        value={formData.password}
-                        onChange={onChange}
-                        disabled={isLoading}
-                        className={`h-11 pl-10 pr-11 transition-all ${inputErrorClass(
-                          "password"
-                        )}`}
-                      />
-                      <button
-                        type="button"
-                        onClick={onTogglePassword}
-                        className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground transition-colors hover:text-foreground"
-                        aria-label={
-                          showPassword ? "Hide password" : "Show password"
-                        }
-                      >
-                        {showPassword ? (
-                          <EyeOff size={16} />
-                        ) : (
-                          <Eye size={16} />
-                        )}
-                      </button>
-                    </div>
+                    <Field className="space-y-2">
+                      <FieldLabel htmlFor="password_confirmation">
+                        Confirm password
+                      </FieldLabel>
 
-                    {errors.password && (
-                      <p className="text-xs font-medium text-destructive">
-                        {errors.password}
-                      </p>
-                    )}
-                  </Field>
+                      <div className="relative">
+                        <LockKeyhole className="absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+                        <Input
+                          id="password_confirmation"
+                          name="password_confirmation"
+                          type={showConfirmPassword ? "text" : "password"}
+                          autoComplete="new-password"
+                          placeholder="Confirm your password"
+                          value={formData.password_confirmation}
+                          onChange={onChange}
+                          disabled={isLoading}
+                          className={`h-12 rounded-xl pl-10 pr-11 text-sm transition-all ${inputErrorClass(
+                            "password_confirmation"
+                          )}`}
+                        />
 
-                  {/* Confirm Password */}
-                  <Field className="space-y-2">
-                    <FieldLabel htmlFor="password_confirmation">
-                      Confirm Password
-                    </FieldLabel>
-                    <div className="relative">
-                      <LockKeyhole className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground/70" />
-                      <Input
-                        id="password_confirmation"
-                        name="password_confirmation"
-                        type={showConfirmPassword ? "text" : "password"}
-                        placeholder="••••••••"
-                        value={formData.password_confirmation}
-                        onChange={onChange}
-                        disabled={isLoading}
-                        className={`h-11 pl-10 pr-11 transition-all ${inputErrorClass(
-                          "password_confirmation"
-                        )}`}
-                      />
-                      <button
-                        type="button"
-                        onClick={onToggleConfirmPassword}
-                        className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground transition-colors hover:text-foreground"
-                        aria-label={
-                          showConfirmPassword
-                            ? "Hide confirm password"
-                            : "Show confirm password"
-                        }
-                      >
-                        {showConfirmPassword ? (
-                          <EyeOff size={16} />
-                        ) : (
-                          <Eye size={16} />
-                        )}
-                      </button>
-                    </div>
+                        <button
+                          type="button"
+                          onClick={onToggleConfirmPassword}
+                          disabled={isLoading}
+                          className="absolute right-3.5 top-1/2 -translate-y-1/2 text-muted-foreground transition-colors hover:text-foreground disabled:cursor-not-allowed disabled:opacity-60"
+                          aria-label={
+                            showConfirmPassword
+                              ? "Hide confirm password"
+                              : "Show confirm password"
+                          }
+                        >
+                          {showConfirmPassword ? (
+                            <EyeOff size={17} />
+                          ) : (
+                            <Eye size={17} />
+                          )}
+                        </button>
+                      </div>
 
-                    {errors.password_confirmation && (
-                      <p className="text-xs font-medium text-destructive">
-                        {errors.password_confirmation}
-                      </p>
-                    )}
-                  </Field>
-                </FieldGroup>
+                      {errors.password_confirmation && (
+                        <p className="text-xs font-medium text-destructive">
+                          {errors.password_confirmation}
+                        </p>
+                      )}
+                    </Field>
+                  </FieldGroup>
 
-                <div className="space-y-4">
                   <Button
                     type="submit"
-                    className="h-12 w-full bg-primary font-bold shadow-lg shadow-primary/25 transition-all hover:scale-[1.01] active:scale-[0.99]"
+                    className="h-12 w-full rounded-xl text-sm font-bold shadow-lg shadow-primary/25 transition-all hover:scale-[1.01] active:scale-[0.99]"
                     disabled={isLoading}
                   >
-                    {isLoading ? "Creating Account..." : "Get Started"}
+                    {isLoading ? "Creating account..." : "Create account"}
                   </Button>
 
                   <p className="text-center text-sm text-muted-foreground">
@@ -419,11 +409,11 @@ const SignupForm = ({
                       Login
                     </Link>
                   </p>
-                </div>
-              </form>
-            </CardContent>
-          </Card>
-        </motion.div>
+                </form>
+              </CardContent>
+            </Card>
+          </motion.div>
+        </div>
       </div>
     </div>
   );

@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import { useCreatePnrMutation } from "@/redux/api/fligtBookingApi/flightBookingApi";
 import { useGetMyTravellersQuery } from "@/redux/api/flightApi/myTravellersApi";
@@ -17,30 +17,12 @@ import type {
   PnrFormState,
   PnrTravellerForm,
 } from "@/types/flight/myTravellers.types";
+import { setFlightBookingCode } from "@/redux/features/flightPaymentSlice";
 
 type BookingFlightPNRFormProps = {
   flightId: string;
   searchId: string;
   initialForm: PnrFormState;
-};
-
-const mergeProfileWithSearchTravellers = (
-  searchBasedTravellers: PnrTravellerForm[],
-  profileTravellers: PnrTravellerForm[],
-): PnrTravellerForm[] => {
-  if (!profileTravellers.length) return searchBasedTravellers;
-
-  return searchBasedTravellers.map((traveller, index) => {
-    const profileTraveller = profileTravellers[index];
-
-    if (!profileTraveller) return traveller;
-
-    return {
-      ...traveller,
-      ...profileTraveller,
-      passengerType: traveller.passengerType,
-    };
-  });
 };
 
 const BookingFlightPNRForm = ({
@@ -49,6 +31,7 @@ const BookingFlightPNRForm = ({
   initialForm,
 }: BookingFlightPNRFormProps) => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const searchTravelers = useSelector(
     (state: RootState) => state.flightSearch.travelers,
@@ -58,13 +41,16 @@ const BookingFlightPNRForm = ({
     const searchBasedTravellers = buildInitialPnrTravellers(searchTravelers);
 
     return {
-      travelers: mergeProfileWithSearchTravellers(
-        searchBasedTravellers,
-        Array.isArray(initialForm.travelers) ? initialForm.travelers : [],
-      ),
+      // Important:
+      // Only create empty travellers from flight search count/type.
+      // Do not merge logged-in user profile data here.
+      travelers: searchBasedTravellers,
 
-      contactPhone: initialForm.contactPhone || "",
-      contactEmail: initialForm.contactEmail || "",
+      // Important:
+      // Keep contact fields empty.
+      // User will type manually or select traveller from dropdown.
+      contactPhone: "",
+      contactEmail: "",
 
       sendBookingEmail: initialForm.sendBookingEmail ?? true,
       paymentMethod: initialForm.paymentMethod || "CK",
@@ -178,22 +164,18 @@ const BookingFlightPNRForm = ({
       const response = await createPnr(payload).unwrap();
 
       if (!response.success) {
-        alert(response.message || "PNR creation failed.");
+        alert(response.message || "PNR create failed.");
         return;
       }
 
-      const bookingCode = response.data?.booking_code;
-      const bookingId = response.data?.id;
+      const booking = response.data?.booking;
 
-      if (bookingCode) {
-        navigate(`/dashboard/flight-bookings/${bookingCode}`);
+      if (!booking?.booking_code) {
+        alert("Booking code not found from PNR response.");
         return;
       }
 
-      if (bookingId) {
-        navigate(`/dashboard/flight-bookings/${bookingId}`);
-        return;
-      }
+      dispatch(setFlightBookingCode(booking.booking_code));
 
       navigate("/dashboard/flight-bookings");
     } catch (error: unknown) {

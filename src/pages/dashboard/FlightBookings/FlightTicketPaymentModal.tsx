@@ -1,5 +1,13 @@
-import { useState } from "react";
-import { BadgeCheck, Banknote, CreditCard, Loader2 } from "lucide-react";
+import { useEffect, useState } from "react";
+import {
+  AlertCircle,
+  BadgeCheck,
+  CreditCard,
+  ExternalLink,
+  Loader2,
+  RefreshCcw,
+  ShieldCheck,
+} from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -8,19 +16,13 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import {
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-} from "@/components/ui/tabs";
 
-import type { FlightBooking } from "@/types/flight/flightTicketPayment.types";
-import { useIssueAirTicketMutation } from "@/redux/api/fligtBookingApi/flightBookingApi";
+import type {
+  FlightBooking,
+  InitiateFlightPaymentData,
+} from "@/types/flight/flightTicketPayment.types";
+import { useInitiateFlightBookingPaymentMutation } from "@/redux/api/fligtBookingApi/flightBookingApi";
 import PaymentBookingSummary from "./modals/PaymentBookingSummary";
-import PaymentCodeForm from "./modals/PaymentCodeForm";
-import PaymentCardForm from "./modals/PaymentCardForm";
-
 
 type Props = {
   open: boolean;
@@ -28,166 +30,211 @@ type Props = {
   booking: FlightBooking;
 };
 
-type PaymentTab = "code" | "card";
-
 const FlightTicketPaymentModal = ({
   open,
   onOpenChange,
   booking,
 }: Props) => {
-  const [paymentType, setPaymentType] = useState<PaymentTab>("code");
+  const [paymentInfo, setPaymentInfo] =
+    useState<InitiateFlightPaymentData | null>(null);
+  const [errorMessage, setErrorMessage] = useState("");
 
-  const [couponCode, setCouponCode] = useState("");
-  const [cardTypeCode, setCardTypeCode] = useState("VI");
-  const [cardNumber, setCardNumber] = useState("4111111111111111");
-  const [cardSecurityCode, setCardSecurityCode] = useState("123");
-  const [expiryDate, setExpiryDate] = useState("2030-12");
+  const [initiatePayment, { isLoading }] =
+    useInitiateFlightBookingPaymentMutation();
 
-  const passenger = booking.passengers?.[0];
-
-  const [issueAirTicket, { isLoading: isIssuing }] =
-    useIssueAirTicketMutation();
-
-  const contactEmail = passenger?.email || "eshrakg62@gmail.com";
-  const contactPhone = passenger?.phone || "01712131223";
+  const bookingCode = booking.booking_code;
 
   const isTicketed = booking.booking_status === "ticketed";
   const isCancelled = booking.booking_status === "cancelled";
-  const canPay = Boolean(booking.pnr) && !isTicketed && !isCancelled;
 
-  const handleIssueTicket = async () => {
-    if (!booking.pnr) {
-      alert("PNR not found.");
+  const canPay = Boolean(bookingCode) && !isTicketed && !isCancelled;
+
+  const handleInitiatePayment = async () => {
+    if (!bookingCode) {
+      setErrorMessage("Booking code not found.");
       return;
     }
 
     try {
-      const payload =
-        paymentType === "code"
-          ? {
-              pnr: booking.pnr,
-              payment: {
-                method: "CA" as const,
-              },
-              ticket_country_code: "BD",
-              hardcopy_lniata: "EE4B55",
-              send_email: true,
-              contact: {
-                email: contactEmail,
-                phone: contactPhone,
-              },
-            }
-          : {
-              pnr: booking.pnr,
-              payment: {
-                method: "CC" as const,
-                card: {
-                  card_type_code: cardTypeCode,
-                  card_number: cardNumber.replace(/\s/g, ""),
-                  card_security_code: cardSecurityCode,
-                  expiry_date: expiryDate,
-                },
-              },
-              ticket_country_code: "BD",
-              hardcopy_lniata: "EE4B55",
-              send_email: true,
-              contact: {
-                email: contactEmail,
-                phone: contactPhone,
-              },
-            };
+      setErrorMessage("");
 
-      console.log("Issue Ticket Payload:", JSON.stringify(payload, null, 2));
-
-      const response = await issueAirTicket(payload).unwrap();
+      const response = await initiatePayment({
+        bookingCode,
+      }).unwrap();
 
       if (!response.success) {
-        alert(response.message || "Ticket issue failed.");
+        setErrorMessage(response.message || "Payment initiate failed.");
         return;
       }
 
-      alert(response.message || "Air ticket issued successfully.");
-      onOpenChange(false);
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    } catch (error: any) {
-      console.error("Issue Ticket Error:", error);
+      setPaymentInfo(response.data);
+    } catch (error: unknown) {
+      console.error("Initiate Payment Error:", error);
+
+      const apiError = error as {
+        data?: {
+          message?: string;
+          data?: {
+            friendly_reason?: string;
+          };
+        };
+      };
 
       const message =
-        error?.data?.data?.friendly_reason ||
-        error?.data?.message ||
-        "Ticket issue failed. Please try again.";
+        apiError?.data?.data?.friendly_reason ||
+        apiError?.data?.message ||
+        "Payment initiate failed. Please try again.";
 
-      alert(message);
+      setErrorMessage(message);
     }
   };
 
+  const handleGoToPayment = () => {
+    if (!paymentInfo?.payment_url) return;
+
+    window.location.href = paymentInfo.payment_url;
+  };
+
+  const handleModalChange = (nextOpen: boolean) => {
+    onOpenChange(nextOpen);
+
+    if (!nextOpen) {
+      setPaymentInfo(null);
+      setErrorMessage("");
+    }
+  };
+
+  useEffect(() => {
+    if (!open || !canPay || paymentInfo || isLoading) return;
+
+    handleInitiatePayment();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [open, canPay, bookingCode]);
+
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
+    <Dialog open={open} onOpenChange={handleModalChange}>
       <DialogContent className="max-h-[92vh] overflow-y-auto border-none p-0 sm:max-w-2xl">
-        <div className="rounded-2xl bg-background">
+        <div className="overflow-hidden rounded-2xl bg-background">
           <DialogHeader className="border-b bg-muted/40 px-5 py-4">
             <DialogTitle className="flex items-center gap-2 text-xl font-bold">
-              Complete Payment & Issue Ticket
+              <ShieldCheck className="h-5 w-5 text-primary" />
+              SSLCommerz Payment
             </DialogTitle>
           </DialogHeader>
 
           <div className="space-y-5 p-5">
             <PaymentBookingSummary booking={booking} />
 
-            <Tabs
-              value={paymentType}
-              onValueChange={(value) => setPaymentType(value as PaymentTab)}
-            >
-              <TabsList className="grid h-12 w-full grid-cols-2 rounded-xl">
-                <TabsTrigger value="code" className="gap-2 rounded-lg">
-                  <Banknote className="h-4 w-4" />
-                  Buy with Code
-                </TabsTrigger>
+            {isLoading ? (
+              <div className="rounded-2xl border bg-muted/20 p-6 text-center">
+                <Loader2 className="mx-auto h-8 w-8 animate-spin text-primary" />
 
-                <TabsTrigger value="card" className="gap-2 rounded-lg">
-                  <CreditCard className="h-4 w-4" />
-                  Bank Card
-                </TabsTrigger>
-              </TabsList>
+                <h3 className="mt-4 text-lg font-extrabold">
+                  Creating secure payment link...
+                </h3>
 
-              <TabsContent value="code" className="mt-5">
-                <PaymentCodeForm
-                  couponCode={couponCode}
-                  onCouponCodeChange={setCouponCode}
-                />
-              </TabsContent>
+                <p className="mt-2 text-sm text-muted-foreground">
+                  Please wait while we connect your booking with SSLCommerz.
+                </p>
+              </div>
+            ) : null}
 
-              <TabsContent value="card" className="mt-5">
-                <PaymentCardForm
-                  cardTypeCode={cardTypeCode}
-                  cardNumber={cardNumber}
-                  cardSecurityCode={cardSecurityCode}
-                  expiryDate={expiryDate}
-                  onCardTypeCodeChange={setCardTypeCode}
-                  onCardNumberChange={setCardNumber}
-                  onCardSecurityCodeChange={setCardSecurityCode}
-                  onExpiryDateChange={setExpiryDate}
-                />
-              </TabsContent>
-            </Tabs>
+            {!isLoading && errorMessage ? (
+              <div className="rounded-2xl border border-destructive/30 bg-destructive/5 p-4">
+                <div className="flex gap-3">
+                  <AlertCircle className="mt-0.5 h-5 w-5 shrink-0 text-destructive" />
 
-            <Button
-              onClick={handleIssueTicket}
-              disabled={!canPay || isIssuing}
-              className="h-11 w-full rounded-xl font-bold"
-            >
-              {isIssuing ? (
-                <>
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  Issuing Ticket...
-                </>
-              ) : (
-                <>
-                  <BadgeCheck className="mr-2 h-4 w-4" />
-                  Pay Now & Issue Ticket
-                </>
-              )}
-            </Button>
+                  <div>
+                    <h3 className="font-bold text-destructive">
+                      Payment initiate failed
+                    </h3>
+
+                    <p className="mt-1 text-sm text-muted-foreground">
+                      {errorMessage}
+                    </p>
+                  </div>
+                </div>
+
+                <Button
+                  type="button"
+                  onClick={handleInitiatePayment}
+                  disabled={!canPay || isLoading}
+                  variant="outline"
+                  className="mt-4 h-11 w-full rounded-xl font-bold"
+                >
+                  <RefreshCcw className="mr-2 h-4 w-4" />
+                  Try Again
+                </Button>
+              </div>
+            ) : null}
+
+            {!isLoading && paymentInfo ? (
+              <div className="space-y-4">
+                <div className="rounded-2xl border bg-card p-4 shadow-sm">
+                  <div className="mb-4 flex items-center gap-2 text-sm font-bold text-primary">
+                    <BadgeCheck className="h-4 w-4" />
+                    Payment Link Ready
+                  </div>
+
+                  <div className="grid gap-3 sm:grid-cols-2">
+                    <div className="rounded-xl border bg-muted/20 p-3">
+                      <p className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">
+                        Booking Code
+                      </p>
+                      <p className="mt-1 break-all text-sm font-extrabold">
+                        {paymentInfo.booking_code}
+                      </p>
+                    </div>
+
+                    <div className="rounded-xl border bg-muted/20 p-3">
+                      <p className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">
+                        Amount
+                      </p>
+                      <p className="mt-1 text-sm font-extrabold">
+                        {paymentInfo.currency}{" "}
+                        {Number(paymentInfo.amount).toLocaleString()}
+                      </p>
+                    </div>
+
+                    <div className="rounded-xl border bg-muted/20 p-3 sm:col-span-2">
+                      <p className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">
+                        Transaction ID
+                      </p>
+                      <p className="mt-1 break-all text-sm font-extrabold">
+                        {paymentInfo.tran_id}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <Button
+                  type="button"
+                  onClick={handleGoToPayment}
+                  className="h-12 w-full rounded-xl font-extrabold shadow-sm"
+                >
+                  <CreditCard className="mr-2 h-4 w-4" />
+                  Pay with SSLCommerz
+                  <ExternalLink className="ml-2 h-4 w-4" />
+                </Button>
+
+                <p className="text-center text-xs text-muted-foreground">
+                  After successful payment, SSLCommerz will redirect you back to
+                  the website.
+                </p>
+              </div>
+            ) : null}
+
+            {!isLoading && !paymentInfo && !errorMessage ? (
+              <Button
+                type="button"
+                onClick={handleInitiatePayment}
+                disabled={!canPay}
+                className="h-11 w-full rounded-xl font-bold"
+              >
+                <CreditCard className="mr-2 h-4 w-4" />
+                Generate SSLCommerz Payment Link
+              </Button>
+            ) : null}
           </div>
         </div>
       </DialogContent>

@@ -16,7 +16,7 @@ import { useAuthLogout } from "@/hooks/useAuthLogout";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import { getFirstLetter } from "@/lib/utiils.authUser";
+import { getFirstLetter } from "@/lib/utils.authUser";
 import { ModeToggle } from "@/shared/ModeToggler";
 import NavbarLogo from "@/shared/Navbar/NavbarLogo";
 
@@ -93,13 +93,13 @@ const DashboardSidebar = () => {
             </p>
           </Link>
 
-          <Button
+          {/* <Button
             variant="ghost"
             size="icon"
             className="h-9 w-9 shrink-0 rounded-full text-muted-foreground hover:bg-primary/10 hover:text-primary"
           >
             <Bell className="h-4 w-4" />
-          </Button>
+          </Button> */}
         </div>
       </div>
 

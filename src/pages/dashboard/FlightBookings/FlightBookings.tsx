@@ -23,66 +23,73 @@ const FlightBookings = () => {
 
   const hasPreviousPage = page > 1;
   const hasNextPage = pagination ? page < pagination.last_page : false;
+
   const handleBookingExpired = () => {
     if (!data || isLoading || isFetching) return;
-
     refetch();
   };
+
   return (
-    <section className="space-y-6">
-      <div className="flex flex-col gap-4 rounded-2xl border bg-card p-5 shadow-sm dark:bg-card/80 sm:flex-row sm:items-center sm:justify-between">
-        <div>
-          <div className="flex items-center gap-2 text-sm font-semibold text-primary">
-            <CalendarCheck2 className="h-4 w-4" />
-            Flight Booking History
+    <section className="space-y-5">
+      <div className="rounded-2xl border bg-card p-4 shadow-sm dark:bg-card/80 sm:p-5 lg:p-6">
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+          <div className="min-w-0">
+            <div className="flex items-center gap-2 text-sm font-semibold text-primary">
+              <CalendarCheck2 className="h-4 w-4 shrink-0" />
+              <span>Flight Booking History</span>
+            </div>
+
+            <h1 className="mt-2 text-xl font-extrabold tracking-tight text-foreground sm:text-2xl lg:text-3xl">
+              My Bookings
+            </h1>
+
+            <p className="mt-1 max-w-2xl text-sm leading-6 text-muted-foreground">
+              Manage your flight bookings, payment status and ticket details.
+            </p>
           </div>
 
-          <h1 className="mt-2 text-2xl font-bold tracking-tight text-foreground">
-            My Flight Bookings
-          </h1>
-
-          <p className="mt-1 text-sm text-muted-foreground">
-            View your PNR, ticket status, payment status, passenger and flight
-            segment details.
-          </p>
+          <Button
+            variant="outline"
+            onClick={() => refetch()}
+            disabled={isFetching}
+            className="h-11 w-full gap-2 rounded-xl font-bold sm:w-auto"
+          >
+            <RefreshCcw
+              className={`h-4 w-4 ${isFetching ? "animate-spin" : ""}`}
+            />
+            Refresh
+          </Button>
         </div>
-
-        <Button
-          variant="outline"
-          onClick={() => refetch()}
-          disabled={isFetching}
-          className="w-full gap-2 rounded-xl sm:w-auto"
-        >
-          <RefreshCcw
-            className={`h-4 w-4 ${isFetching ? "animate-spin" : ""}`}
-          />
-          Refresh
-        </Button>
       </div>
+
+      {!isLoading && !isError && bookings.length > 0 ? (
+        <FlightBookingStats bookings={bookings} />
+      ) : null}
+
       {pagination ? (
         <div className="flex flex-col gap-3 rounded-2xl border bg-card p-4 shadow-sm dark:bg-card/80 sm:flex-row sm:items-center sm:justify-between">
-          <p className="text-sm text-muted-foreground">
+          <p className="text-sm leading-6 text-muted-foreground">
             Showing page{" "}
-            <span className="font-semibold text-foreground">
+            <span className="font-bold text-foreground">
               {pagination.current_page}
             </span>{" "}
             of{" "}
-            <span className="font-semibold text-foreground">
+            <span className="font-bold text-foreground">
               {pagination.last_page}
             </span>{" "}
             · Total{" "}
-            <span className="font-semibold text-foreground">
+            <span className="font-bold text-foreground">
               {pagination.total}
             </span>{" "}
             bookings
           </p>
 
-          <div className="flex items-center gap-2">
+          <div className="grid grid-cols-2 gap-2 sm:flex sm:items-center">
             <Button
               variant="outline"
               disabled={!hasPreviousPage || isFetching}
               onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
-              className="rounded-xl"
+              className="h-10 rounded-xl font-bold"
             >
               Previous
             </Button>
@@ -90,15 +97,12 @@ const FlightBookings = () => {
             <Button
               disabled={!hasNextPage || isFetching}
               onClick={() => setPage((prev) => prev + 1)}
-              className="rounded-xl"
+              className="h-10 rounded-xl font-bold"
             >
               Next
             </Button>
           </div>
         </div>
-      ) : null}
-      {!isLoading && !isError && bookings.length > 0 ? (
-        <FlightBookingStats bookings={bookings} />
       ) : null}
 
       {isError ? (
@@ -106,13 +110,14 @@ const FlightBookings = () => {
           <h3 className="text-lg font-bold text-destructive">
             Failed to load booking history
           </h3>
+
           <p className="mt-2 text-sm text-muted-foreground">
             Please try again. If this continues, check your API auth/session.
           </p>
 
           <Button
             onClick={() => refetch()}
-            className="mt-4 rounded-xl"
+            className="mt-4 h-11 rounded-xl font-bold"
             disabled={isFetching}
           >
             Try Again
@@ -121,7 +126,7 @@ const FlightBookings = () => {
       ) : null}
 
       {isLoading ? (
-        <div className="grid gap-5 xl:grid-cols-2">
+        <div className="space-y-4">
           {Array.from({ length: 4 }).map((_, index) => (
             <FlightBookingCardSkeleton key={index} />
           ))}
@@ -131,18 +136,17 @@ const FlightBookings = () => {
       {!isLoading && !isError && bookings.length === 0 ? (
         <FlightBookingEmptyState />
       ) : null}
+
       {!isLoading && !isError && bookings.length > 0 ? (
-        <>
-          <div className="grid gap-5 lg:grid-cols-2 xl:grid-cols-2 2xl:grid-cols-3">
-            {bookings.map((booking) => (
-              <FlightBookingCard
-                key={booking.id}
-                booking={booking}
-                onBookingExpired={handleBookingExpired}
-              />
-            ))}
-          </div>
-        </>
+        <div className="space-y-4">
+          {bookings.map((booking) => (
+            <FlightBookingCard
+              key={booking.id}
+              booking={booking}
+              onBookingExpired={handleBookingExpired}
+            />
+          ))}
+        </div>
       ) : null}
     </section>
   );
