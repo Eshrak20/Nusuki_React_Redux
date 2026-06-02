@@ -1,7 +1,8 @@
 import { laravelApi } from "@/redux/api/laravelApi";
 import type { FlightBookingDetailResponse, FlightBookingHistoryResponse, GetFlightBookingsParams } from "@/types/flight/flightBooking.types";
-import type { CreatePnrRequest, CreatePnrResponse } from "@/types/flight/flightBookingPNR.types";
+import type { CreatePnrResponse } from "@/types/flight/flightBookingPNR.types";
 import type { CancelAirTicketRequest, CancelAirTicketResponse, IssueAirTicketRequest, IssueAirTicketResponse } from "@/types/flight/flightTicketPayment.types";
+import type { CreatePnrPayload } from "@/types/flight/myTravellers.types";
 
 
 export const flightBookingApi = laravelApi.injectEndpoints({
@@ -16,7 +17,7 @@ export const flightBookingApi = laravelApi.injectEndpoints({
           method: "GET",
         };
       },
-      providesTags: ["FlightBookings"],
+      providesTags: ["FlightBookings", "MyTravellers"],
     }),
 
     getFlightBookingDetails: builder.query<FlightBookingDetailResponse, number>({
@@ -28,37 +29,40 @@ export const flightBookingApi = laravelApi.injectEndpoints({
         { type: "FlightBookings", id: bookingId },
       ],
     }),
-    createPnr: builder.mutation<CreatePnrResponse, CreatePnrRequest>({
+    createPnr: builder.mutation<CreatePnrResponse, CreatePnrPayload>({
       query: (body) => ({
         url: "flights/create-pnr",
         method: "POST",
         body,
       }),
-      invalidatesTags: ["UserProfile"],
+      invalidatesTags: ["MyTravellers"],
     }),
-    issueAirTicket: builder.mutation<IssueAirTicketResponse, IssueAirTicketRequest>({
-      query: (body) => ({
-        url: "flights/issue-air-ticket",
-        method: "POST",
-        body,
-      }),
-      invalidatesTags: ["FlightBookings"],
-    }),
+
     cancelAirTicket: builder.mutation<CancelAirTicketResponse, CancelAirTicketRequest>({
       query: (body) => ({
         url: "flights/cancel-air-ticket",
         method: "POST",
         body,
       }),
-      invalidatesTags: ["FlightBookings"],
+      invalidatesTags: ["FlightBookings", "MyTravellers"],
     }),
+    //!This will be deletetd isse ticket
+    issueAirTicket: builder.mutation<IssueAirTicketResponse, IssueAirTicketRequest>({
+      query: (body) => ({
+        url: "flights/issue-air-ticket",
+        method: "POST",
+        body,
+      }),
+      invalidatesTags: ["FlightBookings", "MyTravellers"],
+    }),
+
   }),
 });
 
 export const {
   useGetFlightBookingsQuery,
   useGetFlightBookingDetailsQuery,
-  useCreatePnrMutation,
   useIssueAirTicketMutation,
   useCancelAirTicketMutation,
+  useCreatePnrMutation
 } = flightBookingApi;

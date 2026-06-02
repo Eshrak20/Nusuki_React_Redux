@@ -1,6 +1,6 @@
-export type PassengerType = "ADT" | "CNN" | "INF";
-export type Gender = "M" | "F";
-export type PaymentMethod = "CA" | "CARD" | "BKASH" | "NAGAD";
+import type { Gender, PassengerType, Title } from "./myTravellers.types";
+
+export type PaymentMethod = "CK" | "CA" | "CARD" | "BKASH" | "NAGAD";
 
 export type TravelerPassport = {
   number: string;
@@ -12,6 +12,7 @@ export type TravelerPassport = {
 export type PnrTraveler = {
   given_name: string;
   surname: string;
+  title: Title;
   passenger_type: PassengerType;
   date_of_birth: string;
   gender: Gender;
@@ -25,7 +26,7 @@ export type PnrContact = {
 };
 
 export type PnrPayment = {
-  method: PaymentMethod;
+  method: PaymentMethod | string;
 };
 
 export type CreatePnrRequest = {
@@ -36,6 +37,7 @@ export type CreatePnrRequest = {
   send_booking_email: boolean;
   payment: PnrPayment;
   received_from: string;
+  save_travellers: boolean;
 };
 
 export type CreatePnrResponse = {

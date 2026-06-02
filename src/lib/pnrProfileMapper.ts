@@ -1,4 +1,9 @@
-import type { PnrFormState } from "@/pages/main/Flight/FlightBooking/BookingFlightPNR/PassengerForm";
+import type {
+  Gender,
+  PnrFormState,
+  PnrTravellerForm,
+} from "@/types/flight/myTravellers.types";
+
 import { initialPnrFormState } from "./pnrFormDefaults";
 
 export type UserProfile = {
@@ -52,7 +57,7 @@ export const getProfileFromResponse = (response: any): UserProfile | null => {
   };
 };
 
-const normalizeGender = (gender?: string): PnrFormState["gender"] => {
+const normalizeGender = (gender?: string): Gender => {
   if (!gender) return "M";
 
   const value = gender.toLowerCase();
@@ -71,10 +76,10 @@ const buildPhoneNumber = (countryCode?: string, phoneNumber?: string) => {
   return `${countryCode}${phoneNumber}`;
 };
 
-export const mapProfileToPnrForm = (
+export const mapProfileToPnrTraveller = (
   profile: UserProfile | null,
-): PnrFormState => {
-  if (!profile) return initialPnrFormState;
+): PnrTravellerForm | null => {
+  if (!profile) return null;
 
   const fullName = splitFullName(profile.name);
 
@@ -87,23 +92,47 @@ export const mapProfileToPnrForm = (
   );
 
   return {
-    ...initialPnrFormState,
+    selectedSavedTravellerId: null,
 
     givenName,
     surname,
-
-    dateOfBirth: profile.date_of_birth || "",
+    title: normalizeGender(profile.gender) === "F" ? "MS" : "MR",
+    passengerType: "ADT",
     gender: normalizeGender(profile.gender),
-
+    dateOfBirth: profile.date_of_birth || "",
     travelerPhone: phone,
-    contactEmail: profile.email || "",
-    contactPhone: phone,
 
     passportNumber: profile.passport_no || "",
     nationality: profile.nationality || "BD",
-    issuingCountry: profile.nationality || "BD",
+    passportNationality: profile.nationality || "BD",
+    passportIssuingCountry: profile.nationality || "BD",
     passportExpiryDate: profile.passport_expire_date || "",
+  };
+};
+
+export const mapProfileToPnrForm = (
+  profile: UserProfile | null,
+): PnrFormState => {
+  if (!profile) return initialPnrFormState;
+
+  const phone = buildPhoneNumber(
+    profile.phone_country_code,
+    profile.phone_number,
+  );
+
+  const profileTraveller = mapProfileToPnrTraveller(profile);
+
+  return {
+    ...initialPnrFormState,
+
+    travelers: profileTraveller ? [profileTraveller] : [],
+
+    contactEmail: profile.email || "",
+    contactPhone: phone,
 
     sendBookingEmail: true,
+    paymentMethod: "CK",
+    receivedFrom: "NUSUKI WEB",
+    saveTravellers: true,
   };
 };

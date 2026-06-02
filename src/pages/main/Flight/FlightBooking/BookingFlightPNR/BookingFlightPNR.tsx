@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import { useSearchParams } from "react-router-dom";
 
 import {
@@ -14,10 +14,14 @@ import BookingStepIndicator from "./BookingStepIndicator";
 
 const BookingFlightPNR = () => {
   const [searchParams] = useSearchParams();
-  window.scrollTo({
-    top: 0,
-    behavior: "smooth",
-  });
+
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  }, []);
+
   const flightId = searchParams.get("flight_id") ?? "";
   const searchId = searchParams.get("search_id") ?? "";
 
@@ -31,30 +35,28 @@ const BookingFlightPNR = () => {
   }, [profileResponse]);
 
   return (
-    <>
-      <div className="mt-24 min-h-screen bg-background py-4 text-foreground md:py-8">
-        <div className="mx-auto max-w-7xl space-y-8 px-4">
-          <BookingStepIndicator />
+    <div className="mt-24 min-h-screen bg-background py-4 text-foreground md:py-8">
+      <div className="mx-auto max-w-7xl space-y-8 px-4">
+        <BookingStepIndicator />
 
-          <PnrPageHeader />
+        <PnrPageHeader />
 
-          <PnrMissingParamsAlert flightId={flightId} searchId={searchId} />
+        <PnrMissingParamsAlert flightId={flightId} searchId={searchId} />
 
-          {isProfileLoading ? (
-            <div className="rounded-xl border bg-card p-4 text-sm text-muted-foreground shadow-sm">
-              Loading your profile information...
-            </div>
-          ) : (
-            <BookingFlightPNRForm
-              key={`${profileResponse?.data?.id ?? "guest"}-${flightId}-${searchId}`}
-              flightId={flightId}
-              searchId={searchId}
-              initialForm={initialForm}
-            />
-          )}
-        </div>
+        {isProfileLoading ? (
+          <div className="rounded-xl border bg-card p-4 text-sm text-muted-foreground shadow-sm">
+            Loading your profile information...
+          </div>
+        ) : (
+          <BookingFlightPNRForm
+            key={`${profileResponse?.data?.id ?? "guest"}-${flightId}-${searchId}`}
+            flightId={flightId}
+            searchId={searchId}
+            initialForm={initialForm}
+          />
+        )}
       </div>
-    </>
+    </div>
   );
 };
 

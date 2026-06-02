@@ -1,7 +1,6 @@
-import type { PnrFormState } from "@/pages/main/Flight/FlightBooking/BookingFlightPNR/PassengerForm";
-import type { CreatePnrRequest } from "@/types/flight/flightBookingPNR.types";
+import type { CreatePnrPayload, PnrFormState } from "@/types/flight/myTravellers.types";
 
-type BuildPnrPayloadParams = {
+type BuildPnrPayloadArgs = {
   form: PnrFormState;
   flightId: string;
   searchId: string;
@@ -11,34 +10,40 @@ export const buildPnrPayload = ({
   form,
   flightId,
   searchId,
-}: BuildPnrPayloadParams): CreatePnrRequest => {
+}: BuildPnrPayloadArgs): CreatePnrPayload => {
   return {
-    flight_id: flightId,
     search_id: searchId,
-    travelers: [
-      {
-        given_name: form.givenName.trim(),
-        surname: form.surname.trim(),
-        passenger_type: form.passengerType,
-        date_of_birth: form.dateOfBirth,
-        gender: form.gender,
-        phone: form.travelerPhone.trim(),
-        passport: {
-          number: form.passportNumber.trim().toUpperCase(),
-          nationality: form.nationality,
-          issuing_country: form.issuingCountry,
-          expiry_date: form.passportExpiryDate,
-        },
+    flight_id: flightId,
+
+    travelers: form.travelers.map((traveller) => ({
+      given_name: traveller.givenName.trim().toUpperCase(),
+      surname: traveller.surname.trim().toUpperCase(),
+      title: traveller.title,
+      passenger_type: traveller.passengerType,
+      gender: traveller.gender,
+      date_of_birth: traveller.dateOfBirth,
+      phone: traveller.travelerPhone,
+      passport: {
+        number: traveller.passportNumber.trim().toUpperCase(),
+        nationality: traveller.passportNationality || traveller.nationality,
+        issuing_country: traveller.passportIssuingCountry,
+        expiry_date: traveller.passportExpiryDate,
       },
-    ],
+    })),
+
     contact: {
-      email: form.contactEmail.trim(),
-      phone: form.contactPhone.trim(),
+      phone: form.contactPhone,
+      email: form.contactEmail,
     },
+
     send_booking_email: form.sendBookingEmail,
+
     payment: {
-      method: "CA",
+      method: form.paymentMethod || "CK",
     },
-    received_from: "UTRAVEL WEB",
+
+    received_from: form.receivedFrom || "NUSUKI WEB",
+
+    save_travellers: form.saveTravellers,
   };
 };

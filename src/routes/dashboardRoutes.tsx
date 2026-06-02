@@ -7,6 +7,7 @@ import FlightBookings from "@/pages/dashboard/FlightBookings/FlightBookings";
 import FlightBookingDetails from "@/pages/dashboard/FlightBookingDetails/FlightBookingDetails";
 import HotelBookings from "@/pages/dashboard/HotelBookings/HotelBookings";
 import HotelBookingDetails from "@/pages/dashboard/HotelBookingDetails/HotelBookingDetails";
+import MyTravelers from "@/pages/dashboard/MyTravelers";
 
 export const dashboardRoutes = [
   {
@@ -40,6 +41,10 @@ export const dashboardRoutes = [
       {
         path: "/dashboard/hotel-bookings/:id",
         element: <HotelBookingDetails />,
+      },
+      {
+        path: "/dashboard/my-travelers",
+        element: <MyTravelers  />,
       },
     ],
   },

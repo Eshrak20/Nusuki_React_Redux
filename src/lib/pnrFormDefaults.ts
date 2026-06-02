@@ -1,20 +1,14 @@
-import type { PnrFormState } from "@/pages/main/Flight/FlightBooking/BookingFlightPNR/PassengerForm";
+import type { PnrFormState } from "@/types/flight/myTravellers.types";
 
 export const initialPnrFormState: PnrFormState = {
-  givenName: "",
-  surname: "",
-  dateOfBirth: "",
-  gender: "M",
-  passengerType: "ADT",
-  travelerPhone: "",
+  travelers: [],
 
-  contactEmail: "",
   contactPhone: "",
-
-  passportNumber: "",
-  nationality: "BD",
-  issuingCountry: "BD",
-  passportExpiryDate: "",
+  contactEmail: "",
 
   sendBookingEmail: true,
+  paymentMethod: "CK",
+  receivedFrom: "NUSUKI WEB",
+
+  saveTravellers: true,
 };

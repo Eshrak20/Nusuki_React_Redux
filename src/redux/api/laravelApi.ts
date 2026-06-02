@@ -77,6 +77,6 @@ const baseQueryWithAuthCheck: BaseQueryFn<
 export const laravelApi = createApi({
   reducerPath: "laravelApi",
   baseQuery: baseQueryWithAuthCheck,
-  tagTypes: ["UserProfile", "FlightBookings"],
+  tagTypes: ["UserProfile", "FlightBookings","MyTravellers"],
   endpoints: () => ({}),
 });
