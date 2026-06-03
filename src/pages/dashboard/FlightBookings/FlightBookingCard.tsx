@@ -1,12 +1,9 @@
 import { useState } from "react";
 import {
   ArrowRight,
-  CalendarDays,
-  CheckCircle2,
   CreditCard,
   Loader2,
   Plane,
-  Route,
   TicketX,
 } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -25,6 +22,9 @@ type Props = {
   onBookingExpired?: () => void;
 };
 
+const flightImage =
+  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSIvZWB5T0IEKEeY1nGH8j5g4ypWEYgyL9R-A&s";
+
 const isExpiredByTtl = (ttlAt?: string | null) => {
   if (!ttlAt) return false;
 
@@ -35,18 +35,64 @@ const isExpiredByTtl = (ttlAt?: string | null) => {
   return ttlTime <= Date.now();
 };
 
-const formatAmount = (amount?: string | number | null) => {
-  const numericAmount = Number(amount ?? 0);
-
-  if (Number.isNaN(numericAmount)) return "0";
-
-  return numericAmount.toLocaleString();
-};
-
 const formatTripType = (tripType?: string | null) => {
   if (!tripType) return "N/A";
 
   return tripType.replace(/_/g, " ");
+};
+
+const formatRoute = (route?: string | null) => {
+  const [from, to] = route?.split("->") || [];
+
+  return {
+    from: from?.trim() || "N/A",
+    to: to?.trim() || "N/A",
+  };
+};
+
+const formatTravelDate = (date?: string | null) => {
+  if (!date) return "N/A";
+
+  const parsedDate = new Date(date);
+
+  if (Number.isNaN(parsedDate.getTime())) return date;
+
+  return parsedDate.toLocaleDateString("en-GB", {
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
+  });
+};
+
+const getAirlineName = (booking: FlightBooking) => {
+  const bookingWithAirline = booking as FlightBooking & {
+    airline?: string | null;
+    airline_name?: string | null;
+    carrier_name?: string | null;
+    segments?: {
+      airline_name?: string | null;
+      airline_code?: string | null;
+    }[];
+  };
+
+  return (
+    bookingWithAirline.segments?.[0]?.airline_name ||
+    bookingWithAirline.airline_name ||
+    bookingWithAirline.carrier_name ||
+    bookingWithAirline.airline ||
+    bookingWithAirline.segments?.[0]?.airline_code ||
+    "N/A"
+  );
+};
+
+const getAirlineCode = (booking: FlightBooking) => {
+  const bookingWithSegments = booking as FlightBooking & {
+    segments?: {
+      airline_code?: string | null;
+    }[];
+  };
+
+  return bookingWithSegments.segments?.[0]?.airline_code || null;
 };
 
 const FlightBookingCard = ({ booking, onBookingExpired }: Props) => {
@@ -68,6 +114,16 @@ const FlightBookingCard = ({ booking, onBookingExpired }: Props) => {
   const isPendingPayment =
     booking.payment_status === "unpaid" || booking.payment_status === "pending";
 
+  const shouldShowExpiredBadge =
+    isPaymentExpired && isPendingPayment && !isPaid && !isTicketed;
+
+  const canShowTimer =
+    !shouldShowExpiredBadge &&
+    !isCancelled &&
+    !isTicketed &&
+    !isPaid &&
+    isPendingPayment;
+
   const canShowPayButton =
     !isCancelled &&
     !isTicketed &&
@@ -85,6 +141,10 @@ const FlightBookingCard = ({ booking, onBookingExpired }: Props) => {
     !isPaymentExpired;
 
   const contactEmail = passenger?.email || "eshrakg62@gmail.com";
+
+  const { from, to } = formatRoute(booking.route);
+  const airlineName = getAirlineName(booking);
+  const airlineCode = getAirlineCode(booking);
 
   const handlePaymentTimerExpired = () => {
     setIsPaymentExpired(true);
@@ -119,13 +179,21 @@ const FlightBookingCard = ({ booking, onBookingExpired }: Props) => {
 
       alert(response.message || "Air ticket cancelled successfully.");
       setCancelOpen(false);
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error("Cancel Ticket Error:", error);
 
+      const apiError = error as {
+        data?: {
+          data?: {
+            friendly_reason?: string;
+          };
+          message?: string;
+        };
+      };
+
       const message =
-        error?.data?.data?.friendly_reason ||
-        error?.data?.message ||
+        apiError?.data?.data?.friendly_reason ||
+        apiError?.data?.message ||
         "Ticket cancel failed. Please try again.";
 
       alert(message);
@@ -134,137 +202,99 @@ const FlightBookingCard = ({ booking, onBookingExpired }: Props) => {
 
   return (
     <>
-      <article className="overflow-hidden rounded-2xl border bg-card shadow-sm transition hover:border-primary/30 hover:shadow-md dark:bg-card/80">
-        <div className="grid gap-0 md:grid-cols-[240px_1fr]">
-          <div className="relative min-h-[170px] overflow-hidden bg-primary md:min-h-full">
-            <div className="absolute inset-0 bg-gradient-to-br from-primary via-primary/90 to-sky-500" />
+      <article className="group overflow-hidden rounded-md border bg-card shadow-sm transition hover:border-primary/30 hover:shadow-md">
+        <div className="relative grid gap-0 p-3 sm:grid-cols-[180px_1fr] md:grid-cols-[190px_1fr]">
+          {/* Right status and timer area */}
+          <div className="absolute right-3 top-3 z-10 lg:mt-3 flex max-w-[140px] flex-col items-end gap-1.5">
+            {shouldShowExpiredBadge ? (
+              <span className="rounded-md bg-muted-foreground px-2.5 py-1 text-[10px] font-extrabold uppercase leading-none text-background shadow-sm">
+                Expired
+              </span>
+            ) : (
+              <BookingStatusBadge
+                bookingStatus={booking.booking_status}
+                paymentStatus={booking.payment_status}
+              />
+            )}
 
-            <div className="absolute inset-0 opacity-25">
-              <div className="absolute -right-14 top-10 h-44 w-44 rounded-full bg-white/40 blur-2xl" />
-              <div className="absolute -bottom-14 -left-14 h-44 w-44 rounded-full bg-white/30 blur-2xl" />
-            </div>
-
-            <div className="relative flex h-full min-h-[170px] flex-col justify-between p-4 text-primary-foreground">
-              <div className="inline-flex w-fit items-center gap-2 rounded-lg bg-white px-3 py-1.5 text-xs font-extrabold text-primary shadow-sm">
-                <Plane className="h-3.5 w-3.5" />
-                Flight
-              </div>
-
-              <div>
-                <Plane className="mb-3 h-12 w-12 text-white/90" />
-
-                <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-white/75">
-                  Route
-                </p>
-
-                <h3 className="mt-1 text-xl font-black leading-tight text-white">
-                  {booking.route || "N/A"}
-                </h3>
-              </div>
-            </div>
+            {canShowTimer ? (
+              <BookingPaymentTimer
+                ttlAt={booking.ttl_at}
+                paymentStatus={booking.payment_status}
+                bookingStatus={booking.booking_status}
+                onExpired={handlePaymentTimerExpired}
+              />
+            ) : null}
           </div>
 
-          <div className="flex flex-col gap-4 p-4 sm:p-5">
-            <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
-              <div className="min-w-0">
-                <p className="text-sm text-muted-foreground">
-                  Booking ID:{" "}
-                  <span className="font-bold text-foreground">
-                    {booking.booking_code || "N/A"}
-                  </span>
-                </p>
-
-                <h3 className="mt-2 break-words text-xl font-black leading-tight text-foreground sm:text-2xl">
-                  From {booking.route?.split("->")?.[0]?.trim() || "N/A"} To{" "}
-                  {booking.route?.split("->")?.[1]?.trim() || "N/A"}
-                </h3>
-
-                <div className="mt-3 flex flex-wrap items-center gap-2">
-                  <span className="inline-flex items-center gap-1.5 rounded-lg border border-primary/20 bg-primary/10 px-2.5 py-1 text-xs font-bold text-primary">
-                    <CheckCircle2 className="h-3.5 w-3.5" />
-                    PNR: {booking.pnr || "N/A"}
-                  </span>
-
-                  <BookingStatusBadge
-                    bookingStatus={booking.booking_status}
-                    paymentStatus={booking.payment_status}
-                  />
-                </div>
-              </div>
-
-              <div className="shrink-0 sm:text-right">
-                <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-muted-foreground">
-                  Amount
-                </p>
-
-                <p className="mt-1 text-xl font-black text-primary sm:text-2xl">
-                  <span className="mr-1 text-xs font-bold">
-                    {booking.pricing?.currency ?? "BDT"}
-                  </span>
-                  {formatAmount(booking.pricing?.total_amount)}
-                </p>
-              </div>
-            </div>
-
-            <div className="grid gap-3 sm:grid-cols-3">
-              <div className="flex min-w-0 items-center gap-2 rounded-xl border bg-muted/5 p-3">
-                <CalendarDays className="h-4 w-4 shrink-0 text-primary" />
-                <div className="min-w-0">
-                  <p className="text-[10px] font-bold uppercase tracking-[0.14em] text-muted-foreground">
-                    Departure
-                  </p>
-                  <p className="truncate text-sm font-bold text-foreground">
-                    {booking.travel_start_date || "N/A"}
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex min-w-0 items-center gap-2 rounded-xl border bg-muted/5 p-3">
-                <Route className="h-4 w-4 shrink-0 text-primary" />
-                <div className="min-w-0">
-                  <p className="text-[10px] font-bold uppercase tracking-[0.14em] text-muted-foreground">
-                    Trip
-                  </p>
-                  <p className="truncate text-sm font-bold capitalize text-foreground">
-                    {formatTripType(booking.trip_type)}
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex min-w-0 items-center gap-2 rounded-xl border bg-muted/5 p-3">
-                <Plane className="h-4 w-4 shrink-0 text-primary" />
-                <div className="min-w-0">
-                  <p className="text-[10px] font-bold uppercase tracking-[0.14em] text-muted-foreground">
-                    Passenger
-                  </p>
-                  <p className="truncate text-sm font-bold text-foreground">
-                    {passenger
-                      ? `${passenger.given_name ?? ""} ${
-                          passenger.surname ?? ""
-                        }`.trim()
-                      : "N/A"}
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <BookingPaymentTimer
-              ttlAt={booking.ttl_at}
-              paymentStatus={booking.payment_status}
-              bookingStatus={booking.booking_status}
-              onExpired={handlePaymentTimerExpired}
+          {/* Left image area */}
+          <Link
+            to={`/dashboard/flight-bookings/${booking.id}`}
+            className="relative h-[135px] overflow-hidden my-auto rounded-md bg-muted sm:h-[150px]"
+          >
+            <img
+              src={flightImage}
+              alt="Flight"
+              className="h-full w-full object-cover object-center transition duration-300 group-hover:scale-105"
             />
 
-            <div className="flex flex-col gap-2 border-t pt-4 sm:flex-row sm:items-center sm:justify-end">
+            <div className="absolute left-3 top-3 inline-flex min-w-9 items-center justify-center rounded bg-white px-2 py-1 text-xs font-black text-primary shadow-sm">
+              {airlineCode || "FL"}
+            </div>
+          </Link>
+
+          {/* Content */}
+          <div className="min-w-0 px-0 pt-4 sm:px-4 sm:pt-3 md:px-5">
+            <div className="pr-36">
+              <p className="text-xs font-medium text-muted-foreground sm:text-sm">
+                Booking ID:{" "}
+                <span className="text-muted-foreground">
+                  {booking.booking_code || "N/A"}
+                </span>
+              </p>
+
+              <Link to={`/dashboard/flight-bookings/${booking.id}`}>
+                <h3 className="mt-2 text-base font-extrabold leading-tight text-foreground transition hover:text-primary sm:text-lg">
+                  From {from} To {to}
+                </h3>
+              </Link>
+
+              <div className="mt-2 flex items-center gap-2">
+                {airlineCode ? (
+                  <span className="inline-flex h-5 min-w-8 items-center justify-center rounded bg-primary/10 px-1.5 text-[10px] font-black text-primary">
+                    {airlineCode}
+                  </span>
+                ) : (
+                  <Plane className="h-4 w-4 text-primary" />
+                )}
+
+                <p className="truncate text-sm font-medium text-foreground">
+                  {airlineName}
+                </p>
+              </div>
+            </div>
+
+            <div className="mt-3 space-y-1 text-sm text-muted-foreground">
+              <p>
+                <span className="font-semibold text-foreground">
+                  Departure:
+                </span>{" "}
+                {formatTravelDate(booking.travel_start_date)}
+              </p>
+
+              <p className="capitalize">{formatTripType(booking.trip_type)}</p>
+            </div>
+
+            <div className="mt-4 flex flex-wrap items-center justify-end gap-2 border-t pt-3">
               {canShowPayButton ? (
                 <Button
                   type="button"
                   variant="outline"
                   onClick={() => setPaymentOpen(true)}
                   disabled={!canPay}
-                  className="h-10 rounded-xl px-4 text-sm font-bold"
+                  className="h-9 rounded-md px-3 text-xs font-bold"
                 >
-                  <CreditCard className="mr-2 h-4 w-4" />
+                  <CreditCard className="mr-1.5 h-3.5 w-3.5" />
                   Pay Now
                 </Button>
               ) : null}
@@ -275,12 +305,12 @@ const FlightBookingCard = ({ booking, onBookingExpired }: Props) => {
                   variant="outline"
                   onClick={() => setCancelOpen(true)}
                   disabled={isCancelling}
-                  className="h-10 rounded-xl border-destructive/30 px-4 text-sm font-bold text-destructive hover:bg-destructive/5 hover:text-destructive"
+                  className="h-9 rounded-md border-destructive/30 px-3 text-xs font-bold text-destructive hover:bg-destructive/5 hover:text-destructive"
                 >
                   {isCancelling ? (
-                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    <Loader2 className="mr-1.5 h-3.5 w-3.5 animate-spin" />
                   ) : (
-                    <TicketX className="mr-2 h-4 w-4" />
+                    <TicketX className="mr-1.5 h-3.5 w-3.5" />
                   )}
                   {isCancelling ? "Cancelling..." : "Cancel"}
                 </Button>
@@ -288,11 +318,11 @@ const FlightBookingCard = ({ booking, onBookingExpired }: Props) => {
 
               <Button
                 asChild
-                className="h-10 rounded-xl px-5 text-sm font-extrabold shadow-sm"
+                className="h-9 rounded-md px-4 text-xs font-extrabold"
               >
                 <Link to={`/dashboard/flight-bookings/${booking.id}`}>
                   View Details
-                  <ArrowRight className="ml-2 h-4 w-4" />
+                  <ArrowRight className="ml-1.5 h-3.5 w-3.5" />
                 </Link>
               </Button>
             </div>

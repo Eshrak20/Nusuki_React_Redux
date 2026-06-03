@@ -13,12 +13,10 @@ const DashboardPageHeader = ({
   title,
   subtitle,
   icon: Icon,
-  badgeTitle = "Dashboard",
-  badgeText = "Manage your account",
   imageUrl,
 }: DashboardPageHeaderProps) => {
   return (
-    <div className="overflow-hidden rounded-2xl -mt-4 border bg-card shadow-sm">
+    <div className="overflow-hidden rounded-sm -mt-6 border bg-card shadow-sm">
       <div className="relative bg-primary px-5 py-8 text-primary-foreground sm:px-8">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.22),transparent_35%)]" />
 
@@ -44,10 +42,6 @@ const DashboardPageHeader = ({
             </div>
           </div>
 
-          <div className="rounded-xl border border-primary-foreground/20 bg-primary-foreground/10 px-4 py-3 text-sm">
-            <p className="font-medium">{badgeTitle}</p>
-            <p className="text-primary-foreground/80">{badgeText}</p>
-          </div>
         </div>
       </div>
     </div>

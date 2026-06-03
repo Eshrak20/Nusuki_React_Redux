@@ -1,4 +1,18 @@
 import { useMemo, useState } from "react";
+import { SquarePen, Trash2, Search, Plus } from "lucide-react";
+import { toast } from "sonner";
+
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
+
 import {
   useCreateMyTravellerMutation,
   useDeleteMyTravellerMutation,
@@ -6,25 +20,40 @@ import {
   useUpdateMyTravellerMutation,
 } from "@/redux/api/flightApi/myTravellersApi";
 
-import MyTravellerForm from "./MyTravellerForm";
+import MyTravellerModal from "./MyTravellerModal";
 
 import type {
   MyTraveller,
   MyTravellerFormPayload,
 } from "@/types/flight/myTravellers.types";
 
+const getFullName = (traveller: MyTraveller) => {
+  return `${traveller.title || ""} ${traveller.given_name || ""} ${traveller.surname || ""
+    }`
+    .replace(/\s+/g, " ")
+    .trim();
+};
+
+const getTravellerEmail = (traveller: MyTraveller) => {
+  const emailTraveller = traveller as MyTraveller & {
+    email?: string | null;
+    user?: {
+      email?: string | null;
+    } | null;
+  };
+
+  return emailTraveller.email || emailTraveller.user?.email || "No email";
+};
+
 const MyTravelers = () => {
   const [showForm, setShowForm] = useState(false);
   const [selectedTraveller, setSelectedTraveller] =
     useState<MyTraveller | null>(null);
+  const [travellerToDelete, setTravellerToDelete] =
+    useState<MyTraveller | null>(null);
   const [searchText, setSearchText] = useState("");
 
-  const {
-    data,
-    isLoading,
-    isError,
-    refetch,
-  } = useGetMyTravellersQuery();
+  const { data, isLoading, isError } = useGetMyTravellersQuery();
 
   const [createTraveller, { isLoading: isCreating }] =
     useCreateMyTravellerMutation();
@@ -43,13 +72,12 @@ const MyTravelers = () => {
     if (!query) return travellers;
 
     return travellers.filter((traveller) => {
-      const fullName = `${traveller.given_name} ${traveller.surname}`;
+      const fullName = getFullName(traveller);
+      const email = getTravellerEmail(traveller);
 
       return (
         fullName.toLowerCase().includes(query) ||
-        traveller.phone?.toLowerCase().includes(query) ||
-        traveller.passport_no?.toLowerCase().includes(query) ||
-        traveller.passenger_type?.toLowerCase().includes(query)
+        email.toLowerCase().includes(query)
       );
     });
   }, [travellers, searchText]);
@@ -69,6 +97,15 @@ const MyTravelers = () => {
     setShowForm(false);
   };
 
+  const fieldClass =
+    "h-11 w-full rounded-md border border-input bg-muted/40 px-3 text-sm text-foreground shadow-sm outline-none transition placeholder:text-muted-foreground hover:bg-muted/50 focus:border-primary focus:bg-background focus:ring-2 focus:ring-primary/25";
+
+  const selectTriggerClass =
+    "h-11 w-full border border-input bg-muted/40 text-foreground shadow-sm hover:bg-muted/50 focus:border-primary focus:ring-2 focus:ring-primary/25";
+
+  const dateButtonClass =
+    "h-11 w-full justify-between border border-input bg-muted/40 px-3 text-left text-sm font-normal text-foreground shadow-sm hover:bg-muted/50 focus:border-primary focus:bg-background focus:ring-2 focus:ring-primary/25";
+
   const handleSubmit = async (payload: MyTravellerFormPayload) => {
     try {
       if (selectedTraveller) {
@@ -78,20 +115,20 @@ const MyTravelers = () => {
         }).unwrap();
 
         if (!response.success) {
-          alert(response.message || "Traveller update failed.");
+          toast.error(response.message || "Traveller update failed.");
           return;
         }
 
-        alert(response.message || "Traveller updated successfully.");
+        toast.success(response.message || "Traveller updated successfully.");
       } else {
         const response = await createTraveller(payload).unwrap();
 
         if (!response.success) {
-          alert(response.message || "Traveller creation failed.");
+          toast.error(response.message || "Traveller creation failed.");
           return;
         }
 
-        alert(response.message || "Traveller created successfully.");
+        toast.success(response.message || "Traveller created successfully.");
       }
 
       setShowForm(false);
@@ -105,26 +142,27 @@ const MyTravelers = () => {
         };
       };
 
-      alert(apiError?.data?.message || "Something went wrong.");
+      toast.error(apiError?.data?.message || "Something went wrong.");
     }
   };
 
-  const handleDelete = async (traveller: MyTraveller) => {
-    const confirmed = window.confirm(
-      `Are you sure you want to delete ${traveller.given_name} ${traveller.surname}?`,
-    );
+  const handleDeleteClick = (traveller: MyTraveller) => {
+    setTravellerToDelete(traveller);
+  };
 
-    if (!confirmed) return;
+  const handleDeleteConfirm = async () => {
+    if (!travellerToDelete) return;
 
     try {
-      const response = await deleteTraveller(traveller.id).unwrap();
+      const response = await deleteTraveller(travellerToDelete.id).unwrap();
 
       if (!response.success) {
-        alert(response.message || "Traveller delete failed.");
+        toast.error(response.message || "Traveller delete failed.");
         return;
       }
 
-      alert(response.message || "Traveller deleted successfully.");
+      toast.success(response.message || "Traveller deleted successfully.");
+      setTravellerToDelete(null);
     } catch (error: unknown) {
       console.error("Traveller Delete Error:", error);
 
@@ -134,253 +172,188 @@ const MyTravelers = () => {
         };
       };
 
-      alert(apiError?.data?.message || "Something went wrong.");
+      toast.error(apiError?.data?.message || "Something went wrong.");
     }
   };
 
   return (
-    <div className="space-y-6 p-4 md:p-6">
-      <div className="overflow-hidden rounded-2xl border bg-gradient-to-r from-primary/10 via-background to-background p-5 shadow-sm">
-        <div className="flex flex-col justify-between gap-4 md:flex-row md:items-center">
-          <div>
-            <h1 className="text-2xl font-bold text-foreground">
-              My Travellers
-            </h1>
-            <p className="mt-1 text-sm text-muted-foreground">
-              Manage your saved travellers for faster flight booking and PNR
-              creation.
-            </p>
+    <>
+      <div className="mx-auto w-full max-w-6xl px-4 py-4 sm:px-5 md:px-6 lg:px-8">
+        <div className="rounded-2xl border bg-card text-card-foreground shadow-sm">
+          <div className="border-b px-4 py-4 sm:px-5 md:px-6">
+            <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
+              <div>
+                <h1 className="text-xl font-bold tracking-tight text-foreground sm:text-2xl">
+                  Traveler Info
+                </h1>
+
+                <p className="mt-1 text-sm text-muted-foreground">
+                  You have {travellers.length}{" "}
+                  {travellers.length === 1 ? "traveller" : "travellers"}
+                </p>
+              </div>
+
+              <button
+                type="button"
+                onClick={handleAddNew}
+                className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-primary px-4 py-2.5 text-sm font-semibold text-primary-foreground shadow-sm transition hover:bg-primary/90 md:w-auto"
+              >
+                <Plus className="h-4 w-4" />
+                Add Traveller
+              </button>
+            </div>
+
+            <div className="relative mt-4 w-full md:max-w-md">
+              <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+
+              <input
+                type="text"
+                value={searchText}
+                onChange={(event) => setSearchText(event.target.value)}
+                placeholder="Search by name or email..."
+                className="h-11 w-full rounded-xl border bg-background pl-10 pr-4 text-sm text-foreground outline-none transition placeholder:text-muted-foreground focus:border-primary focus:ring-2 focus:ring-primary/20"
+              />
+            </div>
           </div>
 
-          <button
-            type="button"
-            onClick={handleAddNew}
-            className="rounded-xl bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground shadow-sm transition hover:opacity-90"
-          >
-            + Add Traveller
-          </button>
+          <div className="px-4 py-2 sm:px-5 md:px-6">
+            {isLoading ? (
+              <div className="flex min-h-40 items-center justify-center">
+                <p className="text-sm text-muted-foreground">
+                  Loading travellers...
+                </p>
+              </div>
+            ) : null}
+
+            {isError ? (
+              <div className="my-4 rounded-xl border border-destructive/20 bg-destructive/10 p-4 text-sm text-destructive">
+                Failed to load travellers.
+              </div>
+            ) : null}
+
+            {!isLoading && !isError && filteredTravellers.length === 0 ? (
+              <div className="flex min-h-52 flex-col items-center justify-center text-center">
+                <h3 className="text-base font-semibold text-foreground">
+                  No traveller found
+                </h3>
+
+                <p className="mt-1 max-w-sm text-sm text-muted-foreground">
+                  Add your first traveller to use it during flight booking and
+                  PNR creation.
+                </p>
+
+                <button
+                  type="button"
+                  onClick={handleAddNew}
+                  className="mt-4 rounded-xl bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground transition hover:bg-primary/90"
+                >
+                  Add Traveller
+                </button>
+              </div>
+            ) : null}
+
+            {!isLoading && !isError && filteredTravellers.length > 0 ? (
+              <div className="divide-y">
+                {filteredTravellers.map((traveller, index) => {
+                  const fullName = getFullName(traveller);
+                  const email = getTravellerEmail(traveller);
+                  const isPrimaryTraveller = index === 0;
+
+                  return (
+                    <div
+                      key={traveller.id}
+                      className="flex flex-col gap-3 py-4 transition hover:bg-muted/30 sm:px-2 md:flex-row md:items-center md:justify-between"
+                    >
+                      <div className="min-w-0">
+                        <div className="flex flex-wrap items-center gap-2">
+                          <h3 className="truncate text-sm font-bold uppercase tracking-wide text-foreground sm:text-base">
+                            {fullName || "Unnamed Traveller"}
+                          </h3>
+
+                          {isPrimaryTraveller ? (
+                            <span className="rounded-sm border border-primary px-1.5 py-0.5 text-[10px] font-bold uppercase leading-none text-primary">
+                              Primary Traveler
+                            </span>
+                          ) : null}
+                        </div>
+
+                        <p className="mt-1 truncate text-xs text-muted-foreground sm:text-sm">
+                          {email}
+                        </p>
+                      </div>
+
+                      <div className="flex shrink-0 items-center gap-4 md:justify-end">
+                        <button
+                          type="button"
+                          onClick={() => handleEdit(traveller)}
+                          className="inline-flex items-center gap-1.5 text-xs font-bold text-primary transition hover:text-primary/80 sm:text-sm"
+                        >
+                          <SquarePen className="h-4 w-4 stroke-[2.4]" />
+                          Edit
+                        </button>
+
+                        <button
+                          type="button"
+                          disabled={isDeleting}
+                          onClick={() => handleDeleteClick(traveller)}
+                          className="inline-flex items-center gap-1.5 text-xs font-bold text-destructive transition hover:text-destructive/80 disabled:cursor-not-allowed disabled:opacity-60 sm:text-sm"
+                        >
+                          <Trash2 className="h-3.5 w-3.5" />
+                          Delete
+                        </button>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            ) : null}
+          </div>
         </div>
       </div>
 
       {showForm ? (
-        <MyTravellerForm
+        <MyTravellerModal
+          key={selectedTraveller?.id || "add-traveller"}
+          open={showForm}
           selectedTraveller={selectedTraveller}
           isSubmitting={isCreating || isUpdating}
           onSubmit={handleSubmit}
-          onCancel={handleCancel}
+          onClose={handleCancel}
         />
       ) : null}
 
-      <div className="rounded-2xl border bg-card p-5 shadow-sm">
-        <div className="mb-5 flex flex-col justify-between gap-3 md:flex-row md:items-center">
-          <div>
-            <h2 className="text-lg font-semibold text-card-foreground">
-              Saved Travellers
-            </h2>
-            <p className="text-sm text-muted-foreground">
-              Total travellers: {travellers.length}
-            </p>
-          </div>
+      <AlertDialog
+        open={Boolean(travellerToDelete)}
+        onOpenChange={(open) => {
+          if (!open) setTravellerToDelete(null);
+        }}
+      >
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Delete traveller?</AlertDialogTitle>
+            <AlertDialogDescription>
+              Are you sure you want to delete{" "}
+              <span className="font-semibold text-foreground">
+                {travellerToDelete ? getFullName(travellerToDelete) : ""}
+              </span>
+              ? This action cannot be undone.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
 
-          <div className="flex gap-2">
-            <input
-              type="text"
-              value={searchText}
-              onChange={(event) => setSearchText(event.target.value)}
-              placeholder="Search by name, phone, passport..."
-              className="w-full rounded-xl border bg-background px-4 py-2 text-sm outline-none focus:ring-2 focus:ring-primary/40 md:w-80"
-            />
+          <AlertDialogFooter>
+            <AlertDialogCancel disabled={isDeleting}>Cancel</AlertDialogCancel>
 
-            <button
-              type="button"
-              onClick={() => refetch()}
-              className="rounded-xl border px-4 py-2 text-sm font-medium hover:bg-muted"
+            <AlertDialogAction
+              disabled={isDeleting}
+              onClick={handleDeleteConfirm}
+              className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
             >
-              Refresh
-            </button>
-          </div>
-        </div>
-
-        {isLoading ? (
-          <div className="flex min-h-40 items-center justify-center rounded-xl border border-dashed">
-            <p className="text-sm text-muted-foreground">
-              Loading travellers...
-            </p>
-          </div>
-        ) : null}
-
-        {isError ? (
-          <div className="rounded-xl border border-red-200 bg-red-50 p-5 text-sm text-red-700">
-            Failed to load travellers.
-          </div>
-        ) : null}
-
-        {!isLoading && !isError && filteredTravellers.length === 0 ? (
-          <div className="flex min-h-44 flex-col items-center justify-center rounded-xl border border-dashed text-center">
-            <h3 className="text-base font-semibold">No traveller found</h3>
-            <p className="mt-1 text-sm text-muted-foreground">
-              Add your first traveller to use it during PNR creation.
-            </p>
-
-            <button
-              type="button"
-              onClick={handleAddNew}
-              className="mt-4 rounded-xl bg-primary px-5 py-2 text-sm font-semibold text-primary-foreground"
-            >
-              Add Traveller
-            </button>
-          </div>
-        ) : null}
-
-        {!isLoading && !isError && filteredTravellers.length > 0 ? (
-          <>
-            <div className="hidden overflow-hidden rounded-xl border md:block">
-              <table className="w-full text-left text-sm">
-                <thead className="bg-muted/70 text-xs uppercase text-muted-foreground">
-                  <tr>
-                    <th className="px-4 py-3">Traveller</th>
-                    <th className="px-4 py-3">Type</th>
-                    <th className="px-4 py-3">DOB</th>
-                    <th className="px-4 py-3">Phone</th>
-                    <th className="px-4 py-3">Passport</th>
-                    <th className="px-4 py-3">Expiry</th>
-                    <th className="px-4 py-3 text-right">Action</th>
-                  </tr>
-                </thead>
-
-                <tbody>
-                  {filteredTravellers.map((traveller) => (
-                    <tr
-                      key={traveller.id}
-                      className="border-t transition hover:bg-muted/40"
-                    >
-                      <td className="px-4 py-4">
-                        <div className="font-semibold text-foreground">
-                          {traveller.title} {traveller.given_name}{" "}
-                          {traveller.surname}
-                        </div>
-                        <div className="text-xs text-muted-foreground">
-                          {traveller.gender === "M" ? "Male" : "Female"} ·{" "}
-                          {traveller.nationality}
-                        </div>
-                      </td>
-
-                      <td className="px-4 py-4">
-                        <span className="rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold text-primary">
-                          {traveller.passenger_type}
-                        </span>
-                      </td>
-
-                      <td className="px-4 py-4">{traveller.date_of_birth}</td>
-
-                      <td className="px-4 py-4">{traveller.phone}</td>
-
-                      <td className="px-4 py-4">
-                        <div className="font-medium">
-                          {traveller.passport_no}
-                        </div>
-                        <div className="text-xs text-muted-foreground">
-                          {traveller.passport_issuing_country}
-                        </div>
-                      </td>
-
-                      <td className="px-4 py-4">
-                        {traveller.passport_expire_date}
-                      </td>
-
-                      <td className="px-4 py-4">
-                        <div className="flex justify-end gap-2">
-                          <button
-                            type="button"
-                            onClick={() => handleEdit(traveller)}
-                            className="rounded-lg border px-3 py-1.5 text-xs font-medium hover:bg-muted"
-                          >
-                            Edit
-                          </button>
-
-                          <button
-                            type="button"
-                            disabled={isDeleting}
-                            onClick={() => handleDelete(traveller)}
-                            className="rounded-lg border border-red-200 px-3 py-1.5 text-xs font-medium text-red-600 hover:bg-red-50 disabled:opacity-60"
-                          >
-                            Delete
-                          </button>
-                        </div>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-
-            <div className="grid gap-4 md:hidden">
-              {filteredTravellers.map((traveller) => (
-                <div
-                  key={traveller.id}
-                  className="rounded-xl border bg-background p-4 shadow-sm"
-                >
-                  <div className="mb-3 flex items-start justify-between gap-3">
-                    <div>
-                      <h3 className="font-semibold">
-                        {traveller.title} {traveller.given_name}{" "}
-                        {traveller.surname}
-                      </h3>
-                      <p className="text-xs text-muted-foreground">
-                        {traveller.passenger_type} ·{" "}
-                        {traveller.gender === "M" ? "Male" : "Female"}
-                      </p>
-                    </div>
-
-                    <span className="rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold text-primary">
-                      {traveller.passenger_type}
-                    </span>
-                  </div>
-
-                  <div className="grid gap-2 text-sm">
-                    <p>
-                      <span className="font-medium">DOB:</span>{" "}
-                      {traveller.date_of_birth}
-                    </p>
-                    <p>
-                      <span className="font-medium">Phone:</span>{" "}
-                      {traveller.phone}
-                    </p>
-                    <p>
-                      <span className="font-medium">Passport:</span>{" "}
-                      {traveller.passport_no}
-                    </p>
-                    <p>
-                      <span className="font-medium">Expire:</span>{" "}
-                      {traveller.passport_expire_date}
-                    </p>
-                  </div>
-
-                  <div className="mt-4 flex gap-2">
-                    <button
-                      type="button"
-                      onClick={() => handleEdit(traveller)}
-                      className="flex-1 rounded-lg border px-3 py-2 text-sm font-medium hover:bg-muted"
-                    >
-                      Edit
-                    </button>
-
-                    <button
-                      type="button"
-                      disabled={isDeleting}
-                      onClick={() => handleDelete(traveller)}
-                      className="flex-1 rounded-lg border border-red-200 px-3 py-2 text-sm font-medium text-red-600 hover:bg-red-50 disabled:opacity-60"
-                    >
-                      Delete
-                    </button>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </>
-        ) : null}
-      </div>
-    </div>
+              {isDeleting ? "Deleting..." : "Delete"}
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+    </>
   );
 };
 

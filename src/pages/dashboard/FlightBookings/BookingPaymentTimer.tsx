@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from "react";
-import { AlertTriangle, Clock3 } from "lucide-react";
 
 type Props = {
   ttlAt?: string | null;
@@ -7,8 +6,6 @@ type Props = {
   bookingStatus: string;
   onExpired?: () => void;
 };
-
-const PAYMENT_TTL_MS = 20 * 60 * 1000;
 
 const getRemainingTime = (ttlAt?: string | null) => {
   if (!ttlAt) return 0;
@@ -82,78 +79,12 @@ const BookingPaymentTimer = ({
     return () => window.clearInterval(intervalId);
   }, [ttlAt, shouldShowTimer, onExpired]);
 
-  if (!shouldShowTimer) return null;
-
-  const isExpired = remainingTime <= 0;
-
-  const progressPercentage = Math.max(
-    0,
-    Math.min(100, (remainingTime / PAYMENT_TTL_MS) * 100),
-  );
+  if (!shouldShowTimer || remainingTime <= 0) return null;
 
   return (
-    <div
-      className={`rounded-2xl border p-4 ${
-        isExpired
-          ? "border-primary/10 bg-primary/10"
-          : "border-primary bg-primary/10"
-      }`}
-    >
-      <div className="flex items-start justify-between gap-3">
-        <div className="flex gap-3">
-          <div
-            className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl ${
-              isExpired
-                ? "bg-primary/10 text-primary dark:text-primary/80"
-                : "bg-primary/10 text-primary dark:text-primary/80"
-            }`}
-          >
-            {isExpired ? (
-              <AlertTriangle className="h-5 w-5" />
-            ) : (
-              <Clock3 className="h-5 w-5" />
-            )}
-          </div>
-
-          <div>
-            <p
-              className={`text-xs font-black uppercase tracking-wider ${
-                isExpired
-                  ? "text-primary dark:text-primary/80"
-                  : "text-primary dark:text-primary/80"
-              }`}
-            >
-              {isExpired ? "Payment Time Expired" : "Payment Time Left"}
-            </p>
-
-            <p className="mt-1 text-sm font-medium text-muted-foreground">
-              {isExpired
-                ? "This booking may be auto-cancelled soon."
-                : "Complete payment before the timer ends."}
-            </p>
-          </div>
-        </div>
-
-        <div
-          className={`rounded-xl px-3 py-2 text-lg font-black tabular-nums ${
-            isExpired
-              ? "bg-primary/10 text-primary dark:text-primary/80"
-              : "bg-background text-foreground shadow-sm"
-          }`}
-        >
-          {formatRemainingTime(remainingTime)}
-        </div>
-      </div>
-
-      <div className="mt-4 h-2 overflow-hidden rounded-full bg-background/80">
-        <div
-          className={`h-full rounded-full transition-all duration-500 ${
-            isExpired ? "bg-primary" : "bg-primary"
-          }`}
-          style={{ width: `${progressPercentage}%` }}
-        />
-      </div>
-    </div>
+    <span className="inline-flex rounded-md bg-background px-2.5 py-1 font-black tabular-nums text-foreground shadow-sm">
+      {formatRemainingTime(remainingTime)}
+    </span>
   );
 };
 

@@ -89,7 +89,7 @@ const ChangePassword = () => {
           badgeText="Use a strong password"
         />
 
-        <div className="grid gap-6 lg:grid-cols-[1fr_340px]">
+        <div className="">
           <ChangePasswordForm
             form={form}
             isLoading={isLoading}
@@ -97,8 +97,6 @@ const ChangePassword = () => {
             onReset={resetForm}
             onSubmit={handleSubmit}
           />
-
-          <SecurityTipsCard />
         </div>
       </div>
     </div>

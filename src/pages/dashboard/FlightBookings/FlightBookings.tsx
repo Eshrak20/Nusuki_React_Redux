@@ -31,7 +31,7 @@ const FlightBookings = () => {
 
   return (
     <section className="space-y-5">
-      <div className="rounded-2xl border bg-card p-4 shadow-sm dark:bg-card/80 sm:p-5 lg:p-6">
+      <div className="rounded-sm border bg-card p-4 shadow-sm dark:bg-card/80 sm:p-5 lg:p-6">
         <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div className="min-w-0">
             <div className="flex items-center gap-2 text-sm font-semibold text-primary">

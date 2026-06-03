@@ -23,7 +23,7 @@ const ProfileViewCard = ({ userData, onEdit }: ProfileViewCardProps) => {
   const profile = userData.profile;
 
   return (
-    <div className="grid w-full gap-6 lg:grid-cols-[1fr_340px]">
+    <div className="w-full ">
       <div className="space-y-6">
         {/* Personal Information */}
         <Card className="rounded-2xl shadow-sm overflow-hidden">

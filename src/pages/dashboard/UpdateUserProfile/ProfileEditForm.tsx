@@ -48,14 +48,14 @@ const ProfileEditForm = ({
   onCancel,
 }: ProfileEditFormProps) => {
   return (
-    <form onSubmit={onSubmit} className="grid gap-6 lg:grid-cols-[1fr_360px]">
-      <div className="space-y-6">
-        <div className="flex justify-end">
+    <form onSubmit={onSubmit} className="">
+      <div className="">
+        <div className="flex justify-end -mt-2 mb-3">
           <Button
             type="button"
             variant="outline"
             onClick={onCancel}
-            className="rounded-xl"
+            className="rounded-sm bg-primary text-white mr-3"
           >
             Cancel Edit
           </Button>

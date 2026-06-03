@@ -18,8 +18,8 @@ const DashboardLayout = () => {
             onOpenMobileSidebar={() => setMobileSidebarOpen(true)}
           />
 
-          <main className="flex-1 py-6 px-4 lg:px-14">
-            <div className="w-full">
+          <main className="flex-1 py-6 px-4 bg-gray-200 dark:bg-background lg:px-14">
+            <div className="max-w-2xl mx-auto">
               <Outlet />
             </div>
           </main>

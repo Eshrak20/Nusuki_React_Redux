@@ -16,7 +16,7 @@ export function SearchField({
   return (
     <div
       className={cn(
-        "flex min-h-[58px] items-center gap-3 rounded-lg border border-slate-200 bg-white px-4 py-3 transition",
+        "flex min-h-14.5 items-center gap-3 rounded-lg border border-slate-200 bg-white px-4 py-3 transition",
         "dark:border-[#2B2544] dark:bg-[#0B0B10]",
         className,
       )}
