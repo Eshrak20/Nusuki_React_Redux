@@ -1,8 +1,7 @@
 import { useEffect } from "react";
 import { flushSync } from "react-dom";
-import { useGoogleLogin, useGoogleOneTapLogin } from "@react-oauth/google";
+import { useGoogleOneTapLogin } from "@react-oauth/google";
 import { useDispatch, useSelector } from "react-redux";
-import { useLocation } from "react-router-dom";
 import { toast } from "sonner";
 
 import {
@@ -11,6 +10,18 @@ import {
 } from "@/redux/features/auth/authSlice";
 import type { RootState } from "@/redux/store";
 import { useGoogleLoginMutation } from "@/redux/api/authApi/authApi";
+
+declare global {
+  interface Window {
+    google?: {
+      accounts?: {
+        id?: {
+          cancel?: () => void;
+        };
+      };
+    };
+  }
+}
 
 type GoogleOneTapAuthResponse = {
   message?: string;
@@ -21,6 +32,13 @@ type GoogleOneTapAuthResponse = {
   token?: string;
   user?: AuthUser;
 };
+
+const blockedRoutes = [
+  "/login",
+  "/signup",
+  "/forgot-password",
+  "/reset-password",
+];
 
 const isValidAuthUser = (user: unknown): user is AuthUser => {
   return typeof user === "object" && user !== null;
@@ -46,30 +64,24 @@ const getErrorMessage = (error: unknown) => {
 
 const GoogleOneTapLogin = () => {
   const dispatch = useDispatch();
-  const location = useLocation();
 
   const { isAuthenticated } = useSelector((state: RootState) => state.auth);
 
   const [googleOneTapLoginApi] = useGoogleLoginMutation();
 
-  const blockedRoutes = [
-    "/login",
-    "/signup",
-    "/forgot-password",
-    "/reset-password",
-  ];
+  const currentPath = window.location.pathname;
 
   const isBlockedRoute = blockedRoutes.some((route) =>
-    location.pathname.startsWith(route)
+    currentPath.startsWith(route)
   );
 
   const shouldShowOneTap = !isAuthenticated && !isBlockedRoute;
 
   useEffect(() => {
     if (!shouldShowOneTap) {
-      window.google?.accounts?.id?.cancel();
+      window.google?.accounts?.id?.cancel?.();
     }
-  }, [shouldShowOneTap, location.pathname]);
+  }, [shouldShowOneTap]);
 
   useGoogleOneTapLogin({
     disabled: !shouldShowOneTap,
@@ -83,8 +95,17 @@ const GoogleOneTapLogin = () => {
           return;
         }
 
+        /**
+         * IMPORTANT:
+         * One Tap gives credential, not access_token.
+         * Your backend currently expects:
+         * { access_token: "..." }
+         *
+         * So this API call will fail unless backend also accepts:
+         * { credential: "..." }
+         */
         const res = (await googleOneTapLoginApi({
-          credential,
+          accessToken: credential,
         }).unwrap()) as GoogleOneTapAuthResponse;
 
         const token = res.data?.token ?? res.token ?? null;
@@ -111,7 +132,7 @@ const GoogleOneTapLogin = () => {
     },
 
     onError: () => {
-      // One Tap can be blocked by Google/browser. Don't show toast every reload.
+      // Google/browser can block One Tap. Don't show toast every reload.
     },
 
     cancel_on_tap_outside: false,

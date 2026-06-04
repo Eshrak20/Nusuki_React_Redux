@@ -9,7 +9,7 @@ import { ThemeProvider } from "./providers/theme.provider";
 import { Toaster } from "@/components/ui/sonner";
 import { router } from "./routes/router";
 import { GoogleOAuthProvider } from "@react-oauth/google";
-// import GoogleOneTapLogin from "./pages/main/auth/AuthComponents/GoogleOneTapLogin";
+import GoogleOneTapLogin from "./pages/main/auth/AuthComponents/GoogleOneTapLogin";
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
@@ -17,7 +17,7 @@ createRoot(document.getElementById("root")!).render(
         <PersistGate loading={null} persistor={persistor}>
           <Toaster richColors position="top-center" closeButton />
           <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}>
-            {/* <GoogleOneTapLogin /> */}
+            <GoogleOneTapLogin />
             <RouterProvider router={router} />
           </GoogleOAuthProvider>
         </PersistGate>
