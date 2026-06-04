@@ -14,7 +14,7 @@ const PnrSubmitFooter = ({
   onSubmit,
 }: PnrSubmitFooterProps) => {
   return (
-    <div className="border-t border-black/5 bg-[#eef1f5] px-6 py-4 dark:border-white/10 dark:bg-[#0b1220]">
+    <div className="border-t border-black/5  px-6 py-4 dark:border-white/10 dark:bg-[#0b1220]">
       <div className="mx-auto flex max-w-7xl justify-center">
         <Button
           onClick={onSubmit}

@@ -35,7 +35,7 @@ const BookingFlightPNR = () => {
   }, [profileResponse]);
 
   return (
-    <div className="mt-24 min-h-screen bg-background py-4 text-foreground md:py-8">
+    <div className="mt-24 min-h-screen bg-gray-200 dark:bg-muted py-4 text-foreground md:py-8">
       <div className="mx-auto max-w-7xl space-y-8 px-4">
         <BookingStepIndicator />
 

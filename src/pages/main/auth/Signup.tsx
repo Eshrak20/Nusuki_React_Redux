@@ -7,6 +7,7 @@ import { setCredentials } from "@/redux/features/auth/authSlice";
 import { useSignupMutation } from "@/redux/api/authApi/authApi";
 import type { SignupErrors, SignupFormData } from "./AuthComponents/SignupForm";
 import SignupForm from "./AuthComponents/SignupForm";
+import SocialLogin from "./AuthComponents/SocialLogin";
 
 const getErrorMessage = (error: unknown) => {
   if (
@@ -30,12 +31,10 @@ const isValidBangladeshiPhone = (phone: string) => {
 const normalizeBangladeshiPhone = (phone: string) => {
   let cleanedPhone = phone.replace(/\D/g, "");
 
-  // Example: 8801309176398 -> 1309176398
   if (cleanedPhone.startsWith("880")) {
     cleanedPhone = cleanedPhone.slice(3);
   }
 
-  // Example: 1309176398 -> 01309176398
   if (cleanedPhone.length === 10 && cleanedPhone.startsWith("1")) {
     cleanedPhone = `0${cleanedPhone}`;
   }
@@ -219,7 +218,7 @@ const Signup = () => {
       toast.error(getErrorMessage(error));
     }
   };
-
+''
   return (
     <div className="relative min-h-svh overflow-hidden bg-background">
       <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_top_left,hsl(var(--primary)/0.22),transparent_34%),radial-gradient(circle_at_bottom_right,hsl(var(--primary)/0.16),transparent_32%)]" />
@@ -238,6 +237,9 @@ const Signup = () => {
         onSubmit={handleSignup}
         onTogglePassword={() => setShowPassword((prev) => !prev)}
         onToggleConfirmPassword={() => setShowConfirmPassword((prev) => !prev)}
+        socialLoginSlot={
+          <SocialLogin redirectTo="/" disabled={isLoading} mode="signup" />
+        }
       />
     </div>
   );

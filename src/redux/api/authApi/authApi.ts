@@ -84,6 +84,15 @@ export const authApi = laravelApi.injectEndpoints({
         body,
       }),
     }),
+    googleLogin: builder.mutation({
+      query: (payload: { accessToken: string }) => ({
+        url: "/auth/google",
+        method: "POST",
+        body: {
+          access_token: payload.accessToken,
+        },
+      }),
+    }),
   }),
 });
 
@@ -97,4 +106,5 @@ export const {
   useSendResetPasswordOtpMutation,
   useCheckOtpMutation,
   useResetPasswordMutation,
+  useGoogleLoginMutation
 } = authApi;

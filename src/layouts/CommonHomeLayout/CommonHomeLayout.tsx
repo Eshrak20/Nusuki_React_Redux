@@ -22,7 +22,6 @@ const CommonHomeLayout = ({
 }: Props) => {
   const location = useLocation();
 
-  // MOVE BOTH ROUTE CHECKS INSIDE THE COMPONENT FUNCTION BODY:
   const isFlightPage = location.pathname.startsWith("/flight");
   const isHolidayPage = location.pathname.startsWith("/holiday");
   const isHotelPage = location.pathname.startsWith("/hotel");
@@ -35,13 +34,23 @@ const CommonHomeLayout = ({
           subtitle="Book flights, visa & holiday packages at the best prices"
         />
 
+        <div className="absolute left-1/2 top-48 z-30 w-full max-w-xs -translate-x-1/2 px-4 sm:top-52 sm:max-w-sm md:top-56 lg:top-60">
+        
+        </div>
+
         {searchSection}
       </div>
 
-      {/* This padding calculation will now run perfectly */}
       <section
-        className={`max-w-7xl mx-auto px-4 pt-96 mt-44 md:mt-0 ${isFlightPage ? "md:pt-32" : isHolidayPage ? "pt-32" : isHotelPage ? "md:pt-14" : "md:pt-72"
-          }`}
+        className={`max-w-7xl mx-auto px-4 pt-96 mt-44 md:mt-0 ${
+          isFlightPage
+            ? "md:pt-32"
+            : isHolidayPage
+              ? "pt-32"
+              : isHotelPage
+                ? "md:pt-14"
+                : "md:pt-72"
+        }`}
       >
         <CMPromotions />
       </section>

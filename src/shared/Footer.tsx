@@ -5,11 +5,11 @@ import footerLight from "@/assets/reactAssets/Footer/footer.webp";
 import footerDark from "@/assets/reactAssets/Footer/footer-dark.jpeg";
 import { footerPayImages } from "@/data/footerPayImages";
 import {
-  Facebook,
-  Twitter,
-  Instagram,
-  Youtube,
-  Linkedin,
+  // Facebook,
+  // Twitter,
+  // Instagram,
+  // Youtube,
+  // Linkedin,
   MapPin,
   Phone,
   Mail,
@@ -24,16 +24,16 @@ import {
 } from "@/redux/api/settingsApi/settingApi";
 
 const socialIconMap: Record<string, LucideIcon> = {
-  facebook: Facebook,
-  fafacebook: Facebook,
-  twitter: Twitter,
-  fatwitter: Twitter,
-  instagram: Instagram,
-  fainstagram: Instagram,
-  youtube: Youtube,
-  fayoutube: Youtube,
-  linkedin: Linkedin,
-  falinkedin: Linkedin,
+  facebook: Phone,
+  fafacebook: Phone,
+  twitter: Phone,
+  fatwitter: Phone,
+  instagram: Phone,
+  fainstagram: Phone,
+  youtube: Phone,
+  fayoutube: Phone,
+  linkedin: Phone,
+  falinkedin: Phone,
 };
 
 const getSocialIcon = (icon?: string | null, platform?: string | null) => {

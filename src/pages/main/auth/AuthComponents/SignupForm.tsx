@@ -1,3 +1,4 @@
+import type { ChangeEvent, FormEvent, ReactNode } from "react";
 import {
   ArrowLeft,
   CheckCircle2,
@@ -52,12 +53,13 @@ type SignupFormProps = {
   isLoading: boolean;
   showPassword: boolean;
   showConfirmPassword: boolean;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
   onPhoneBlur: () => void;
   onCountryCodeChange: (value: string) => void;
-  onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
+  onSubmit: (e: FormEvent<HTMLFormElement>) => void;
   onTogglePassword: () => void;
   onToggleConfirmPassword: () => void;
+  socialLoginSlot?: ReactNode;
 };
 
 const SignupForm = ({
@@ -72,6 +74,7 @@ const SignupForm = ({
   onSubmit,
   onTogglePassword,
   onToggleConfirmPassword,
+  socialLoginSlot,
 }: SignupFormProps) => {
   const inputErrorClass = (field: keyof SignupFormData) =>
     errors[field]
@@ -129,6 +132,7 @@ const SignupForm = ({
               <div className="mt-10 space-y-4">
                 <div className="flex items-start gap-3 rounded-2xl bg-white/10 p-4 backdrop-blur">
                   <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0" />
+
                   <div>
                     <p className="font-semibold">Simple information</p>
                     <p className="mt-1 text-sm text-primary-foreground/75">
@@ -139,6 +143,7 @@ const SignupForm = ({
 
                 <div className="flex items-start gap-3 rounded-2xl bg-white/10 p-4 backdrop-blur">
                   <ShieldCheck className="mt-0.5 h-5 w-5 shrink-0" />
+
                   <div>
                     <p className="font-semibold">Secure validation</p>
                     <p className="mt-1 text-sm text-primary-foreground/75">
@@ -180,6 +185,7 @@ const SignupForm = ({
 
                       <div className="relative">
                         <Mail className="absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+
                         <Input
                           id="email"
                           name="email"
@@ -263,6 +269,7 @@ const SignupForm = ({
 
                         <div className="relative">
                           <Phone className="absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+
                           <Input
                             id="phone_number"
                             name="phone_number"
@@ -306,6 +313,7 @@ const SignupForm = ({
 
                       <div className="relative">
                         <LockKeyhole className="absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+
                         <Input
                           id="password"
                           name="password"
@@ -351,6 +359,7 @@ const SignupForm = ({
 
                       <div className="relative">
                         <LockKeyhole className="absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+
                         <Input
                           id="password_confirmation"
                           name="password_confirmation"
@@ -399,6 +408,8 @@ const SignupForm = ({
                   >
                     {isLoading ? "Creating account..." : "Create account"}
                   </Button>
+
+                  {socialLoginSlot}
 
                   <p className="text-center text-sm text-muted-foreground">
                     Already have an account?{" "}

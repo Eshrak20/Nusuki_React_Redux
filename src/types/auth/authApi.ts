@@ -54,12 +54,9 @@ export type AuthData = {
 // ===============================
 
 export type SignupRequest = {
-  name: string;
   email: string;
   password: string;
   password_confirmation: string;
-  given_name: string;
-  surname: string;
   phone_country_code: string;
   phone_number: string;
 };
