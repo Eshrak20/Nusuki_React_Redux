@@ -1,3 +1,4 @@
+import { formatStatus } from "@/lib/util.hotel";
 import type {
   HotelBookingStatus,
   HotelPaymentStatus,
@@ -6,16 +7,6 @@ import type {
 type HotelBookingStatusBadgeProps = {
   status?: HotelBookingStatus | HotelPaymentStatus | null;
   type?: "booking" | "payment";
-};
-
-const formatStatus = (status?: string | null) => {
-  if (!status) return "N/A";
-
-  return status
-    .replaceAll("_", " ")
-    .split(" ")
-    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-    .join(" ");
 };
 
 const HotelBookingStatusBadge = ({

@@ -1,12 +1,7 @@
 import { useState } from "react";
-import {
-  ArrowRight,
-  CreditCard,
-  Loader2,
-  Plane,
-  TicketX,
-} from "lucide-react";
+import { ArrowRight, CreditCard, Loader2, Plane, TicketX } from "lucide-react";
 import { Link } from "react-router-dom";
+import { toast } from "sonner";
 
 import { Button } from "@/components/ui/button";
 import type { FlightBooking } from "@/types/flight/flightTicketPayment.types";
@@ -23,7 +18,7 @@ type Props = {
 };
 
 const flightImage =
-  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSIvZWB5T0IEKEeY1nGH8j5g4ypWEYgyL9R-A&s";
+  "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?q=80&w=1600&auto=format&fit=crop";
 
 const isExpiredByTtl = (ttlAt?: string | null) => {
   if (!ttlAt) return false;
@@ -99,7 +94,7 @@ const FlightBookingCard = ({ booking, onBookingExpired }: Props) => {
   const [paymentOpen, setPaymentOpen] = useState(false);
   const [cancelOpen, setCancelOpen] = useState(false);
   const [isPaymentExpired, setIsPaymentExpired] = useState(() =>
-    isExpiredByTtl(booking.ttl_at),
+    isExpiredByTtl(booking.payment_ttl),
   );
 
   const [cancelAirTicket, { isLoading: isCancelling }] =
@@ -108,7 +103,9 @@ const FlightBookingCard = ({ booking, onBookingExpired }: Props) => {
   const passenger = booking.passengers?.[0];
 
   const isTicketed = booking.booking_status === "ticketed";
-  const isCancelled = booking.booking_status === "cancelled";
+  const isCancelled =
+    booking.booking_status === "cancelled" ||
+    booking.booking_status === "pnr_cancelled";
   const isPaid = booking.payment_status === "paid";
 
   const isPendingPayment =
@@ -153,7 +150,9 @@ const FlightBookingCard = ({ booking, onBookingExpired }: Props) => {
 
   const handleConfirmCancel = async () => {
     if (!booking.pnr) {
-      alert("PNR not found.");
+      toast.error("PNR not found.", {
+        description: "Unable to cancel this ticket because PNR is missing.",
+      });
       return;
     }
 
@@ -173,11 +172,18 @@ const FlightBookingCard = ({ booking, onBookingExpired }: Props) => {
       const response = await cancelAirTicket(payload).unwrap();
 
       if (!response.success) {
-        alert(response.message || "Ticket cancel failed.");
+        toast.error("Ticket cancel failed.", {
+          description: response.message || "Please try again.",
+        });
         return;
       }
 
-      alert(response.message || "Air ticket cancelled successfully.");
+      toast.success("Ticket cancelled successfully.", {
+        description:
+          response.message ||
+          "Your air ticket has been cancelled successfully.",
+      });
+
       setCancelOpen(false);
     } catch (error: unknown) {
       console.error("Cancel Ticket Error:", error);
@@ -196,16 +202,60 @@ const FlightBookingCard = ({ booking, onBookingExpired }: Props) => {
         apiError?.data?.message ||
         "Ticket cancel failed. Please try again.";
 
-      alert(message);
+      toast.error("Ticket cancel failed.", {
+        description: message,
+      });
     }
   };
 
   return (
     <>
-      <article className="group overflow-hidden rounded-md border bg-card shadow-sm transition hover:border-primary/30 hover:shadow-md">
-        <div className="relative grid gap-0 p-3 sm:grid-cols-[180px_1fr] md:grid-cols-[190px_1fr]">
-          {/* Right status and timer area */}
-          <div className="absolute right-3 top-3 z-10 lg:mt-3 flex max-w-[140px] flex-col items-end gap-1.5">
+      <style>
+        {`
+          @keyframes flightKenBurns {
+            0% {
+              transform: scale(1.05) translate3d(-1%, -1%, 0);
+            }
+            50% {
+              transform: scale(1.15) translate3d(1%, 1%, 0);
+            }
+            100% {
+              transform: scale(1.08) translate3d(-0.5%, 1.5%, 0);
+            }
+          }
+
+          @keyframes flightShine {
+            0% {
+              transform: translateX(-120%) rotate(18deg);
+              opacity: 0;
+            }
+            25% {
+              opacity: 0.45;
+            }
+            60% {
+              opacity: 0.15;
+            }
+            100% {
+              transform: translateX(170%) rotate(18deg);
+              opacity: 0;
+            }
+          }
+
+          @keyframes flightFloat {
+            0%, 100% {
+              transform: translateY(0);
+            }
+            50% {
+              transform: translateY(-5px);
+            }
+          }
+        `}
+      </style>
+
+      <article className="group overflow-hidden rounded-sm border bg-card shadow-sm transition duration-300 hover:border-primary/30 hover:shadow-xl">
+        <div className="relative grid gap-0 p-3 sm:grid-cols-[220px_1fr] md:grid-cols-[350px_1fr]">
+          {/* Dynamic badge & timer upper management */}
+          <div className="absolute right-3 top-3 z-20 flex max-w-35 flex-col items-end gap-1.5 lg:mt-3">
             {shouldShowExpiredBadge ? (
               <span className="rounded-md bg-muted-foreground px-2.5 py-1 text-[10px] font-extrabold uppercase leading-none text-background shadow-sm">
                 Expired
@@ -219,7 +269,7 @@ const FlightBookingCard = ({ booking, onBookingExpired }: Props) => {
 
             {canShowTimer ? (
               <BookingPaymentTimer
-                ttlAt={booking.ttl_at}
+                ttlAt={booking.payment_ttl}
                 paymentStatus={booking.payment_status}
                 bookingStatus={booking.booking_status}
                 onExpired={handlePaymentTimerExpired}
@@ -227,34 +277,56 @@ const FlightBookingCard = ({ booking, onBookingExpired }: Props) => {
             ) : null}
           </div>
 
-          {/* Left image area */}
+          {/* Left Side: Cinematic full-bleed image section */}
           <Link
             to={`/dashboard/flight-bookings/${booking.id}`}
-            className="relative h-[135px] overflow-hidden my-auto rounded-md bg-muted sm:h-[150px]"
+            className="relative my-auto block h-45 w-full overflow-hidden rounded-sm bg-muted shadow-lg shadow-primary/10 sm:h-50"
           >
             <img
               src={flightImage}
-              alt="Flight"
-              className="h-full w-full object-cover object-center transition duration-300 group-hover:scale-105"
+              alt="Flight Cinematic View"
+              className="h-full w-full object-cover object-center"
+              style={{
+                animation: "flightKenBurns 10s ease-in-out infinite alternate",
+              }}
             />
 
-            <div className="absolute left-3 top-3 inline-flex min-w-9 items-center justify-center rounded bg-white px-2 py-1 text-xs font-black text-primary shadow-sm">
+            {/* Dark Cinematic Vignettes */}
+            <div className="absolute inset-0 bg-linear-to-br from-black/45 via-black/10 to-primary/40" />
+            <div className="absolute inset-x-0 bottom-0 h-20 bg-linear-to-t from-black/60 to-transparent" />
+
+            {/* Video sweeping sheen effect */}
+            <div
+              className="absolute -left-20 top-0 h-full w-16 bg-white/20 blur-md"
+              style={{
+                animation: "flightShine 5.5s ease-in-out infinite",
+              }}
+            />
+
+            {/* Airline / Class overlay pill */}
+            <div className="absolute left-3 top-3 z-10 inline-flex items-center gap-1.5 rounded-full border border-white/25 bg-white/15 px-3 py-1.5 text-xs font-black text-white shadow-md backdrop-blur-md">
+              <Plane
+                className="h-3.5 w-3.5"
+                style={{
+                  animation: "flightFloat 2.5s ease-in-out infinite",
+                }}
+              />
               {airlineCode || "FL"}
             </div>
           </Link>
 
-          {/* Content */}
-          <div className="min-w-0 px-0 pt-4 sm:px-4 sm:pt-3 md:px-5">
+          {/* Right Side: Information & Action details */}
+          <div className="min-w-0 px-0 pt-4 sm:pl-5 sm:pr-2 sm:pt-3 md:pl-6">
             <div className="pr-36">
-              <p className="text-xs font-medium text-muted-foreground sm:text-sm">
+              <p className="text-xs font-semibold text-muted-foreground sm:text-sm">
                 Booking ID:{" "}
-                <span className="text-muted-foreground">
+                <span className="text-muted-foreground font-normal">
                   {booking.booking_code || "N/A"}
                 </span>
               </p>
 
               <Link to={`/dashboard/flight-bookings/${booking.id}`}>
-                <h3 className="mt-2 text-base font-extrabold leading-tight text-foreground transition hover:text-primary sm:text-lg">
+                <h3 className="mt-2 text-base font-extrabold leading-tight text-foreground transition hover:text-primary sm:text-lg md:text-xl">
                   From {from} To {to}
                 </h3>
               </Link>
@@ -268,13 +340,13 @@ const FlightBookingCard = ({ booking, onBookingExpired }: Props) => {
                   <Plane className="h-4 w-4 text-primary" />
                 )}
 
-                <p className="truncate text-sm font-medium text-foreground">
+                <p className="truncate text-sm font-semibold text-foreground">
                   {airlineName}
                 </p>
               </div>
             </div>
 
-            <div className="mt-3 space-y-1 text-sm text-muted-foreground">
+            <div className="mt-4 space-y-1 text-sm text-muted-foreground">
               <p>
                 <span className="font-semibold text-foreground">
                   Departure:
@@ -282,10 +354,13 @@ const FlightBookingCard = ({ booking, onBookingExpired }: Props) => {
                 {formatTravelDate(booking.travel_start_date)}
               </p>
 
-              <p className="capitalize">{formatTripType(booking.trip_type)}</p>
+              <p className="capitalize font-medium text-foreground/80">
+                {formatTripType(booking.trip_type)}
+              </p>
             </div>
 
-            <div className="mt-4 flex flex-wrap items-center justify-end gap-2 border-t pt-3">
+            {/* Standard aligned action triggers */}
+            <div className="mt-5 flex flex-wrap items-center justify-end gap-2 border-t pt-3">
               {canShowPayButton ? (
                 <Button
                   type="button"

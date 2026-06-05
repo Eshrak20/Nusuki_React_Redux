@@ -1,14 +1,11 @@
 import { CalendarDays, Clock3, Plane, UserRound } from "lucide-react";
-
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import BookingStatusBadge from "../FlightBookings/BookingStatusBadge";
+import { Card, CardContent } from "@/components/ui/card";
 import DetailItem from "./DetailItem";
 
 import {
   cabinClassLabel,
   formatBookingDate,
   formatBookingDateTime,
-  tripTypeLabel,
 } from "@/lib/utils.flightBooking";
 import type { FlightBookingItem } from "@/types/flight/flightBooking.types";
 
@@ -19,35 +16,7 @@ type BookingOverviewCardProps = {
 const BookingOverviewCard = ({ booking }: BookingOverviewCardProps) => {
   return (
     <Card className="overflow-hidden rounded-sm shadow-sm">
-      <CardHeader className="border-b bg-muted/30 p-5 dark:bg-muted/10">
-        <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
-          <div>
-            <p className="text-sm font-semibold text-primary">
-              {tripTypeLabel(booking.trip_type)}
-            </p>
-
-            <h2 className="mt-2 text-2xl font-bold text-foreground">
-              {booking.route}
-            </h2>
-
-            <p className="mt-1 text-sm text-muted-foreground">
-              PNR:{" "}
-              <span className="font-semibold text-foreground">
-                {booking.pnr || "N/A"}
-              </span>
-            </p>
-          </div>
-
-          <div className="flex flex-wrap gap-2 sm:justify-end">
-            <BookingStatusBadge
-              bookingStatus={booking.booking_status}
-              paymentStatus={booking.payment_status}
-            />
-          </div>
-        </div>
-      </CardHeader>
-
-      <CardContent className="grid gap-4 p-5 sm:grid-cols-2 xl:grid-cols-4">
+      <CardContent className="grid gap-3 py-5 px-2 sm:grid-cols-2 xl:grid-cols-4">
         <DetailItem
           icon={CalendarDays}
           label="Travel Date"
@@ -71,7 +40,7 @@ const BookingOverviewCard = ({ booking }: BookingOverviewCardProps) => {
         <DetailItem
           icon={Clock3}
           label="Ticket Time Limit"
-          value={formatBookingDateTime(booking.ttl_at)}
+          value={formatBookingDateTime(booking.payment_ttl)}
         />
       </CardContent>
     </Card>

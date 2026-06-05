@@ -72,7 +72,7 @@ export type FlightBooking = {
   booking_status: string;
   payment_status: string;
   is_ticketable: boolean;
-  ttl_at: string | null;
+  payment_ttl: string | null;
   ticketed_at: string | null;
   cancelled_at: string | null;
   pricing: FlightPricing;

@@ -40,7 +40,7 @@ export const flightBookingApi = laravelApi.injectEndpoints({
 
     cancelAirTicket: builder.mutation<CancelAirTicketResponse, CancelAirTicketRequest>({
       query: (body) => ({
-        url: "flights/cancel-air-ticket",
+        url: "flights/cancel-booking",
         method: "POST",
         body,
       }),
