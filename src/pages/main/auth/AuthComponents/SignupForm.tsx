@@ -1,19 +1,9 @@
 import type { ChangeEvent, FormEvent, ReactNode } from "react";
-import {
-  ArrowLeft,
-  CheckCircle2,
-  Eye,
-  EyeOff,
-  LockKeyhole,
-  Mail,
-  Phone,
-  ShieldCheck,
-  Sparkles,
-} from "lucide-react";
+import { ArrowLeft, Eye, EyeOff, LockKeyhole, Mail, Phone } from "lucide-react";
 import { Link } from "react-router-dom";
-import { motion } from "framer-motion";
 
 import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 import {
   Card,
   CardContent,
@@ -21,12 +11,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import {
-  Field,
-  FieldDescription,
-  FieldGroup,
-  FieldLabel,
-} from "@/components/ui/field";
+import { Field, FieldGroup, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import {
   Select,
@@ -42,7 +27,7 @@ export type SignupFormData = {
   phone_number: string;
   phone_country_code: string;
   password: string;
-  password_confirmation: string;
+  password_confirmation?: string;
 };
 
 export type SignupErrors = Partial<Record<keyof SignupFormData, string>>;
@@ -52,13 +37,11 @@ type SignupFormProps = {
   errors: SignupErrors;
   isLoading: boolean;
   showPassword: boolean;
-  showConfirmPassword: boolean;
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
   onPhoneBlur: () => void;
   onCountryCodeChange: (value: string) => void;
   onSubmit: (e: FormEvent<HTMLFormElement>) => void;
   onTogglePassword: () => void;
-  onToggleConfirmPassword: () => void;
   socialLoginSlot?: ReactNode;
 };
 
@@ -67,366 +50,240 @@ const SignupForm = ({
   errors,
   isLoading,
   showPassword,
-  showConfirmPassword,
   onChange,
   onPhoneBlur,
   onCountryCodeChange,
   onSubmit,
   onTogglePassword,
-  onToggleConfirmPassword,
   socialLoginSlot,
 }: SignupFormProps) => {
-  const inputErrorClass = (field: keyof SignupFormData) =>
-    errors[field]
-      ? "border-destructive bg-destructive/5 ring-destructive/20 focus-visible:ring-destructive"
-      : "border-border/60 bg-background/70 focus:border-primary/60 focus-visible:ring-primary/20";
-
   const selectedCountry = countryCodes.find(
     (country) => country.code === formData.phone_country_code
   );
 
+  const inputClass = (hasError?: boolean) =>
+    `h-9 rounded-md border pl-9 text-sm shadow-none transition-all placeholder:text-slate-400 focus-visible:ring-1 dark:placeholder:text-slate-500 ${
+      hasError
+        ? "border-red-300 bg-red-50/70 text-red-900 focus-visible:ring-red-300 dark:border-red-500/60 dark:bg-red-950/20 dark:text-red-100 dark:focus-visible:ring-red-500/40"
+        : "border-slate-200 bg-white text-slate-950 focus-visible:border-primary focus-visible:ring-primary/30 dark:border-slate-800 dark:bg-slate-950 dark:text-slate-100 dark:focus-visible:border-primary/70 dark:focus-visible:ring-primary/30"
+    }`;
+
+  const phoneBoxClass =
+    errors.phone_number || errors.phone_country_code
+      ? "border-red-300 bg-red-50/70 dark:border-red-500/60 dark:bg-red-950/20"
+      : "border-slate-200 bg-white focus-within:border-primary focus-within:ring-1 focus-within:ring-primary/30 dark:border-slate-800 dark:bg-slate-950 dark:focus-within:border-primary/70 dark:focus-within:ring-primary/30";
+
   return (
-    <div className="flex min-h-svh w-full items-center justify-center px-4 py-8 sm:px-6 lg:px-8">
-      <div className="w-full max-w-6xl">
-        <motion.div
-          initial={{ opacity: 0, x: -16 }}
-          animate={{ opacity: 1, x: 0 }}
-          className="mb-6"
+    <Card className="w-full max-w-[470px] rounded-md border-0 bg-white shadow-sm dark:bg-slate-900 dark:shadow-none dark:ring-1 dark:ring-slate-800">
+      <CardHeader className="px-5 pb-2.5 pt-4 sm:px-6 sm:pt-5">
+        <Link
+          to="/"
+          className="mb-3 inline-flex h-7 w-7 items-center justify-center rounded-full text-primary transition hover:bg-primary/5 dark:hover:bg-primary/10"
+          aria-label="Back to home"
         >
-          <Link
-            to="/"
-            className="group inline-flex items-center gap-2 rounded-full border border-border/60 bg-background/70 px-4 py-2 text-sm font-medium text-muted-foreground shadow-sm backdrop-blur transition-all hover:border-primary/40 hover:text-primary"
-          >
-            <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-1" />
-            Back to home
-          </Link>
-        </motion.div>
+          <ArrowLeft className="h-4.5 w-4.5" />
+        </Link>
 
-        <div className="grid overflow-hidden rounded-[2rem] border border-border/50 bg-card/70 shadow-2xl backdrop-blur-2xl lg:grid-cols-[0.95fr_1.05fr]">
-          <motion.div
-            initial={{ opacity: 0, x: -24 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.45 }}
-            className="relative hidden overflow-hidden bg-primary p-10 text-primary-foreground lg:block"
-          >
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.28),transparent_34%),radial-gradient(circle_at_bottom_right,rgba(255,255,255,0.18),transparent_34%)]" />
-            <div className="absolute -bottom-20 -left-20 h-64 w-64 rounded-full bg-white/10 blur-3xl" />
-            <div className="absolute -right-24 top-20 h-72 w-72 rounded-full bg-white/10 blur-3xl" />
+        <CardTitle className="text-lg font-bold tracking-tight text-slate-950 dark:text-slate-50 sm:text-xl">
+          Sign Up
+        </CardTitle>
 
-            <div className="relative z-10 flex h-full flex-col justify-between">
-              <div>
-                <div className="mb-8 inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-white/15 shadow-lg backdrop-blur">
-                  <Sparkles className="h-7 w-7" />
-                </div>
+        <CardDescription className="pt-0.5 text-xs text-slate-600 dark:text-slate-400">
+          Create an account to easily use our services.
+        </CardDescription>
+      </CardHeader>
 
-                <h1 className="max-w-sm text-4xl font-black leading-tight tracking-tight">
-                  Create your account in seconds.
-                </h1>
+      <CardContent className="px-5 pb-4 sm:px-6 sm:pb-5">
+        <form onSubmit={onSubmit} className="space-y-3">
+          <FieldGroup className="-space-y-2.5">
+            <Field className="space-y-1">
+              <FieldLabel htmlFor="email" className="sr-only">
+                Email
+              </FieldLabel>
 
-                <p className="mt-4 max-w-md text-sm leading-7 text-primary-foreground/80">
-                  Use your email and phone number to sign up securely. Simple,
-                  fast, and clean signup experience for every device.
+              <div className="relative">
+                <Mail className="pointer-events-none absolute left-3 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-slate-400 dark:text-slate-500" />
+
+                <Input
+                  id="email"
+                  name="email"
+                  type="email"
+                  autoComplete="email"
+                  placeholder="someone@example.com"
+                  value={formData.email}
+                  onChange={onChange}
+                  disabled={isLoading}
+                  className={inputClass(Boolean(errors.email))}
+                />
+              </div>
+
+              {errors.email && (
+                <p className="text-[11px] font-medium text-red-500 dark:text-red-400">
+                  {errors.email}
                 </p>
-              </div>
+              )}
+            </Field>
 
-              <div className="mt-10 space-y-4">
-                <div className="flex items-start gap-3 rounded-2xl bg-white/10 p-4 backdrop-blur">
-                  <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0" />
+            <Field className="space-y-1">
+              <FieldLabel htmlFor="phone_number" className="sr-only">
+                Mobile
+              </FieldLabel>
 
-                  <div>
-                    <p className="font-semibold">Simple information</p>
-                    <p className="mt-1 text-sm text-primary-foreground/75">
-                      Only email, phone number, and password required.
-                    </p>
-                  </div>
-                </div>
+              <div
+                className={`flex h-9 overflow-hidden rounded-md border transition-all ${phoneBoxClass}`}
+              >
+                <div className="flex w-[118px] shrink-0 items-center border-r border-slate-200 pl-3 dark:border-slate-800">
+                  <Phone className="mr-2 h-3.5 w-3.5 text-slate-400 dark:text-slate-500" />
 
-                <div className="flex items-start gap-3 rounded-2xl bg-white/10 p-4 backdrop-blur">
-                  <ShieldCheck className="mt-0.5 h-5 w-5 shrink-0" />
-
-                  <div>
-                    <p className="font-semibold">Secure validation</p>
-                    <p className="mt-1 text-sm text-primary-foreground/75">
-                      Password confirmation and Bangladesh phone validation
-                      included.
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 18 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.45 }}
-            className="p-4 sm:p-6 md:p-8"
-          >
-            <Card className="border-0 bg-transparent shadow-none">
-              <CardHeader className="px-0 pb-6 pt-2 text-center sm:text-left">
-                <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-primary/10 text-primary sm:mx-0 lg:hidden">
-                  <Sparkles className="h-7 w-7" />
-                </div>
-
-                <CardTitle className="text-2xl font-black tracking-tight sm:text-3xl">
-                  Sign up
-                </CardTitle>
-
-                <CardDescription className="text-muted-foreground">
-                  Enter your details below to create your account.
-                </CardDescription>
-              </CardHeader>
-
-              <CardContent className="px-0 pb-2">
-                <form onSubmit={onSubmit} className="space-y-6">
-                  <FieldGroup className="grid gap-5">
-                    <Field className="space-y-2">
-                      <FieldLabel htmlFor="email">Email address</FieldLabel>
-
-                      <div className="relative">
-                        <Mail className="absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-
-                        <Input
-                          id="email"
-                          name="email"
-                          type="email"
-                          autoComplete="email"
-                          placeholder="user@example.com"
-                          value={formData.email}
-                          onChange={onChange}
-                          disabled={isLoading}
-                          className={`h-12 rounded-xl pl-10 text-sm transition-all ${inputErrorClass(
-                            "email"
-                          )}`}
-                        />
-                      </div>
-
-                      {errors.email && (
-                        <p className="text-xs font-medium text-destructive">
-                          {errors.email}
-                        </p>
-                      )}
-                    </Field>
-
-                    <div className="grid gap-4 sm:grid-cols-[150px_1fr]">
-                      <Field className="space-y-2">
-                        <FieldLabel htmlFor="phone_country_code">
-                          Country code
-                        </FieldLabel>
-
-                        <Select
-                          value={formData.phone_country_code}
-                          onValueChange={onCountryCodeChange}
-                          disabled={isLoading}
-                        >
-                          <SelectTrigger
-                            id="phone_country_code"
-                            className={`h-12 rounded-xl transition-all ${inputErrorClass(
-                              "phone_country_code"
-                            )}`}
-                          >
-                            <SelectValue placeholder="Code">
-                              {selectedCountry ? (
-                                <span className="flex items-center gap-2">
-                                  <span>{selectedCountry.flag}</span>
-                                  <span>{selectedCountry.code}</span>
-                                </span>
-                              ) : null}
-                            </SelectValue>
-                          </SelectTrigger>
-
-                          <SelectContent>
-                            {countryCodes.map((country) => (
-                              <SelectItem
-                                key={`${country.code}-${country.label}`}
-                                value={country.code}
-                              >
-                                <span className="flex items-center gap-2">
-                                  <span>{country.flag}</span>
-                                  <span className="font-medium">
-                                    {country.code}
-                                  </span>
-                                  <span className="text-muted-foreground">
-                                    {country.label}
-                                  </span>
-                                </span>
-                              </SelectItem>
-                            ))}
-                          </SelectContent>
-                        </Select>
-
-                        {errors.phone_country_code && (
-                          <p className="text-xs font-medium text-destructive">
-                            {errors.phone_country_code}
-                          </p>
-                        )}
-                      </Field>
-
-                      <Field className="space-y-2">
-                        <FieldLabel htmlFor="phone_number">
-                          Phone number
-                        </FieldLabel>
-
-                        <div className="relative">
-                          <Phone className="absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-
-                          <Input
-                            id="phone_number"
-                            name="phone_number"
-                            type="tel"
-                            inputMode="numeric"
-                            autoComplete="tel-national"
-                            maxLength={
-                              formData.phone_country_code === "+880" ? 11 : 20
-                            }
-                            placeholder={
-                              formData.phone_country_code === "+880"
-                                ? "01712345678"
-                                : "Phone number"
-                            }
-                            value={formData.phone_number}
-                            onChange={onChange}
-                            onBlur={onPhoneBlur}
-                            disabled={isLoading}
-                            className={`h-12 rounded-xl pl-10 text-sm transition-all ${inputErrorClass(
-                              "phone_number"
-                            )}`}
-                          />
-                        </div>
-
-                        {errors.phone_number && (
-                          <p className="text-xs font-medium text-destructive">
-                            {errors.phone_number}
-                          </p>
-                        )}
-
-                        {formData.phone_country_code === "+880" && (
-                          <FieldDescription>
-                            Use Bangladeshi format: 01712345678
-                          </FieldDescription>
-                        )}
-                      </Field>
-                    </div>
-
-                    <Field className="space-y-2">
-                      <FieldLabel htmlFor="password">Password</FieldLabel>
-
-                      <div className="relative">
-                        <LockKeyhole className="absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-
-                        <Input
-                          id="password"
-                          name="password"
-                          type={showPassword ? "text" : "password"}
-                          autoComplete="new-password"
-                          placeholder="Enter your password"
-                          value={formData.password}
-                          onChange={onChange}
-                          disabled={isLoading}
-                          className={`h-12 rounded-xl pl-10 pr-11 text-sm transition-all ${inputErrorClass(
-                            "password"
-                          )}`}
-                        />
-
-                        <button
-                          type="button"
-                          onClick={onTogglePassword}
-                          disabled={isLoading}
-                          className="absolute right-3.5 top-1/2 -translate-y-1/2 text-muted-foreground transition-colors hover:text-foreground disabled:cursor-not-allowed disabled:opacity-60"
-                          aria-label={
-                            showPassword ? "Hide password" : "Show password"
-                          }
-                        >
-                          {showPassword ? (
-                            <EyeOff size={17} />
-                          ) : (
-                            <Eye size={17} />
-                          )}
-                        </button>
-                      </div>
-
-                      {errors.password && (
-                        <p className="text-xs font-medium text-destructive">
-                          {errors.password}
-                        </p>
-                      )}
-                    </Field>
-
-                    <Field className="space-y-2">
-                      <FieldLabel htmlFor="password_confirmation">
-                        Confirm password
-                      </FieldLabel>
-
-                      <div className="relative">
-                        <LockKeyhole className="absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-
-                        <Input
-                          id="password_confirmation"
-                          name="password_confirmation"
-                          type={showConfirmPassword ? "text" : "password"}
-                          autoComplete="new-password"
-                          placeholder="Confirm your password"
-                          value={formData.password_confirmation}
-                          onChange={onChange}
-                          disabled={isLoading}
-                          className={`h-12 rounded-xl pl-10 pr-11 text-sm transition-all ${inputErrorClass(
-                            "password_confirmation"
-                          )}`}
-                        />
-
-                        <button
-                          type="button"
-                          onClick={onToggleConfirmPassword}
-                          disabled={isLoading}
-                          className="absolute right-3.5 top-1/2 -translate-y-1/2 text-muted-foreground transition-colors hover:text-foreground disabled:cursor-not-allowed disabled:opacity-60"
-                          aria-label={
-                            showConfirmPassword
-                              ? "Hide confirm password"
-                              : "Show confirm password"
-                          }
-                        >
-                          {showConfirmPassword ? (
-                            <EyeOff size={17} />
-                          ) : (
-                            <Eye size={17} />
-                          )}
-                        </button>
-                      </div>
-
-                      {errors.password_confirmation && (
-                        <p className="text-xs font-medium text-destructive">
-                          {errors.password_confirmation}
-                        </p>
-                      )}
-                    </Field>
-                  </FieldGroup>
-
-                  <Button
-                    type="submit"
-                    className="h-12 w-full rounded-xl text-sm font-bold shadow-lg shadow-primary/25 transition-all hover:scale-[1.01] active:scale-[0.99]"
+                  <Select
+                    value={formData.phone_country_code}
+                    onValueChange={onCountryCodeChange}
                     disabled={isLoading}
                   >
-                    {isLoading ? "Creating account..." : "Create account"}
-                  </Button>
+                    <SelectTrigger className="h-8 border-0 bg-transparent px-0 text-xs text-slate-950 shadow-none focus:ring-0 dark:text-slate-100">
+                      <SelectValue placeholder="Code">
+                        {selectedCountry ? (
+                          <span className="flex items-center gap-1.5">
+                            <span>{selectedCountry.flag}</span>
+                            <span>{selectedCountry.code}</span>
+                          </span>
+                        ) : (
+                          <span>+880</span>
+                        )}
+                      </SelectValue>
+                    </SelectTrigger>
 
-                  {socialLoginSlot}
+                    <SelectContent className="max-h-64 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-100">
+                      {countryCodes.map((country) => (
+                        <SelectItem
+                          key={`${country.code}-${country.label}`}
+                          value={country.code}
+                        >
+                          <span className="flex items-center gap-2">
+                            <span>{country.flag}</span>
+                            <span className="font-medium">
+                              {country.label}
+                            </span>
+                            <span className="text-slate-500 dark:text-slate-400">
+                              {country.code}
+                            </span>
+                          </span>
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
 
-                  <p className="text-center text-sm text-muted-foreground">
-                    Already have an account?{" "}
-                    <Link
-                      to="/login"
-                      className="font-bold text-primary underline-offset-4 hover:underline"
-                    >
-                      Login
-                    </Link>
-                  </p>
-                </form>
-              </CardContent>
-            </Card>
-          </motion.div>
-        </div>
-      </div>
-    </div>
+                <Input
+                  id="phone_number"
+                  name="phone_number"
+                  type="tel"
+                  inputMode="numeric"
+                  autoComplete="tel-national"
+                  maxLength={formData.phone_country_code === "+880" ? 11 : 20}
+                  placeholder={
+                    formData.phone_country_code === "+880"
+                      ? "1XXX XXXXXX"
+                      : "Phone number"
+                  }
+                  value={formData.phone_number}
+                  onChange={onChange}
+                  onBlur={onPhoneBlur}
+                  disabled={isLoading}
+                  className="h-full flex-1 border-0 bg-transparent px-3 text-sm text-slate-950 shadow-none placeholder:text-slate-400 focus-visible:ring-0 dark:text-slate-100 dark:placeholder:text-slate-500"
+                />
+              </div>
+
+              {(errors.phone_country_code || errors.phone_number) && (
+                <p className="text-[11px] font-medium text-red-500 dark:text-red-400">
+                  {errors.phone_country_code || errors.phone_number}
+                </p>
+              )}
+            </Field>
+
+            <Field className="space-y-1">
+              <FieldLabel htmlFor="password" className="sr-only">
+                Password
+              </FieldLabel>
+
+              <div className="relative">
+                <LockKeyhole className="pointer-events-none absolute left-3 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-slate-400 dark:text-slate-500" />
+
+                <Input
+                  id="password"
+                  name="password"
+                  type={showPassword ? "text" : "password"}
+                  autoComplete="new-password"
+                  placeholder="Password"
+                  value={formData.password}
+                  onChange={onChange}
+                  disabled={isLoading}
+                  className={`${inputClass(Boolean(errors.password))} pr-9`}
+                />
+
+                <button
+                  type="button"
+                  onClick={onTogglePassword}
+                  disabled={isLoading}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 transition hover:text-slate-700 disabled:cursor-not-allowed disabled:opacity-60 dark:text-slate-500 dark:hover:text-slate-200"
+                  aria-label={showPassword ? "Hide password" : "Show password"}
+                >
+                  {showPassword ? <EyeOff size={15} /> : <Eye size={15} />}
+                </button>
+              </div>
+
+              {errors.password && (
+                <p className="text-[11px] font-medium text-red-500 dark:text-red-400">
+                  {errors.password}
+                </p>
+              )}
+            </Field>
+          </FieldGroup>
+
+          <label className="flex items-start gap-2 text-[11px] leading-4 text-slate-600 dark:text-slate-400">
+            <Checkbox className="mt-0.5 h-4 w-4 border-primary data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground" />
+
+            <span>
+              By creating an account, I agree to the{" "}
+              <Link
+                to="/support-center"
+                className="font-semibold text-primary hover:underline"
+              >
+                Terms & Conditions
+              </Link>{" "}
+              and{" "}
+              <Link
+                to="/privacy-policy"
+                className="font-semibold text-primary hover:underline"
+              >
+                Privacy Policy
+              </Link>
+              .
+            </span>
+          </label>
+
+          <Button
+            type="submit"
+            disabled={isLoading}
+            className="h-9 w-full rounded-md bg-primary text-sm font-semibold text-primary-foreground hover:bg-primary/90"
+          >
+            {isLoading ? "Creating account..." : "Sign Up"}
+          </Button>
+
+          {socialLoginSlot && <div className="pt-0.5">{socialLoginSlot}</div>}
+
+          <p className="pt-0.5 text-center text-xs text-slate-600 dark:text-slate-400">
+            Already have an Account?{" "}
+            <Link
+              to="/login"
+              className="font-bold text-primary hover:underline"
+            >
+              Sign In
+            </Link>
+          </p>
+        </form>
+      </CardContent>
+    </Card>
   );
 };
 

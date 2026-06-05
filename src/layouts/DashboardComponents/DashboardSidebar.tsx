@@ -1,7 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 import {
-  Bell,
   ChevronRight,
   Home,
   LockKeyhole,

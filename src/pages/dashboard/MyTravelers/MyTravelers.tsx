@@ -97,15 +97,6 @@ const MyTravelers = () => {
     setShowForm(false);
   };
 
-  const fieldClass =
-    "h-11 w-full rounded-md border border-input bg-muted/40 px-3 text-sm text-foreground shadow-sm outline-none transition placeholder:text-muted-foreground hover:bg-muted/50 focus:border-primary focus:bg-background focus:ring-2 focus:ring-primary/25";
-
-  const selectTriggerClass =
-    "h-11 w-full border border-input bg-muted/40 text-foreground shadow-sm hover:bg-muted/50 focus:border-primary focus:ring-2 focus:ring-primary/25";
-
-  const dateButtonClass =
-    "h-11 w-full justify-between border border-input bg-muted/40 px-3 text-left text-sm font-normal text-foreground shadow-sm hover:bg-muted/50 focus:border-primary focus:bg-background focus:ring-2 focus:ring-primary/25";
-
   const handleSubmit = async (payload: MyTravellerFormPayload) => {
     try {
       if (selectedTraveller) {

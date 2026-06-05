@@ -1,27 +1,59 @@
 import { useState } from "react";
-import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 
-import { setCredentials } from "@/redux/features/auth/authSlice";
 import { useSignupMutation } from "@/redux/api/authApi/authApi";
 import type { SignupErrors, SignupFormData } from "./AuthComponents/SignupForm";
 import SignupForm from "./AuthComponents/SignupForm";
 import SocialLogin from "./AuthComponents/SocialLogin";
 
+type LaravelValidationError = {
+  data?: {
+    success?: boolean;
+    message?: string;
+    data?: Partial<Record<keyof SignupFormData, string[]>>;
+    errors?: Partial<Record<keyof SignupFormData, string[]>>;
+    code?: number;
+  };
+};
+
 const getErrorMessage = (error: unknown) => {
-  if (
-    typeof error === "object" &&
-    error !== null &&
-    "data" in error &&
-    typeof error.data === "object" &&
-    error.data !== null &&
-    "message" in error.data
-  ) {
-    return String(error.data.message);
+  const apiError = error as LaravelValidationError;
+
+  const fieldErrors = apiError.data?.data || apiError.data?.errors;
+  const firstFieldError = fieldErrors
+    ? Object.values(fieldErrors).flat()[0]
+    : null;
+
+  if (firstFieldError) {
+    return firstFieldError;
+  }
+
+  if (apiError.data?.message) {
+    return apiError.data.message;
   }
 
   return "Something went wrong. Please try again.";
+};
+const getLaravelFieldErrors = (error: unknown): SignupErrors => {
+  const apiError = error as LaravelValidationError;
+
+  const fieldErrors = apiError.data?.data || apiError.data?.errors;
+
+  if (!fieldErrors) return {};
+
+  return Object.entries(fieldErrors).reduce<SignupErrors>(
+    (acc, [field, messages]) => {
+      const key = field as keyof SignupFormData;
+
+      if (Array.isArray(messages) && messages.length > 0) {
+        acc[key] = messages[0];
+      }
+
+      return acc;
+    },
+    {},
+  );
 };
 
 const isValidBangladeshiPhone = (phone: string) => {
@@ -43,13 +75,11 @@ const normalizeBangladeshiPhone = (phone: string) => {
 };
 
 const Signup = () => {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const [signup, { isLoading }] = useSignupMutation();
 
   const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [errors, setErrors] = useState<SignupErrors>({});
 
   const [formData, setFormData] = useState<SignupFormData>({
@@ -71,6 +101,7 @@ const Signup = () => {
   const validateForm = () => {
     const newErrors: SignupErrors = {};
     const trimmedPhoneNumber = getNormalizedPhoneNumber();
+    const email = formData.email.trim().toLowerCase();
 
     if (
       trimmedPhoneNumber !== formData.phone_number &&
@@ -82,9 +113,9 @@ const Signup = () => {
       }));
     }
 
-    if (!formData.email.trim()) {
+    if (!email) {
       newErrors.email = "Email is required";
-    } else if (!/^\S+@\S+\.\S+$/.test(formData.email)) {
+    } else if (!/^\S+@\S+\.\S+$/.test(email)) {
       newErrors.email = "Please enter a valid email address";
     }
 
@@ -104,15 +135,8 @@ const Signup = () => {
 
     if (!formData.password.trim()) {
       newErrors.password = "Password is required";
-    } else if (formData.password.length < 6) {
-      newErrors.password = "Password must be at least 6 characters";
-    }
-
-    if (!formData.password_confirmation.trim()) {
-      newErrors.password_confirmation = "Confirm password is required";
-    } else if (formData.password !== formData.password_confirmation) {
-      newErrors.password_confirmation =
-        "Password and confirm password do not match";
+    } else if (formData.password.length < 8) {
+      newErrors.password = "Password must be at least 8 characters";
     }
 
     setErrors(newErrors);
@@ -130,6 +154,10 @@ const Signup = () => {
     const { id, value } = e.target;
 
     let nextValue = value;
+
+    if (id === "email") {
+      nextValue = value.trim().toLowerCase();
+    }
 
     if (id === "phone_number") {
       nextValue = value.replace(/\D/g, "");
@@ -164,7 +192,7 @@ const Signup = () => {
     if (formData.phone_country_code !== "+880") return;
 
     const normalizedPhoneNumber = normalizeBangladeshiPhone(
-      formData.phone_number
+      formData.phone_number,
     );
 
     setFormData((prev) => ({
@@ -192,56 +220,62 @@ const Signup = () => {
 
     if (!validateForm()) return;
 
+    const email = formData.email.trim().toLowerCase();
+    const normalizedPhoneNumber = getNormalizedPhoneNumber();
+
+    const payload: SignupFormData = {
+      email,
+      phone_country_code: formData.phone_country_code,
+      phone_number: normalizedPhoneNumber,
+      password: formData.password,
+      password_confirmation: formData.password,
+    };
+
     try {
-      const normalizedPhoneNumber = getNormalizedPhoneNumber();
-
-      const payload: SignupFormData = {
-        email: formData.email.trim(),
-        phone_country_code: formData.phone_country_code,
-        phone_number: normalizedPhoneNumber,
-        password: formData.password,
-        password_confirmation: formData.password_confirmation,
-      };
-
       const res = await signup(payload).unwrap();
 
-      dispatch(
-        setCredentials({
-          token: res.data.token,
-          user: res.data.user,
-        })
+      toast.success(
+        res.message || "Signup successful. Please verify your email.",
       );
 
-      toast.success(res.message || "Signup successful");
-      navigate("/", { replace: true });
+      navigate("/verify-signup", {
+        replace: true,
+        state: {
+          email,
+        },
+      });
     } catch (error) {
+      const serverFieldErrors = getLaravelFieldErrors(error);
+
+      if (Object.keys(serverFieldErrors).length > 0) {
+        setErrors(serverFieldErrors);
+
+        const firstError = Object.values(serverFieldErrors)[0];
+        toast.error(firstError || "Validation failed");
+        return;
+      }
+
       toast.error(getErrorMessage(error));
     }
   };
-''
-  return (
-    <div className="relative min-h-svh overflow-hidden bg-background">
-      <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_top_left,hsl(var(--primary)/0.22),transparent_34%),radial-gradient(circle_at_bottom_right,hsl(var(--primary)/0.16),transparent_32%)]" />
-      <div className="absolute left-8 top-10 -z-10 h-36 w-36 rounded-full bg-primary/10 blur-3xl" />
-      <div className="absolute bottom-10 right-8 -z-10 h-44 w-44 rounded-full bg-primary/10 blur-3xl" />
 
+  return (
+    <main className="flex min-h-svh w-full items-center justify-center bg-[#edf4f8] px-4 py-3 dark:bg-slate-950 sm:px-6 lg:px-8">
       <SignupForm
         formData={formData}
         errors={errors}
         isLoading={isLoading}
         showPassword={showPassword}
-        showConfirmPassword={showConfirmPassword}
         onChange={handleChange}
         onPhoneBlur={handlePhoneBlur}
         onCountryCodeChange={handleCountryCodeChange}
         onSubmit={handleSignup}
         onTogglePassword={() => setShowPassword((prev) => !prev)}
-        onToggleConfirmPassword={() => setShowConfirmPassword((prev) => !prev)}
         socialLoginSlot={
           <SocialLogin redirectTo="/" disabled={isLoading} mode="signup" />
         }
       />
-    </div>
+    </main>
   );
 };
 

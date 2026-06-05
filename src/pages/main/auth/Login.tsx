@@ -31,7 +31,6 @@ const Login = () => {
   const location = useLocation();
 
   const [login, { isLoading }] = useLoginMutation();
-
   const [showPassword, setShowPassword] = useState(false);
 
   const [formData, setFormData] = useState<LoginFormData>({
@@ -111,11 +110,7 @@ const Login = () => {
   };
 
   return (
-    <div className="relative flex min-h-svh w-full items-center justify-center overflow-hidden bg-background px-4 py-8 sm:px-6 md:p-10">
-      <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_top,hsl(var(--primary)/0.20),transparent_35%),radial-gradient(circle_at_bottom_right,hsl(var(--primary)/0.12),transparent_35%)]" />
-      <div className="absolute left-10 top-10 -z-10 h-32 w-32 rounded-full bg-primary/10 blur-3xl" />
-      <div className="absolute bottom-10 right-10 -z-10 h-40 w-40 rounded-full bg-primary/10 blur-3xl" />
-
+    <main className="flex min-h-svh w-full items-center justify-center bg-[#edf4f8] px-4 py-3 dark:bg-slate-950 sm:px-6 lg:px-8">
       <LoginForm
         formData={formData}
         errors={errors}
@@ -128,7 +123,7 @@ const Login = () => {
           <SocialLogin redirectTo={from} disabled={isLoading} mode="login" />
         }
       />
-    </div>
+    </main>
   );
 };
 

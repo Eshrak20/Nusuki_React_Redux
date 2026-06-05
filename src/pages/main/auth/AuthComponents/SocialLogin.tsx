@@ -85,13 +85,13 @@ const SocialLogin = ({
             setCredentials({
               token,
               user,
-            })
+            }),
           );
         });
 
         toast.success(
           res.message ||
-            (mode === "signup" ? "Signup successful" : "Login successful")
+            (mode === "signup" ? "Signup successful" : "Login successful"),
         );
 
         navigate(redirectTo, { replace: true });
@@ -109,11 +109,13 @@ const SocialLogin = ({
     <div className="space-y-4">
       <div className="relative flex items-center">
         <div className="h-px flex-1 bg-border" />
-
-        <span className="px-3 text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">
-          Or continue with
-        </span>
-
+        <div className="flex items-center gap-3">
+          <div className="h-px flex-1 bg-slate-200" />
+          <span className="text-[10px] font-semibold uppercase tracking-[0.22em] text-slate-500">
+            Or continue with
+          </span>
+          <div className="h-px flex-1 bg-slate-200" />
+        </div>
         <div className="h-px flex-1 bg-border" />
       </div>
 

@@ -18,7 +18,7 @@ import { getApiErrorMessage } from "@/lib/apiError";
 type HotelRoomsSectionProps = {
   rooms?: HotelAvailableRoom[];
   searchId?: string;
-  stay?: HotelStay
+  stay?: HotelStay;
 };
 
 const HotelRoomsSection = ({ rooms = [], searchId }: HotelRoomsSectionProps) => {
@@ -33,7 +33,7 @@ const HotelRoomsSection = ({ rooms = [], searchId }: HotelRoomsSectionProps) => 
   if (!rooms.length) return null;
 
   const handlePriceCheck = async (
-    room: HotelAvailableRoom,
+    _room: HotelAvailableRoom,
     ratePlan: HotelRatePlan,
   ) => {
     const rateKey = ratePlan.rate_key || ratePlan.rate_info?.rate_key;

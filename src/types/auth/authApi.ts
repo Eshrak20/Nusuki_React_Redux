@@ -43,7 +43,24 @@ export type AuthUser = {
   email: string;
   profile: UserProfile | null;
 };
+// export type AuthUser = {
+//   id: number;
+//   name: string;
+//   email: string;
+//   is_verified: boolean;
+//   is_active: boolean;
+//   profile: UserProfile | null;
+// };
 
+export type SignupOtpRequest = {
+  email: string;
+  otp: string;
+};
+
+export type SignupOtpData = {
+  token: string;
+  user: AuthUser;
+};
 export type AuthData = {
   token: string;
   user: AuthUser;
@@ -56,7 +73,7 @@ export type AuthData = {
 export type SignupRequest = {
   email: string;
   password: string;
-  password_confirmation: string;
+  password_confirmation?: string;
   phone_country_code: string;
   phone_number: string;
 };

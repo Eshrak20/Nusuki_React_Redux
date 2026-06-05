@@ -1,4 +1,4 @@
-import type { ApiResponse, AuthData, AuthUser, ChangePasswordRequest, CheckOtpData, CheckOtpRequest, LoginRequest, ResetPasswordRequest, SendResetPasswordOtpData, SendResetPasswordOtpRequest, SignupRequest, UpdateUserProfileRequest } from "@/types/auth/authApi";
+import type { ApiResponse, AuthData, AuthUser, ChangePasswordRequest, CheckOtpData, CheckOtpRequest, LoginRequest, ResetPasswordRequest, SendResetPasswordOtpData, SendResetPasswordOtpRequest, SignupOtpData, SignupOtpRequest, SignupRequest, UpdateUserProfileRequest } from "@/types/auth/authApi";
 import { laravelApi } from "../laravelApi";
 import type { GetUserProfileResponse } from "@/pages/dashboard/UpdateUserProfile/types";
 
@@ -77,6 +77,16 @@ export const authApi = laravelApi.injectEndpoints({
       }),
     }),
 
+
+
+    signupOtp: builder.mutation<ApiResponse<SignupOtpData>, SignupOtpRequest>({
+      query: (body) => ({
+        url: "/verify-signup",
+        method: "POST",
+        body,
+      }),
+    }),
+
     resetPassword: builder.mutation<ApiResponse<null>, ResetPasswordRequest>({
       query: (body) => ({
         url: "/reset-password",
@@ -105,6 +115,7 @@ export const {
   useLogoutMutation,
   useSendResetPasswordOtpMutation,
   useCheckOtpMutation,
+  useSignupOtpMutation,
   useResetPasswordMutation,
-  useGoogleLoginMutation
+  useGoogleLoginMutation,
 } = authApi;

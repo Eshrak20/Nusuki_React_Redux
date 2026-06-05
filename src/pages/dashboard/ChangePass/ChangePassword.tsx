@@ -10,7 +10,6 @@ import {
 import { useChangePasswordMutation } from "@/redux/api/authApi/authApi";
 import DashboardPageHeader from "../Common/DashboardPageHeader";
 import ChangePasswordForm from "./ChangePasswordForm";
-import SecurityTipsCard from "./SecurityTipsCard";
 
 const ChangePassword = () => {
   const [form, setForm] = useState<ChangePasswordFormValues>(
