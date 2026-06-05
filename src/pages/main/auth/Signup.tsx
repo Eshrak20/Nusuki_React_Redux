@@ -6,55 +6,12 @@ import { useSignupMutation } from "@/redux/api/authApi/authApi";
 import type { SignupErrors, SignupFormData } from "./AuthComponents/SignupForm";
 import SignupForm from "./AuthComponents/SignupForm";
 import SocialLogin from "./AuthComponents/SocialLogin";
-
-type LaravelValidationError = {
-  data?: {
-    success?: boolean;
-    message?: string;
-    data?: Partial<Record<keyof SignupFormData, string[]>>;
-    errors?: Partial<Record<keyof SignupFormData, string[]>>;
-    code?: number;
-  };
-};
-
-const getErrorMessage = (error: unknown) => {
-  const apiError = error as LaravelValidationError;
-
-  const fieldErrors = apiError.data?.data || apiError.data?.errors;
-  const firstFieldError = fieldErrors
-    ? Object.values(fieldErrors).flat()[0]
-    : null;
-
-  if (firstFieldError) {
-    return firstFieldError;
-  }
-
-  if (apiError.data?.message) {
-    return apiError.data.message;
-  }
-
-  return "Something went wrong. Please try again.";
-};
-const getLaravelFieldErrors = (error: unknown): SignupErrors => {
-  const apiError = error as LaravelValidationError;
-
-  const fieldErrors = apiError.data?.data || apiError.data?.errors;
-
-  if (!fieldErrors) return {};
-
-  return Object.entries(fieldErrors).reduce<SignupErrors>(
-    (acc, [field, messages]) => {
-      const key = field as keyof SignupFormData;
-
-      if (Array.isArray(messages) && messages.length > 0) {
-        acc[key] = messages[0];
-      }
-
-      return acc;
-    },
-    {},
-  );
-};
+import {
+  getApiErrorMessage,
+  getApiFieldErrors,
+  getFirstApiFieldError,
+  hasApiFieldErrors,
+} from "@/lib/getApiErrorMessage";
 
 const isValidBangladeshiPhone = (phone: string) => {
   return /^01[3-9]\d{8}$/.test(phone);
@@ -100,16 +57,16 @@ const Signup = () => {
 
   const validateForm = () => {
     const newErrors: SignupErrors = {};
-    const trimmedPhoneNumber = getNormalizedPhoneNumber();
     const email = formData.email.trim().toLowerCase();
+    const normalizedPhoneNumber = getNormalizedPhoneNumber();
 
     if (
-      trimmedPhoneNumber !== formData.phone_number &&
+      normalizedPhoneNumber !== formData.phone_number &&
       formData.phone_country_code === "+880"
     ) {
       setFormData((prev) => ({
         ...prev,
-        phone_number: trimmedPhoneNumber,
+        phone_number: normalizedPhoneNumber,
       }));
     }
 
@@ -123,11 +80,11 @@ const Signup = () => {
       newErrors.phone_country_code = "Please select your country code";
     }
 
-    if (!trimmedPhoneNumber) {
+    if (!normalizedPhoneNumber) {
       newErrors.phone_number = "Phone number is required";
     } else if (
       formData.phone_country_code === "+880" &&
-      !isValidBangladeshiPhone(trimmedPhoneNumber)
+      !isValidBangladeshiPhone(normalizedPhoneNumber)
     ) {
       newErrors.phone_number =
         "Please enter a valid Bangladeshi phone number like 01712345678";
@@ -142,8 +99,7 @@ const Signup = () => {
     setErrors(newErrors);
 
     if (Object.keys(newErrors).length > 0) {
-      const firstError = Object.values(newErrors)[0];
-      toast.error(firstError || "Please check your information");
+      toast.error(Object.values(newErrors)[0]);
       return false;
     }
 
@@ -245,17 +201,15 @@ const Signup = () => {
         },
       });
     } catch (error) {
-      const serverFieldErrors = getLaravelFieldErrors(error);
+      const serverFieldErrors = getApiFieldErrors<SignupFormData>(error);
 
-      if (Object.keys(serverFieldErrors).length > 0) {
+      if (hasApiFieldErrors(serverFieldErrors)) {
         setErrors(serverFieldErrors);
-
-        const firstError = Object.values(serverFieldErrors)[0];
-        toast.error(firstError || "Validation failed");
+        toast.error(getFirstApiFieldError(serverFieldErrors));
         return;
       }
 
-      toast.error(getErrorMessage(error));
+      toast.error(getApiErrorMessage(error));
     }
   };
 

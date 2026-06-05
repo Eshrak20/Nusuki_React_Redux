@@ -15,31 +15,28 @@ import {
 import { Input } from "@/components/ui/input";
 import { setCredentials } from "@/redux/features/auth/authSlice";
 import { useSignupOtpMutation } from "@/redux/api/authApi/authApi";
+import {
+  getApiErrorMessage,
+  getApiFieldErrors,
+  getFirstApiFieldError,
+  hasApiFieldErrors,
+} from "@/lib/getApiErrorMessage";
 
 const OTP_LENGTH = 6;
-const OTP_EXPIRE_SECONDS = 5 * 60;
 
-const getErrorMessage = (error: unknown) => {
-  if (
-    typeof error === "object" &&
-    error !== null &&
-    "data" in error &&
-    typeof error.data === "object" &&
-    error.data !== null &&
-    "message" in error.data
-  ) {
-    return String(error.data.message);
-  }
-
-  return "Something went wrong. Please try again.";
+type VerifySignupFormData = {
+  email: string;
+  otp: string;
 };
+
+type VerifySignupErrors = Partial<Record<keyof VerifySignupFormData, string>>;
 
 const formatTime = (seconds: number) => {
   const minutes = Math.floor(seconds / 60);
   const remainingSeconds = seconds % 60;
 
   return `${String(minutes).padStart(2, "0")}:${String(
-    remainingSeconds
+    remainingSeconds,
   ).padStart(2, "0")}`;
 };
 
@@ -53,8 +50,14 @@ const VerifySignup = () => {
   const emailFromState =
     typeof location.state?.email === "string" ? location.state.email : "";
 
+  const expiresInMinutes =
+    typeof location.state?.expiresInMinutes === "number"
+      ? location.state.expiresInMinutes
+      : 5;
+
   const [otp, setOtp] = useState<string[]>(Array(OTP_LENGTH).fill(""));
-  const [timeLeft, setTimeLeft] = useState(OTP_EXPIRE_SECONDS);
+  const [errors, setErrors] = useState<VerifySignupErrors>({});
+  const [timeLeft, setTimeLeft] = useState(expiresInMinutes * 60);
 
   const inputRefs = useRef<Array<HTMLInputElement | null>>([]);
 
@@ -87,6 +90,11 @@ const VerifySignup = () => {
       return nextOtp;
     });
 
+    setErrors((prev) => ({
+      ...prev,
+      otp: "",
+    }));
+
     if (digit && index < OTP_LENGTH - 1) {
       inputRefs.current[index + 1]?.focus();
     }
@@ -94,7 +102,7 @@ const VerifySignup = () => {
 
   const handleKeyDown = (
     index: number,
-    e: React.KeyboardEvent<HTMLInputElement>
+    e: React.KeyboardEvent<HTMLInputElement>,
   ) => {
     if (e.key === "Backspace" && !otp[index] && index > 0) {
       inputRefs.current[index - 1]?.focus();
@@ -126,13 +134,22 @@ const VerifySignup = () => {
   const handleVerifyOtp = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (timeLeft <= 0) {
-      toast.error("OTP expired. Please signup again.");
-      return;
+    const newErrors: VerifySignupErrors = {};
+
+    if (!emailFromState) {
+      newErrors.email = "Email is required";
     }
 
-    if (!isOtpComplete) {
-      toast.error("Please enter the 6 digit OTP");
+    if (timeLeft <= 0) {
+      newErrors.otp = "OTP expired. Please request a new verification code.";
+    } else if (!isOtpComplete) {
+      newErrors.otp = "Please enter the 6 digit OTP";
+    }
+
+    setErrors(newErrors);
+
+    if (Object.keys(newErrors).length > 0) {
+      toast.error(Object.values(newErrors)[0]);
       return;
     }
 
@@ -146,13 +163,29 @@ const VerifySignup = () => {
         setCredentials({
           token: res.data.token,
           user: res.data.user,
-        })
+        }),
       );
 
       toast.success(res.message || "Email verified successfully");
       navigate("/", { replace: true });
     } catch (error) {
-      toast.error(getErrorMessage(error));
+      const serverFieldErrors =
+        getApiFieldErrors<VerifySignupFormData>(error);
+
+      if (hasApiFieldErrors(serverFieldErrors)) {
+        setErrors(serverFieldErrors);
+        toast.error(
+          getFirstApiFieldError(
+            serverFieldErrors,
+            "Please check your OTP and try again.",
+          ),
+        );
+        return;
+      }
+
+      toast.error(
+        getApiErrorMessage(error, "Unable to verify email. Please try again."),
+      );
     }
   };
 
@@ -181,7 +214,7 @@ const VerifySignup = () => {
             <span className="font-semibold text-slate-900 dark:text-slate-100">
               {emailFromState}
             </span>
-            . The OTP will expire in 5 minutes.
+            . The OTP will expire in {expiresInMinutes} minutes.
           </CardDescription>
         </CardHeader>
 
@@ -202,10 +235,20 @@ const VerifySignup = () => {
                   onKeyDown={(e) => handleKeyDown(index, e)}
                   onPaste={handlePaste}
                   disabled={isLoading || timeLeft <= 0}
-                  className="h-10 w-10 rounded-md border-slate-200 bg-white p-0 text-center text-sm font-bold text-slate-950 shadow-none focus-visible:border-primary focus-visible:ring-1 focus-visible:ring-primary/30 dark:border-slate-800 dark:bg-slate-950 dark:text-slate-100 dark:focus-visible:border-primary/70 sm:h-11 sm:w-11"
+                  className={`h-10 w-10 rounded-md p-0 text-center text-sm font-bold shadow-none focus-visible:ring-1 sm:h-11 sm:w-11 ${
+                    errors.otp
+                      ? "border-red-300 bg-red-50/70 text-red-900 focus-visible:ring-red-300 dark:border-red-500/60 dark:bg-red-950/20 dark:text-red-100"
+                      : "border-slate-200 bg-white text-slate-950 focus-visible:border-primary focus-visible:ring-primary/30 dark:border-slate-800 dark:bg-slate-950 dark:text-slate-100 dark:focus-visible:border-primary/70"
+                  }`}
                 />
               ))}
             </div>
+
+            {errors.otp && (
+              <p className="text-[11px] font-medium text-red-500 dark:text-red-400">
+                {errors.otp}
+              </p>
+            )}
 
             <div className="flex items-center justify-between text-xs">
               <p className="text-slate-600 dark:text-slate-400">

@@ -13,7 +13,7 @@ import type {
   HotelRatePlan,
   HotelStay,
 } from "@/types/hotel/hotelDetail.types";
-import { getApiErrorMessage } from "@/lib/apiError";
+import { getApiErrorMessage } from "@/lib/getApiErrorMessage";
 
 type HotelRoomsSectionProps = {
   rooms?: HotelAvailableRoom[];

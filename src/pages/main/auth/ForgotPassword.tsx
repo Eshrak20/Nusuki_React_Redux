@@ -2,26 +2,18 @@ import { useSendResetPasswordOtpMutation } from "@/redux/api/authApi/authApi";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
-import type { ForgotPasswordErrors, ForgotPasswordFormData } from "./AuthComponents/ForgotPasswordForm";
+
+import type {
+  ForgotPasswordErrors,
+  ForgotPasswordFormData,
+} from "./AuthComponents/ForgotPasswordForm";
 import ForgotPasswordForm from "./AuthComponents/ForgotPasswordForm";
-
-
-
-
-const getErrorMessage = (error: unknown) => {
-  if (
-    typeof error === "object" &&
-    error !== null &&
-    "data" in error &&
-    typeof error.data === "object" &&
-    error.data !== null &&
-    "message" in error.data
-  ) {
-    return String(error.data.message);
-  }
-
-  return "Something went wrong. Please try again.";
-};
+import {
+  getApiErrorMessage,
+  getApiFieldErrors,
+  getFirstApiFieldError,
+  hasApiFieldErrors,
+} from "@/lib/getApiErrorMessage";
 
 const ForgotPassword = () => {
   const navigate = useNavigate();
@@ -37,10 +29,11 @@ const ForgotPassword = () => {
 
   const validateForm = () => {
     const newErrors: ForgotPasswordErrors = {};
+    const email = formData.email.trim().toLowerCase();
 
-    if (!formData.email.trim()) {
+    if (!email) {
       newErrors.email = "Email is required";
-    } else if (!/^\S+@\S+\.\S+$/.test(formData.email)) {
+    } else if (!/^\S+@\S+\.\S+$/.test(email)) {
       newErrors.email = "Please enter a valid email address";
     }
 
@@ -59,7 +52,7 @@ const ForgotPassword = () => {
 
     setFormData((prev) => ({
       ...prev,
-      [id]: value,
+      [id]: id === "email" ? value.trim().toLowerCase() : value,
     }));
 
     setErrors((prev) => ({
@@ -73,32 +66,39 @@ const ForgotPassword = () => {
 
     if (!validateForm()) return;
 
+    const email = formData.email.trim().toLowerCase();
+
     try {
       const res = await sendResetPasswordOtp({
-        email: formData.email,
+        email,
       }).unwrap();
 
       toast.success(
         res.message ||
-          `OTP sent successfully. It will expire in ${res.data.expires_in_minutes} minutes.`
+          `OTP sent successfully. It will expire in ${res.data.expires_in_minutes} minutes.`,
       );
 
       navigate("/check-otp", {
         state: {
-          email: formData.email,
+          email,
+          expiresInMinutes: res.data.expires_in_minutes,
         },
       });
     } catch (error) {
-      toast.error(getErrorMessage(error));
+      const serverFieldErrors = getApiFieldErrors<ForgotPasswordFormData>(error);
+
+      if (hasApiFieldErrors(serverFieldErrors)) {
+        setErrors(serverFieldErrors);
+        toast.error(getFirstApiFieldError(serverFieldErrors));
+        return;
+      }
+
+      toast.error(getApiErrorMessage(error));
     }
   };
 
   return (
-    <div className="relative flex min-h-svh w-full items-center justify-center overflow-hidden bg-background px-4 py-8 sm:px-6 md:p-10">
-      <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_top,hsl(var(--primary)/0.20),transparent_35%),radial-gradient(circle_at_bottom_right,hsl(var(--primary)/0.12),transparent_35%)]" />
-      <div className="absolute left-10 top-10 -z-10 h-32 w-32 rounded-full bg-primary/10 blur-3xl" />
-      <div className="absolute bottom-10 right-10 -z-10 h-40 w-40 rounded-full bg-primary/10 blur-3xl" />
-
+    <main className="flex min-h-svh w-full items-center justify-center bg-[#edf4f8] px-4 py-3 dark:bg-slate-950 sm:px-6 lg:px-8">
       <ForgotPasswordForm
         formData={formData}
         errors={errors}
@@ -106,7 +106,7 @@ const ForgotPassword = () => {
         onChange={handleChange}
         onSubmit={handleSendOtp}
       />
-    </div>
+    </main>
   );
 };
 

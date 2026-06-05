@@ -66,6 +66,20 @@ export type AuthData = {
   user: AuthUser;
 };
 
+export type ResendVerificationRequest = {
+  email: string;
+};
+
+export type ResendVerificationData = {
+  email: string;
+  expires_in_minutes: number;
+};
+
+export type LoginUnverifiedData = {
+  email: string;
+  is_verified: false;
+};
+
 // ===============================
 // Request Body Types
 // ===============================
