@@ -78,13 +78,13 @@ const FlightBookingDialog = ({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="h-[88vh] w-[98vw]! max-w-375! mt-10 overflow-y-auto border-none p-0 shadow-2xl dark:bg-[#0b1220] sm:rounded-xl">
+      <DialogContent className="h-[88vh] w-[98vw]! max-w-375! mt-10 overflow-y-auto border-none p-0 shadow-2xl dark:bg-[#0b1220] sm:rounded-sm">
         <DialogTitle className="sr-only">Flight booking details</DialogTitle>
 
        <button
   type="button"
   onClick={() => onOpenChange(false)}
-  className="absolute right-4 top-4 z-30 rounded-md border border-black/15 bg-white/90 p-1 text-[#666] transition hover:bg-white dark:border-white/10 dark:bg-[#111827] dark:text-white/70 dark:hover:bg-[#1a2335]"
+  className="absolute right-4 top-4 z-30 rounded-sm border border-black/15 bg-white/90 p-1 text-[#666] transition hover:bg-white dark:border-white/10 dark:bg-[#111827] dark:text-white/70 dark:hover:bg-[#1a2335]"
 >
   <X className="h-5 w-5" />
 </button>
@@ -138,7 +138,7 @@ const FlightBookingDialog = ({
                 <Button
                   onClick={handleContinue}
                   disabled={!pnrFlightId || !pnrSearchId}
-                  className="h-11 min-w-57.5 rounded-md bg-[#17306f] px-8 text-[16px] font-bold text-white hover:bg-[#102558] disabled:cursor-not-allowed disabled:opacity-60 dark:bg-[#1f4fa3] dark:hover:bg-[#1a438b]"
+                  className="h-11 min-w-57.5 rounded-sm bg-[#17306f] px-8 text-[16px] font-bold text-white hover:bg-[#102558] disabled:cursor-not-allowed disabled:opacity-60 dark:bg-[#1f4fa3] dark:hover:bg-[#1a438b]"
                 >
                   Next - Continue Booking
                 </Button>

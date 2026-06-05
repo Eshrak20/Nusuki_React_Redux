@@ -16,7 +16,7 @@ const OurFeatures = () => {
             <div
               key={index}
               // Changed bg-white to bg-card and border-gray-200 to border-border
-              className="bg-card p-5 lg:p-8 rounded-xl border border-border shadow-md flex flex-col lg:h-full hover:shadow-md transition-shadow"
+              className="bg-card p-5 lg:p-8 rounded-sm border border-border shadow-md flex flex-col lg:h-full hover:shadow-md transition-shadow"
             >
               <div className="hidden lg:block mb-4">{service.icon}</div>
 

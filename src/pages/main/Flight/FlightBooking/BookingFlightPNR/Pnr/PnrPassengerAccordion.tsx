@@ -87,7 +87,7 @@ const PnrPassengerAccordion = ({
             <AccordionItem
               key={`${traveller.passengerType}-${index}`}
               value={`traveller-${index}`}
-              className="rounded-lg border bg-card"
+              className="rounded-sm border bg-card"
             >
               <AccordionTrigger className="rounded-t-lg px-4 transition-colors hover:bg-muted/50 hover:no-underline">
                 <span className="font-semibold uppercase text-card-foreground">

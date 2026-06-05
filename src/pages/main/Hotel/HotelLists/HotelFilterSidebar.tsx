@@ -269,7 +269,7 @@ const CheckboxFilter = ({
       </span>
 
       {typeof count === "number" && (
-        <span className="shrink-0 text-xs text-muted-foreground/70 font-medium bg-muted/50 px-1.5 py-0.5 rounded-md">
+        <span className="shrink-0 text-xs text-muted-foreground/70 font-medium bg-muted/50 px-1.5 py-0.5 rounded-sm">
           {count}
         </span>
       )}

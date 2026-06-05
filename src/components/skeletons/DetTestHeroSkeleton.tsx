@@ -26,7 +26,7 @@ const DetTestHeroSkeleton = () => {
                     </div>
 
                     {/* Button Skeleton */}
-                    <Skeleton className="h-12 w-48 rounded-xl mt-4" />
+                    <Skeleton className="h-12 w-48 rounded-sm mt-4" />
                 </div>
 
                 {/* Right Column: Image Placeholder Skeleton */}

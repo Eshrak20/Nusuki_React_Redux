@@ -12,7 +12,7 @@ interface Props {
 }
 
 const badgeClass =
-  "inline-flex items-center gap-2 rounded-md lg:rounded-full border border-border bg-background px-2.5 lg:px-3 py-2 text-[11px] lg:text-sm font-medium text-muted-foreground shadow-sm transition-colors hover:bg-muted/50";
+  "inline-flex items-center gap-2 rounded-sm lg:rounded-full border border-border bg-background px-2.5 lg:px-3 py-2 text-[11px] lg:text-sm font-medium text-muted-foreground shadow-sm transition-colors hover:bg-muted/50";
 
 const FlightMetaBadges = ({ flight }: Props) => {
 

@@ -58,7 +58,7 @@ const OurCoreStrength = () => {
           </div>
 
           {/* Container - Changed bg-white to bg-card */}
-          <div className="relative group rounded-3xl overflow-hidden bg-card p-2 border border-border shadow-md">
+          <div className="relative group rounded-sm overflow-hidden bg-card p-2 border border-border shadow-md">
             <img
               className="w-full h-auto object-cover rounded-sm transition-transform duration-700 group-hover:scale-[1.02]"
               src={image}

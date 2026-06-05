@@ -45,7 +45,7 @@ const HotelPriceCheckModal = ({
 
   return (
     <div className="fixed inset-0 z-999 flex items-center justify-center bg-black/60 px-4 backdrop-blur-sm">
-      <div className="relative max-h-[90vh] w-full max-w-2xl overflow-y-auto rounded-3xl border bg-card p-5 text-card-foreground shadow-2xl">
+      <div className="relative max-h-[90vh] w-full max-w-2xl overflow-y-auto rounded-sm border bg-card p-5 text-card-foreground shadow-2xl">
         <button
           type="button"
           onClick={onClose}

@@ -57,7 +57,7 @@ const HomeInstitutionCard = ({ universities }: HomeInstitutionCardProps) => {
             <div className="flex gap-4 mt-auto">
               <Link
                 to={`${uni.id}`}
-                className="flex-1 py-2.5 px-2 border border-primary/40 text-primary text-sm font-semibold rounded-lg hover:bg-primary/10 transition-colors text-center flex items-center justify-center"
+                className="flex-1 py-2.5 px-2 border border-primary/40 text-primary text-sm font-semibold rounded-sm hover:bg-primary/10 transition-colors text-center flex items-center justify-center"
               >
                 Know More
               </Link>
@@ -66,7 +66,7 @@ const HomeInstitutionCard = ({ universities }: HomeInstitutionCardProps) => {
                 onClick={() => setIsOpen(true)}
                 whileHover={{ scale: 1.03 }}
                 whileTap={{ scale: 0.97 }}
-                className="flex-1 py-2.5 px-2 bg-primary text-primary-foreground text-sm font-semibold rounded-lg hover:opacity-90 transition-opacity shadow-md flex items-center justify-center"
+                className="flex-1 py-2.5 px-2 bg-primary text-primary-foreground text-sm font-semibold rounded-sm hover:opacity-90 transition-opacity shadow-md flex items-center justify-center"
               >
                 Apply Now
               </motion.button>

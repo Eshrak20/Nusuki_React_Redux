@@ -161,7 +161,7 @@ const HotelCard = ({ hotel, currency }: Props) => {
               {/* View Details CTA Button Layout Fixed */}
               <Link 
                 to={`/hotel/detail/${search_id}/${hotel_id}`} 
-                className="flex h-10 w-full items-center justify-center rounded-xl bg-primary px-4 text-sm font-bold text-primary-foreground transition-all hover:opacity-90 active:scale-[0.98]"
+                className="flex h-10 w-full items-center justify-center rounded-sm bg-primary px-4 text-sm font-bold text-primary-foreground transition-all hover:opacity-90 active:scale-[0.98]"
               >
                 View Details
               </Link>

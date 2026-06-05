@@ -37,7 +37,7 @@ const CourseEntryRequirements = ({ sections }: CourseEntryRequirementsProps) => 
 
         {/* Header */}
         <div className="flex items-center gap-4">
-          <div className="p-2.5 hidden lg:block rounded-xl bg-primary/10 text-primary shadow-sm ring-1 ring-primary/20">
+          <div className="p-2.5 hidden lg:block rounded-sm bg-primary/10 text-primary shadow-sm ring-1 ring-primary/20">
             <ClipboardCheck className="w-6 h-6" />
           </div>
 
@@ -59,7 +59,7 @@ const CourseEntryRequirements = ({ sections }: CourseEntryRequirementsProps) => 
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
-          className="bg-background -ml-11.5 -mr-7 lg:mx-0 lg:rounded-3xl pl-11 pr-9 py-4 lg:p-8 lg:shadow-sm transition-colors duration-500"
+          className="bg-background -ml-11.5 -mr-7 lg:mx-0 lg:rounded-sm pl-11 pr-9 py-4 lg:p-8 lg:shadow-sm transition-colors duration-500"
         >
           <div className="text-lg leading-[1.8] text-muted-foreground font-normal tracking-wide">
             {entry.text

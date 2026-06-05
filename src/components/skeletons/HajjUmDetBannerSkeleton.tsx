@@ -36,12 +36,12 @@ const HajjUmDetBannerSkeleton = () => {
 
                 {/* Main Title Skeleton */}
                 {/* Simulating the height and width of the large text */}
-                <Skeleton className="h-12 w-[80%] max-w-2xl md:h-20 lg:h-24 lg:mb-12 rounded-xl bg-black/10 dark:bg-white/10" />
+                <Skeleton className="h-12 w-[80%] max-w-2xl md:h-20 lg:h-24 lg:mb-12 rounded-sm bg-black/10 dark:bg-white/10" />
 
                 {/* Tagline Skeleton */}
                 <div className="mt-4 flex flex-col items-center gap-2">
-                    <Skeleton className="h-6 w-64 md:w-96 rounded-md bg-black/10 dark:bg-white/10" />
-                    <Skeleton className="h-6 w-48 md:w-72 rounded-md bg-black/10 dark:bg-white/10" />
+                    <Skeleton className="h-6 w-64 md:w-96 rounded-sm bg-black/10 dark:bg-white/10" />
+                    <Skeleton className="h-6 w-48 md:w-72 rounded-sm bg-black/10 dark:bg-white/10" />
                 </div>
 
                 {/* Elegant Divider Skeleton */}

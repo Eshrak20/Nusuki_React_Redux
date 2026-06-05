@@ -80,7 +80,7 @@ const ProfileImageUploadSection = ({
         <Button
           type="submit"
           disabled={isLoading}
-          className="h-11 w-full rounded-xl font-semibold shadow-sm transition-all active:scale-[0.98]"
+          className="h-11 w-full rounded-sm font-semibold shadow-sm transition-all active:scale-[0.98]"
         >
           {isLoading ? (
             <>

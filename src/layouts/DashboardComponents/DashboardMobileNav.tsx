@@ -97,7 +97,7 @@ const DashboardMobileNav = ({
                   to={item.href}
                   onClick={closeSheet}
                   className={cn(
-                    "flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium transition-all",
+                    "flex items-center gap-3 rounded-sm px-4 py-3 text-sm font-medium transition-all",
                     isActive
                       ? "bg-primary text-primary-foreground"
                       : "text-muted-foreground hover:bg-primary/10 hover:text-primary"

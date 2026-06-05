@@ -32,7 +32,7 @@ const GuestInfoFields = ({
         <button
           type="button"
           onClick={addGuest}
-          className="h-10 rounded-xl border px-4 text-sm font-medium transition hover:bg-muted"
+          className="h-10 rounded-sm border px-4 text-sm font-medium transition hover:bg-muted"
         >
           Add Guest
         </button>
@@ -63,7 +63,7 @@ const GuestInfoFields = ({
                   onChange={(event) =>
                     updateGuest(index, "type", event.target.value)
                   }
-                  className="mt-2 h-11 w-full rounded-xl border bg-background px-3 text-sm outline-none transition focus:border-primary"
+                  className="mt-2 h-11 w-full rounded-sm border bg-background px-3 text-sm outline-none transition focus:border-primary"
                 >
                   <option value="adult">Adult</option>
                   <option value="child">Child</option>
@@ -79,7 +79,7 @@ const GuestInfoFields = ({
                     updateGuest(index, "first_name", event.target.value)
                   }
                   placeholder="First name"
-                  className="mt-2 h-11 w-full rounded-xl border bg-background px-3 text-sm outline-none transition focus:border-primary"
+                  className="mt-2 h-11 w-full rounded-sm border bg-background px-3 text-sm outline-none transition focus:border-primary"
                 />
               </div>
 
@@ -92,7 +92,7 @@ const GuestInfoFields = ({
                     updateGuest(index, "last_name", event.target.value)
                   }
                   placeholder="Last name"
-                  className="mt-2 h-11 w-full rounded-xl border bg-background px-3 text-sm outline-none transition focus:border-primary"
+                  className="mt-2 h-11 w-full rounded-sm border bg-background px-3 text-sm outline-none transition focus:border-primary"
                 />
               </div>
 
@@ -105,7 +105,7 @@ const GuestInfoFields = ({
                     updateGuest(index, "email", event.target.value)
                   }
                   placeholder="Guest email"
-                  className="mt-2 h-11 w-full rounded-xl border bg-background px-3 text-sm outline-none transition focus:border-primary"
+                  className="mt-2 h-11 w-full rounded-sm border bg-background px-3 text-sm outline-none transition focus:border-primary"
                 />
               </div>
 
@@ -117,7 +117,7 @@ const GuestInfoFields = ({
                     updateGuest(index, "phone", event.target.value)
                   }
                   placeholder="Guest phone"
-                  className="mt-2 h-11 w-full rounded-xl border bg-background px-3 text-sm outline-none transition focus:border-primary"
+                  className="mt-2 h-11 w-full rounded-sm border bg-background px-3 text-sm outline-none transition focus:border-primary"
                 />
               </div>
             </div>

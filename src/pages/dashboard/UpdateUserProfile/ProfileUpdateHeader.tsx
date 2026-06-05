@@ -38,7 +38,7 @@ const ProfileUpdateHeader = ({
             </div>
           </div>
 
-          <div className="rounded-xl border border-primary-foreground/20 bg-primary-foreground/10 px-4 py-3 text-sm">
+          <div className="rounded-sm border border-primary-foreground/20 bg-primary-foreground/10 px-4 py-3 text-sm">
             <p className="font-medium">Profile Status</p>
             <p className="text-primary-foreground/80">Information saved</p>
           </div>

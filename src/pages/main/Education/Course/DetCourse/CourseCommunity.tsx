@@ -39,7 +39,7 @@ const CourseCommunity = ({ sections }: CourseCommunityProps) => {
       <div className="space-y-6 pl-4">
         {/* Header */}
         <div className="flex items-center gap-4">
-          <div className="hidden lg:block p-2.5 rounded-xl bg-primary/10 text-primary ring-1 ring-primary/20">
+          <div className="hidden lg:block p-2.5 rounded-sm bg-primary/10 text-primary ring-1 ring-primary/20">
             <Users className="w-6 h-6" />
           </div>
 
@@ -68,7 +68,7 @@ const CourseCommunity = ({ sections }: CourseCommunityProps) => {
               key={index}
               variants={itemVariants}
               className={cn(
-                "relative overflow-hidden p-6 lg:p-8 rounded-3xl border",
+                "relative overflow-hidden p-6 lg:p-8 rounded-sm border",
                 "bg-primary/5 border-border hover:border-primary/30",
                 "shadow-sm transition-all duration-300"
               )}

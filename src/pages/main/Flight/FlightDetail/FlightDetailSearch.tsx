@@ -142,7 +142,7 @@ const FlightDetailSearch = () => {
     >
       <motion.div
         variants={rowVariants}
-        className="overflow-hidden lg:rounded-[28px] lg:border lg:border-border lg:bg-card lg:shadow-sm"
+        className="overflow-hidden lg:rounded-[20px] lg:border lg:border-border lg:bg-card lg:shadow-sm"
       >
         <div className="pt-1 pb-3 sm:p-5">
           {/* Mobile compact layout */}
@@ -176,7 +176,7 @@ const FlightDetailSearch = () => {
               <Button
                 variant="outline"
                 onClick={() => setOpen((prev) => !prev)}
-                className="h-10 rounded-xl border-border bg-background px-3 text-[12px] font-medium"
+                className="h-10 rounded-sm border-border bg-background px-3 text-[12px] font-medium"
               >
                 <span className="truncate">
                   {open ? "Hide Journey" : "Journey Details"}
@@ -191,7 +191,7 @@ const FlightDetailSearch = () => {
               <Link to="/" className="block">
                 <Button
                   variant="secondary"
-                  className="h-10 w-full rounded-xl px-3 text-[12px] font-medium"
+                  className="h-10 w-full rounded-sm px-3 text-[12px] font-medium"
                 >
                   <Settings2 className="mr-1.5 h-4 w-4 shrink-0" />
                   <span className="truncate">Modify Search</span>
@@ -262,7 +262,7 @@ const FlightDetailSearch = () => {
               <Button
                 variant="outline"
                 onClick={() => setOpen((prev) => !prev)}
-                className="group rounded-xl border-border bg-background"
+                className="group rounded-sm border-border bg-background"
               >
                 {open ? "Hide Journey Details" : "Show Journey Details"}
                 {open ? (
@@ -275,7 +275,7 @@ const FlightDetailSearch = () => {
               <div className="flex flex-col gap-4">
                 {/* <Button
                   variant="secondary"
-                  className="rounded-xl"
+                  className="rounded-sm"
                   onClick={() => setShowModifySearch((prev) => !prev)}
                 >
                   <Settings2 className="mr-2 h-4 w-4" />
@@ -288,7 +288,7 @@ const FlightDetailSearch = () => {
                   </div>
                 )} */}
                 <Link to="/">
-                  <Button variant="secondary" className="rounded-xl">
+                  <Button variant="secondary" className="rounded-sm">
                     <Settings2 className="mr-2 h-4 w-4" />
                     Modify Search
                   </Button>
@@ -342,7 +342,7 @@ const FlightDetailSearch = () => {
                         >
                           <td className="px-6 py-5">
                             <div className="flex items-center gap-3">
-                              <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-primary/10 text-xs font-extrabold text-primary">
+                              <span className="flex h-8 w-8 items-center justify-center rounded-sm bg-primary/10 text-xs font-extrabold text-primary">
                                 {String(index + 1).padStart(2, "0")}
                               </span>
                               <PlaneTakeoff className="h-4 w-4 text-primary transition-transform duration-200 group-hover:-translate-y-0.5" />
@@ -401,7 +401,7 @@ const FlightDetailSearch = () => {
                       className="rounded-sm border bg-card p-4 shadow-sm"
                     >
                       <div className="mb-3 flex items-center justify-between">
-                        <span className="inline-flex h-8 w-8 items-center justify-center rounded-xl bg-primary/10 text-xs font-extrabold text-primary">
+                        <span className="inline-flex h-8 w-8 items-center justify-center rounded-sm bg-primary/10 text-xs font-extrabold text-primary">
                           {String(index + 1).padStart(2, "0")}
                         </span>
 

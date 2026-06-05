@@ -76,7 +76,7 @@ const HotelPNRSuccessModal = ({
 
         <div className="mt-5 rounded-sm border bg-muted/30 p-4">
           <div className="flex items-start gap-3">
-            <div className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-background text-primary">
+            <div className="flex size-10 shrink-0 items-center justify-center rounded-sm bg-background text-primary">
               <Hotel size={20} />
             </div>
 
@@ -107,7 +107,7 @@ const HotelPNRSuccessModal = ({
             {overviewItems.map((item) => (
               <div
                 key={item.label}
-                className="rounded-xl border bg-background px-3 py-2"
+                className="rounded-sm border bg-background px-3 py-2"
               >
                 <p className="text-xs text-muted-foreground">{item.label}</p>
                 <p className="mt-1 wrap-break-word text-sm font-semibold">
@@ -122,7 +122,7 @@ const HotelPNRSuccessModal = ({
           <button
             type="button"
             onClick={handleGoToDashboard}
-            className="h-11 rounded-xl bg-primary px-5 text-sm font-semibold text-primary-foreground transition hover:opacity-90"
+            className="h-11 rounded-sm bg-primary px-5 text-sm font-semibold text-primary-foreground transition hover:opacity-90"
           >
             Go to dashboard for booking lists
           </button>
@@ -130,7 +130,7 @@ const HotelPNRSuccessModal = ({
           <button
             type="button"
             onClick={onClose}
-            className="h-11 rounded-xl border bg-background px-5 text-sm font-semibold text-foreground transition hover:bg-muted"
+            className="h-11 rounded-sm border bg-background px-5 text-sm font-semibold text-foreground transition hover:bg-muted"
           >
             Close the modal
           </button>

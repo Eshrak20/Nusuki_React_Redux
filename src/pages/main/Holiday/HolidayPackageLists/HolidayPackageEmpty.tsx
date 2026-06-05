@@ -2,8 +2,8 @@ import { SearchX } from "lucide-react";
 
 const HolidayPackageEmpty = () => {
   return (
-    <div className="flex min-h-[340px] flex-col items-center justify-center rounded-md border border-dashed bg-card p-8 text-center">
-      <div className="mb-4 flex size-14 items-center justify-center rounded-md bg-primary/10 text-primary">
+    <div className="flex min-h-[340px] flex-col items-center justify-center rounded-sm border border-dashed bg-card p-8 text-center">
+      <div className="mb-4 flex size-14 items-center justify-center rounded-sm bg-primary/10 text-primary">
         <SearchX size={30} />
       </div>
 

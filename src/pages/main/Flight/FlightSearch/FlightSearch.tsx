@@ -109,7 +109,7 @@ const FlightSearch = ({ searchDests, onSearchSubmit }: FlightSearchProps) => {
   if (!searchData || !searchData.travelers) return null;
 
   return (
-    <div className="w-full bg-white dark:bg-slate-950 p-3 sm:p-4 md:p-6 rounded-xl shadow-sm border border-slate-200 dark:border-slate-800">
+    <div className="w-full bg-white dark:bg-slate-950 p-3 sm:p-4 md:p-6 rounded-sm shadow-sm border border-slate-200 dark:border-slate-800">
       {/* Top Row */}
       <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 mb-6">
         <TripTypeSelector />
@@ -152,7 +152,7 @@ const FlightSearch = ({ searchDests, onSearchSubmit }: FlightSearchProps) => {
 
         <button
           onClick={handleSearch}
-          className="col-span-1 sm:col-span-2 w-full h-12 lg:w-14 lg:h-14 bg-primary hover:bg-primary/90 dark:hover:bg-primary/80 text-primary-foreground rounded-md lg:rounded-xl flex items-center justify-center transition-all duration-200 shadow-lg active:scale-95"
+          className="col-span-1 sm:col-span-2 w-full h-12 lg:w-14 lg:h-14 bg-primary hover:bg-primary/90 dark:hover:bg-primary/80 text-primary-foreground rounded-sm lg:rounded-sm flex items-center justify-center transition-all duration-200 shadow-lg active:scale-95"
         >
           <Search className="w-6 h-6" />
         </button>

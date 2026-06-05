@@ -43,7 +43,7 @@ const HajjUmDetIncludedServices = () => {
                 {transports.map((item, index) => (
                     <div
                         key={index}
-                        className="p-6 rounded-xl border border-border bg-card hover:shadow-md transition-shadow space-y-4"
+                        className="p-6 rounded-sm border border-border bg-card hover:shadow-md transition-shadow space-y-4"
                     >
                         <div className="w-10 h-10 hidden rounded-full bg-emerald-50 dark:bg-emerald-950/30 lg:flex items-center justify-center">
                             {item.icon}
@@ -72,7 +72,7 @@ const HajjUmDetIncludedServices = () => {
 
             {/* Personal Assistant Card */}
             <div className="lg:max-w-xs max-w-425 mx-auto lg:mx-0">
-                <div className="rounded-xl border border-border bg-card overflow-hidden hover:shadow-md transition-shadow">
+                <div className="rounded-sm border border-border bg-card overflow-hidden hover:shadow-md transition-shadow">
                     <div className="relative w-full">
                         <img
                             src={serviceImg} // Replace with your actual image path

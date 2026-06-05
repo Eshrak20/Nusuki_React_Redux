@@ -56,7 +56,7 @@ const RoomSelector = ({ rooms, setRooms, onClose }: RoomSelectorProps) => {
   };
 
   return (
-    <div className="w-full bg-white dark:bg-background p-5 rounded-xl shadow-lg border border-slate-100">
+    <div className="w-full bg-white dark:bg-background p-5 rounded-sm shadow-lg border border-slate-100">
       {/* Header */}
       <div className="mb-6 flex items-start justify-between">
         <div>
@@ -65,7 +65,7 @@ const RoomSelector = ({ rooms, setRooms, onClose }: RoomSelectorProps) => {
         </div>
         <Button 
           onClick={handleReset} 
-          className="bg-primary text-primary-foreground hover:bg-primary/90 h-8 px-4 rounded-md font-bold"
+          className="bg-primary text-primary-foreground hover:bg-primary/90 h-8 px-4 rounded-sm font-bold"
         >
           Reset
         </Button>
@@ -153,7 +153,7 @@ const RoomSelector = ({ rooms, setRooms, onClose }: RoomSelectorProps) => {
                       <select
                         value={room.child_ages?.[childIdx] || 5}
                         onChange={(e) => updateChildAge(index, childIdx, Number(e.target.value))}
-                        className="appearance-none rounded-lg border border-slate-200 bg-white py-2 pl-4 pr-10 text-sm font-bold text-slate-700 outline-none focus:border-primary"
+                        className="appearance-none rounded-sm border border-slate-200 bg-white py-2 pl-4 pr-10 text-sm font-bold text-slate-700 outline-none focus:border-primary"
                       >
                         {Array.from({ length: 17 }, (_, i) => i + 1).map((age) => (
                           <option key={age} value={age}>{age < 10 ? `0${age}` : age} Years</option>
@@ -175,7 +175,7 @@ const RoomSelector = ({ rooms, setRooms, onClose }: RoomSelectorProps) => {
           <Button
             variant="ghost"
             onClick={addRoom}
-            className="w-full h-12 flex items-center justify-center gap-2 rounded-xl text-primary bg-primary/5 hover:bg-primary/10 font-bold border-none"
+            className="w-full h-12 flex items-center justify-center gap-2 rounded-sm text-primary bg-primary/5 hover:bg-primary/10 font-bold border-none"
           >
             <Plus className="h-5 w-5" />
             Add another Room
@@ -183,7 +183,7 @@ const RoomSelector = ({ rooms, setRooms, onClose }: RoomSelectorProps) => {
         )}
         <Button
           onClick={onClose}
-          className="w-full h-14 rounded-xl bg-primary text-primary-foreground font-bold text-lg hover:bg-primary/90 transition-all shadow-lg active:scale-[0.98]"
+          className="w-full h-14 rounded-sm bg-primary text-primary-foreground font-bold text-lg hover:bg-primary/90 transition-all shadow-lg active:scale-[0.98]"
         >
           Done
         </Button>

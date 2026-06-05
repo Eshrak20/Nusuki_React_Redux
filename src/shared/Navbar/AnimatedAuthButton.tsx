@@ -22,7 +22,7 @@ export const AnimatedAuthButton = ({
     <Link to={href} onClick={onClick}>
       <div
         className={cn(
-          "group relative inline-flex items-center justify-center overflow-hidden rounded-xl",
+          "group relative inline-flex items-center justify-center overflow-hidden rounded-sm",
           "transition-all duration-300 hover:-translate-y-0.5",
           className
         )}
@@ -30,7 +30,7 @@ export const AnimatedAuthButton = ({
         {/* Running border gradient */}
         <div
           className={cn(
-            "absolute inset-0 rounded-xl opacity-0 transition-opacity duration-300 group-hover:opacity-100",
+            "absolute inset-0 rounded-sm opacity-0 transition-opacity duration-300 group-hover:opacity-100",
             variant === "login"
               ? "bg-gradient-to-r from-primary via-purple-500 to-primary bg-[length:200%_100%] animate-gradient-flow"
               : specialRoute
@@ -63,7 +63,7 @@ export const AnimatedAuthButton = ({
         {/* Glow effect on hover */}
         <div
           className={cn(
-            "absolute inset-0 rounded-xl opacity-0 blur-xl transition-all duration-500 group-hover:opacity-100",
+            "absolute inset-0 rounded-sm opacity-0 blur-xl transition-all duration-500 group-hover:opacity-100",
             specialRoute
               ? "bg-hajj/20"
               : "bg-primary/20"

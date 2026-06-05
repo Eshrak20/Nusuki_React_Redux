@@ -185,7 +185,7 @@ const handleSubmit = async (payload: MyTravellerFormPayload) => {
               <button
                 type="button"
                 onClick={handleAddNew}
-                className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-primary px-4 py-2.5 text-sm font-semibold text-primary-foreground shadow-sm transition hover:bg-primary/90 md:w-auto"
+                className="inline-flex w-full items-center justify-center gap-2 rounded-sm bg-primary px-4 py-2.5 text-sm font-semibold text-primary-foreground shadow-sm transition hover:bg-primary/90 md:w-auto"
               >
                 <Plus className="h-4 w-4" />
                 Add Traveller
@@ -200,7 +200,7 @@ const handleSubmit = async (payload: MyTravellerFormPayload) => {
                 value={searchText}
                 onChange={(event) => setSearchText(event.target.value)}
                 placeholder="Search by name or email..."
-                className="h-11 w-full rounded-xl border bg-background pl-10 pr-4 text-sm text-foreground outline-none transition placeholder:text-muted-foreground focus:border-primary focus:ring-2 focus:ring-primary/20"
+                className="h-11 w-full rounded-sm border bg-background pl-10 pr-4 text-sm text-foreground outline-none transition placeholder:text-muted-foreground focus:border-primary focus:ring-2 focus:ring-primary/20"
               />
             </div>
           </div>
@@ -215,7 +215,7 @@ const handleSubmit = async (payload: MyTravellerFormPayload) => {
             ) : null}
 
             {isError ? (
-              <div className="my-4 rounded-xl border border-destructive/20 bg-destructive/10 p-4 text-sm text-destructive">
+              <div className="my-4 rounded-sm border border-destructive/20 bg-destructive/10 p-4 text-sm text-destructive">
                 Failed to load travellers.
               </div>
             ) : null}
@@ -234,7 +234,7 @@ const handleSubmit = async (payload: MyTravellerFormPayload) => {
                 <button
                   type="button"
                   onClick={handleAddNew}
-                  className="mt-4 rounded-xl bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground transition hover:bg-primary/90"
+                  className="mt-4 rounded-sm bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground transition hover:bg-primary/90"
                 >
                   Add Traveller
                 </button>

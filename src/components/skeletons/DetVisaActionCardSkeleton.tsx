@@ -22,8 +22,8 @@ const DetVisaActionCardSkeleton = () => {
 
             {/* Action Buttons Skeleton */}
             <div className="flex flex-col gap-3">
-                <Skeleton className="h-13 w-full rounded-xl" />
-                <Skeleton className="h-13 w-full rounded-xl" />
+                <Skeleton className="h-13 w-full rounded-sm" />
+                <Skeleton className="h-13 w-full rounded-sm" />
             </div>
         </div>
     );

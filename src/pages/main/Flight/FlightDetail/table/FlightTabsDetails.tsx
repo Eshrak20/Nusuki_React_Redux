@@ -34,31 +34,31 @@ const FlightTabsDetails = ({ flight }: Props) => {
   return (
     <div className="border-t bg-background p-4 md:p-6">
       <Tabs defaultValue="details" className="w-full">
-        <TabsList className="grid h-auto w-full grid-cols-2 gap-2 rounded-lg bg-muted p-1 mb-7 lg:mb-0 md:grid-cols-4">
+        <TabsList className="grid h-auto w-full grid-cols-2 gap-2 rounded-sm bg-muted p-1 mb-7 lg:mb-0 md:grid-cols-4">
           <TabsTrigger
             value="details"
-            className="rounded-md px-3 py-2 text-xs sm:text-sm data-[state=active]:bg-primary data-[state=active]:text-primary-foreground"
+            className="rounded-sm px-3 py-2 text-xs sm:text-sm data-[state=active]:bg-primary data-[state=active]:text-primary-foreground"
           >
             Flight Details
           </TabsTrigger>
 
           <TabsTrigger
             value="fare"
-            className="rounded-md px-3 py-2 text-xs sm:text-sm data-[state=active]:bg-primary data-[state=active]:text-primary-foreground"
+            className="rounded-sm px-3 py-2 text-xs sm:text-sm data-[state=active]:bg-primary data-[state=active]:text-primary-foreground"
           >
             Fare Summary
           </TabsTrigger>
 
           <TabsTrigger
             value="availability"
-            className="rounded-md px-3 py-2 text-xs sm:text-sm data-[state=active]:bg-primary data-[state=active]:text-primary-foreground"
+            className="rounded-sm px-3 py-2 text-xs sm:text-sm data-[state=active]:bg-primary data-[state=active]:text-primary-foreground"
           >
             Availability
           </TabsTrigger>
 
           <TabsTrigger
             value="refund"
-            className="rounded-md px-3 py-2 text-[11px] sm:text-sm data-[state=active]:bg-primary data-[state=active]:text-primary-foreground"
+            className="rounded-sm px-3 py-2 text-[11px] sm:text-sm data-[state=active]:bg-primary data-[state=active]:text-primary-foreground"
           >
             Refund & Cancellation Policy
           </TabsTrigger>
@@ -80,7 +80,7 @@ const FlightTabsDetails = ({ flight }: Props) => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.2 }}
           >
-            <div className="overflow-hidden rounded-xl border bg-card">
+            <div className="overflow-hidden rounded-sm border bg-card">
               <div className="grid grid-cols-1 lg:grid-cols-4">
                 <div className="border-b lg:col-span-3 lg:border-b-0 lg:border-r">
                   <div className="border-b bg-muted/40 px-4 py-3 text-center">

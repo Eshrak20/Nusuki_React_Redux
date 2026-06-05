@@ -197,7 +197,7 @@ const StatItem = ({
   >
     {/* Subtle highlight card */}
     <div
-      className="relative bg-white/5 rounded-lg p-6 
+      className="relative bg-white/5 rounded-sm p-6 
                     border border-white/10 
                     transition-all duration-300
                     group-hover:bg-white/10 group-hover:border-white/20

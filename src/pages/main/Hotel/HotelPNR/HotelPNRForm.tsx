@@ -165,7 +165,7 @@ const HotelPNRForm = ({
               <input
                 value={searchId}
                 readOnly
-                className="mt-2 h-11 w-full rounded-xl border bg-muted px-3 text-sm text-muted-foreground outline-none"
+                className="mt-2 h-11 w-full rounded-sm border bg-muted px-3 text-sm text-muted-foreground outline-none"
               />
             </div>
 
@@ -174,7 +174,7 @@ const HotelPNRForm = ({
               <input
                 value={bookingKey}
                 readOnly
-                className="mt-2 h-11 w-full rounded-xl border bg-muted px-3 text-sm text-muted-foreground outline-none"
+                className="mt-2 h-11 w-full rounded-sm border bg-muted px-3 text-sm text-muted-foreground outline-none"
               />
             </div>
           </div>
@@ -201,7 +201,7 @@ const HotelPNRForm = ({
         <button
           type="submit"
           disabled={isLoading}
-          className="h-12 w-full rounded-xl bg-primary px-5 text-sm font-semibold text-primary-foreground shadow-sm transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-60"
+          className="h-12 w-full rounded-sm bg-primary px-5 text-sm font-semibold text-primary-foreground shadow-sm transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-60"
         >
           {isLoading ? "Creating Booking..." : "Create Hotel Booking"}
         </button>

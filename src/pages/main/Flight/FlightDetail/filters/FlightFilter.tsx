@@ -31,7 +31,7 @@ const FlightFilter = ({
   return (
     <aside
       className={cn(
-        "w-full rounded-3xl py-3 md:py-4",
+        "w-full rounded-sm py-3 md:py-4",
         isDrawer && "rounded-none border-0 bg-transparent p-0 shadow-none",
         className,
       )}
@@ -39,7 +39,7 @@ const FlightFilter = ({
       {!isDrawer && (
         <div className="mb-3 flex items-center justify-between rounded-sm border border-border bg-background px-4 py-3 shadow-sm">
           <div className="flex items-center gap-2">
-            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-primary/10 text-primary">
+            <div className="flex h-9 w-9 items-center justify-center rounded-sm bg-primary/10 text-primary">
               <SlidersHorizontal className="h-4 w-4" />
             </div>
             <div>
@@ -53,7 +53,7 @@ const FlightFilter = ({
           <Button
             variant="ghost"
             size="sm"
-            className="rounded-xl"
+            className="rounded-sm"
             onClick={() => dispatch(resetFilters())}
           >
             <RotateCcw className="mr-2 h-4 w-4" />
@@ -67,7 +67,7 @@ const FlightFilter = ({
           <Button
             variant="ghost"
             size="sm"
-            className="rounded-xl"
+            className="rounded-sm"
             onClick={() => dispatch(resetFilters())} 
           >
             <RotateCcw className="mr-2 h-4 w-4" />

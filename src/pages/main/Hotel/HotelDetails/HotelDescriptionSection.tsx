@@ -22,7 +22,7 @@ return (
       initial={{ opacity: 0, y: 14 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.35, ease: "easeOut" }}
-      className="rounded-3xl border border-border bg-card p-5 text-card-foreground shadow-sm md:p-6"
+      className="rounded-sm border border-border bg-card p-5 text-card-foreground shadow-sm md:p-6"
     >
       <div className="flex items-center gap-2">
         <div className="flex size-9 items-center justify-center rounded-sm bg-primary/10 text-primary">

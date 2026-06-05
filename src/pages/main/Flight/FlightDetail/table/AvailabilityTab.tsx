@@ -68,7 +68,7 @@ const AvailabilityTab = ({ flight }: Props) => {
               />
             ))
           ) : (
-            <div className="rounded-xl border border-dashed p-4 text-sm text-muted-foreground">
+            <div className="rounded-sm border border-dashed p-4 text-sm text-muted-foreground">
               No segment information found.
             </div>
           )}

@@ -47,7 +47,7 @@ const MobileNavbar = ({ isShopRoute, isSpecialRoute }: MobileNavbarProps) => {
             variant="ghost"
             size="icon"
             className={cn(
-              "relative overflow-hidden rounded-xl text-foreground transition-all duration-300",
+              "relative overflow-hidden rounded-sm text-foreground transition-all duration-300",
               "hover:bg-primary/10 hover:text-primary"
             )}
           >

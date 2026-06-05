@@ -10,7 +10,7 @@ const HajjUmDetPackageServices = ({
 }: HajjUmDetPackageServicesProps) => {
  return (
   <div className="bg-background px-8 lg:px-24">
-    <div className="w-full space-y-8 -mb-8 lg:mb-2 lg:mt-6 text-foreground p-6 rounded-lg border border-border/50">
+    <div className="w-full space-y-8 -mb-8 lg:mb-2 lg:mt-6 text-foreground p-6 rounded-sm border border-border/50">
       <h2 className="text-2xl font-bold mb-6 text-foreground">
         Package Services
       </h2>

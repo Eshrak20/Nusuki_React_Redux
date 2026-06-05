@@ -62,7 +62,7 @@ const HotelBookingDetails = () => {
           <button
             type="button"
             onClick={() => navigate(-1)}
-            className="mb-4 inline-flex h-10 items-center gap-2 rounded-xl border bg-background px-4 text-sm font-semibold text-foreground transition hover:bg-muted"
+            className="mb-4 inline-flex h-10 items-center gap-2 rounded-sm border bg-background px-4 text-sm font-semibold text-foreground transition hover:bg-muted"
           >
             <ArrowLeft size={16} />
             Back
@@ -121,7 +121,7 @@ const HotelBookingDetails = () => {
             type="button"
             onClick={() => refetch()}
             disabled={isFetching}
-            className="h-10 rounded-xl border bg-background px-4 text-sm font-semibold transition hover:bg-muted disabled:cursor-not-allowed disabled:opacity-60"
+            className="h-10 rounded-sm border bg-background px-4 text-sm font-semibold transition hover:bg-muted disabled:cursor-not-allowed disabled:opacity-60"
           >
             {isFetching ? "Refreshing..." : "Refresh"}
           </button>
@@ -203,7 +203,7 @@ type DetailRowProps = {
 
 const DetailRow = ({ label, value, icon }: DetailRowProps) => {
   return (
-    <div className="rounded-xl border bg-background p-3">
+    <div className="rounded-sm border bg-background p-3">
       <p className="text-xs text-muted-foreground">{label}</p>
 
       <div className="mt-1 flex min-w-0 items-center gap-2">

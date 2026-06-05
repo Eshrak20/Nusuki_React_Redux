@@ -56,12 +56,12 @@ const HolidayOfferRequestDialog = ({ offer, open, onOpenChange }: Props) => {
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-2xl rounded-md">
+      <DialogContent className="max-w-2xl rounded-sm">
         <DialogHeader>
           <DialogTitle>Submit Offer Request</DialogTitle>
         </DialogHeader>
 
-        <div className="rounded-md border bg-muted/40 p-4">
+        <div className="rounded-sm border bg-muted/40 p-4">
           <p className="text-xs font-semibold uppercase text-primary">
             Selected Offer
           </p>
@@ -72,7 +72,7 @@ const HolidayOfferRequestDialog = ({ offer, open, onOpenChange }: Props) => {
           <div>
             <Label>Name</Label>
             <Input
-              className="mt-2 rounded-md"
+              className="mt-2 rounded-sm"
               value={form.name}
               onChange={(e) => handleChange("name", e.target.value)}
             />
@@ -82,7 +82,7 @@ const HolidayOfferRequestDialog = ({ offer, open, onOpenChange }: Props) => {
             <Label>Email</Label>
             <Input
               type="email"
-              className="mt-2 rounded-md"
+              className="mt-2 rounded-sm"
               value={form.email}
               onChange={(e) => handleChange("email", e.target.value)}
             />
@@ -91,7 +91,7 @@ const HolidayOfferRequestDialog = ({ offer, open, onOpenChange }: Props) => {
           <div className="md:col-span-2">
             <Label>Phone</Label>
             <Input
-              className="mt-2 rounded-md"
+              className="mt-2 rounded-sm"
               value={form.phone}
               onChange={(e) => handleChange("phone", e.target.value)}
             />
@@ -100,7 +100,7 @@ const HolidayOfferRequestDialog = ({ offer, open, onOpenChange }: Props) => {
           <div className="md:col-span-2">
             <Label>Extra Note</Label>
             <Textarea
-              className="mt-2 min-h-28 rounded-md"
+              className="mt-2 min-h-28 rounded-sm"
               placeholder="Write anything extra..."
               value={form.note}
               onChange={(e) => handleChange("note", e.target.value)}
@@ -111,7 +111,7 @@ const HolidayOfferRequestDialog = ({ offer, open, onOpenChange }: Props) => {
         <Button
           onClick={handleSubmit}
           disabled={isLoading}
-          className="mt-2 h-11 w-full rounded-md"
+          className="mt-2 h-11 w-full rounded-sm"
         >
           {isLoading ? (
             <Loader2 size={18} className="mr-2 animate-spin" />

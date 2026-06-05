@@ -124,7 +124,7 @@ const SocialLogin = ({
         variant="outline"
         disabled={disabled || isLoading}
         onClick={() => loginWithGoogle()}
-        className="group h-12 w-full rounded-xl border-border/70 bg-background/70 text-sm font-bold shadow-sm backdrop-blur transition-all hover:scale-[1.01] hover:border-primary/50 hover:bg-primary/5 hover:text-primary active:scale-[0.99] dark:bg-background/40"
+        className="group h-12 w-full rounded-sm border-border/70 bg-background/70 text-sm font-bold shadow-sm backdrop-blur transition-all hover:scale-[1.01] hover:border-primary/50 hover:bg-primary/5 hover:text-primary active:scale-[0.99] dark:bg-background/40"
       >
         {isLoading ? (
           <Loader2 className="mr-2 h-4 w-4 animate-spin" />

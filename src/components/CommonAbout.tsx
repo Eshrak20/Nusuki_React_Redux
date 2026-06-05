@@ -54,7 +54,7 @@ const CommonAbout = ({ title, img }: { title: string; img: string }) => {
                     "
                   >
                     <CardContent className="flex h-full items-center gap-3 px-4 py-2">
-                      <div className="rounded-lg bg-hajj/10 p-2">
+                      <div className="rounded-sm bg-hajj/10 p-2">
                         <Icon className="h-5 w-5 text-hajj" />
                       </div>
 
@@ -78,10 +78,10 @@ const CommonAbout = ({ title, img }: { title: string; img: string }) => {
           <div className="relative w-full hidden lg:w-1/2 lg:flex items-center justify-center p-4">
             <div className="relative w-full max-w-md lg:max-w-lg group">
               {/* Decorative Background Element - Adjusted for subtle depth */}
-              <div className="absolute -bottom-4 -right-4 -z-10 h-full w-full rounded-3xl bg-hajj/5 transition-transform duration-500 group-hover:translate-x-2 group-hover:translate-y-2 lg:-bottom-8 lg:-right-8" />
+              <div className="absolute -bottom-4 -right-4 -z-10 h-full w-full rounded-sm bg-hajj/5 transition-transform duration-500 group-hover:translate-x-2 group-hover:translate-y-2 lg:-bottom-8 lg:-right-8" />
 
               {/* Main Image Card */}
-              <Card className="relative overflow-hidden rounded-3xl border-none shadow-2xl">
+              <Card className="relative overflow-hidden rounded-sm border-none shadow-2xl">
                 <CardContent className="p-0">
                   <div className="relative aspect-4/5 overflow-hidden">
                     <img

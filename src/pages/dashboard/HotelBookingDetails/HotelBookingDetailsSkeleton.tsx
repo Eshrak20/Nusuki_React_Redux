@@ -1,7 +1,7 @@
 const HotelBookingDetailsSkeleton = () => {
   return (
     <div className="space-y-6">
-      <div className="h-10 w-24 animate-pulse rounded-xl bg-muted" />
+      <div className="h-10 w-24 animate-pulse rounded-sm bg-muted" />
 
       <div>
         <div className="h-8 w-64 animate-pulse rounded bg-muted" />

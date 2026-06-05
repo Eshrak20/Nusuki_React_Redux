@@ -45,7 +45,7 @@ const HotelRoomCard = ({ room, index, onPriceCheck }: HotelRoomCardProps) => {
       initial={{ opacity: 0, y: 14 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3, ease: "easeOut" }}
-      className="rounded-3xl border border-border bg-muted/35 p-4 text-card-foreground shadow-sm transition-colors hover:bg-muted/45 md:p-5"
+      className="rounded-sm border border-border bg-muted/35 p-4 text-card-foreground shadow-sm transition-colors hover:bg-muted/45 md:p-5"
     >
       <div className="grid grid-cols-1 gap-4 lg:grid-cols-[1fr_270px]">
         <div>
@@ -131,7 +131,7 @@ const HotelRoomCard = ({ room, index, onPriceCheck }: HotelRoomCardProps) => {
             type="button"
             onClick={handleSelectRoom}
             disabled={!ratePlan}
-            className="mt-4 w-full rounded-xl bg-primary px-4 py-3 text-sm font-bold text-primary-foreground shadow-sm transition hover:bg-primary/90 disabled:cursor-not-allowed disabled:opacity-50"
+            className="mt-4 w-full rounded-sm bg-primary px-4 py-3 text-sm font-bold text-primary-foreground shadow-sm transition hover:bg-primary/90 disabled:cursor-not-allowed disabled:opacity-50"
           >
             Select Room
           </button>

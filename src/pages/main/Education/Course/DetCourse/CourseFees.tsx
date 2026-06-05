@@ -19,7 +19,7 @@ const CourseFees = ({ tuition }: CourseFeesProps) => {
     >
       {/* Header */}
       <div className="flex items-center gap-4 mb-6">
-        <div className="hidden lg:block p-3 rounded-xl bg-primary/10 text-primary ring-1 ring-primary/20">
+        <div className="hidden lg:block p-3 rounded-sm bg-primary/10 text-primary ring-1 ring-primary/20">
           <Banknote className="w-6 h-6" />
         </div>
 
@@ -38,7 +38,7 @@ const CourseFees = ({ tuition }: CourseFeesProps) => {
       {/* Main Card */}
       <div
         className={cn(
-          "relative overflow-hidden rounded-3xl border bg-card",
+          "relative overflow-hidden rounded-sm border bg-card",
           "border-border lg:shadow-sm transition-all duration-300",
           "hover:shadow-md hover:border-primary/30"
         )}
@@ -70,7 +70,7 @@ const CourseFees = ({ tuition }: CourseFeesProps) => {
 
             {/* Academic Year */}
             <div className="flex items-center gap-3">
-              <div className="p-2 rounded-lg bg-muted text-muted-foreground">
+              <div className="p-2 rounded-sm bg-muted text-muted-foreground">
                 <CalendarDays className="w-4 h-4" />
               </div>
 
@@ -87,7 +87,7 @@ const CourseFees = ({ tuition }: CourseFeesProps) => {
 
             {/* Status */}
             <div className="flex items-center gap-3">
-              <div className="p-2 rounded-lg bg-primary/10 text-primary">
+              <div className="p-2 rounded-sm bg-primary/10 text-primary">
                 <ShieldCheck className="w-4 h-4" />
               </div>
 

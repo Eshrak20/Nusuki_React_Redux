@@ -44,7 +44,7 @@ const DetInstitutionAdmissionReq = ({ admission }: Props) => {
       {/* Header Section */}
       <div className="flex flex-col gap-2">
         <div className="flex items-center gap-3">
-          <div className="p-2 rounded-xl bg-primary/10">
+          <div className="p-2 rounded-sm bg-primary/10">
             <ClipboardCheck className="w-8 h-8 text-primary" />
           </div>
 
@@ -71,7 +71,7 @@ const DetInstitutionAdmissionReq = ({ admission }: Props) => {
               <TabsTrigger
                 key={category.id}
                 value={category.name}
-                className="rounded-md transition-all duration-300
+                className="rounded-sm transition-all duration-300
                            data-[state=active]:bg-primary
                            data-[state=active]:text-primary-foreground
                            data-[state=active]:shadow-md"
@@ -105,7 +105,7 @@ const DetInstitutionAdmissionReq = ({ admission }: Props) => {
                     <CardHeader>
                       <div className="flex items-start justify-between gap-4">
                         <div className="flex items-center gap-2.5">
-                          <div className="p-1.5 rounded-lg bg-primary/10 text-primary transition-colors group-hover:bg-primary group-hover:text-primary-foreground">
+                          <div className="p-1.5 rounded-sm bg-primary/10 text-primary transition-colors group-hover:bg-primary group-hover:text-primary-foreground">
                             <CheckCircle2 className="w-4 h-4" />
                           </div>
 

@@ -26,7 +26,7 @@ const AppErrorModal = ({
 }: AppErrorModalProps) => {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-md overflow-hidden rounded-3xl border-destructive/20 p-0 shadow-2xl">
+      <DialogContent className="max-w-md overflow-hidden rounded-sm border-destructive/20 p-0 shadow-2xl">
         <div className="bg-gradient-to-br from-destructive/15 via-background to-background p-6">
           <DialogHeader className="space-y-4 text-left">
             <div className="flex h-14 w-14 items-center justify-center rounded-sm bg-destructive/10 text-destructive ring-1 ring-destructive/20">
@@ -69,7 +69,7 @@ const AppErrorModal = ({
               type="button"
               variant="outline"
               onClick={() => onOpenChange(false)}
-              className="rounded-xl"
+              className="rounded-sm"
             >
               <X className="mr-2 h-4 w-4" />
               Close
@@ -78,7 +78,7 @@ const AppErrorModal = ({
             <Button
               type="button"
               onClick={() => onOpenChange(false)}
-              className="rounded-xl"
+              className="rounded-sm"
             >
               <RefreshCw className="mr-2 h-4 w-4" />
               Try Again

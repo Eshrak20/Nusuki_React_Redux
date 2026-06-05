@@ -40,7 +40,7 @@ const ProductGallery = ({ images, thumbnail, variant }: Props) => {
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: i * 0.1 }}
-              className={`relative shrink-0 w-20 h-20 sm:w-24 sm:h-24 rounded-xl border-2 overflow-hidden cursor-pointer transition-all duration-300 group ${isSelected
+              className={`relative shrink-0 w-20 h-20 sm:w-24 sm:h-24 rounded-sm border-2 overflow-hidden cursor-pointer transition-all duration-300 group ${isSelected
                 ? "border-primary shadow-lg scale-105"
                 : "border-transparent hover:border-primary/30"
                 }`}

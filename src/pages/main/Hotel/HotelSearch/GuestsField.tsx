@@ -128,7 +128,7 @@ export function GuestsField({
             {rooms.map((room, roomIndex) => (
               <div
                 key={roomIndex}
-                className="rounded-xl border border-slate-200 bg-slate-50 p-4 dark:border-[#2B2544] dark:bg-[#050018]"
+                className="rounded-sm border border-slate-200 bg-slate-50 p-4 dark:border-[#2B2544] dark:bg-[#050018]"
               >
                 <div className="mb-4 flex items-center justify-between">
                   <h4 className="text-sm font-semibold text-slate-900 dark:text-white">
@@ -201,7 +201,7 @@ export function GuestsField({
                               Number(event.target.value),
                             )
                           }
-                          className="mt-1 h-10 w-full rounded-lg border border-slate-200 bg-white px-3 text-sm font-medium text-slate-800 outline-none transition focus:border-primary dark:border-[#2B2544] dark:bg-[#0B0B10] dark:text-white"
+                          className="mt-1 h-10 w-full rounded-sm border border-slate-200 bg-white px-3 text-sm font-medium text-slate-800 outline-none transition focus:border-primary dark:border-[#2B2544] dark:bg-[#0B0B10] dark:text-white"
                         >
                           {Array.from({ length: 18 }).map((_, age) => (
                             <option key={age} value={age}>
@@ -220,7 +220,7 @@ export function GuestsField({
           <button
             type="button"
             onClick={addRoom}
-            className="mt-4 flex h-11 w-full items-center justify-center gap-2 rounded-xl border border-dashed border-slate-300 text-sm font-semibold text-slate-700 transition hover:bg-slate-50 dark:border-[#2B2544] dark:text-[#8B93FF] dark:hover:bg-[#151222]"
+            className="mt-4 flex h-11 w-full items-center justify-center gap-2 rounded-sm border border-dashed border-slate-300 text-sm font-semibold text-slate-700 transition hover:bg-slate-50 dark:border-[#2B2544] dark:text-[#8B93FF] dark:hover:bg-[#151222]"
           >
             <Plus className="h-4 w-4" />
             Add Room
@@ -231,7 +231,7 @@ export function GuestsField({
           <button
             type="button"
             onClick={() => onOpenChange(false)}
-            className="h-10 rounded-xl bg-primary px-5 text-sm font-semibold text-primary-foreground transition hover:bg-primary/90 dark:bg-[#8B93FF] dark:text-[#050018] dark:hover:bg-[#9AA1FF]"
+            className="h-10 rounded-sm bg-primary px-5 text-sm font-semibold text-primary-foreground transition hover:bg-primary/90 dark:bg-[#8B93FF] dark:text-[#050018] dark:hover:bg-[#9AA1FF]"
           >
             Done
           </button>

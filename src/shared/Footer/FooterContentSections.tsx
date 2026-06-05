@@ -29,7 +29,7 @@ const FooterContentSections = ({ sections }: FooterContentSectionsProps) => {
               {section.list.map((item) => (
                 <li
                   key={item}
-                  className="flex gap-2 rounded-xl border bg-card p-3 text-sm text-muted-foreground shadow-sm dark:bg-card/70"
+                  className="flex gap-2 rounded-sm border bg-card p-3 text-sm text-muted-foreground shadow-sm dark:bg-card/70"
                 >
                   <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
                   <span>{item}</span>

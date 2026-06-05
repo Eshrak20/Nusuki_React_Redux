@@ -28,7 +28,7 @@ const FlightResultsSummaryBar = ({
   disableNextDay,
 }: Props) => {
   return (
-    <Card className="overflow-hidden rounded-3xl border bg-card shadow-sm">
+    <Card className="overflow-hidden rounded-sm border bg-card shadow-sm">
       <CardContent className="p-4 sm:p-5">
         <div className="flex flex-col gap-4">
           <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">

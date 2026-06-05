@@ -30,7 +30,7 @@ const ContactInfoFields = ({ contact, setContact }: ContactInfoFieldsProps) => {
               }))
             }
             placeholder="Enter contact email"
-            className="mt-2 h-11 w-full rounded-xl border bg-background px-3 text-sm outline-none transition focus:border-primary"
+            className="mt-2 h-11 w-full rounded-sm border bg-background px-3 text-sm outline-none transition focus:border-primary"
           />
         </div>
 
@@ -46,7 +46,7 @@ const ContactInfoFields = ({ contact, setContact }: ContactInfoFieldsProps) => {
               }))
             }
             placeholder="Enter contact phone"
-            className="mt-2 h-11 w-full rounded-xl border bg-background px-3 text-sm outline-none transition focus:border-primary"
+            className="mt-2 h-11 w-full rounded-sm border bg-background px-3 text-sm outline-none transition focus:border-primary"
           />
         </div>
       </div>

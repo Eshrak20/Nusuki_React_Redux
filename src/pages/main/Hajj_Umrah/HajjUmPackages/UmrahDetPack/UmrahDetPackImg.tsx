@@ -23,7 +23,7 @@ const UmrahDetPackImg = ({ images, onSeeAll }: Props) => {
             whileInView={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0 }}
             viewport={{ once: true }}
-            className="overflow-hidden rounded-xl h-full"
+            className="overflow-hidden rounded-sm h-full"
           >
             <img
               src={leftImg.image_url}
@@ -41,7 +41,7 @@ const UmrahDetPackImg = ({ images, onSeeAll }: Props) => {
               whileInView={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.1 }}
               viewport={{ once: true }}
-              className="overflow-hidden rounded-xl flex-1 min-h-0"
+              className="overflow-hidden rounded-sm flex-1 min-h-0"
             >
               <img
                 src={midTopImg.image_url}
@@ -56,7 +56,7 @@ const UmrahDetPackImg = ({ images, onSeeAll }: Props) => {
               whileInView={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.2 }}
               viewport={{ once: true }}
-              className="overflow-hidden rounded-xl flex-1 min-h-0"
+              className="overflow-hidden rounded-sm flex-1 min-h-0"
             >
               <img
                 src={midBotImg.image_url}
@@ -74,7 +74,7 @@ const UmrahDetPackImg = ({ images, onSeeAll }: Props) => {
             whileInView={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.3 }}
             viewport={{ once: true }}
-            className="relative overflow-hidden rounded-xl h-full group"
+            className="relative overflow-hidden rounded-sm h-full group"
           >
             <img
               src={rightImg.image_url}
@@ -84,7 +84,7 @@ const UmrahDetPackImg = ({ images, onSeeAll }: Props) => {
             {/* Updated Button */}
             <button
               onClick={onSeeAll}
-              className="absolute hidden bottom-4 right-4 lg:flex items-center gap-2 bg-hajj text-white font-semibold text-sm px-4 py-2 rounded-lg shadow-md transition-all duration-300 ease-in-out dark:bg-green-700 hover:scale-105 hover:shadow-lg active:scale-95"
+              className="absolute hidden bottom-4 right-4 lg:flex items-center gap-2 bg-hajj text-white font-semibold text-sm px-4 py-2 rounded-sm shadow-md transition-all duration-300 ease-in-out dark:bg-green-700 hover:scale-105 hover:shadow-lg active:scale-95"
             >
               View All Images
               <svg

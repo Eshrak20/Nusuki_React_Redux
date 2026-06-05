@@ -57,7 +57,7 @@ const CourseHeader = ({ course }: CourseHeaderProps) => {
           >
             <div className="absolute -inset-2 bg-primary/30 rounded-[2.5rem] blur-2xl opacity-0 group-hover:opacity-100 transition duration-500" />
 
-            <div className="relative flex items-center justify-center bg-white border border-white/20 w-40 h-40 md:w-52 md:h-52 rounded-4xl shadow-2xl overflow-hidden">
+            <div className="relative flex items-center justify-center bg-white border border-white/20 w-40 h-40 md:w-52 md:h-52 rounded-sm shadow-2xl overflow-hidden">
               <img
                 src={course.logo}
                 alt={course.university}

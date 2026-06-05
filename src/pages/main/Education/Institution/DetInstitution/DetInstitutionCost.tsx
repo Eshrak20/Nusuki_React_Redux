@@ -115,7 +115,7 @@ const DetInstitutionCost = ({ cost }: Props) => {
           {totalExpenses > 0 && (
             <motion.div
               whileHover={{ scale: 1.02 }}
-              className="bg-card/50 backdrop-blur-md border border-border p-4 rounded-3xl shadow-xl flex items-center gap-4 pr-8"
+              className="bg-card/50 backdrop-blur-md border border-border p-4 rounded-sm shadow-xl flex items-center gap-4 pr-8"
             >
               <div className="w-12 h-12 rounded-sm bg-primary flex items-center justify-center shadow-lg shadow-primary/20">
                 <TrendingUp className="w-6 h-6 text-primary-foreground" />
@@ -184,7 +184,7 @@ const DetInstitutionCost = ({ cost }: Props) => {
                 </div>
 
                 <div className="relative z-10 space-y-4">
-                  <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-colors">
+                  <div className="w-10 h-10 rounded-sm bg-primary/10 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-colors">
                     <card.icon className="w-5 h-5" />
                   </div>
                   <div>
@@ -228,7 +228,7 @@ const DetInstitutionCost = ({ cost }: Props) => {
                   <CardContent className="p-6 relative">
                     {/* Header with icon and type */}
                     <div className="flex items-start justify-between mb-4">
-                      <div className="p-3 rounded-xl bg-primary/10 text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-all duration-300">
+                      <div className="p-3 rounded-sm bg-primary/10 text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-all duration-300">
                         <IconComponent className="w-5 h-5" />
                       </div>
 
@@ -306,7 +306,7 @@ const DetInstitutionCost = ({ cost }: Props) => {
                       >
                         <TableCell className="py-4">
                           <div className="flex items-center gap-3">
-                            <div className="p-2 rounded-lg bg-primary/10 text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-all duration-300">
+                            <div className="p-2 rounded-sm bg-primary/10 text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-all duration-300">
                               <IconComponent className="w-4 h-4" />
                             </div>
                             <span className="font-medium">{item.expenseType}</span>

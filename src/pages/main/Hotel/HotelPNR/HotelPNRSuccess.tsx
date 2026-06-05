@@ -20,7 +20,7 @@ const HotelPNRSuccess = () => {
 
           <button
             onClick={() => navigate("/hotel")}
-            className="mt-5 rounded-xl bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground"
+            className="mt-5 rounded-sm bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground"
           >
             Back to Hotel
           </button>
@@ -114,14 +114,14 @@ const HotelPNRSuccess = () => {
         <div className="flex flex-col gap-3 sm:flex-row">
           <Link
             to="/hotel"
-            className="inline-flex h-11 items-center justify-center rounded-xl border px-5 text-sm font-semibold transition hover:bg-muted"
+            className="inline-flex h-11 items-center justify-center rounded-sm border px-5 text-sm font-semibold transition hover:bg-muted"
           >
             Back to Hotel
           </Link>
 
           <button
             onClick={() => window.print()}
-            className="h-11 rounded-xl bg-primary px-5 text-sm font-semibold text-primary-foreground transition hover:opacity-90"
+            className="h-11 rounded-sm bg-primary px-5 text-sm font-semibold text-primary-foreground transition hover:opacity-90"
           >
             Print Booking
           </button>

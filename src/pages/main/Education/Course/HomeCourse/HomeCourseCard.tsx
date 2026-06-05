@@ -75,7 +75,7 @@ const HomeCourseCard = ({ courses }: HomeCourseCardProps) => {
                                 <img
                                     src={course.logo}
                                     alt={`${course.university} logo`}
-                                    className="max-w-full rounded-lg max-h-full object-contain"
+                                    className="max-w-full rounded-sm max-h-full object-contain"
                                 />
                             </div>
                         </div>
@@ -87,7 +87,7 @@ const HomeCourseCard = ({ courses }: HomeCourseCardProps) => {
                                 to={`/education/courses/${course.id}`}
                                 whileHover={{ scale: 1.02 }}
                                 whileTap={{ scale: 0.98 }}
-                                className="w-full bg-transparent border border-primary/40 text-primary font-semibold py-2.5 px-4 rounded-lg hover:bg-primary/10 dark:hover:bg-primary/20 transition-colors text-center flex items-center justify-center"
+                                className="w-full bg-transparent border border-primary/40 text-primary font-semibold py-2.5 px-4 rounded-sm hover:bg-primary/10 dark:hover:bg-primary/20 transition-colors text-center flex items-center justify-center"
                             >
                                 View details
                             </MotionLink>
@@ -95,7 +95,7 @@ const HomeCourseCard = ({ courses }: HomeCourseCardProps) => {
                                 onClick={() => setIsOpen(true)}
                                 whileHover={{ scale: 1.02 }}
                                 whileTap={{ scale: 0.98 }}
-                                className="w-full bg-primary text-primary-foreground font-semibold py-2.5 px-4 rounded-lg hover:opacity-90 transition-opacity shadow-sm text-center flex items-center justify-center"
+                                className="w-full bg-primary text-primary-foreground font-semibold py-2.5 px-4 rounded-sm hover:opacity-90 transition-opacity shadow-sm text-center flex items-center justify-center"
                             >
                                 Apply Now
                             </motion.button>

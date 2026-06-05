@@ -37,7 +37,7 @@ const HolidayOfferContactDialog = ({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-            <DialogContent className="w-[95vw] !max-w-3xl rounded-md p-0 overflow-hidden">
+            <DialogContent className="w-[95vw] !max-w-3xl rounded-sm p-0 overflow-hidden">
         <div className="grid md:grid-cols-[1.1fr_0.9fr]">
           <div className="space-y-4 border-r p-6">
             <DialogHeader>
@@ -50,7 +50,7 @@ const HolidayOfferContactDialog = ({
             </p>
 
             <div className="space-y-3">
-              <Button asChild className="h-12 w-full justify-start rounded-md">
+              <Button asChild className="h-12 w-full justify-start rounded-sm">
                 <a
                   href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(
                     `Hello, I am interested in ${offer.name} Package of Holiday`,
@@ -66,7 +66,7 @@ const HolidayOfferContactDialog = ({
               <Button
                 asChild
                 variant="outline"
-                className="h-12 w-full justify-start rounded-md"
+                className="h-12 w-full justify-start rounded-sm"
               >
                 <a href={`tel:${phoneNumber}`}>
                   <Phone size={18} className="mr-3" />
@@ -80,7 +80,7 @@ const HolidayOfferContactDialog = ({
               <Button
                 variant="outline"
                 onClick={handleCopyPhone}
-                className="h-12 w-full justify-start rounded-md"
+                className="h-12 w-full justify-start rounded-sm"
               >
                 {copied ? (
                   <Check size={18} className="mr-3 text-green-600" />
@@ -95,7 +95,7 @@ const HolidayOfferContactDialog = ({
             </div>
 
             {copied && (
-              <div className="rounded-md border border-green-200 bg-green-50 px-4 py-3 text-sm font-medium text-green-700">
+              <div className="rounded-sm border border-green-200 bg-green-50 px-4 py-3 text-sm font-medium text-green-700">
                 Phone number copied successfully.
               </div>
             )}
@@ -116,7 +116,7 @@ const HolidayOfferContactDialog = ({
                 you with full details about this offer.
               </p>
 
-              <div className="mt-5 rounded-md border bg-background p-4">
+              <div className="mt-5 rounded-sm border bg-background p-4">
                 <p className="text-sm font-semibold text-foreground">
                   Selected Offer
                 </p>
@@ -128,7 +128,7 @@ const HolidayOfferContactDialog = ({
 
             <Button
               onClick={onRequestClick}
-              className="mt-6 h-12 w-full rounded-md font-semibold"
+              className="mt-6 h-12 w-full rounded-sm font-semibold"
             >
               <Send size={18} className="mr-2" />
               Submit Request Form

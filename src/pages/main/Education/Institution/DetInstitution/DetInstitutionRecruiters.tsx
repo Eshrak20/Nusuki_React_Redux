@@ -141,7 +141,7 @@ const DetInstitutionRecruiters = ({ placement }: Props) => {
                 </div>
                 <CardContent className="p-6">
                   <div className="flex items-center gap-3 mb-4">
-                    <div className="p-2.5 rounded-lg bg-primary/10 text-primary">
+                    <div className="p-2.5 rounded-sm bg-primary/10 text-primary">
                       <DollarSign className="w-5 h-5" />
                     </div>
                     <Badge variant="secondary" className="text-[10px] uppercase tracking-tighter">Est. Package</Badge>

@@ -39,7 +39,7 @@ const ProfileSelectField = ({
 
       <Select value={value} onValueChange={onChange}>
         {/* Added w-full here to fix the width issue */}
-        <SelectTrigger className="w-full h-11 rounded-xl bg-muted/5 border-muted-foreground/20 focus:ring-primary">
+        <SelectTrigger className="w-full h-11 rounded-sm bg-muted/5 border-muted-foreground/20 focus:ring-primary">
           <SelectValue placeholder={placeholder} />
         </SelectTrigger>
 

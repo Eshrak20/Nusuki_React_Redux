@@ -15,7 +15,7 @@ const BookingPriceSidebar = ({ flight }: Props) => {
   const payableAmount = getPayableAmount(flight);
 
   return (
-    <div className="rounded-xl border border-[#d8dde7] bg-white p-6 shadow-sm dark:border-white/10 dark:bg-[#101827]">
+    <div className="rounded-sm border border-[#d8dde7] bg-white p-6 shadow-sm dark:border-white/10 dark:bg-[#101827]">
       <h3 className="text-[22px] font-extrabold text-[#172f6d] dark:text-[#8fb4ff]">
         Price Details
       </h3>
@@ -59,7 +59,7 @@ const BookingPriceSidebar = ({ flight }: Props) => {
             Payable Amount
           </span>
 
-          <div className="rounded-md border-2 border-[#2457a6] px-4 py-2 text-[20px] font-extrabold text-[#2570c9] dark:border-[#4b8dff] dark:text-[#6ea8ff]">
+          <div className="rounded-sm border-2 border-[#2457a6] px-4 py-2 text-[20px] font-extrabold text-[#2570c9] dark:border-[#4b8dff] dark:text-[#6ea8ff]">
             {formatBDT(payableAmount)}
           </div>
         </div>

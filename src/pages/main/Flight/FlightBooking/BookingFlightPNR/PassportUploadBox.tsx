@@ -57,7 +57,7 @@ const PassportUploadBox = ({
 
   return (
     <div
-      className={`rounded-md border p-4 transition-all ${
+      className={`rounded-sm border p-4 transition-all ${
         fileUploaded
           ? "border-green-500 bg-green-50/50 dark:bg-green-950/20"
           : "border-blue-400 bg-blue-50/50 dark:bg-blue-950/20"

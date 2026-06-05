@@ -204,7 +204,7 @@ const EduFormSubmission = ({ title }: TitleProps) => {
                   <motion.div
                     initial={{ opacity: 0, scale: 0.9 }}
                     animate={{ opacity: 1, scale: 1 }}
-                    className="flex items-center justify-center gap-2 text-green-600 dark:text-green-400 font-bold text-sm bg-green-50 dark:bg-green-950/30 py-3 rounded-xl border border-green-200 dark:border-green-900"
+                    className="flex items-center justify-center gap-2 text-green-600 dark:text-green-400 font-bold text-sm bg-green-50 dark:bg-green-950/30 py-3 rounded-sm border border-green-200 dark:border-green-900"
                   >
                     <CheckCircle2 size={18} />
                     Message Sent!
@@ -215,7 +215,7 @@ const EduFormSubmission = ({ title }: TitleProps) => {
                     whileTap={{ scale: 0.98 }}
                     type="submit"
                     disabled={isLoading}
-                    className="w-full py-4 bg-primary text-primary-foreground rounded-xl font-bold tracking-widest text-[11px] flex items-center justify-center gap-3   transition-all disabled:opacity-50"
+                    className="w-full py-4 bg-primary text-primary-foreground rounded-sm font-bold tracking-widest text-[11px] flex items-center justify-center gap-3   transition-all disabled:opacity-50"
                   >
                     {isLoading ? "SENDING..." : "ENQUIRE NOW"}
                     <Send size={14} />

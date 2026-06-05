@@ -155,7 +155,7 @@ const DetInstitutionCultural = ({ culture }: DetInstitutionCulturalProps) => {
                   viewport={{ once: true }}
                   transition={{ delay: idx * 0.05 }}
                   onClick={() => setSelectedImageIdx(idx)}
-                  className="relative cursor-zoom-in overflow-hidden rounded-xl break-inside-avoid shadow-md hover:shadow-xl transition-all group"
+                  className="relative cursor-zoom-in overflow-hidden rounded-sm break-inside-avoid shadow-md hover:shadow-xl transition-all group"
                 >
                   <img
                     src={image.desktopImage?.url || image.mobileImage?.url}
@@ -193,7 +193,7 @@ const DetInstitutionCultural = ({ culture }: DetInstitutionCulturalProps) => {
             >
               <img
                 src={images[selectedImageIdx].desktopImage?.url}
-                className="max-w-full max-h-full object-contain rounded-lg shadow-2xl"
+                className="max-w-full max-h-full object-contain rounded-sm shadow-2xl"
                 alt="Enlarged campus"
               />
 

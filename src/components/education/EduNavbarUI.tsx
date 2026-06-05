@@ -66,7 +66,7 @@ const EduNavbarUI = ({
         <button
           type="button"
           onClick={onMenuToggle}
-          className="flex size-11 items-center justify-center rounded-xl border bg-card text-foreground shadow-sm transition hover:bg-primary hover:text-primary-foreground lg:hidden"
+          className="flex size-11 items-center justify-center rounded-sm border bg-card text-foreground shadow-sm transition hover:bg-primary hover:text-primary-foreground lg:hidden"
         >
           {isMenuOpen ? <X size={22} /> : <Menu size={22} />}
         </button>
@@ -81,7 +81,7 @@ const EduNavbarUI = ({
                 <Link
                   to={item.path}
                   className={cn(
-                    "relative inline-flex h-12 items-center gap-2 overflow-hidden rounded-xl px-4 text-sm font-bold transition-all duration-300",
+                    "relative inline-flex h-12 items-center gap-2 overflow-hidden rounded-sm px-4 text-sm font-bold transition-all duration-300",
                     "hover:-translate-y-0.5 hover:bg-primary/10 hover:text-primary hover:shadow-md",
                     active
                       ? "bg-primary text-primary-foreground shadow-xl hover:text-muted shadow-primary/25"
@@ -91,7 +91,7 @@ const EduNavbarUI = ({
                   {active && (
                     <motion.span
                       layoutId="edu-active-navbar-item"
-                      className="absolute inset-0 rounded-xl bg-primary"
+                      className="absolute inset-0 rounded-sm bg-primary"
                       transition={{
                         type: "spring",
                         stiffness: 400,
@@ -124,7 +124,7 @@ const EduNavbarUI = ({
                         <button
                           type="button"
                           onClick={onSearchUniversities}
-                          className="inline-flex items-center gap-2 rounded-xl bg-primary px-4 py-2 text-xs font-bold text-primary-foreground shadow-lg shadow-primary/25 transition hover:-translate-y-0.5 hover:brightness-110"
+                          className="inline-flex items-center gap-2 rounded-sm bg-primary px-4 py-2 text-xs font-bold text-primary-foreground shadow-lg shadow-primary/25 transition hover:-translate-y-0.5 hover:brightness-110"
                         >
                           <Search size={15} />
                           Search Universities
@@ -141,7 +141,7 @@ const EduNavbarUI = ({
                               key={dest.code}
                               to={href}
                               className={cn(
-                                "group/item flex items-center gap-3 rounded-xl border p-3 text-sm font-bold transition-all duration-300",
+                                "group/item flex items-center gap-3 rounded-sm border p-3 text-sm font-bold transition-all duration-300",
                                 activeDest
                                   ? "border-primary bg-primary text-primary-foreground shadow-lg shadow-primary/25"
                                   : "border-border/70 bg-card hover:-translate-y-0.5 hover:border-primary/40 hover:bg-primary/10 hover:text-primary hover:shadow-md",
@@ -180,7 +180,7 @@ const EduNavbarUI = ({
         <button
           type="button"
           onClick={onOpenCounselling}
-          className="flex size-11 items-center justify-center rounded-xl bg-primary text-primary-foreground shadow-lg shadow-primary/25 lg:hidden"
+          className="flex size-11 items-center justify-center rounded-sm bg-primary text-primary-foreground shadow-lg shadow-primary/25 lg:hidden"
         >
           <Video className="size-4 fill-white text-white" />
         </button>
@@ -208,7 +208,7 @@ const EduNavbarUI = ({
                         type="button"
                         onClick={() => onMobileSubmenuToggle(item.name)}
                         className={cn(
-                          "flex w-full items-center justify-between rounded-xl px-4 py-3 text-sm font-bold transition-all",
+                          "flex w-full items-center justify-between rounded-sm px-4 py-3 text-sm font-bold transition-all",
                           active
                             ? "bg-primary text-primary-foreground shadow-lg shadow-primary/25"
                             : "text-foreground hover:bg-primary/10 hover:text-primary",
@@ -247,7 +247,7 @@ const EduNavbarUI = ({
                                     to={href}
                                     onClick={onMobileClose}
                                     className={cn(
-                                      "flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-semibold transition-all",
+                                      "flex items-center gap-3 rounded-sm px-3 py-2.5 text-sm font-semibold transition-all",
                                       activeDest
                                         ? "bg-primary text-primary-foreground"
                                         : "text-muted-foreground hover:bg-primary/10 hover:text-primary",
@@ -276,7 +276,7 @@ const EduNavbarUI = ({
                     to={item.path}
                     onClick={onMobileClose}
                     className={cn(
-                      "flex items-center justify-between rounded-xl px-4 py-3 text-sm font-bold transition-all",
+                      "flex items-center justify-between rounded-sm px-4 py-3 text-sm font-bold transition-all",
                       active
                         ? "bg-primary text-primary-foreground shadow-lg shadow-primary/25"
                         : "text-foreground hover:bg-primary/10 hover:text-primary",

@@ -177,13 +177,13 @@ const DetInstitutionPrograms = ({ programs }: Props) => {
           <TabsList className="h-16 p-2 bg-muted/80 backdrop-blur-md border border-border rounded-sm shadow-inner gap-2">
             <TabsTrigger 
               value="masters" 
-              className="rounded-xl px-8 h-12 text-md font-bold transition-all data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-lg"
+              className="rounded-sm px-8 h-12 text-md font-bold transition-all data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-lg"
             >
               Master's Degrees
             </TabsTrigger>
             <TabsTrigger 
               value="bachelors" 
-              className="rounded-xl px-8 h-12 text-md font-bold transition-all data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-lg"
+              className="rounded-sm px-8 h-12 text-md font-bold transition-all data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-lg"
             >
               Bachelor's Degrees
             </TabsTrigger>

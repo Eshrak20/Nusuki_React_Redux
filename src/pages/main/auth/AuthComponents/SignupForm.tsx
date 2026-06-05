@@ -62,7 +62,7 @@ const SignupForm = ({
   );
 
   const inputClass = (hasError?: boolean) =>
-    `h-9 rounded-md border pl-9 text-sm shadow-none transition-all placeholder:text-slate-400 focus-visible:ring-1 dark:placeholder:text-slate-500 ${
+    `h-9 rounded-sm border pl-9 text-sm shadow-none transition-all placeholder:text-slate-400 focus-visible:ring-1 dark:placeholder:text-slate-500 ${
       hasError
         ? "border-red-300 bg-red-50/70 text-red-900 focus-visible:ring-red-300 dark:border-red-500/60 dark:bg-red-950/20 dark:text-red-100 dark:focus-visible:ring-red-500/40"
         : "border-slate-200 bg-white text-slate-950 focus-visible:border-primary focus-visible:ring-primary/30 dark:border-slate-800 dark:bg-slate-950 dark:text-slate-100 dark:focus-visible:border-primary/70 dark:focus-visible:ring-primary/30"
@@ -74,7 +74,7 @@ const SignupForm = ({
       : "border-slate-200 bg-white focus-within:border-primary focus-within:ring-1 focus-within:ring-primary/30 dark:border-slate-800 dark:bg-slate-950 dark:focus-within:border-primary/70 dark:focus-within:ring-primary/30";
 
   return (
-    <Card className="w-full max-w-[470px] rounded-md border-0 bg-white shadow-sm dark:bg-slate-900 dark:shadow-none dark:ring-1 dark:ring-slate-800">
+    <Card className="w-full max-w-[470px] rounded-sm border-0 bg-white shadow-sm dark:bg-slate-900 dark:shadow-none dark:ring-1 dark:ring-slate-800">
       <CardHeader className="px-5 pb-2.5 pt-4 sm:px-6 sm:pt-5">
         <Link
           to="/"
@@ -130,7 +130,7 @@ const SignupForm = ({
               </FieldLabel>
 
               <div
-                className={`flex h-9 overflow-hidden rounded-md border transition-all ${phoneBoxClass}`}
+                className={`flex h-9 overflow-hidden rounded-sm border transition-all ${phoneBoxClass}`}
               >
                 <div className="flex w-[118px] shrink-0 items-center border-r border-slate-200 pl-3 dark:border-slate-800">
                   <Phone className="mr-2 h-3.5 w-3.5 text-slate-400 dark:text-slate-500" />
@@ -265,7 +265,7 @@ const SignupForm = ({
           <Button
             type="submit"
             disabled={isLoading}
-            className="h-9 w-full rounded-md bg-primary text-sm font-semibold text-primary-foreground hover:bg-primary/90"
+            className="h-9 w-full rounded-sm bg-primary text-sm font-semibold text-primary-foreground hover:bg-primary/90"
           >
             {isLoading ? "Creating account..." : "Sign Up"}
           </Button>

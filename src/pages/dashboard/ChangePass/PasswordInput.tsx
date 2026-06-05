@@ -32,7 +32,7 @@ const PasswordInput = ({
           value={value}
           placeholder={placeholder}
           onChange={(e) => onChange(e.target.value)}
-          className="h-11 rounded-xl px-10"
+          className="h-11 rounded-sm px-10"
         />
 
         <button

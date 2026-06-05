@@ -85,7 +85,7 @@ const CustomSelect = ({
 
             {/* Dropdown Options Menu */}
             {isOpen && (
-                <div className="absolute top-[calc(100%+8px)] left-0 w-full bg-card border border-border/60 rounded-4xl shadow-xl z-50 py-3 animate-in fade-in zoom-in-95 duration-200">
+                <div className="absolute top-[calc(100%+8px)] left-0 w-full bg-card border border-border/60 rounded-sm shadow-xl z-50 py-3 animate-in fade-in zoom-in-95 duration-200">
                     {/* Header inside the menu */}
                     <div className="px-5 pb-2 text-sm text-foreground font-medium select-none">
                         {dropdownTitle || placeholder}

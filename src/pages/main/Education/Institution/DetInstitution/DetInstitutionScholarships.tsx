@@ -41,7 +41,7 @@ const DetInstitutionScholarships = ({ scholarships }: DetInstitutionScholarships
       <div className="container mx-auto px-4">
         {/* Header Section */}
         <div className="flex items-center gap-4 mb-8">
-          <div className="p-3 rounded-xl bg-primary dark:bg-primary/10">
+          <div className="p-3 rounded-sm bg-primary dark:bg-primary/10">
             {scholarships.iconImage ? (
               <img
                 src={scholarships.iconImage.imageUrl}
@@ -114,9 +114,9 @@ const DetInstitutionScholarships = ({ scholarships }: DetInstitutionScholarships
         </div>
 
         {/* Additional Info */}
-        <div className="mt-12 p-6 rounded-xl bg-primary/5 border border-primary/10">
+        <div className="mt-12 p-6 rounded-sm bg-primary/5 border border-primary/10">
           <div className="flex items-start gap-4">
-            <div className="p-2 rounded-lg bg-primary/10">
+            <div className="p-2 rounded-sm bg-primary/10">
               <GraduationCap className="w-5 h-5 text-primary" />
             </div>
             <div>

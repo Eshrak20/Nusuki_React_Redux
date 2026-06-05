@@ -27,7 +27,7 @@ const PaymentInfoFields = ({
             onChange={(event) =>
               updatePaymentType(event.target.value as HotelPaymentType)
             }
-            className="mt-2 h-11 w-full rounded-xl border bg-background px-3 text-sm outline-none transition focus:border-primary"
+            className="mt-2 h-11 w-full rounded-sm border bg-background px-3 text-sm outline-none transition focus:border-primary"
           >
             <option value="GUARANTEE">Guarantee</option>
             <option value="DEPOSIT">Deposit</option>
@@ -42,7 +42,7 @@ const PaymentInfoFields = ({
             value={payment.card_code}
             onChange={(event) => updatePayment("card_code", event.target.value)}
             placeholder="VI"
-            className="mt-2 h-11 w-full rounded-xl border bg-background px-3 text-sm outline-none transition focus:border-primary"
+            className="mt-2 h-11 w-full rounded-sm border bg-background px-3 text-sm outline-none transition focus:border-primary"
           />
         </div>
 
@@ -55,7 +55,7 @@ const PaymentInfoFields = ({
               updatePayment("card_number", event.target.value)
             }
             placeholder="4111111111111111"
-            className="mt-2 h-11 w-full rounded-xl border bg-background px-3 text-sm outline-none transition focus:border-primary"
+            className="mt-2 h-11 w-full rounded-sm border bg-background px-3 text-sm outline-none transition focus:border-primary"
           />
         </div>
 
@@ -66,7 +66,7 @@ const PaymentInfoFields = ({
             value={payment.cvv}
             onChange={(event) => updatePayment("cvv", event.target.value)}
             placeholder="123"
-            className="mt-2 h-11 w-full rounded-xl border bg-background px-3 text-sm outline-none transition focus:border-primary"
+            className="mt-2 h-11 w-full rounded-sm border bg-background px-3 text-sm outline-none transition focus:border-primary"
           />
         </div>
 
@@ -81,7 +81,7 @@ const PaymentInfoFields = ({
             onChange={(event) =>
               updatePayment("expiry_month", Number(event.target.value))
             }
-            className="mt-2 h-11 w-full rounded-xl border bg-background px-3 text-sm outline-none transition focus:border-primary"
+            className="mt-2 h-11 w-full rounded-sm border bg-background px-3 text-sm outline-none transition focus:border-primary"
           />
         </div>
 
@@ -94,7 +94,7 @@ const PaymentInfoFields = ({
               updatePayment("expiry_year", event.target.value)
             }
             placeholder="2028"
-            className="mt-2 h-11 w-full rounded-xl border bg-background px-3 text-sm outline-none transition focus:border-primary"
+            className="mt-2 h-11 w-full rounded-sm border bg-background px-3 text-sm outline-none transition focus:border-primary"
           />
         </div>
 
@@ -107,7 +107,7 @@ const PaymentInfoFields = ({
               updatePayment("holder_first_name", event.target.value)
             }
             placeholder="Holder first name"
-            className="mt-2 h-11 w-full rounded-xl border bg-background px-3 text-sm outline-none transition focus:border-primary"
+            className="mt-2 h-11 w-full rounded-sm border bg-background px-3 text-sm outline-none transition focus:border-primary"
           />
         </div>
 
@@ -120,7 +120,7 @@ const PaymentInfoFields = ({
               updatePayment("holder_last_name", event.target.value)
             }
             placeholder="Holder last name"
-            className="mt-2 h-11 w-full rounded-xl border bg-background px-3 text-sm outline-none transition focus:border-primary"
+            className="mt-2 h-11 w-full rounded-sm border bg-background px-3 text-sm outline-none transition focus:border-primary"
           />
         </div>
       </div>

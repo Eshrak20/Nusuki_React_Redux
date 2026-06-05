@@ -32,7 +32,7 @@ const DepartureDate: React.FC<DepartureDateProps> = ({
       <PopoverTrigger asChild>
         <div
           className={cn(
-            "flex-1 rounded-xl border p-3 cursor-pointer transition",
+            "flex-1 rounded-sm border p-3 cursor-pointer transition",
             "bg-background hover:border-primary",
             "border-border"
           )}
@@ -55,7 +55,7 @@ const DepartureDate: React.FC<DepartureDateProps> = ({
       </PopoverTrigger>
 
       <PopoverContent
-        className="w-auto rounded-xl border bg-popover p-0 shadow-lg"
+        className="w-auto rounded-sm border bg-popover p-0 shadow-lg"
         align="start"
       >
         <Calendar

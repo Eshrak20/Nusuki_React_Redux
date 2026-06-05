@@ -42,7 +42,7 @@ const FlightResultsSortBar = ({
                 onSortChange(item.key, isActive ? sortOrder : "asc")
               }
               disabled={isLoading}
-              className="h-11 rounded-xl"
+              className="h-11 rounded-sm"
             >
               <Icon className="mr-2 h-4 w-4" />
               {item.label}
@@ -56,7 +56,7 @@ const FlightResultsSortBar = ({
           variant={sortOrder === "asc" ? "default" : "outline"}
           onClick={() => onSortChange(sortBy, "asc")}
           disabled={isLoading}
-          className="h-11 rounded-xl"
+          className="h-11 rounded-sm"
         >
           <ArrowUpAZ className="mr-2 h-4 w-4" />
           Asc
@@ -66,7 +66,7 @@ const FlightResultsSortBar = ({
           variant={sortOrder === "desc" ? "default" : "outline"}
           onClick={() => onSortChange(sortBy, "desc")}
           disabled={isLoading}
-          className="h-11 rounded-xl"
+          className="h-11 rounded-sm"
         >
           <ArrowDownUp className="mr-2 h-4 w-4" />
           Desc

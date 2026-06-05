@@ -119,7 +119,7 @@ const CountryVisaCard = ({ visas }: CountryVisaCardProps) => {
                         <MotionLink
                             to={`${visa.id}`}
                             whileTap={{ scale: 0.95 }}
-                            className="relative overflow-hidden bg-primary text-primary-foreground px-5 py-2.5 rounded-lg text-sm font-semibold transition-colors hover:bg-primary/90"
+                            className="relative overflow-hidden bg-primary text-primary-foreground px-5 py-2.5 rounded-sm text-sm font-semibold transition-colors hover:bg-primary/90"
                         >
                             {/* The Glossy Shine Element */}
                             <span className="absolute inset-0 -translate-x-[150%] bg-linear-to-r from-transparent via-white/30 to-transparent transition-transform duration-700 ease-in-out group-hover/card:translate-x-[150%]" />

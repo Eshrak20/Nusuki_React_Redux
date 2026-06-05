@@ -42,7 +42,7 @@ export function DestinationField({
 
       {suggestions.length > 0 && (
         <div
-          className="absolute left-0 top-full z-50 mt-2 max-h-72 w-full overflow-y-auto rounded-xl border bg-white shadow-xl"
+          className="absolute left-0 top-full z-50 mt-2 max-h-72 w-full overflow-y-auto rounded-sm border bg-white shadow-xl"
           onScroll={(event) => {
             const target = event.currentTarget;
 

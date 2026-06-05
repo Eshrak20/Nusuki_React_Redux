@@ -27,7 +27,7 @@ const SideImages = ({ images }: SideImagesProps) => {
       {images?.map((img, index) => (
         <motion.div
           key={index}
-          className="group relative overflow-hidden lg:rounded-xl border bg-card lg:shadow-2xl"
+          className="group relative overflow-hidden lg:rounded-sm border bg-card lg:shadow-2xl"
           initial={{ opacity: 0, x: 80, rotateY: 15, scale: 0.95 }}
           whileInView={{ opacity: 1, x: 0, rotateY: 0, scale: 1 }}
           viewport={{ once: true, amount: 0.3 }}
@@ -37,7 +37,7 @@ const SideImages = ({ images }: SideImagesProps) => {
             <motion.img
               src={img}
               alt={`Requirement visual ${index + 1}`}
-              className="w-full h-auto object-cover lg:rounded-xl"
+              className="w-full h-auto object-cover lg:rounded-sm"
               animate={isInView ? { y: [0, -8, 0] } : {}}
               transition={{
                 duration: 4,
@@ -48,7 +48,7 @@ const SideImages = ({ images }: SideImagesProps) => {
             />
 
             <motion.div
-              className="absolute inset-0 pointer-events-none rounded-xl"
+              className="absolute inset-0 pointer-events-none rounded-sm"
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               transition={{ duration: 1, delay: 0.5 }}
@@ -58,7 +58,7 @@ const SideImages = ({ images }: SideImagesProps) => {
       ))}
 
       <motion.div
-        className="absolute -z-10 inset-0 rounded-3xl"
+        className="absolute -z-10 inset-0 rounded-sm"
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         transition={{ duration: 1, delay: 0.5 }}

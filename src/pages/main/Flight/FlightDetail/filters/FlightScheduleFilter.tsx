@@ -45,7 +45,7 @@ const ScheduleOptionButton = ({
       type="button"
       onClick={onClick}
       className={cn(
-        "group flex min-h-[38px] w-full items-center justify-between rounded-md border px-3 py-2 text-left transition-all duration-200",
+        "group flex min-h-[38px] w-full items-center justify-between rounded-sm border px-3 py-2 text-left transition-all duration-200",
         "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/30",
         isActive
           ? "border-primary/80 bg-primary/10 text-primary dark:border-primary/70 dark:bg-primary/15"
@@ -166,7 +166,7 @@ const FlightScheduleFilter = ({ data }: Props) => {
               variant="ghost"
               size="sm"
               onClick={clearAll}
-              className="h-7 rounded-md px-2 text-[11px] font-medium text-muted-foreground hover:text-destructive"
+              className="h-7 rounded-sm px-2 text-[11px] font-medium text-muted-foreground hover:text-destructive"
             >
               <X className="mr-1 h-3.5 w-3.5" />
               Clear
@@ -175,16 +175,16 @@ const FlightScheduleFilter = ({ data }: Props) => {
         </div>
 
         <Tabs defaultValue="departure" className="w-full">
-          <TabsList className="grid h-9 w-full grid-cols-2 rounded-lg bg-muted/70 p-0.5">
+          <TabsList className="grid h-9 w-full grid-cols-2 rounded-sm bg-muted/70 p-0.5">
             <TabsTrigger
               value="departure"
-              className="rounded-md text-xs font-medium data-[state=active]:bg-background data-[state=active]:shadow-none"
+              className="rounded-sm text-xs font-medium data-[state=active]:bg-background data-[state=active]:shadow-none"
             >
               Departure
             </TabsTrigger>
             <TabsTrigger
               value="arrival"
-              className="rounded-md text-xs font-medium data-[state=active]:bg-background data-[state=active]:shadow-none"
+              className="rounded-sm text-xs font-medium data-[state=active]:bg-background data-[state=active]:shadow-none"
             >
               Arrival
             </TabsTrigger>

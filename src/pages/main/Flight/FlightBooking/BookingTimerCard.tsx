@@ -6,7 +6,7 @@ interface Props {
 
 const BookingTimerCard = ({ timeText }: Props) => {
   return (
-    <div className="rounded-xl border border-[#d8dde7] bg-white px-4 py-3 shadow-sm dark:border-white/10 dark:bg-[#101827]">
+    <div className="rounded-sm border border-[#d8dde7] bg-white px-4 py-3 shadow-sm dark:border-white/10 dark:bg-[#101827]">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2 text-[16px] text-[#222] dark:text-white/90">
           <Clock3 className="h-4 w-4 fill-[#b88d22] text-[#b88d22]" />

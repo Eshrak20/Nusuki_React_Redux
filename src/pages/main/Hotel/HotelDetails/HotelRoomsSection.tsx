@@ -78,7 +78,7 @@ const HotelRoomsSection = ({ rooms = [], searchId }: HotelRoomsSectionProps) => 
         initial={{ opacity: 0, y: 14 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.35, ease: "easeOut" }}
-        className="rounded-3xl border border-border bg-card p-5 text-card-foreground shadow-sm md:p-6"
+        className="rounded-sm border border-border bg-card p-5 text-card-foreground shadow-sm md:p-6"
       >
         <div className="flex flex-wrap items-center justify-between gap-4">
           <div className="flex items-start gap-3">

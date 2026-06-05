@@ -32,7 +32,7 @@ const StepGuide = ({
             {/* Section Header */}
             <div className="bg-muted/30 px-6 py-4 border-b border-border flex items-center justify-between">
               <h3 className="text-xl font-bold text-foreground flex items-center gap-3">
-                <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-hajj text-white text-sm">
+                <span className="flex h-8 w-8 items-center justify-center rounded-sm bg-hajj text-white text-sm">
                   {sIdx + 1}
                 </span>
                 {section.title}

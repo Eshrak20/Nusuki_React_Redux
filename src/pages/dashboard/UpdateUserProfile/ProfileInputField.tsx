@@ -39,7 +39,7 @@ const ProfileInputField = ({
           onChange={(e) => onChange(e.target.value)}
           placeholder={placeholder}
           className={cn(
-            "h-11 rounded-xl bg-muted/5 border-muted-foreground/20 focus:bg-background transition-all", 
+            "h-11 rounded-sm bg-muted/5 border-muted-foreground/20 focus:bg-background transition-all", 
             Icon && "pl-10"
           )}
         />

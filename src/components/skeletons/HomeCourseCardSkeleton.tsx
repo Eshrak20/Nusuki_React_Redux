@@ -13,11 +13,11 @@ const HomeCourseCardSkeleton = () => {
                         {/* Titles Skeleton */}
                         <div className="mb-5">
                             {/* Course Name lines */}
-                            <div className="h-7 bg-muted dark:bg-muted-dark rounded-md w-3/4 mb-2" />
-                            <div className="h-7 bg-muted dark:bg-muted-dark rounded-md w-1/2 mb-4" />
+                            <div className="h-7 bg-muted dark:bg-muted-dark rounded-sm w-3/4 mb-2" />
+                            <div className="h-7 bg-muted dark:bg-muted-dark rounded-sm w-1/2 mb-4" />
                             
                             {/* University Name */}
-                            <div className="h-4 bg-muted dark:bg-muted-dark rounded-md w-1/3" />
+                            <div className="h-4 bg-muted dark:bg-muted-dark rounded-sm w-1/3" />
                         </div>
 
                         <hr className="border-muted dark:border-muted-dark mb-4" />
@@ -28,13 +28,13 @@ const HomeCourseCardSkeleton = () => {
                                 {/* Study Level */}
                                 <div className="flex items-center gap-2">
                                     <div className="w-4 h-4 bg-muted dark:bg-muted-dark rounded-full" />
-                                    <div className="h-4 bg-muted dark:bg-muted-dark rounded-md w-24" />
+                                    <div className="h-4 bg-muted dark:bg-muted-dark rounded-sm w-24" />
                                 </div>
 
                                 {/* Location */}
                                 <div className="flex items-center gap-2">
                                     <div className="w-4 h-4 bg-muted dark:bg-muted-dark rounded-full" />
-                                    <div className="h-4 bg-muted dark:bg-muted-dark rounded-md w-32" />
+                                    <div className="h-4 bg-muted dark:bg-muted-dark rounded-sm w-32" />
                                 </div>
                             </div>
 
@@ -44,8 +44,8 @@ const HomeCourseCardSkeleton = () => {
 
                         {/* Action Buttons Skeleton */}
                         <div className="flex gap-3 mt-auto">
-                            <div className="w-full h-11 bg-muted dark:bg-muted-dark rounded-lg" />
-                            <div className="w-full h-11 bg-muted dark:bg-muted-dark rounded-lg" />
+                            <div className="w-full h-11 bg-muted dark:bg-muted-dark rounded-sm" />
+                            <div className="w-full h-11 bg-muted dark:bg-muted-dark rounded-sm" />
                         </div>
                     </div>
                 </div>

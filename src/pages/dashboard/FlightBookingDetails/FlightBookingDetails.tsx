@@ -39,7 +39,7 @@ const FlightBookingDetails = () => {
           Invalid booking ID
         </h2>
 
-        <Button asChild className="mt-4 rounded-xl">
+        <Button asChild className="mt-4 rounded-sm">
           <Link to="/dashboard/flight-bookings">Back to Bookings</Link>
         </Button>
       </div>
@@ -71,7 +71,7 @@ const FlightBookingDetails = () => {
             <Button
               onClick={() => refetch()}
               disabled={isFetching}
-              className="mt-4 rounded-xl"
+              className="mt-4 rounded-sm"
             >
               Try Again
             </Button>

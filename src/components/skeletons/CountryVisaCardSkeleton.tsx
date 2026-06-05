@@ -50,7 +50,7 @@ const CountryVisaCardSkeleton = () => {
                         </div>
 
                         {/* Button Placeholder */}
-                        <Skeleton className="w-28 h-10 rounded-lg" />
+                        <Skeleton className="w-28 h-10 rounded-sm" />
                     </div>
                 </div>
             ))}

@@ -8,7 +8,7 @@ const FormSubmissionSkeleton = () => {
         <div className="lg:col-span-4 bg-hajj p-10 lg:p-12 flex flex-col justify-between relative space-y-6">
           <Skeleton className="h-6 w-2/5 rounded-full" />{" "}
           {/* Professional Support badge */}
-          <Skeleton className="h-10 w-3/4 rounded-md" /> {/* Heading */}
+          <Skeleton className="h-10 w-3/4 rounded-sm" /> {/* Heading */}
           <ul className="space-y-4">
             {Array(3)
               .fill(0)
@@ -16,22 +16,22 @@ const FormSubmissionSkeleton = () => {
                 <li key={idx} className="flex gap-4 items-center">
                   <Skeleton className="h-8 w-8 rounded-full" /> {/* Icon */}
                   <div className="space-y-1">
-                    <Skeleton className="h-4 w-3/4 rounded-md" /> {/* Title */}
-                    <Skeleton className="h-3 w-5/6 rounded-md" />{" "}
+                    <Skeleton className="h-4 w-3/4 rounded-sm" /> {/* Title */}
+                    <Skeleton className="h-3 w-5/6 rounded-sm" />{" "}
                     {/* Description */}
                   </div>
                 </li>
               ))}
           </ul>
           <div className="mt-12 pt-8 border-t border-white/10">
-            <Skeleton className="h-4 w-full rounded-md" /> {/* Footer quote */}
+            <Skeleton className="h-4 w-full rounded-sm" /> {/* Footer quote */}
           </div>
         </div>
 
         {/* Right Form Skeleton */}
         <div className="lg:col-span-8 p-8 md:p-14 space-y-8">
           {/* Header */}
-          <Skeleton className="h-8 w-2/5 rounded-md mb-3" />
+          <Skeleton className="h-8 w-2/5 rounded-sm mb-3" />
           <Skeleton className="h-1.5 w-20 rounded-full mb-8" />
 
           <div className="space-y-6">
@@ -50,8 +50,8 @@ const FormSubmissionSkeleton = () => {
 
             {/* Footer / Submit Button */}
             <div className="flex items-center justify-between gap-6 pt-6">
-              <Skeleton className="h-4 w-1/3 rounded-md" /> {/* Privacy text */}
-              <Skeleton className="h-16 w-48 rounded-4xl" />{" "}
+              <Skeleton className="h-4 w-1/3 rounded-sm" /> {/* Privacy text */}
+              <Skeleton className="h-16 w-48 rounded-sm" />{" "}
               {/* Submit button */}
             </div>
           </div>

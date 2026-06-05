@@ -4,7 +4,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 const FlightPromotionsSkeleton = () => (
   <div className="w-full px-4 overflow-hidden">
-    <Skeleton className="h-10 w-64 mb-8 rounded-lg" />
+    <Skeleton className="h-10 w-64 mb-8 rounded-sm" />
     <div className="flex gap-4">
       {[1, 2, 3].map((i) => (
         <div key={i} className="w-full md:w-[calc(50%-12px)] lg:w-[calc(33.33%-16px)] shrink-0">
@@ -18,7 +18,7 @@ const FlightPromotionsSkeleton = () => (
 const FlightDestinationSkeleton = () => (
   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
     {[1, 2, 3, 4].map((i) => (
-      <div key={i} className="relative h-95 w-full rounded-3xl overflow-hidden">
+      <div key={i} className="relative h-95 w-full rounded-sm overflow-hidden">
         <Skeleton className="h-full w-full" />
         <div className="absolute bottom-0 left-0 p-6 w-full space-y-3">
           <Skeleton className="h-7 w-3/4 bg-slate-200/50 dark:bg-slate-800/50" />
@@ -101,7 +101,7 @@ const FlightHomeSkeleton = () => {
             <Skeleton className="h-4 w-32 rounded-full" />
             <Skeleton className="h-12 w-80" />
           </div>
-          <Skeleton className="h-16 w-full md:w-96 rounded-xl" />
+          <Skeleton className="h-16 w-full md:w-96 rounded-sm" />
         </div>
         <FlightCollectionSkeleton />
       </section>

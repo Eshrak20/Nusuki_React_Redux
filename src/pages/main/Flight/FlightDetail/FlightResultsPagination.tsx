@@ -43,7 +43,7 @@ const FlightResultsPagination = ({
               className={
                 currentPage === 1
                   ? "pointer-events-none opacity-50"
-                  : "cursor-pointer rounded-md border bg-background hover:bg-muted"
+                  : "cursor-pointer rounded-sm border bg-background hover:bg-muted"
               }
             />
           </PaginationItem>
@@ -64,7 +64,7 @@ const FlightResultsPagination = ({
                       onPageChange(page);
                     }
                   }}
-                  className={`h-10 w-10 cursor-pointer rounded-md border text-sm font-medium ${
+                  className={`h-10 w-10 cursor-pointer rounded-sm border text-sm font-medium ${
                     currentPage === page
                       ? "bg-primary text-primary-foreground"
                       : "bg-background hover:bg-muted"
@@ -88,7 +88,7 @@ const FlightResultsPagination = ({
               className={
                 currentPage === totalPages
                   ? "pointer-events-none opacity-50"
-                  : "cursor-pointer rounded-md border bg-background hover:bg-muted"
+                  : "cursor-pointer rounded-sm border bg-background hover:bg-muted"
               }
             />
           </PaginationItem>

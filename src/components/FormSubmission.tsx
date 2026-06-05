@@ -67,7 +67,7 @@ const FormSubmission = ({ title }: TitleProps) => {
 
   return (
     <section className="py-16 min-h-screen flex items-center justify-center from-muted/40 via-background to-muted/40 dark:from-background dark:via-muted/30 dark:to-background transition-colors">
-      <div className="w-full max-w-5xl lg:rounded-3xl overflow-hidden border border-border bg-white/70 dark:bg-card/70 backdrop-blur-xl lg:shadow-2xl lg:dark:shadow-black/40 transition-all">
+      <div className="w-full max-w-5xl lg:rounded-sm overflow-hidden border border-border bg-white/70 dark:bg-card/70 backdrop-blur-xl lg:shadow-2xl lg:dark:shadow-black/40 transition-all">
         {/* Header */}
         <div className="bg-linear-to-r from-hajj via-hajj/90 to-hajj/70 dark:from-hajj dark:via-hajj/80 dark:to-hajj/60 p-10 text-center text-white relative overflow-hidden">
           <motion.div

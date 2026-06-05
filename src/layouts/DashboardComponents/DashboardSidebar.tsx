@@ -119,7 +119,7 @@ const DashboardSidebar = () => {
               key={item.href}
               to={item.href}
               className={cn(
-                "group flex items-center justify-between rounded-xl px-4 py-3 text-sm font-semibold uppercase tracking-wide transition-all",
+                "group flex items-center justify-between rounded-sm px-4 py-3 text-sm font-semibold uppercase tracking-wide transition-all",
                 isActive
                   ? "bg-primary text-primary-foreground shadow-lg shadow-primary/20"
                   : "text-muted-foreground hover:bg-primary/10 hover:text-primary",
@@ -150,7 +150,7 @@ const DashboardSidebar = () => {
             variant="ghost"
             onClick={handleLogout}
             disabled={isLogoutLoading}
-            className="h-11 justify-start gap-2 rounded-xl px-3 text-destructive hover:bg-destructive/10 hover:text-destructive"
+            className="h-11 justify-start gap-2 rounded-sm px-3 text-destructive hover:bg-destructive/10 hover:text-destructive"
           >
             <LogOut className="h-4 w-4" />
             <span className="text-sm font-semibold">
@@ -158,7 +158,7 @@ const DashboardSidebar = () => {
             </span>
           </Button>
 
-          <div className="flex h-11 w-11 items-center justify-center rounded-xl border border-border/70 bg-background/70 shadow-sm">
+          <div className="flex h-11 w-11 items-center justify-center rounded-sm border border-border/70 bg-background/70 shadow-sm">
             <ModeToggle />
           </div>
         </div>

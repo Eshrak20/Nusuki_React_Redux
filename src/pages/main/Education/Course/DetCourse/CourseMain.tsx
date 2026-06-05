@@ -92,7 +92,7 @@ const CourseMain = () => {
               )}
 
               {careerSections.length > 0 && (
-                <section className="bg-muted/30 p-8 rounded-3xl border border-border/50 shadow-sm">
+                <section className="bg-muted/30 p-8 rounded-sm border border-border/50 shadow-sm">
                   <h2 className="text-2xl font-bold mb-6 text-foreground">
                     Career Outcomes
                   </h2>
@@ -141,7 +141,7 @@ const CourseMain = () => {
             <div className="absolute -inset-2 bg-linear-to-tr from-primary/20 via-primary/5 to-transparent rounded-[2rem] blur-xl opacity-50 group-hover:opacity-80 transition duration-700"></div>
 
             {/* The Form Card: Removed negative margins, added border and clean shadow */}
-            <div className="relative bg-card border border-border/60 shadow-2xl shadow-primary/5 rounded-3xl overflow-hidden">
+            <div className="relative bg-card border border-border/60 shadow-2xl shadow-primary/5 rounded-sm overflow-hidden">
               <div className="">
                 {" "}
                 {/* Tiny padding to let the form border breathe */}

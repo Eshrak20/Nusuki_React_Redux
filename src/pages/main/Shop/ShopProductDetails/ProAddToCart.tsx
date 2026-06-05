@@ -34,7 +34,7 @@ const ProAddToCart = ({ product }: Props) => {
   if (!variantId) {
     // Return null or a 'Sold Out' button if no variants exist
     return (
-      <div className="w-full p-4 text-center bg-gray-100 dark:bg-gray-800 rounded-xl text-gray-500 font-bold">
+      <div className="w-full p-4 text-center bg-gray-100 dark:bg-gray-800 rounded-sm text-gray-500 font-bold">
         Out of Stock
       </div>
     );

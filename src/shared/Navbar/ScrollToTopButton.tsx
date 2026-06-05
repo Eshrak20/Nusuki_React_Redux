@@ -19,7 +19,7 @@ const ScrollToTopButton = ({ show, isSpecialRoute }: ScrollToTopButtonProps) => 
           whileTap={{ scale: 0.9 }}
           onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
           className={cn(
-            "fixed bottom-6 right-6 z-50 flex h-14 w-14 items-center justify-center rounded-sm",
+            "fixed bottom-6 right-6 z-50 flex h-14 w-14 items-center justify-center rounded-full",
             "text-primary-foreground shadow-2xl transition-all duration-300",
             isSpecialRoute
               ? "bg-hajj shadow-hajj/25 hover:shadow-hajj/40"
@@ -35,7 +35,7 @@ const ScrollToTopButton = ({ show, isSpecialRoute }: ScrollToTopButtonProps) => 
           </motion.div>
 
           <motion.div
-            className="absolute inset-0 rounded-sm border-2 border-current"
+            className="absolute inset-0 rounded-full border-2 border-current"
             animate={{ scale: [1, 1.5], opacity: [0.5, 0] }}
             transition={{ duration: 1.5, repeat: Infinity, ease: "easeOut" }}
           />

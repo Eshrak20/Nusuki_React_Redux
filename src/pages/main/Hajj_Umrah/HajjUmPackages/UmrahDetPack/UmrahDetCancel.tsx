@@ -32,7 +32,7 @@ const UmrahDetCancel = () => {
       </div>
 
       {/* Pricing Table */}
-      <div className="overflow-x-auto border rounded-lg border-border">
+      <div className="overflow-x-auto border rounded-sm border-border">
         <table className="w-full text-sm text-left border-collapse">
           <thead className="bg-hajj/5 text-muted-foreground font-medium">
             <tr>
@@ -175,7 +175,7 @@ const ContactCard = ({
       </div>
     </div>
 
-    <button className="w-full py-2 bg-hajj text-white rounded-md text-sm font-medium hover:opacity-90 transition-opacity mt-auto">
+    <button className="w-full py-2 bg-hajj text-white rounded-sm text-sm font-medium hover:opacity-90 transition-opacity mt-auto">
       {buttonText}
     </button>
   </div>

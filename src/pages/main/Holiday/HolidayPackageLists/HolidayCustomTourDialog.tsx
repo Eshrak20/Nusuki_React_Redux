@@ -80,14 +80,14 @@ ${form.note}
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button size="lg" className="rounded-md px-8">
+        <Button size="lg" className="rounded-sm px-8">
           Request Now
         </Button>
       </DialogTrigger>
 
       <DialogContent
         className="
-          w-[95vw] !max-w-2xl rounded-md
+          w-[95vw] !max-w-2xl rounded-sm
           [&>button]:text-primary
           [&>button]:opacity-100
           [&>button:hover]:bg-primary/10
@@ -104,7 +104,7 @@ ${form.note}
           <div>
             <Label>Name</Label>
             <Input
-              className="mt-2 rounded-md"
+              className="mt-2 rounded-sm"
               value={form.name}
               onChange={(e) => handleChange("name", e.target.value)}
             />
@@ -114,7 +114,7 @@ ${form.note}
             <Label>Email</Label>
             <Input
               type="email"
-              className="mt-2 rounded-md"
+              className="mt-2 rounded-sm"
               value={form.email}
               onChange={(e) => handleChange("email", e.target.value)}
             />
@@ -123,7 +123,7 @@ ${form.note}
           <div>
             <Label>Phone</Label>
             <Input
-              className="mt-2 rounded-md"
+              className="mt-2 rounded-sm"
               value={form.phone}
               onChange={(e) => handleChange("phone", e.target.value)}
             />
@@ -132,7 +132,7 @@ ${form.note}
           <div>
             <Label>Destination</Label>
             <Input
-              className="mt-2 rounded-md"
+              className="mt-2 rounded-sm"
               value={form.destination}
               onChange={(e) => handleChange("destination", e.target.value)}
             />
@@ -147,7 +147,7 @@ ${form.note}
                   type="button"
                   variant="outline"
                   className={cn(
-                    "mt-2 h-10 w-full justify-start rounded-md text-left font-normal",
+                    "mt-2 h-10 w-full justify-start rounded-sm text-left font-normal",
                     !travelDate && "text-muted-foreground",
                   )}
                 >
@@ -156,7 +156,7 @@ ${form.note}
                 </Button>
               </PopoverTrigger>
 
-              <PopoverContent className="w-auto rounded-md p-0" align="start">
+              <PopoverContent className="w-auto rounded-sm p-0" align="start">
                 <Calendar
                   mode="single"
                   selected={travelDate}
@@ -176,7 +176,7 @@ ${form.note}
             <Input
               type="number"
               min={1}
-              className="mt-2 rounded-md"
+              className="mt-2 rounded-sm"
               value={form.travelers}
               onChange={(e) => handleChange("travelers", e.target.value)}
             />
@@ -185,7 +185,7 @@ ${form.note}
           <div className="md:col-span-2">
             <Label>Budget</Label>
             <Input
-              className="mt-2 rounded-md"
+              className="mt-2 rounded-sm"
               placeholder="Example: BDT 50,000"
               value={form.budget}
               onChange={(e) => handleChange("budget", e.target.value)}
@@ -195,7 +195,7 @@ ${form.note}
           <div className="md:col-span-2">
             <Label>Extra Note</Label>
             <Textarea
-              className="mt-2 min-h-28 rounded-md"
+              className="mt-2 min-h-28 rounded-sm"
               value={form.note}
               onChange={(e) => handleChange("note", e.target.value)}
             />
@@ -205,7 +205,7 @@ ${form.note}
         <Button
           onClick={handleSubmit}
           disabled={isLoading}
-          className="mt-2 h-11 w-full text-white! dark:text-black! hover:text-primary! dark:hover:text-red-400! rounded-md"
+          className="mt-2 h-11 w-full text-white! dark:text-black! hover:text-primary! dark:hover:text-red-400! rounded-sm"
         >
           {isLoading ? (
             <Loader2 size={18} className="mr-2 animate-spin" />

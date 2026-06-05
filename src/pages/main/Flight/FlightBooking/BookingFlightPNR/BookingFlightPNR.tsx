@@ -44,7 +44,7 @@ const BookingFlightPNR = () => {
         <PnrMissingParamsAlert flightId={flightId} searchId={searchId} />
 
         {isProfileLoading ? (
-          <div className="rounded-xl border bg-card p-4 text-sm text-muted-foreground shadow-sm">
+          <div className="rounded-sm border bg-card p-4 text-sm text-muted-foreground shadow-sm">
             Loading your profile information...
           </div>
         ) : (

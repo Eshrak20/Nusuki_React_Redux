@@ -23,7 +23,7 @@ const HotelBookingDetailsError = ({ onRetry }: HotelBookingDetailsErrorProps) =>
       <button
         type="button"
         onClick={onRetry}
-        className="mt-5 h-10 rounded-xl bg-destructive px-5 text-sm font-semibold text-destructive-foreground transition hover:opacity-90"
+        className="mt-5 h-10 rounded-sm bg-destructive px-5 text-sm font-semibold text-destructive-foreground transition hover:opacity-90"
       >
         Try again
       </button>

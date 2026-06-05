@@ -62,7 +62,7 @@ const SearchSummary = ({ data, nights }: Props) => {
           type="button"
           variant="secondary"
           onClick={handleModifySearch}
-          className="h-11 cursor-pointer hover:bg-primary hover:text-primary-foreground w-full shrink-0 rounded-xl px-4 text-sm font-semibold sm:w-auto lg:h-12"
+          className="h-11 cursor-pointer hover:bg-primary hover:text-primary-foreground w-full shrink-0 rounded-sm px-4 text-sm font-semibold sm:w-auto lg:h-12"
         >
           <Settings2 className="mr-2 h-4 w-4" />
           Modify Search

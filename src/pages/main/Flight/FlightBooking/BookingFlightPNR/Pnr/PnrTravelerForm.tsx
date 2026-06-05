@@ -108,7 +108,7 @@ const DatePickerField = ({
           <Button
             type="button"
             variant="outline"
-            className="h-11 w-full justify-start rounded-xl border-slate-200 bg-white/80 px-3 text-left font-normal shadow-sm transition hover:bg-slate-50 dark:border-white/10 dark:bg-slate-950/50 dark:hover:bg-slate-900"
+            className="h-11 w-full justify-start rounded-sm border-slate-200 bg-white/80 px-3 text-left font-normal shadow-sm transition hover:bg-slate-50 dark:border-white/10 dark:bg-slate-950/50 dark:hover:bg-slate-900"
           >
             <CalendarIcon className="mr-2 h-4 w-4 text-slate-500" />
 
@@ -184,7 +184,7 @@ const PnrTravelerForm = ({
               onValueChange={handleSavedTravellerSelect}
               disabled={isLoadingSavedTravellers}
             >
-              <SelectTrigger className="h-11 w-full rounded-xl border-slate-200 bg-white/80 shadow-sm dark:border-white/10 dark:bg-slate-950/50">
+              <SelectTrigger className="h-11 w-full rounded-sm border-slate-200 bg-white/80 shadow-sm dark:border-white/10 dark:bg-slate-950/50">
                 <SelectValue
                   placeholder={
                     isLoadingSavedTravellers
@@ -234,7 +234,7 @@ const PnrTravelerForm = ({
                   updateTraveller(travellerIndex, "title", value as Title)
                 }
               >
-                <SelectTrigger className="h-11 rounded-xl border-slate-200 bg-white/80 shadow-sm dark:border-white/10 dark:bg-slate-950/50">
+                <SelectTrigger className="h-11 rounded-sm border-slate-200 bg-white/80 shadow-sm dark:border-white/10 dark:bg-slate-950/50">
                   <SelectValue placeholder="Select title" />
                 </SelectTrigger>
 
@@ -266,7 +266,7 @@ const PnrTravelerForm = ({
                       event.target.value.toUpperCase(),
                     )
                   }
-                  className="h-11 rounded-xl border-slate-200 bg-white/80 pl-9 uppercase shadow-sm dark:border-white/10 dark:bg-slate-950/50"
+                  className="h-11 rounded-sm border-slate-200 bg-white/80 pl-9 uppercase shadow-sm dark:border-white/10 dark:bg-slate-950/50"
                   placeholder="ESHRAK"
                 />
               </div>
@@ -290,7 +290,7 @@ const PnrTravelerForm = ({
                       event.target.value.toUpperCase(),
                     )
                   }
-                  className="h-11 rounded-xl border-slate-200 bg-white/80 pl-9 uppercase shadow-sm dark:border-white/10 dark:bg-slate-950/50"
+                  className="h-11 rounded-sm border-slate-200 bg-white/80 pl-9 uppercase shadow-sm dark:border-white/10 dark:bg-slate-950/50"
                   placeholder="HASAN"
                 />
               </div>
@@ -309,7 +309,7 @@ const PnrTravelerForm = ({
                   updateTraveller(travellerIndex, "gender", value as Gender)
                 }
               >
-                <SelectTrigger className="h-11 rounded-xl border-slate-200 bg-white/80 shadow-sm dark:border-white/10 dark:bg-slate-950/50">
+                <SelectTrigger className="h-11 rounded-sm border-slate-200 bg-white/80 shadow-sm dark:border-white/10 dark:bg-slate-950/50">
                   <SelectValue placeholder="Select gender" />
                 </SelectTrigger>
 
@@ -348,7 +348,7 @@ const PnrTravelerForm = ({
                       event.target.value,
                     )
                   }
-                  className="h-11 rounded-xl border-slate-200 bg-white/80 pl-9 shadow-sm dark:border-white/10 dark:bg-slate-950/50"
+                  className="h-11 rounded-sm border-slate-200 bg-white/80 pl-9 shadow-sm dark:border-white/10 dark:bg-slate-950/50"
                   placeholder="+8801712345678"
                 />
               </div>
@@ -385,7 +385,7 @@ const PnrTravelerForm = ({
                       event.target.value.toUpperCase(),
                     )
                   }
-                  className="h-11 rounded-xl border-slate-200 bg-white/80 pl-9 uppercase shadow-sm dark:border-white/10 dark:bg-slate-950/50"
+                  className="h-11 rounded-sm border-slate-200 bg-white/80 pl-9 uppercase shadow-sm dark:border-white/10 dark:bg-slate-950/50"
                   placeholder="AB123456"
                 />
               </div>
@@ -409,7 +409,7 @@ const PnrTravelerForm = ({
                       event.target.value.toUpperCase(),
                     )
                   }
-                  className="h-11 rounded-xl border-slate-200 bg-white/80 pl-9 uppercase shadow-sm dark:border-white/10 dark:bg-slate-950/50"
+                  className="h-11 rounded-sm border-slate-200 bg-white/80 pl-9 uppercase shadow-sm dark:border-white/10 dark:bg-slate-950/50"
                   placeholder="BD"
                   maxLength={2}
                 />
@@ -434,7 +434,7 @@ const PnrTravelerForm = ({
                       event.target.value.toUpperCase(),
                     )
                   }
-                  className="h-11 rounded-xl border-slate-200 bg-white/80 pl-9 uppercase shadow-sm dark:border-white/10 dark:bg-slate-950/50"
+                  className="h-11 rounded-sm border-slate-200 bg-white/80 pl-9 uppercase shadow-sm dark:border-white/10 dark:bg-slate-950/50"
                   placeholder="BD"
                   maxLength={2}
                 />

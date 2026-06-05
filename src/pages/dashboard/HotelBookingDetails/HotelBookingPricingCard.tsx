@@ -13,7 +13,7 @@ const HotelBookingPricingCard = ({ pricing }: HotelBookingPricingCardProps) => {
   return (
     <div className="h-fit rounded-sm border bg-card p-5 text-card-foreground shadow-sm sm:p-6">
       <div className="flex items-center gap-3">
-        <div className="flex size-11 items-center justify-center rounded-xl bg-primary/10 text-primary">
+        <div className="flex size-11 items-center justify-center rounded-sm bg-primary/10 text-primary">
           <WalletCards size={22} />
         </div>
 

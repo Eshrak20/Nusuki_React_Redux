@@ -52,7 +52,7 @@ const FlightBookings = () => {
             variant="outline"
             onClick={() => refetch()}
             disabled={isFetching}
-            className="h-11 w-full gap-2 rounded-xl font-bold sm:w-auto"
+            className="h-11 w-full gap-2 rounded-sm font-bold sm:w-auto"
           >
             <RefreshCcw
               className={`h-4 w-4 ${isFetching ? "animate-spin" : ""}`}
@@ -89,7 +89,7 @@ const FlightBookings = () => {
               variant="outline"
               disabled={!hasPreviousPage || isFetching}
               onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
-              className="h-10 rounded-xl font-bold"
+              className="h-10 rounded-sm font-bold"
             >
               Previous
             </Button>
@@ -97,7 +97,7 @@ const FlightBookings = () => {
             <Button
               disabled={!hasNextPage || isFetching}
               onClick={() => setPage((prev) => prev + 1)}
-              className="h-10 rounded-xl font-bold"
+              className="h-10 rounded-sm font-bold"
             >
               Next
             </Button>
@@ -117,7 +117,7 @@ const FlightBookings = () => {
 
           <Button
             onClick={() => refetch()}
-            className="mt-4 h-11 rounded-xl font-bold"
+            className="mt-4 h-11 rounded-sm font-bold"
             disabled={isFetching}
           >
             Try Again

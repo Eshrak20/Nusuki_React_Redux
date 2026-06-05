@@ -22,7 +22,7 @@ const TripTypeSelector = () => {
             type="button"
             onClick={() => dispatch(setSearchField({ tripType: type }))}
             className={cn(
-              "flex items-center gap-2 px-4 py-2 rounded-md border text-sm font-medium transition-all",
+              "flex items-center gap-2 px-4 py-2 rounded-sm border text-sm font-medium transition-all",
               isActive
                 ? "bg-primary text-primary-foreground border-primary shadow-sm"
                 : "bg-background text-muted-foreground border-input hover:border-primary hover:text-foreground"

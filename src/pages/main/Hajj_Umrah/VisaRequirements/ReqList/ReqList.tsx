@@ -46,7 +46,7 @@ const ReqList = ({ title, requirements, note }: ReqListProps) => {
 
       {/* Professional Note Box */}
       {note && (
-        <div className="relative mt-12 overflow-hidden rounded-xl border border-hajj/20 bg-muted/30 p-6">
+        <div className="relative mt-12 overflow-hidden rounded-sm border border-hajj/20 bg-muted/30 p-6">
           <div className="absolute top-0 left-0 h-full w-1 bg-hajj" />
           <div className="flex gap-3">
             <svg

@@ -18,7 +18,7 @@ const HotelStaySummary = ({stay}: HotelStayProps) => {
       initial={{ opacity: 0, y: 14 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.35, ease: "easeOut" }}
-      className="rounded-3xl border border-border bg-card p-5 text-card-foreground shadow-sm md:p-6"
+      className="rounded-sm border border-border bg-card p-5 text-card-foreground shadow-sm md:p-6"
     >
       <div className="flex items-start gap-3">
         <div className="flex size-10 shrink-0 items-center justify-center rounded-sm bg-primary/10 text-primary">
@@ -71,7 +71,7 @@ const SummaryCard = ({
 }) => {
   return (
     <div className="group flex items-center gap-3 rounded-sm border border-border bg-muted/35 p-4 transition-colors hover:bg-muted/55">
-      <div className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary transition-colors group-hover:bg-primary/15">
+      <div className="flex size-10 shrink-0 items-center justify-center rounded-sm bg-primary/10 text-primary transition-colors group-hover:bg-primary/15">
         {icon}
       </div>
 

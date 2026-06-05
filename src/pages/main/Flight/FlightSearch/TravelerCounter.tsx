@@ -35,7 +35,7 @@ export const TravelerCounter: React.FC<TravelerCounterProps> = ({
   return (
     <div
       className={cn(
-        "flex items-center justify-between rounded-xl border p-3 transition-colors",
+        "flex items-center justify-between rounded-sm border p-3 transition-colors",
         "bg-card text-card-foreground border-border",
         disabled && "opacity-50 bg-muted/40 cursor-not-allowed",
         className

@@ -86,7 +86,7 @@ const ShopCartMain = () => {
 
         {/* RIGHT: Checkout & Info (Sticky Sidebar) */}
         <aside className="col-span-12 lg:col-span-4 space-y-6 lg:sticky lg:top-28">
-          <div className="bg-white rounded-xl shadow-sm border p-1">
+          <div className="bg-white rounded-sm shadow-sm border p-1">
             <ShopCartCheckOut
               total={totalPrice}
               count={selectedProducts.length}

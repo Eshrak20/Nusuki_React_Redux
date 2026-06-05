@@ -28,7 +28,7 @@ const NoHotelFound = ({ messages }: Props) => {
           {messages.map((item) => (
             <div
               key={item.code}
-              className="rounded-xl bg-slate-50 px-4 py-3 text-left text-xs text-slate-500"
+              className="rounded-sm bg-slate-50 px-4 py-3 text-left text-xs text-slate-500"
             >
               <span className="font-bold text-slate-700">{item.code}: </span>
               {item.text}

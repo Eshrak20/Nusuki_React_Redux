@@ -56,7 +56,7 @@ const FlightBookingDetailsHeader = ({
         <Button
           variant="ghost"
           onClick={() => onBack(-1)}
-          className="-ml-3 gap-2 rounded-xl"
+          className="-ml-3 gap-2 rounded-sm"
         >
           <ArrowLeft className="h-4 w-4" />
           Back
@@ -66,7 +66,7 @@ const FlightBookingDetailsHeader = ({
           variant="outline"
           onClick={onRefresh}
           disabled={isFetching}
-          className="gap-2 rounded-xl"
+          className="gap-2 rounded-sm"
         >
           <RefreshCcw
             className={`h-4 w-4 ${isFetching ? "animate-spin" : ""}`}

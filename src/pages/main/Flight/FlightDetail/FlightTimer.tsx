@@ -31,7 +31,7 @@ const FlightTimer = ({ compact = false }: FlightTimerProps) => {
       <Card
         className={cn(
           "border-border bg-card shadow-sm",
-          compact ? "rounded-sm px-3 py-2.5" : "mb-4 rounded-3xl p-4",
+          compact ? "rounded-sm px-3 py-2.5" : "mb-4 rounded-sm p-4",
         )}
       >
         <div

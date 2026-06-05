@@ -40,7 +40,7 @@ const AppSection = () => {
             <img src={appStore} alt="App Store" className="h-12 w-auto" />
           </a>
 
-          <div className="hidden md:block p-2 bg-white rounded-xl shadow-lg border border-gray-100">
+          <div className="hidden md:block p-2 bg-white rounded-sm shadow-lg border border-gray-100">
             <img src={qrImage} alt="QR Code" className="w-16 h-16" />
           </div>
 

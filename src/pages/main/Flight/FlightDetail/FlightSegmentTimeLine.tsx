@@ -66,7 +66,7 @@ const FlightSegmentTimeline = ({ segments }: Props) => {
                   <span
                     key={`${segment.flight_number}-${index}-org-term`}
                     // Badge adapts to the dark background by becoming semi-transparent white
-                    className="mt-2 inline-flex items-center rounded-md border border-primary/30 bg-primary/5 px-2.5 py-1.5 text-xs font-medium text-primary transition-colors duration-300 group-hover:border-white/20 group-hover:bg-white/10 group-hover:text-white lg:ml-2"
+                    className="mt-2 inline-flex items-center rounded-sm border border-primary/30 bg-primary/5 px-2.5 py-1.5 text-xs font-medium text-primary transition-colors duration-300 group-hover:border-white/20 group-hover:bg-white/10 group-hover:text-white lg:ml-2"
                   >
                     Terminal - {segment.origin.terminal}
                   </span>
@@ -109,7 +109,7 @@ const FlightSegmentTimeline = ({ segments }: Props) => {
                 {segment.destination.terminal ? (
                   <span
                     key={`${segment.flight_number}-${index}-dest-term`}
-                    className="mt-2 inline-flex items-center rounded-md border border-primary/30 bg-primary/5 px-2.5 py-1.5 text-xs font-medium text-primary transition-colors duration-300 group-hover:border-white/20 group-hover:bg-white/10 group-hover:text-white lg:ml-2"
+                    className="mt-2 inline-flex items-center rounded-sm border border-primary/30 bg-primary/5 px-2.5 py-1.5 text-xs font-medium text-primary transition-colors duration-300 group-hover:border-white/20 group-hover:bg-white/10 group-hover:text-white lg:ml-2"
                   >
                     Terminal - {segment.destination.terminal}
                   </span>

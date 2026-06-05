@@ -44,7 +44,7 @@ const HotelBookings = () => {
           type="button"
           onClick={() => refetch()}
           disabled={isFetching}
-          className="inline-flex h-10 items-center justify-center gap-2 rounded-xl border bg-background px-4 text-sm font-semibold text-foreground transition hover:bg-muted disabled:cursor-not-allowed disabled:opacity-60"
+          className="inline-flex h-10 items-center justify-center gap-2 rounded-sm border bg-background px-4 text-sm font-semibold text-foreground transition hover:bg-muted disabled:cursor-not-allowed disabled:opacity-60"
         >
           <RefreshCcw
             size={16}
@@ -68,7 +68,7 @@ const HotelBookings = () => {
           <button
             type="button"
             onClick={() => refetch()}
-            className="mt-4 h-10 rounded-xl bg-destructive px-4 text-sm font-semibold text-destructive-foreground transition hover:opacity-90"
+            className="mt-4 h-10 rounded-sm bg-destructive px-4 text-sm font-semibold text-destructive-foreground transition hover:opacity-90"
           >
             Try again
           </button>

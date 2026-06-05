@@ -160,7 +160,7 @@ const FlightTicketPaymentModal = ({
                   onClick={handleInitiatePayment}
                   disabled={!canPay || isLoading}
                   variant="outline"
-                  className="mt-4 h-11 w-full rounded-xl font-bold"
+                  className="mt-4 h-11 w-full rounded-sm font-bold"
                 >
                   <RefreshCcw className="mr-2 h-4 w-4" />
                   Try Again
@@ -177,7 +177,7 @@ const FlightTicketPaymentModal = ({
                   </div>
 
                   <div className="grid gap-3 sm:grid-cols-2">
-                    <div className="rounded-xl border bg-muted/20 p-3">
+                    <div className="rounded-sm border bg-muted/20 p-3">
                       <p className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">
                         Booking Code
                       </p>
@@ -186,7 +186,7 @@ const FlightTicketPaymentModal = ({
                       </p>
                     </div>
 
-                    <div className="rounded-xl border bg-muted/20 p-3">
+                    <div className="rounded-sm border bg-muted/20 p-3">
                       <p className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">
                         Amount
                       </p>
@@ -196,7 +196,7 @@ const FlightTicketPaymentModal = ({
                       </p>
                     </div>
 
-                    <div className="rounded-xl border bg-muted/20 p-3 sm:col-span-2">
+                    <div className="rounded-sm border bg-muted/20 p-3 sm:col-span-2">
                       <p className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">
                         Transaction ID
                       </p>
@@ -210,7 +210,7 @@ const FlightTicketPaymentModal = ({
                 <Button
                   type="button"
                   onClick={handleGoToPayment}
-                  className="h-12 w-full rounded-xl font-extrabold shadow-sm"
+                  className="h-12 w-full rounded-sm font-extrabold shadow-sm"
                 >
                   <CreditCard className="mr-2 h-4 w-4" />
                   Pay with SSLCommerz
@@ -229,7 +229,7 @@ const FlightTicketPaymentModal = ({
                 type="button"
                 onClick={handleInitiatePayment}
                 disabled={!canPay}
-                className="h-11 w-full rounded-xl font-bold"
+                className="h-11 w-full rounded-sm font-bold"
               >
                 <CreditCard className="mr-2 h-4 w-4" />
                 Generate SSLCommerz Payment Link

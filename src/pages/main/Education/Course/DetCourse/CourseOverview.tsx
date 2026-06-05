@@ -45,7 +45,7 @@ const CourseOverview = ({ detail }: CourseOverviewProps) => {
     <div className="mt-8 space-y-6 pl-2">
       {/* Animated Header */}
       <div className="flex items-center gap-3 px-1">
-        <div className="p-2.5 rounded-xl bg-primary/10 text-primary shadow-sm ring-1 ring-primary/20">
+        <div className="p-2.5 rounded-sm bg-primary/10 text-primary shadow-sm ring-1 ring-primary/20">
           <BookOpen className="w-6 h-6" />
         </div>
         <h2 className="text-3xl font-extrabold tracking-tight text-foreground/90">Course Overview</h2>
@@ -68,7 +68,7 @@ const CourseOverview = ({ detail }: CourseOverviewProps) => {
 
               <CardContent className="p-6 relative z-10">
                 <div className="flex justify-between items-start mb-5">
-                  <div className="p-2.5 rounded-xl bg-background border border-border text-primary shadow-xs group-hover:scale-110 group-hover:bg-primary group-hover:text-primary-foreground transition-all duration-300">
+                  <div className="p-2.5 rounded-sm bg-background border border-border text-primary shadow-xs group-hover:scale-110 group-hover:bg-primary group-hover:text-primary-foreground transition-all duration-300">
                     {stat.icon}
                   </div>
                   <motion.div

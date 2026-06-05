@@ -35,7 +35,7 @@ const WhatsAppContactModal = ({ phoneNumber }: WhatsAppContactModalProps) => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <button className="flex w-full items-center justify-center gap-2 rounded-xl bg-[#22C55E] px-4 py-3.5 text-base font-bold text-white shadow-sm transition-colors hover:bg-[#22C55E]/90">
+        <button className="flex w-full items-center justify-center gap-2 rounded-sm bg-[#22C55E] px-4 py-3.5 text-base font-bold text-white shadow-sm transition-colors hover:bg-[#22C55E]/90">
           <svg
             viewBox="0 0 24 24"
             width="20"
@@ -53,7 +53,7 @@ const WhatsAppContactModal = ({ phoneNumber }: WhatsAppContactModalProps) => {
         </button>
       </DialogTrigger>
 
-      <DialogContent className="sm:max-w-md rounded-3xl border border-border bg-background p-0 shadow-2xl">
+      <DialogContent className="sm:max-w-md rounded-sm border border-border bg-background p-0 shadow-2xl">
         <DialogHeader className="border-b border-border px-6 py-5">
           <DialogTitle className="flex items-center gap-2 text-xl font-bold">
             <MessageCircle className="h-5 w-5 text-[#22C55E]" />
@@ -76,7 +76,7 @@ const WhatsAppContactModal = ({ phoneNumber }: WhatsAppContactModalProps) => {
               href={whatsappLink}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex w-full items-center justify-center gap-2 rounded-xl bg-[#22C55E] px-4 py-3 text-sm font-bold text-white transition-colors hover:bg-[#22C55E]/90"
+              className="flex w-full items-center justify-center gap-2 rounded-sm bg-[#22C55E] px-4 py-3 text-sm font-bold text-white transition-colors hover:bg-[#22C55E]/90"
             >
               <MessageCircle className="h-4 w-4" />
               Open WhatsApp
@@ -84,7 +84,7 @@ const WhatsAppContactModal = ({ phoneNumber }: WhatsAppContactModalProps) => {
 
             <a
               href={telLink}
-              className="flex w-full items-center justify-center gap-2 rounded-xl bg-primary px-4 py-3 text-sm font-bold text-primary-foreground transition-colors hover:opacity-90"
+              className="flex w-full items-center justify-center gap-2 rounded-sm bg-primary px-4 py-3 text-sm font-bold text-primary-foreground transition-colors hover:opacity-90"
             >
               <Phone className="h-4 w-4" />
               Call Now
@@ -93,7 +93,7 @@ const WhatsAppContactModal = ({ phoneNumber }: WhatsAppContactModalProps) => {
             <button
               type="button"
               onClick={handleCopy}
-              className="flex w-full items-center justify-center gap-2 rounded-xl border border-border bg-card px-4 py-3 text-sm font-bold text-card-foreground transition-colors hover:bg-accent"
+              className="flex w-full items-center justify-center gap-2 rounded-sm border border-border bg-card px-4 py-3 text-sm font-bold text-card-foreground transition-colors hover:bg-accent"
             >
               {copied ? (
                 <>

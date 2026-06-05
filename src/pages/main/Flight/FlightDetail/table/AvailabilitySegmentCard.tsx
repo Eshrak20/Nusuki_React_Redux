@@ -57,7 +57,7 @@ const AvailabilitySegmentCard = ({
   elapsedTime,
 }: Props) => {
   return (
-    <div className="overflow-hidden rounded-xl border bg-background">
+    <div className="overflow-hidden rounded-sm border bg-background">
       <div className="flex items-center justify-between border-b bg-muted/20 px-4 py-3">
         <div>
           <h4 className="text-sm font-semibold text-foreground md:text-base">
@@ -68,14 +68,14 @@ const AvailabilitySegmentCard = ({
           </p>
         </div>
 
-        <div className="rounded-md bg-primary/10 p-2 text-primary">
+        <div className="rounded-sm bg-primary/10 p-2 text-primary">
           <Plane className="h-4 w-4" />
         </div>
       </div>
 
       <div className="space-y-4 px-4 py-4 text-sm">
         <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-3">
-          <div className="rounded-lg border p-3">
+          <div className="rounded-sm border p-3">
             <p className="text-xs text-muted-foreground">Airline</p>
             <p className="font-semibold text-foreground">
               {airlineName} ({airlineCode})
@@ -83,7 +83,7 @@ const AvailabilitySegmentCard = ({
             <p className="text-xs text-muted-foreground">{flightNumber}</p>
           </div>
 
-          <div className="rounded-lg border p-3">
+          <div className="rounded-sm border p-3">
             <p className="text-xs text-muted-foreground">Cabin & Booking</p>
             <p className="font-semibold text-foreground">
               {cabin} ({bookingClass})
@@ -91,7 +91,7 @@ const AvailabilitySegmentCard = ({
             <p className="text-xs text-muted-foreground">{passengersLabel}</p>
           </div>
 
-          <div className="rounded-lg border p-3">
+          <div className="rounded-sm border p-3">
             <p className="text-xs text-muted-foreground">Seats Available</p>
             <div className="flex items-center gap-2">
               <Users className="h-4 w-4 text-primary" />
@@ -103,7 +103,7 @@ const AvailabilitySegmentCard = ({
             </div>
           </div>
 
-          <div className="rounded-lg border p-3">
+          <div className="rounded-sm border p-3">
             <p className="text-xs text-muted-foreground">Departure</p>
             <p className="font-semibold text-foreground">{fromCode}</p>
             <p className="text-xs text-muted-foreground">
@@ -111,7 +111,7 @@ const AvailabilitySegmentCard = ({
             </p>
           </div>
 
-          <div className="rounded-lg border p-3">
+          <div className="rounded-sm border p-3">
             <p className="text-xs text-muted-foreground">Arrival</p>
             <p className="font-semibold text-foreground">{toCode}</p>
             <p className="text-xs text-muted-foreground">
@@ -119,7 +119,7 @@ const AvailabilitySegmentCard = ({
             </p>
           </div>
 
-          <div className="rounded-lg border p-3">
+          <div className="rounded-sm border p-3">
             <p className="text-xs text-muted-foreground">Aircraft & Duration</p>
             <p className="font-semibold text-foreground">
               {aircraftName} ({aircraftCode})

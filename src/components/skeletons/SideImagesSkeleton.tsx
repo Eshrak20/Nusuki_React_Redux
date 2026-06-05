@@ -9,12 +9,12 @@ const SideImagesSkeleton = () => {
         .map((_, index) => (
           <Skeleton
             key={index}
-            className="h-60 w-full rounded-xl border bg-card shadow-2xl"
+            className="h-60 w-full rounded-sm border bg-card shadow-2xl"
           />
         ))}
 
       {/* Optional background placeholder */}
-      <Skeleton className="absolute -z-10 inset-0 rounded-3xl" />
+      <Skeleton className="absolute -z-10 inset-0 rounded-sm" />
     </div>
   );
 };

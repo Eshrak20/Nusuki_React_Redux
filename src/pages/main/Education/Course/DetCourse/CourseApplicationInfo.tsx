@@ -34,7 +34,7 @@ const CourseApplicationInfo = ({ sections }: CourseApplicationInfoProps) => {
         {/* Section Header */}
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-4">
-            <div className="hidden lg:block p-2.5 rounded-xl bg-primary/10 text-primary shadow-sm ring-1 ring-primary/20 dark:bg-primary/20 dark:ring-primary/30">
+            <div className="hidden lg:block p-2.5 rounded-sm bg-primary/10 text-primary shadow-sm ring-1 ring-primary/20 dark:bg-primary/20 dark:ring-primary/30">
               <Info className="w-6 h-6" />
             </div>
             <div>
@@ -62,7 +62,7 @@ const CourseApplicationInfo = ({ sections }: CourseApplicationInfoProps) => {
               key={index}
               variants={itemVariants}
               className={cn(
-                "relative p-6 rounded-3xl border transition-all duration-300",
+                "relative p-6 rounded-sm border transition-all duration-300",
                 "bg-white dark:bg-card border-border/60 hover:border-primary/40",
                 "shadow-sm hover:shadow-md"
               )}

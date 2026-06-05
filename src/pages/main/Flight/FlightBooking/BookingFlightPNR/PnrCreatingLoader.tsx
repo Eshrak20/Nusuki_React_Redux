@@ -18,7 +18,7 @@ const PnrCreatingLoader = ({
 
   return (
     <div className="fixed inset-0 z-9999 flex items-center justify-center bg-background/80 px-4 backdrop-blur-md">
-      <div className="relative w-full max-w-md overflow-hidden rounded-3xl border bg-card p-6 text-center shadow-2xl dark:bg-card/95">
+      <div className="relative w-full max-w-md overflow-hidden rounded-sm border bg-card p-6 text-center shadow-2xl dark:bg-card/95">
         <div className="pointer-events-none absolute -left-20 -top-20 h-40 w-40 rounded-full bg-primary/20 blur-3xl" />
         <div className="pointer-events-none absolute -bottom-20 -right-20 h-40 w-40 rounded-full bg-primary/20 blur-3xl" />
 

@@ -8,10 +8,10 @@ const StepGuideSkeleton = () => {
       <div className="space-y-3 max-w-3xl">
         <Skeleton className="h-6 w-40 rounded-full" />{" "}
         {/* Step-by-Step badge */}
-        <Skeleton className="h-10 w-3/5 rounded-md" /> {/* Guide title */}
-        <Skeleton className="h-4 w-full rounded-md" />{" "}
+        <Skeleton className="h-10 w-3/5 rounded-sm" /> {/* Guide title */}
+        <Skeleton className="h-4 w-full rounded-sm" />{" "}
         {/* Description line 1 */}
-        <Skeleton className="h-4 w-5/6 rounded-md" /> {/* Description line 2 */}
+        <Skeleton className="h-4 w-5/6 rounded-sm" /> {/* Description line 2 */}
       </div>
 
       {/* Sections Skeleton (Static 2 Sections, 4 Items Each) */}
@@ -25,9 +25,9 @@ const StepGuideSkeleton = () => {
             >
               {/* Section Header */}
               <div className="bg-muted/30 px-6 py-4 border-b border-border flex items-center justify-between">
-                <Skeleton className="h-6 w-6 rounded-lg" />{" "}
+                <Skeleton className="h-6 w-6 rounded-sm" />{" "}
                 {/* Number Circle */}
-                <Skeleton className="h-6 w-1/3 rounded-md" />{" "}
+                <Skeleton className="h-6 w-1/3 rounded-sm" />{" "}
                 {/* Section title */}
               </div>
 
@@ -40,11 +40,11 @@ const StepGuideSkeleton = () => {
                       <div key={iIdx} className="relative pl-8 space-y-2">
                         <Skeleton className="h-6 w-6 rounded-full absolute left-0 top-1" />{" "}
                         {/* Bullet Icon */}
-                        <Skeleton className="h-5 w-3/4 rounded-md ml-8" />{" "}
+                        <Skeleton className="h-5 w-3/4 rounded-sm ml-8" />{" "}
                         {/* Item title */}
-                        <Skeleton className="h-4 w-full rounded-md ml-8" />{" "}
+                        <Skeleton className="h-4 w-full rounded-sm ml-8" />{" "}
                         {/* Item description line 1 */}
-                        <Skeleton className="h-4 w-5/6 rounded-md ml-8" />{" "}
+                        <Skeleton className="h-4 w-5/6 rounded-sm ml-8" />{" "}
                         {/* Item description line 2 */}
                       </div>
                     ))}

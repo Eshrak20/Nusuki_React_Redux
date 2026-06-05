@@ -62,7 +62,7 @@ const HotelBookingStats = ({ bookings }: HotelBookingStatsProps) => {
                 <h3 className="mt-2 text-2xl font-bold">{item.value}</h3>
               </div>
 
-              <div className="flex size-11 items-center justify-center rounded-xl bg-primary/10 text-primary">
+              <div className="flex size-11 items-center justify-center rounded-sm bg-primary/10 text-primary">
                 <Icon size={22} />
               </div>
             </div>

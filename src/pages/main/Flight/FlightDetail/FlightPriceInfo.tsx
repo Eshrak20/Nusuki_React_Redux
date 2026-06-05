@@ -40,7 +40,7 @@ const FlightPriceInfo = ({ pricing, onBookNow }: Props) => {
 
       <Button
         onClick={onBookNow}
-        className="h-12 rounded-xl px-8 text-base font-semibold shadow-sm transition-all duration-200 hover:scale-[1.02]"
+        className="h-12 rounded-sm px-8 text-base font-semibold shadow-sm transition-all duration-200 hover:scale-[1.02]"
       >
         Book Now
         <ArrowRight className="ml-1 h-4 w-4" />

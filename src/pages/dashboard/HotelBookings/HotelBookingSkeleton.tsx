@@ -9,7 +9,7 @@ const HotelBookingSkeleton = () => {
           <div className="flex animate-pulse flex-col gap-4 lg:flex-row lg:justify-between">
             <div className="flex-1">
               <div className="flex items-start gap-3">
-                <div className="size-11 rounded-xl bg-muted" />
+                <div className="size-11 rounded-sm bg-muted" />
 
                 <div className="w-full">
                   <div className="h-5 w-48 rounded bg-muted" />
@@ -18,9 +18,9 @@ const HotelBookingSkeleton = () => {
               </div>
 
               <div className="mt-4 grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
-                <div className="h-16 rounded-xl bg-muted" />
-                <div className="h-16 rounded-xl bg-muted" />
-                <div className="h-16 rounded-xl bg-muted" />
+                <div className="h-16 rounded-sm bg-muted" />
+                <div className="h-16 rounded-sm bg-muted" />
+                <div className="h-16 rounded-sm bg-muted" />
               </div>
             </div>
 

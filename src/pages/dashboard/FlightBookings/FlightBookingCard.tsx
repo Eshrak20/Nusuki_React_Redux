@@ -257,7 +257,7 @@ const FlightBookingCard = ({ booking, onBookingExpired }: Props) => {
           {/* Dynamic badge & timer upper management */}
           <div className="absolute right-3 top-3 z-20 flex max-w-35 flex-col items-end gap-1.5 lg:mt-3">
             {shouldShowExpiredBadge ? (
-              <span className="rounded-md bg-muted-foreground px-2.5 py-1 text-[10px] font-extrabold uppercase leading-none text-background shadow-sm">
+              <span className="rounded-sm bg-muted-foreground px-2.5 py-1 text-[10px] font-extrabold uppercase leading-none text-background shadow-sm">
                 Expired
               </span>
             ) : (
@@ -367,7 +367,7 @@ const FlightBookingCard = ({ booking, onBookingExpired }: Props) => {
                   variant="outline"
                   onClick={() => setPaymentOpen(true)}
                   disabled={!canPay}
-                  className="h-9 rounded-md px-3 text-xs font-bold"
+                  className="h-9 rounded-sm px-3 text-xs font-bold"
                 >
                   <CreditCard className="mr-1.5 h-3.5 w-3.5" />
                   Pay Now
@@ -380,7 +380,7 @@ const FlightBookingCard = ({ booking, onBookingExpired }: Props) => {
                   variant="outline"
                   onClick={() => setCancelOpen(true)}
                   disabled={isCancelling}
-                  className="h-9 rounded-md border-destructive/30 px-3 text-xs font-bold text-destructive hover:bg-destructive/5 hover:text-destructive"
+                  className="h-9 rounded-sm border-destructive/30 px-3 text-xs font-bold text-destructive hover:bg-destructive/5 hover:text-destructive"
                 >
                   {isCancelling ? (
                     <Loader2 className="mr-1.5 h-3.5 w-3.5 animate-spin" />
@@ -393,7 +393,7 @@ const FlightBookingCard = ({ booking, onBookingExpired }: Props) => {
 
               <Button
                 asChild
-                className="h-9 rounded-md px-4 text-xs font-extrabold"
+                className="h-9 rounded-sm px-4 text-xs font-extrabold"
               >
                 <Link to={`/dashboard/flight-bookings/${booking.id}`}>
                   View Details

@@ -13,7 +13,7 @@ const WhyNusuki = () => {
           {features.map((item, index) => (
             <div
               key={index}
-              className="bg-card p-5 lg:p-8 rounded-xl shadow-sm border border-border flex flex-col h-full transition-all duration-300"
+              className="bg-card p-5 lg:p-8 rounded-sm shadow-sm border border-border flex flex-col h-full transition-all duration-300"
             >
               <div className="hidden lg;block mb-4">{item.icon}</div>
 

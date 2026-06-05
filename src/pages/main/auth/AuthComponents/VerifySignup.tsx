@@ -191,7 +191,7 @@ const VerifySignup = () => {
 
   return (
     <main className="flex min-h-svh w-full items-center justify-center bg-[#edf4f8] px-4 py-3 dark:bg-slate-950 sm:px-6 lg:px-8">
-      <Card className="w-full max-w-117.5 rounded-md border-0 bg-white shadow-sm dark:bg-slate-900 dark:shadow-none dark:ring-1 dark:ring-slate-800">
+      <Card className="w-full max-w-117.5 rounded-sm border-0 bg-white shadow-sm dark:bg-slate-900 dark:shadow-none dark:ring-1 dark:ring-slate-800">
         <CardHeader className="px-5 pb-2.5 pt-4 sm:px-6 sm:pt-5">
           <Link
             to="/signup"
@@ -235,7 +235,7 @@ const VerifySignup = () => {
                   onKeyDown={(e) => handleKeyDown(index, e)}
                   onPaste={handlePaste}
                   disabled={isLoading || timeLeft <= 0}
-                  className={`h-10 w-10 rounded-md p-0 text-center text-sm font-bold shadow-none focus-visible:ring-1 sm:h-11 sm:w-11 ${
+                  className={`h-10 w-10 rounded-sm p-0 text-center text-sm font-bold shadow-none focus-visible:ring-1 sm:h-11 sm:w-11 ${
                     errors.otp
                       ? "border-red-300 bg-red-50/70 text-red-900 focus-visible:ring-red-300 dark:border-red-500/60 dark:bg-red-950/20 dark:text-red-100"
                       : "border-slate-200 bg-white text-slate-950 focus-visible:border-primary focus-visible:ring-primary/30 dark:border-slate-800 dark:bg-slate-950 dark:text-slate-100 dark:focus-visible:border-primary/70"
@@ -276,7 +276,7 @@ const VerifySignup = () => {
             <Button
               type="submit"
               disabled={isLoading || !isOtpComplete || timeLeft <= 0}
-              className="h-9 w-full rounded-md bg-primary text-sm font-semibold text-primary-foreground hover:bg-primary/90"
+              className="h-9 w-full rounded-sm bg-primary text-sm font-semibold text-primary-foreground hover:bg-primary/90"
             >
               {isLoading ? (
                 <span className="flex items-center gap-2">

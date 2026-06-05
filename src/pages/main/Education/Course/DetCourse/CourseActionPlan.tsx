@@ -39,7 +39,7 @@ const CourseActionPlan = ({ sections }: CourseActionPlanProps) => {
       <div className="space-y-8 pl-4">
         {/* Section Header */}
         <div className="flex items-center gap-4">
-          <div className="hidden lg:block p-2.5 rounded-xl bg-primary/10 text-primary ring-1 ring-primary/20">
+          <div className="hidden lg:block p-2.5 rounded-sm bg-primary/10 text-primary ring-1 ring-primary/20">
             <Target className="w-6 h-6" />
           </div>
 
@@ -78,7 +78,7 @@ const CourseActionPlan = ({ sections }: CourseActionPlanProps) => {
               {/* Step Card */}
               <div
                 className={cn(
-                  "flex-1 p-6 rounded-3xl border transition-all duration-300",
+                  "flex-1 p-6 rounded-sm border transition-all duration-300",
                   "bg-white dark:bg-card border-border/60 hover:border-primary/30 shadow-sm",
                   "group-hover/step:shadow-md"
                 )}

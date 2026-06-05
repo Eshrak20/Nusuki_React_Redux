@@ -87,7 +87,7 @@ const EduPagination = ({ pagination, onPageChange }: EduPaginationProps) => {
         <PaginationItem>
           <PaginationPrevious
             href="#"
-            className={`rounded-lg border transition-all hover:bg-gray-100 dark:hover:text-muted px-2 sm:px-4 h-8 sm:h-10 text-xs sm:text-sm ${
+            className={`rounded-sm border transition-all hover:bg-gray-100 dark:hover:text-muted px-2 sm:px-4 h-8 sm:h-10 text-xs sm:text-sm ${
               current_page === 1
                 ? "opacity-40 cursor-not-allowed"
                 : "cursor-pointer"
@@ -110,7 +110,7 @@ const EduPagination = ({ pagination, onPageChange }: EduPaginationProps) => {
                   isActive={page === current_page}
                   className={`
                     flex items-center justify-center
-                    w-8 h-8 sm:w-10 sm:h-10 rounded-lg text-xs sm:text-sm font-semibold transition-all border
+                    w-8 h-8 sm:w-10 sm:h-10 rounded-sm text-xs sm:text-sm font-semibold transition-all border
                     ${
                       page === current_page
                         ? "bg-primary border-primary text-muted shadow-md hover:bg-primary hover:text-muted"
@@ -130,7 +130,7 @@ const EduPagination = ({ pagination, onPageChange }: EduPaginationProps) => {
         <PaginationItem>
           <PaginationNext
             href="#"
-            className={`rounded-lg border transition-all hover:bg-gray-100 dark:hover:text-muted px-2 sm:px-4 h-8 sm:h-10 text-xs sm:text-sm ${
+            className={`rounded-sm border transition-all hover:bg-gray-100 dark:hover:text-muted px-2 sm:px-4 h-8 sm:h-10 text-xs sm:text-sm ${
               current_page === last_page
                 ? "opacity-40 cursor-not-allowed"
                 : "cursor-pointer"

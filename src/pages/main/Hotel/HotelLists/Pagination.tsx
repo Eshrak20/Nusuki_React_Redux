@@ -19,7 +19,7 @@ const Pagination = ({ page, totalPages, onPrev, onNext }: Props) => {
         <button
           onClick={onPrev}
           disabled={page === 1}
-          className="inline-flex h-10 items-center gap-2 rounded-xl border border-slate-200 px-4 text-sm font-bold text-slate-700 transition hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-40"
+          className="inline-flex h-10 items-center gap-2 rounded-sm border border-slate-200 px-4 text-sm font-bold text-slate-700 transition hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-40"
         >
           <ChevronLeft size={16} />
           Prev
@@ -28,7 +28,7 @@ const Pagination = ({ page, totalPages, onPrev, onNext }: Props) => {
         <button
           onClick={onNext}
           disabled={page === totalPages}
-          className="inline-flex h-10 items-center gap-2 rounded-xl bg-[#13275f] px-4 text-sm font-bold text-white transition hover:bg-[#0f1f4c] disabled:cursor-not-allowed disabled:opacity-40"
+          className="inline-flex h-10 items-center gap-2 rounded-sm bg-[#13275f] px-4 text-sm font-bold text-white transition hover:bg-[#0f1f4c] disabled:cursor-not-allowed disabled:opacity-40"
         >
           Next
           <ChevronRight size={16} />

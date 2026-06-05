@@ -21,7 +21,7 @@ const UniversityRanking = ({ ranking }: UniversityRankingProps) => {
 
         {/* Header */}
         <div className="flex items-center gap-4">
-          <div className="hidden lg:block p-3 rounded-xl bg-primary/10 text-primary ring-1 ring-primary/20">
+          <div className="hidden lg:block p-3 rounded-sm bg-primary/10 text-primary ring-1 ring-primary/20">
             <Trophy className="w-6 h-6" />
           </div>
 
@@ -40,7 +40,7 @@ const UniversityRanking = ({ ranking }: UniversityRankingProps) => {
         {/* Ranking Card */}
         <div
           className={cn(
-            "rounded-3xl border bg-card border-border",
+            "rounded-sm border bg-card border-border",
             "lg:shadow-sm hover:shadow-md transition-all duration-300",
             "hover:border-primary/30"
           )}

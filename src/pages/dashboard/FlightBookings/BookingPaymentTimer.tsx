@@ -82,7 +82,7 @@ const BookingPaymentTimer = ({
   if (!shouldShowTimer || remainingTime <= 0) return null;
 
   return (
-    <span className="inline-flex rounded-md bg-background px-2.5 py-1 font-black tabular-nums text-foreground shadow-sm">
+    <span className="inline-flex rounded-sm bg-background px-2.5 py-1 font-black tabular-nums text-foreground shadow-sm">
       {formatRemainingTime(remainingTime)}
     </span>
   );

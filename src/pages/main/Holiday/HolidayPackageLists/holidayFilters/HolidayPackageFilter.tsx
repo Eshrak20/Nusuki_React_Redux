@@ -27,7 +27,7 @@ const HolidayPackageFilter = ({ filters, packages }: HolidayPackageFilterProps) 
   const selectedFilters = useAppSelector((state) => state.holidayPackageFilters);
 
   return (
-    <aside className="sticky top-24 rounded-md border bg-card p-5 shadow-sm">
+    <aside className="sticky top-24 rounded-sm border bg-card p-5 shadow-sm">
       <div className="mb-6 flex items-center justify-between">
         <h2 className="text-lg font-semibold">Filter</h2>
 
@@ -35,7 +35,7 @@ const HolidayPackageFilter = ({ filters, packages }: HolidayPackageFilterProps) 
           size="sm"
           variant="default"
           onClick={() => dispatch(resetHolidayPackageFilters())}
-          className="rounded-md"
+          className="rounded-sm"
         >
           <RotateCcw size={15} className="mr-1" />
           Reset
@@ -78,14 +78,14 @@ const HolidayPackageFilter = ({ filters, packages }: HolidayPackageFilterProps) 
 
                 setSuggestions(matched);
               }}
-              className="rounded-md pr-10"
+              className="rounded-sm pr-10"
             />
             <Search
               size={18}
               className="absolute right-3 top-1/2 -translate-y-1/2 text-primary"
             />
             {suggestions.length > 0 && (
-              <ul className="absolute z-10 mt-1 w-full rounded-md border bg-primary text-muted dark:bg-muted dark:text-foreground shadow-md">
+              <ul className="absolute z-10 mt-1 w-full rounded-sm border bg-primary text-muted dark:bg-muted dark:text-foreground shadow-md">
                 {suggestions.map((item, index) => (
                   <li
                     key={index}
@@ -112,7 +112,7 @@ const HolidayPackageFilter = ({ filters, packages }: HolidayPackageFilterProps) 
               dispatch(setDurationDays(value === "all" ? "" : value))
             }
           >
-            <SelectTrigger className="mt-4 rounded-md">
+            <SelectTrigger className="mt-4 rounded-sm">
               <SelectValue placeholder="Select Durations..." />
             </SelectTrigger>
 

@@ -69,7 +69,7 @@ const HolidayImageGallery = ({
 
   if (!visibleImages.length) {
     return (
-      <div className="flex h-[260px] items-center justify-center border bg-muted/50 text-muted-foreground rounded-lg">
+      <div className="flex h-[260px] items-center justify-center border bg-muted/50 text-muted-foreground rounded-sm">
         No images available
       </div>
     );

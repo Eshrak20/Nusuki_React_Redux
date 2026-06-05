@@ -38,7 +38,7 @@ export default function ErrorPage() {
       {/* Button */}
       <a
         href="/"
-        className="px-6 py-3 bg-teal-600 text-white rounded-xl hover:bg-teal-700 transition-all duration-300 shadow-md"
+        className="px-6 py-3 bg-teal-600 text-white rounded-sm hover:bg-teal-700 transition-all duration-300 shadow-md"
       >
         Go Back Home
       </a>

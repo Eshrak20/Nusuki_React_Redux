@@ -32,7 +32,7 @@ const CourseProvider = ({ provider }: CourseProviderProps) => {
         {/* Section Header */}
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-4">
-            <div className="hidden lg:block p-2.5 rounded-xl bg-primary/10 text-primary shadow-sm ring-1 ring-primary/20 dark:bg-primary/20 dark:ring-primary/30">
+            <div className="hidden lg:block p-2.5 rounded-sm bg-primary/10 text-primary shadow-sm ring-1 ring-primary/20 dark:bg-primary/20 dark:ring-primary/30">
               <School className="w-6 h-6" />
             </div>
             <div>

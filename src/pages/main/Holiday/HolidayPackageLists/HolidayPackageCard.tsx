@@ -16,7 +16,7 @@ const HolidayPackageCard = ({ tour }: HolidayPackageCardProps) => {
   return (
     <button
       onClick={handleClick}
-      className="group relative h-[360px] w-full overflow-hidden rounded-md border bg-card text-left shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
+      className="group relative h-[360px] w-full overflow-hidden rounded-sm border bg-card text-left shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
     >
       <img
         src={tour.image}

@@ -36,7 +36,7 @@ const filteredRequirements = requirements.filter(
       <div className="rounded-sm border border-border bg-card p-6 text-card-foreground shadow-sm md:p-8">
         {/* Header */}
         <div className="mb-8 flex items-center gap-4">
-          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary text-primary-foreground shadow-md shadow-primary/20 lg:h-12 lg:w-12">
+          <div className="flex h-10 w-10 items-center justify-center rounded-sm bg-primary text-primary-foreground shadow-md shadow-primary/20 lg:h-12 lg:w-12">
             <FileText className="h-5 w-5 lg:h-6 lg:w-6" />
           </div>
           <h2 className="text-2xl font-bold">Documents</h2>
@@ -75,7 +75,7 @@ const filteredRequirements = requirements.filter(
             {filteredRequirements.map((req) => (
               <div
                 key={req.id}
-                className="flex items-center gap-3 rounded-lg px-4 py-3.5 transition-colors hover:bg-muted lg:bg-muted/50"
+                className="flex items-center gap-3 rounded-sm px-4 py-3.5 transition-colors hover:bg-muted lg:bg-muted/50"
               >
                 <div className="shrink-0">
                   <CheckCircle2 className="h-5 w-5 text-emerald-500" />

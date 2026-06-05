@@ -70,7 +70,7 @@ const HolidayPackageLists = () => {
             {isLoading && <HolidayPackageSkeleton />}
 
             {isError && (
-              <div className="rounded-md border border-destructive/30 bg-destructive/10 p-6 text-destructive">
+              <div className="rounded-sm border border-destructive/30 bg-destructive/10 p-6 text-destructive">
                 Failed to load packages. Please try again.
               </div>
             )}
@@ -83,7 +83,7 @@ const HolidayPackageLists = () => {
                   variant="outline"
                   disabled={pagination.current_page <= 1}
                   onClick={() => dispatch(setPage(pagination.current_page - 1))}
-                  className="rounded-md"
+                  className="rounded-sm"
                 >
                   Previous
                 </Button>
@@ -96,7 +96,7 @@ const HolidayPackageLists = () => {
                   variant="outline"
                   disabled={pagination.current_page >= pagination.last_page}
                   onClick={() => dispatch(setPage(pagination.current_page + 1))}
-                  className="rounded-md"
+                  className="rounded-sm"
                 >
                   Next
                 </Button>

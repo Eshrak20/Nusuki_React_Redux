@@ -26,7 +26,7 @@ const FlightDetailState = ({
         initial={{ opacity: 0, y: 14, scale: 0.96 }}
         animate={{ opacity: 1, y: 0, scale: 1 }}
         transition={{ duration: 0.28, ease: "easeOut" }}
-        className="relative w-full max-w-md overflow-hidden rounded-3xl border border-border/60 bg-background/95 p-8 text-center shadow-[0_20px_60px_-15px_rgba(0,0,0,0.18)] backdrop-blur"
+        className="relative w-full max-w-md overflow-hidden rounded-sm border border-border/60 bg-background/95 p-8 text-center shadow-[0_20px_60px_-15px_rgba(0,0,0,0.18)] backdrop-blur"
       >
         {/* soft glow */}
         <div className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-primary/10 to-transparent" />

@@ -33,7 +33,7 @@ const HomeTestCardSkeleton = () => {
                         <Skeleton className="h-4 w-20" />
 
                         {/* 'Enroll Now' Button Placeholder */}
-                        <Skeleton className="h-11 w-40 rounded-lg" />
+                        <Skeleton className="h-11 w-40 rounded-sm" />
                     </div>
                 </div>
             ))}

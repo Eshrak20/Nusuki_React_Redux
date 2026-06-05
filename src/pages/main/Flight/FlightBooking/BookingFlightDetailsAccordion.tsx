@@ -10,7 +10,7 @@ interface Props {
 
 const BookingFlightDetailsAccordion = ({ open, onToggle, flight }: Props) => {
   return (
-    <div className="rounded-lg border border-[#d8dde7] bg-white shadow-sm dark:border-white/10 dark:bg-[#101827]">
+    <div className="rounded-sm border border-[#d8dde7] bg-white shadow-sm dark:border-white/10 dark:bg-[#101827]">
       <button
         type="button"
         onClick={onToggle}
@@ -33,7 +33,7 @@ const BookingFlightDetailsAccordion = ({ open, onToggle, flight }: Props) => {
             {flight.segments.map((segment, index) => (
               <div
                 key={`${segment.flight_number}-${index}`}
-                className="rounded-md border border-[#e6e8ed] bg-[#fafbfc] p-4 dark:border-white/10 dark:bg-[#0f1724]"
+                className="rounded-sm border border-[#e6e8ed] bg-[#fafbfc] p-4 dark:border-white/10 dark:bg-[#0f1724]"
               >
                 <div className="mb-2 flex items-center justify-between">
                   <p className="font-semibold text-[#17306f] dark:text-[#8fb4ff]">

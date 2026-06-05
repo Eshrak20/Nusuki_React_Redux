@@ -29,7 +29,7 @@ const ReturnDate: React.FC<ReturnDateProps> = ({
   // use dashed value if your redux state stores one-way / round-way / multi-way
   if (tripType === "one_way") {
     return (
-      <div className="flex-1 cursor-not-allowed rounded-xl border bg-muted p-3 opacity-60">
+      <div className="flex-1 cursor-not-allowed rounded-sm border bg-muted p-3 opacity-60">
         <div className="mb-1 flex items-center gap-2 text-xs text-muted-foreground">
           <CalendarIcon className="h-4 w-4" />
           Return Date
@@ -48,7 +48,7 @@ const ReturnDate: React.FC<ReturnDateProps> = ({
       <PopoverTrigger asChild>
         <div
           className={cn(
-            "flex-1 rounded-xl border p-3 cursor-pointer transition",
+            "flex-1 rounded-sm border p-3 cursor-pointer transition",
             "bg-background hover:border-primary",
             "border-border"
           )}
@@ -71,7 +71,7 @@ const ReturnDate: React.FC<ReturnDateProps> = ({
       </PopoverTrigger>
 
       <PopoverContent
-        className="w-auto rounded-xl border bg-popover p-0 shadow-lg"
+        className="w-auto rounded-sm border bg-popover p-0 shadow-lg"
         align="end"
       >
         <Calendar

@@ -114,7 +114,7 @@ const TravelerSection = ({ totalTravelers }: Props) => {
           })}
         </div>
         {isStudentFare && (
-          <div className="mt-4 p-2.5 bg-orange-500/10 rounded-lg border border-orange-500/20">
+          <div className="mt-4 p-2.5 bg-orange-500/10 rounded-sm border border-orange-500/20">
             <p className="text-[11px] text-orange-600 dark:text-orange-400 leading-relaxed italic">
               * Student fares are restricted to Adult traveler only.
             </p>

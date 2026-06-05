@@ -53,7 +53,7 @@ const HotelDetailsHero = ({ hotel }: HotelDetailsHeroProps) => {
       initial={{ opacity: 0, y: 14 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.35, ease: "easeOut" }}
-      className="overflow-hidden rounded-3xl border border-border bg-card text-card-foreground shadow-sm"
+      className="overflow-hidden rounded-sm border border-border bg-card text-card-foreground shadow-sm"
     >
       <div className="grid grid-cols-1 lg:grid-cols-[360px_1fr]">
         <div className="relative h-64 bg-muted lg:h-full">

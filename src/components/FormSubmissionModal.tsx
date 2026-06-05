@@ -86,7 +86,7 @@ const FormSubmissionModal = ({ open, onClose, title, type = "default" }: Props) 
           2. Backdrop blur (via DialogOverlay inside shadcn)
           3. Closing on 'X' or click outside 
       */}
-            <DialogContent className="sm:max-w-150 max-h-[90vh] overflow-y-auto border-none p-0 bg-background dark:bg-zinc-950 rounded-3xl overflow-hidden">
+            <DialogContent className="sm:max-w-150 max-h-[90vh] overflow-y-auto border-none p-0 bg-background dark:bg-zinc-950 rounded-sm overflow-hidden">
 
                 {/* Header with Primary Gradient */}
                 <DialogHeader className="bg-primary p-8 text-primary-foreground">
@@ -108,7 +108,7 @@ const FormSubmissionModal = ({ open, onClose, title, type = "default" }: Props) 
                                         <FormItem>
                                             <FormLabel>Full Name</FormLabel>
                                             <FormControl>
-                                                <Input placeholder="John Doe" {...field} className="rounded-xl" />
+                                                <Input placeholder="John Doe" {...field} className="rounded-sm" />
                                             </FormControl>
                                             <FormMessage />
                                         </FormItem>
@@ -121,7 +121,7 @@ const FormSubmissionModal = ({ open, onClose, title, type = "default" }: Props) 
                                         <FormItem>
                                             <FormLabel>Email</FormLabel>
                                             <FormControl>
-                                                <Input placeholder="email@example.com" type="email" {...field} className="rounded-xl" />
+                                                <Input placeholder="email@example.com" type="email" {...field} className="rounded-sm" />
                                             </FormControl>
                                             <FormMessage />
                                         </FormItem>
@@ -136,7 +136,7 @@ const FormSubmissionModal = ({ open, onClose, title, type = "default" }: Props) 
                                     <FormItem>
                                         <FormLabel>Phone Number</FormLabel>
                                         <FormControl>
-                                            <Input placeholder="+880..." {...field} className="rounded-xl" />
+                                            <Input placeholder="+880..." {...field} className="rounded-sm" />
                                         </FormControl>
                                         <FormMessage />
                                     </FormItem>
@@ -148,8 +148,8 @@ const FormSubmissionModal = ({ open, onClose, title, type = "default" }: Props) 
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4 rounded-sm bg-muted/50 border border-border">
                                     <Input {...form.register("city")} placeholder="Your City" />
                                     <Input {...form.register("destination")} placeholder="Preferred Destination" />
-                                    <Input {...form.register("coaching" as any)} placeholder="Coaching? (Yes/No)" className="bg-background rounded-lg" />
-                                    <Input {...form.register("loan" as any)} placeholder="Education Loan? (Yes/No)" className="bg-background rounded-lg" />
+                                    <Input {...form.register("coaching" as any)} placeholder="Coaching? (Yes/No)" className="bg-background rounded-sm" />
+                                    <Input {...form.register("loan" as any)} placeholder="Education Loan? (Yes/No)" className="bg-background rounded-sm" />
                                 </div>
                             )}
 
@@ -162,7 +162,7 @@ const FormSubmissionModal = ({ open, onClose, title, type = "default" }: Props) 
                                         <FormControl>
                                             <Textarea
                                                 placeholder="Tell us more..."
-                                                className="min-h-25 rounded-xl resize-none"
+                                                className="min-h-25 rounded-sm resize-none"
                                                 {...field}
                                             />
                                         </FormControl>
@@ -181,7 +181,7 @@ const FormSubmissionModal = ({ open, onClose, title, type = "default" }: Props) 
                                     <Button
                                         type="submit"
                                         disabled={isLoading}
-                                        className="w-full md:w-auto px-12 py-6 rounded-xl text-lg font-bold transition-all hover:scale-[1.02] active:scale-95"
+                                        className="w-full md:w-auto px-12 py-6 rounded-sm text-lg font-bold transition-all hover:scale-[1.02] active:scale-95"
                                     >
                                         {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
                                         {isLoading ? "Submitting..." : "Submit Application"}

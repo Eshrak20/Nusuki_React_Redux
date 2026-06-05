@@ -96,7 +96,7 @@ const DestinationSelector = ({
       <PopoverTrigger asChild>
         <div
           className={cn(
-            "flex-1 w-full border rounded-lg cursor-pointer bg-background min-h-18 flex items-center transition-all px-4 py-2",
+            "flex-1 w-full border rounded-sm cursor-pointer bg-background min-h-18 flex items-center transition-all px-4 py-2",
             openStates[`${index}-${type}`]
               ? "border-primary ring-1 ring-primary"
               : "border-input hover:border-primary",
@@ -211,7 +211,7 @@ const DestinationSelector = ({
             <div className="w-full lg:w-48">
               <Popover>
                 <PopoverTrigger asChild>
-                  <div className="border border-input rounded-lg p-3 bg-background cursor-pointer hover:border-primary min-h-18 flex flex-col justify-center transition-all px-4">
+                  <div className="border border-input rounded-sm p-3 bg-background cursor-pointer hover:border-primary min-h-18 flex flex-col justify-center transition-all px-4">
                     <div className="flex items-center gap-2 mb-1 text-xs text-muted-foreground font-medium">
                       <CalendarIcon className="w-3.5 h-3.5" /> Departure Date
                     </div>
@@ -280,7 +280,7 @@ const DestinationSelector = ({
         <button
           type="button"
           onClick={() => dispatch(addSegmentAction())}
-          className="flex items-center gap-2 px-4 py-2 text-sm font-bold text-primary hover:bg-accent rounded-lg transition-all w-fit border border-dashed border-border"
+          className="flex items-center gap-2 px-4 py-2 text-sm font-bold text-primary hover:bg-accent rounded-sm transition-all w-fit border border-dashed border-border"
         >
           <Plus className="w-4 h-4" /> Add More Flight
         </button>

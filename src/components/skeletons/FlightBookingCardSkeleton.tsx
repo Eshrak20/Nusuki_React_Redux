@@ -22,7 +22,7 @@ const FlightBookingCardSkeleton = () => {
       <CardContent className="space-y-4 p-5">
         <div className="grid gap-3 sm:grid-cols-2">
           {Array.from({ length: 4 }).map((_, index) => (
-            <Skeleton key={index} className="h-16 rounded-xl" />
+            <Skeleton key={index} className="h-16 rounded-sm" />
           ))}
         </div>
 

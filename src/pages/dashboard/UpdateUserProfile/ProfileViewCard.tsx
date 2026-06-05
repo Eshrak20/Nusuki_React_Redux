@@ -139,7 +139,7 @@ const ProfileViewCard = ({ userData, onEdit }: ProfileViewCardProps) => {
 const InfoItem = ({ label, value, icon: Icon, className }: InfoItemProps) => {
   return (
     <div
-      className={`rounded-xl border bg-muted/20 p-3 transition-colors hover:bg-muted/40 ${className ?? ""}`}
+      className={`rounded-sm border bg-muted/20 p-3 transition-colors hover:bg-muted/40 ${className ?? ""}`}
     >
       <div className="mb-1 flex items-center gap-2 text-[10px] font-bold uppercase tracking-wider text-muted-foreground/80">
         {Icon ? <Icon className="h-3 w-3" /> : null}

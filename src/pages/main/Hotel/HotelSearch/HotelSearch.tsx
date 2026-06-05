@@ -187,7 +187,7 @@ export default function HotelSearch() {
   return (
     <section className="relative z-30 w-full">
       <div className="relative mx-auto max-w-6xl px-4">
-        <div className="overflow-visible rounded-xl border border-slate-200 bg-white shadow-xl dark:border-[#272047] dark:bg-[#050018] lg:shadow-2xl">
+        <div className="overflow-visible rounded-sm border border-slate-200 bg-white shadow-xl dark:border-[#272047] dark:bg-[#050018] lg:shadow-2xl">
           <div className="p-4 sm:p-6 md:p-8">
             <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-[1.2fr_1fr_1fr_1fr_0.8fr_auto]">
               <div className="relative">
@@ -210,7 +210,7 @@ export default function HotelSearch() {
                 </SearchField>
 
                 {suggestions.length > 0 && (
-                  <div className="absolute left-0 top-full z-50 mt-2 max-h-72 w-full overflow-y-auto rounded-xl border border-slate-200 bg-white shadow-xl dark:border-[#2B2544] dark:bg-[#0B0B10]">
+                  <div className="absolute left-0 top-full z-50 mt-2 max-h-72 w-full overflow-y-auto rounded-sm border border-slate-200 bg-white shadow-xl dark:border-[#2B2544] dark:bg-[#0B0B10]">
                     {suggestions.map((place) => (
                       <button
                         key={place.id}
@@ -291,7 +291,7 @@ export default function HotelSearch() {
                           setRadius(value);
                           setOpenRadius(false);
                         }}
-                        className={`w-full rounded-md px-3 py-2 text-left text-sm transition-colors ${radius === value
+                        className={`w-full rounded-sm px-3 py-2 text-left text-sm transition-colors ${radius === value
                             ? "bg-primary text-primary-foreground dark:bg-[#8B93FF] dark:text-[#050018]"
                             : "text-slate-700 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-[#151222]"
                           }`}

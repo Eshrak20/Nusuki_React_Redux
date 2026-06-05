@@ -11,7 +11,7 @@ const HajjUmDetPackageSighting = ({
 }: HajjUmDetPackageSightingProps) => {
   return (
   <div className="px-8 lg:px-24 mb-12 lg:mb-20">
-    <div className="w-full space-y-8 bg-background text-foreground p-6 rounded-lg border border-border/50">
+    <div className="w-full space-y-8 bg-background text-foreground p-6 rounded-sm border border-border/50">
       <h2 className="text-2xl font-bold mb-6 text-foreground">
         Sightseeing
       </h2>

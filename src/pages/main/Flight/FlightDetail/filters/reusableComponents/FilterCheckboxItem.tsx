@@ -24,7 +24,7 @@ const FilterCheckboxItem = ({
   return (
     <label
       className={cn(
-        "flex cursor-pointer items-start gap-3 rounded-xl border border-border bg-background px-3 py-3 transition-all hover:bg-accent/40",
+        "flex cursor-pointer items-start gap-3 rounded-sm border border-border bg-background px-3 py-3 transition-all hover:bg-accent/40",
         checked && "border-primary/30 bg-primary/5",
         className
       )}

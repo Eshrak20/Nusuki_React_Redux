@@ -60,7 +60,7 @@ const DetInstitutionIntakes = ({ intakes }: Props) => {
           >
             <Card className="h-full border-muted bg-card hover:bg-accent/50 transition-all duration-300 group p-4">
               <CardHeader className="flex flex-row items-center space-x-4 pb-2">
-                <div className="p-2 rounded-lg bg-primary/10 text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
+                <div className="p-2 rounded-sm bg-primary/10 text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
                   <CalendarDays className="w-5 h-5" />
                 </div>
                 <CardTitle className="text-xl font-bold tracking-tight">

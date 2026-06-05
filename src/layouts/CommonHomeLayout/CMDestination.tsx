@@ -36,7 +36,7 @@ const CMDestination = ({ dests }: destinationProps) => {
             >
                 {dests.map((destination) => (
                     <SwiperSlide key={destination.id}>
-                        <div className="group relative h-95 w-full rounded-3xl overflow-hidden bg-white shadow-md transition-all duration-500 hover:shadow-xl hover:-translate-y-1">
+                        <div className="group relative h-95 w-full rounded-sm overflow-hidden bg-white shadow-md transition-all duration-500 hover:shadow-xl hover:-translate-y-1">
                             {/* Image with subtle zoom on hover */}
                             <img
                                 src={destination.image_url}

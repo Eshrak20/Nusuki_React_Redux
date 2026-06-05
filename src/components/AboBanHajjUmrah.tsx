@@ -2,7 +2,7 @@ import type { VisaRequirementItem } from "@/types/hajj/types.visa";
 
 const AboBanHajjUmrah = ({ title, description }: VisaRequirementItem) => {
   return (
-    <div className="flex flex-col items-center justify-center text-center p-3 lg:p-6 space-y-4 bg-card lg:rounded-lg ">
+    <div className="flex flex-col items-center justify-center text-center p-3 lg:p-6 space-y-4 bg-card lg:rounded-sm ">
       {title && (
         <h3
           className="text-2xl lg:text-4xl font-bold"

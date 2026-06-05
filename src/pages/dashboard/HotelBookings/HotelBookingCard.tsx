@@ -62,7 +62,7 @@ const HotelBookingCard = ({ booking }: HotelBookingCardProps) => {
         {/* Top section */}
         <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
           <div className="flex min-w-0 items-start gap-3">
-            <div className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary">
+            <div className="flex size-11 shrink-0 items-center justify-center rounded-sm bg-primary/10 text-primary">
               <Hotel size={22} />
             </div>
 
@@ -159,7 +159,7 @@ const HotelBookingCard = ({ booking }: HotelBookingCardProps) => {
         <button
           type="button"
           onClick={handleViewDetails}
-          className="inline-flex h-10 items-center justify-center rounded-xl bg-primary px-5 text-sm font-semibold text-primary-foreground transition hover:opacity-90"
+          className="inline-flex h-10 items-center justify-center rounded-sm bg-primary px-5 text-sm font-semibold text-primary-foreground transition hover:opacity-90"
         >
           View Details
         </button>
@@ -177,7 +177,7 @@ type InfoBoxProps = {
 
 const InfoBox = ({ label, value }: InfoBoxProps) => {
   return (
-    <div className="min-h-17.5 rounded-xl border border-border bg-background px-3 py-2.5">
+    <div className="min-h-17.5 rounded-sm border border-border bg-background px-3 py-2.5">
       <p className="text-xs font-medium text-muted-foreground">{label}</p>
       <p className="mt-1 wrap-break-word text-sm font-semibold leading-5 text-foreground">
         {value || "N/A"}
@@ -196,9 +196,9 @@ type SmallInfoProps = {
 const SmallInfo = ({ icon, label, value, className = "" }: SmallInfoProps) => {
   return (
     <div
-      className={`flex min-h-14.5 min-w-0 items-center gap-3 rounded-xl bg-background/70 px-3 py-2.5 ${className}`}
+      className={`flex min-h-14.5 min-w-0 items-center gap-3 rounded-sm bg-background/70 px-3 py-2.5 ${className}`}
     >
-      <span className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary">
+      <span className="flex size-9 shrink-0 items-center justify-center rounded-sm bg-primary/10 text-primary">
         {icon}
       </span>
 

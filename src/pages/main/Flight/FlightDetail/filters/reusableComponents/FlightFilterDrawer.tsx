@@ -40,7 +40,7 @@ const FlightFilterDrawer = ({ availableFilters, isLoading }: Props) => {
           <SheetHeader className="sticky top-0 z-20 border-b bg-background/95 px-4 py-4 backdrop-blur">
             <div className="flex items-center justify-between gap-3">
               <div className="flex items-center gap-2">
-                <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-primary/10 text-primary">
+                <div className="flex h-9 w-9 items-center justify-center rounded-sm bg-primary/10 text-primary">
                   <SlidersHorizontal className="h-4 w-4" />
                 </div>
                 <div>
@@ -57,7 +57,7 @@ const FlightFilterDrawer = ({ availableFilters, isLoading }: Props) => {
                 type="button"
                 variant="ghost"
                 size="icon"
-                className="h-9 w-9 rounded-xl"
+                className="h-9 w-9 rounded-sm"
                 onClick={() => setOpen(false)}
               >
                 <X className="h-4 w-4" />

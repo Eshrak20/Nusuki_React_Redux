@@ -30,7 +30,7 @@ const DashboardHome = () => {
                 <CardHeader className="p-4 pb-2">
                   <CardTitle className="flex items-center justify-between gap-3 text-base font-semibold">
                     <span className="flex items-center gap-2">
-                      <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-primary/10 text-primary">
+                      <span className="flex h-9 w-9 items-center justify-center rounded-sm bg-primary/10 text-primary">
                         <Icon className="h-4 w-4" />
                       </span>
 

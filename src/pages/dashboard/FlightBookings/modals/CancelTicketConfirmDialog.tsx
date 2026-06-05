@@ -47,7 +47,7 @@ const CancelTicketConfirmDialog = ({
             variant="default"
             onClick={() => onOpenChange(false)}
             disabled={isLoading}
-            className="rounded-xl"
+            className="rounded-sm"
           >
             No, Keep Ticket
           </Button>
@@ -57,7 +57,7 @@ const CancelTicketConfirmDialog = ({
             variant="outline"
             onClick={onConfirm}
             disabled={isLoading}
-            className="rounded-xl font-bold"
+            className="rounded-sm font-bold"
           >
             {isLoading ? (
               <>

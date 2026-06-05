@@ -133,7 +133,7 @@ const UpdateUserProfile = () => {
               {Array.from({ length: 8 }).map((_, index) => (
                 <div
                   key={index}
-                  className="h-14 animate-pulse rounded-xl bg-muted"
+                  className="h-14 animate-pulse rounded-sm bg-muted"
                 />
               ))}
             </div>
@@ -156,7 +156,7 @@ const UpdateUserProfile = () => {
           <button
             type="button"
             onClick={() => refetch()}
-            className="mt-5 rounded-xl bg-primary px-5 py-2 text-sm font-medium text-primary-foreground"
+            className="mt-5 rounded-sm bg-primary px-5 py-2 text-sm font-medium text-primary-foreground"
           >
             Try Again
           </button>

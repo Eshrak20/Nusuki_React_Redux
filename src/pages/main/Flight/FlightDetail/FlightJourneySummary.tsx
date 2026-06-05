@@ -16,7 +16,7 @@ const FlightJourneySummary = ({ flight }: Props) => {
         {segments.map((segment, index) => (
           <span
             key={`${segment.flight_number}-${index}`}
-            className="inline-flex items-center rounded-md border border-primary/30 bg-primary/5 px-2.5 py-1 text-xs font-medium text-primary"
+            className="inline-flex items-center rounded-sm border border-primary/30 bg-primary/5 px-2.5 py-1 text-xs font-medium text-primary"
           >
             {segment.flight_number}
           </span>

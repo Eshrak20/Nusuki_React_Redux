@@ -34,13 +34,13 @@ const HotelBookingPagination = ({
           type="button"
           disabled={!canGoPrevious || isFetching}
           onClick={() => onPageChange(current_page - 1)}
-          className="inline-flex h-10 items-center justify-center gap-2 rounded-xl border bg-background px-3 text-sm font-semibold text-foreground transition hover:bg-muted disabled:cursor-not-allowed disabled:opacity-50"
+          className="inline-flex h-10 items-center justify-center gap-2 rounded-sm border bg-background px-3 text-sm font-semibold text-foreground transition hover:bg-muted disabled:cursor-not-allowed disabled:opacity-50"
         >
           <ChevronLeft size={16} />
           Previous
         </button>
 
-        <div className="flex h-10 items-center rounded-xl border bg-background px-4 text-sm font-semibold">
+        <div className="flex h-10 items-center rounded-sm border bg-background px-4 text-sm font-semibold">
           {current_page} / {last_page}
         </div>
 
@@ -48,7 +48,7 @@ const HotelBookingPagination = ({
           type="button"
           disabled={!canGoNext || isFetching}
           onClick={() => onPageChange(current_page + 1)}
-          className="inline-flex h-10 items-center justify-center gap-2 rounded-xl border bg-background px-3 text-sm font-semibold text-foreground transition hover:bg-muted disabled:cursor-not-allowed disabled:opacity-50"
+          className="inline-flex h-10 items-center justify-center gap-2 rounded-sm border bg-background px-3 text-sm font-semibold text-foreground transition hover:bg-muted disabled:cursor-not-allowed disabled:opacity-50"
         >
           Next
           <ChevronRight size={16} />

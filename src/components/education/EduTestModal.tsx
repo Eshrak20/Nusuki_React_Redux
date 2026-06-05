@@ -157,7 +157,7 @@ const EduTestModal = ({ open, onClose }: EduTestModalProps) => {
                                             <motion.div
                                                 initial={{ scale: 0.9, opacity: 0 }}
                                                 animate={{ scale: 1, opacity: 1 }}
-                                                className="flex items-center gap-3 text-green-600 font-bold bg-green-50 px-6 md:px-10 py-3 md:py-4 rounded-xl border border-green-100 text-sm md:text-base"
+                                                className="flex items-center gap-3 text-green-600 font-bold bg-green-50 px-6 md:px-10 py-3 md:py-4 rounded-sm border border-green-100 text-sm md:text-base"
                                             >
                                                 <CheckCircle2 size={24} className="h-5 w-5 md:h-6 md:w-6" /> Enquiry Sent Successfully!
                                             </motion.div>
@@ -167,7 +167,7 @@ const EduTestModal = ({ open, onClose }: EduTestModalProps) => {
                                                 whileTap={{ scale: 0.95 }}
                                                 type="submit"
                                                 disabled={isLoading}
-                                                className="w-full md:w-2/3 py-3 md:py-4 bg-primary text-primary-foreground rounded-lg shadow-md shadow-primary/20 hover:shadow-lg hover:shadow-primary/40 hover:brightness-110 transition-all disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer font-bold tracking-widest text-xs md:text-sm uppercase"
+                                                className="w-full md:w-2/3 py-3 md:py-4 bg-primary text-primary-foreground rounded-sm shadow-md shadow-primary/20 hover:shadow-lg hover:shadow-primary/40 hover:brightness-110 transition-all disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer font-bold tracking-widest text-xs md:text-sm uppercase"
                                             >
                                                 {isLoading ? "PROCESSING..." : "Submit"}
                                             </motion.button>

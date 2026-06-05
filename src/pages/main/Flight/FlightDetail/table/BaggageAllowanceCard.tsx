@@ -10,7 +10,7 @@ const BaggageAllowanceCard = ({
   checkInBaggage,
 }: Props) => {
   return (
-    <div className="rounded-lg border border-sky-200 bg-sky-50 px-4 py-3 dark:border-sky-900/40 dark:bg-sky-950/30">
+    <div className="rounded-sm border border-sky-200 bg-sky-50 px-4 py-3 dark:border-sky-900/40 dark:bg-sky-950/30">
       <div className="flex items-start gap-3">
         <div className="mt-0.5 text-sky-600 dark:text-sky-400">
           <BriefcaseBusiness className="h-4 w-4" />

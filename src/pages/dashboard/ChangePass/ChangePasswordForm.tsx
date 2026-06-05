@@ -100,7 +100,7 @@ const ChangePasswordForm = ({
               variant="outline"
               onClick={onReset}
               disabled={isLoading}
-              className="h-11 px-8 rounded-xl font-medium"
+              className="h-11 px-8 rounded-sm font-medium"
             >
               Reset
             </Button>
@@ -108,7 +108,7 @@ const ChangePasswordForm = ({
             <Button 
               type="submit" 
               disabled={isLoading} 
-              className="h-11 px-8 rounded-xl font-semibold shadow-sm"
+              className="h-11 px-8 rounded-sm font-semibold shadow-sm"
             >
               {isLoading ? (
                 <>

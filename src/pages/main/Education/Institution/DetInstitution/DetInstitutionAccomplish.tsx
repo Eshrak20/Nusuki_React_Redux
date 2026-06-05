@@ -27,7 +27,7 @@ const DetInstitutionAccomplish = ({ accomplish }: DetInstitutionAccomplishProps)
           <button
             onClick={() => setIsOpen(true)}
             className={`
-              px-8 py-4 rounded-lg font-semibold text-lg 
+              px-8 py-4 rounded-sm font-semibold text-lg 
               transition-all duration-300 
               hover:scale-105 hover:shadow-xl 
               focus:outline-none focus:ring-2 focus:ring-offset-2

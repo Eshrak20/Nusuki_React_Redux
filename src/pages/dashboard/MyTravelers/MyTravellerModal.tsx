@@ -126,13 +126,13 @@ const MyTravellerModal = ({
   const modalTitle = selectedTraveller ? "Edit Traveller" : "Add Traveller";
 
   const fieldClass =
-    "h-11 w-full rounded-md !border-2 !border-primary/30 !bg-primary/5 px-3 text-sm text-foreground shadow-sm outline-none transition placeholder:text-muted-foreground hover:!border-primary/50 hover:!bg-primary/10 focus:!border-primary focus:!bg-background focus:ring-2 focus:ring-primary/25 dark:!bg-muted/50 dark:hover:!bg-muted/70";
+    "h-11 w-full rounded-sm !border-2 !border-primary/30 !bg-primary/5 px-3 text-sm text-foreground shadow-sm outline-none transition placeholder:text-muted-foreground hover:!border-primary/50 hover:!bg-primary/10 focus:!border-primary focus:!bg-background focus:ring-2 focus:ring-primary/25 dark:!bg-muted/50 dark:hover:!bg-muted/70";
 
   const selectTriggerClass =
-    "h-11 w-full rounded-md !border-2 !border-primary/30 !bg-primary/5 px-3 text-sm text-foreground shadow-sm transition hover:!border-primary/50 hover:!bg-primary/10 focus:!border-primary focus:ring-2 focus:ring-primary/25 dark:!bg-muted/50 dark:hover:!bg-muted/70";
+    "h-11 w-full rounded-sm !border-2 !border-primary/30 !bg-primary/5 px-3 text-sm text-foreground shadow-sm transition hover:!border-primary/50 hover:!bg-primary/10 focus:!border-primary focus:ring-2 focus:ring-primary/25 dark:!bg-muted/50 dark:hover:!bg-muted/70";
 
   const dateButtonClass =
-    "h-11 w-full justify-between rounded-md !border-2 !border-primary/30 !bg-primary/5 px-3 text-left text-sm font-normal text-foreground shadow-sm transition hover:!border-primary/50 hover:!bg-primary/10 focus:!border-primary focus:!bg-background focus:ring-2 focus:ring-primary/25 dark:!bg-muted/50 dark:hover:!bg-muted/70";
+    "h-11 w-full justify-between rounded-sm !border-2 !border-primary/30 !bg-primary/5 px-3 text-left text-sm font-normal text-foreground shadow-sm transition hover:!border-primary/50 hover:!bg-primary/10 focus:!border-primary focus:!bg-background focus:ring-2 focus:ring-primary/25 dark:!bg-muted/50 dark:hover:!bg-muted/70";
 
   const selectItemClass =
     "cursor-pointer focus:bg-primary focus:text-primary-foreground data-[highlighted]:bg-primary data-[highlighted]:text-primary-foreground";
@@ -185,7 +185,7 @@ const MyTravellerModal = ({
             <button
               type="button"
               onClick={onClose}
-              className="rounded-md p-1 text-muted-foreground transition hover:bg-muted hover:text-foreground"
+              className="rounded-sm p-1 text-muted-foreground transition hover:bg-muted hover:text-foreground"
             >
               <X className="h-5 w-5" />
             </button>
@@ -340,7 +340,7 @@ const MyTravellerModal = ({
                     Gender
                   </label>
 
-                  <div className="flex h-11 flex-wrap items-center gap-5 rounded-md border-2! border-primary/30! bg-primary/5! px-3 shadow-sm transition hover:border-primary/50! hover:bg-primary/10! dark:bg-muted/50! dark:hover:bg-muted/70!">
+                  <div className="flex h-11 flex-wrap items-center gap-5 rounded-sm border-2! border-primary/30! bg-primary/5! px-3 shadow-sm transition hover:border-primary/50! hover:bg-primary/10! dark:bg-muted/50! dark:hover:bg-muted/70!">
                     <label className="flex cursor-pointer items-center gap-2 text-sm text-foreground">
                       <input
                         type="radio"
@@ -503,7 +503,7 @@ const MyTravellerModal = ({
             <button
               type="submit"
               disabled={isSubmitting}
-              className="rounded-md bg-primary px-6 py-2.5 text-sm font-semibold text-primary-foreground shadow-sm transition hover:bg-primary/90 disabled:cursor-not-allowed disabled:opacity-60"
+              className="rounded-sm bg-primary px-6 py-2.5 text-sm font-semibold text-primary-foreground shadow-sm transition hover:bg-primary/90 disabled:cursor-not-allowed disabled:opacity-60"
             >
               {isSubmitting ? "Saving..." : "Save"}
             </button>

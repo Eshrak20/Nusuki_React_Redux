@@ -26,7 +26,7 @@ const UnverifiedEmailModal = ({
 }: UnverifiedEmailModalProps) => {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-105 rounded-lg border-0 bg-white p-0 shadow-xl dark:bg-slate-900 dark:ring-1 dark:ring-slate-800">
+      <DialogContent className="max-w-105 rounded-sm border-0 bg-white p-0 shadow-xl dark:bg-slate-900 dark:ring-1 dark:ring-slate-800">
         <div className="relative px-5 pb-5 pt-6 sm:px-6">
           <button
             type="button"
@@ -55,7 +55,7 @@ const UnverifiedEmailModal = ({
             </div>
           </DialogHeader>
 
-          <div className="mt-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-700 dark:border-slate-800 dark:bg-slate-950 dark:text-slate-300">
+          <div className="mt-4 rounded-sm border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-700 dark:border-slate-800 dark:bg-slate-950 dark:text-slate-300">
             <span className="font-semibold">Email:</span> {email}
           </div>
 
@@ -64,7 +64,7 @@ const UnverifiedEmailModal = ({
               type="button"
               onClick={onResend}
               disabled={isLoading}
-              className="h-9 flex-1 rounded-md text-sm font-semibold"
+              className="h-9 flex-1 rounded-sm text-sm font-semibold"
             >
               {isLoading ? (
                 <span className="flex items-center gap-2">
@@ -84,7 +84,7 @@ const UnverifiedEmailModal = ({
               variant="outline"
               onClick={() => onOpenChange(false)}
               disabled={isLoading}
-              className="h-9 flex-1 rounded-md text-sm font-semibold"
+              className="h-9 flex-1 rounded-sm text-sm font-semibold"
             >
               Cancel
             </Button>

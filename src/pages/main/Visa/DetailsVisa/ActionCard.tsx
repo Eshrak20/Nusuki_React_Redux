@@ -65,7 +65,7 @@ const ActionCard = ({ details }: VisaActionCardProps) => {
         {/* Apply Now Button */}
         <Dialog open={isOpen} onOpenChange={setIsOpen}>
           <DialogTrigger asChild>
-            <button className="flex w-full items-center justify-center gap-2 rounded-xl bg-primary px-4 py-3.5 text-base font-bold text-primary-foreground shadow-sm transition-colors hover:opacity-90">
+            <button className="flex w-full items-center justify-center gap-2 rounded-sm bg-primary px-4 py-3.5 text-base font-bold text-primary-foreground shadow-sm transition-colors hover:opacity-90">
               <Send className="h-5 w-5" />
               Apply Now
             </button>

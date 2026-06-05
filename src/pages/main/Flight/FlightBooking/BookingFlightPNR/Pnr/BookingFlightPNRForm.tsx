@@ -204,7 +204,7 @@ const BookingFlightPNRForm = ({
       <PnrCreatingLoader show={isCreatingPnr} />
 
       <div className="space-y-6">
-        <div className="rounded-lg border bg-card p-4">
+        <div className="rounded-sm border bg-card p-4">
           <h3 className="mb-4 text-base font-semibold text-card-foreground">
             Contact Information
           </h3>
@@ -220,7 +220,7 @@ const BookingFlightPNRForm = ({
                 onChange={(event) =>
                   updateForm("contactPhone", event.target.value)
                 }
-                className="w-full rounded-md border px-3 py-2"
+                className="w-full rounded-sm border px-3 py-2"
                 placeholder="+8801712345678"
               />
             </div>
@@ -235,7 +235,7 @@ const BookingFlightPNRForm = ({
                 onChange={(event) =>
                   updateForm("contactEmail", event.target.value)
                 }
-                className="w-full rounded-md border px-3 py-2"
+                className="w-full rounded-sm border px-3 py-2"
                 placeholder="example@gmail.com"
               />
             </div>

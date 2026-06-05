@@ -8,7 +8,7 @@ const DetVisaRequirementsSkeleton = () => {
                 {/* Header Section Skeleton */}
                 <div className="mb-8 flex items-center gap-4">
                     {/* Icon Box Skeleton */}
-                    <Skeleton className="h-10 w-10 lg:h-12 lg:w-12 rounded-xl" />
+                    <Skeleton className="h-10 w-10 lg:h-12 lg:w-12 rounded-sm" />
                     {/* Title Skeleton */}
                     <Skeleton className="h-8 w-48 lg:w-64" />
                 </div>
@@ -23,7 +23,7 @@ const DetVisaRequirementsSkeleton = () => {
                     {[...Array(5)].map((_, index) => (
                         <div
                             key={index}
-                            className="flex items-center gap-3 rounded-lg lg:bg-muted/50 px-4 py-3.5"
+                            className="flex items-center gap-3 rounded-sm lg:bg-muted/50 px-4 py-3.5"
                         >
                             {/* Check Icon Skeleton */}
                             <div className="shrink-0">

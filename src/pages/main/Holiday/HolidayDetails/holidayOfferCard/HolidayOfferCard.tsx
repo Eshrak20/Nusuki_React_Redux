@@ -30,7 +30,7 @@ const HolidayOfferCard = ({ offer }: Props) => {
         viewport={{ once: true }}
         whileHover={{ y: -8 }}
         transition={{ duration: 0.4, ease: [0.23, 1, 0.32, 1] }}
-        className="group relative overflow-hidden rounded-xl border bg-linear-to-b from-card to-background shadow-lg transition-all duration-300 hover:border-primary/50 hover:shadow-2xl hover:shadow-primary/10"
+        className="group relative overflow-hidden rounded-sm border bg-linear-to-b from-card to-background shadow-lg transition-all duration-300 hover:border-primary/50 hover:shadow-2xl hover:shadow-primary/10"
       >
         {/* Cinematic Animated Border Flare */}
         <div
@@ -90,7 +90,7 @@ const HolidayOfferCard = ({ offer }: Props) => {
                   initial={{ opacity: 0, x: -10 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: idx * 0.1 }}
-                  className="rounded-lg bg-secondary/30 p-3 transition-colors group-hover:bg-secondary/50"
+                  className="rounded-sm bg-secondary/30 p-3 transition-colors group-hover:bg-secondary/50"
                 >
                   <p className="text-[10px] font-semibold uppercase text-muted-foreground tracking-tighter">
                     {item.label}
@@ -114,7 +114,7 @@ const HolidayOfferCard = ({ offer }: Props) => {
           <div className="p-0 pt-0">
             <Button
               onClick={() => setContactOpen(true)}
-              className="relative h-14 w-full overflow-hidden -rounded-lg bg-primary text-sm font-bold uppercase tracking-widest transition-all hover:scale-[1.02] active:scale-[0.98]"
+              className="relative h-14 w-full overflow-hidden -rounded-sm bg-primary text-sm font-bold uppercase tracking-widest transition-all hover:scale-[1.02] active:scale-[0.98]"
             >
               <span className="relative z-10 flex items-center justify-center gap-2">
                 Select Offer{" "}

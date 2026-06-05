@@ -15,7 +15,7 @@ const Processes = ({ details }: ProcessesProps) => {
 
                 {/* Header Section */}
                 <div className="mb-8 flex items-center gap-4">
-                    <div className="flex h-10 w-10 lg:h-12 lg:w-12 items-center justify-center rounded-xl bg-primary text-primary-foreground shadow-md shadow-primary/20">
+                    <div className="flex h-10 w-10 lg:h-12 lg:w-12 items-center justify-center rounded-sm bg-primary text-primary-foreground shadow-md shadow-primary/20">
                         <ListChecks className="h-5 w-5 lg:h-6 lg:w-6" />
                     </div>
                     <h2 className="text-2xl font-bold">Application Process</h2>

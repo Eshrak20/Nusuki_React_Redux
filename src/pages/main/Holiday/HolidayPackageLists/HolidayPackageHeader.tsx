@@ -29,13 +29,13 @@ const HolidayPackageHeader = ({ videoUrl }: Props) => {
 
       <div className="relative z-10 mx-auto flex h-full max-w-7xl items-center px-5 sm:px-8 lg:px-12">
         <div className="max-w-3xl text-white">
-          <div className="mb-4 inline-flex items-center gap-2 rounded-md bg-white/15 px-3 py-1.5 text-xs font-semibold text-white shadow-sm backdrop-blur-md">
+          <div className="mb-4 inline-flex items-center gap-2 rounded-sm bg-white/15 px-3 py-1.5 text-xs font-semibold text-white shadow-sm backdrop-blur-md">
             <Sparkles className="size-3.5" />
             Need a customized tour?
           </div>
 
           <div className="flex items-start gap-4">
-            <div className="hidden size-16 shrink-0 items-center justify-center rounded-md bg-white/15 text-white shadow-xl backdrop-blur-md md:flex">
+            <div className="hidden size-16 shrink-0 items-center justify-center rounded-sm bg-white/15 text-white shadow-xl backdrop-blur-md md:flex">
               <PlaneTakeoff size={32} />
             </div>
 

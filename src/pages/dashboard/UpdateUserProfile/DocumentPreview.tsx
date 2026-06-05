@@ -21,7 +21,7 @@ export default function DocumentPreview({
   return (
     <Card className="overflow-hidden border bg-background transition-all hover:shadow-md">
       <div className="flex items-center gap-4 p-3">
-        <div className="h-20 w-20 flex-shrink-0 overflow-hidden rounded-md border bg-muted">
+        <div className="h-20 w-20 flex-shrink-0 overflow-hidden rounded-sm border bg-muted">
           {imageUrl ? (
             <img
               src={imageUrl}
@@ -55,7 +55,7 @@ export default function DocumentPreview({
               <img
                 src={imageUrl}
                 alt={label}
-                className="max-h-[80vh] w-full rounded-md object-contain"
+                className="max-h-[80vh] w-full rounded-sm object-contain"
               />
             </DialogContent>
           </Dialog>

@@ -13,7 +13,7 @@ interface Props {
 
 const BookingJourneyTimeline = ({ flight }: Props) => {
   return (
-    <div className="rounded-lg border border-[#d8dde7] bg-white shadow-sm dark:border-white/10 dark:bg-[#101827]">
+    <div className="rounded-sm border border-[#d8dde7] bg-white shadow-sm dark:border-white/10 dark:bg-[#101827]">
       <div className="flex">
         <div className="lg:flex w-14.5 flex-col items-center hidden py-5">
           {flight.journeys.map((journey: FlightJourneyItem, index: number) => (
