@@ -96,3 +96,13 @@ export const formatTitle = (value?: string) => {
     .replace(/_/g, " ")
     .trim();
 };
+
+export const formatStatus = (status?: string | null) => {
+  if (!status) return "N/A";
+
+  return status
+    .replaceAll("_", " ")
+    .split(" ")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
+};

@@ -10,10 +10,18 @@ import BookingSegmentsCard from "./BookingSegmentsCard";
 import BookingPricingCard from "./BookingPricingCard";
 import BookingTicketsCard from "./BookingTicketsCard";
 import BookingPassengersCard from "./BookingPassengersCard";
+import { useEffect } from "react";
 
 const FlightBookingDetails = () => {
   const navigate = useNavigate();
   const { bookingId } = useParams();
+
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  }, [bookingId]);
 
   const numericBookingId = Number(bookingId);
 
@@ -75,13 +83,12 @@ const FlightBookingDetails = () => {
         <>
           <BookingOverviewCard booking={booking} />
 
-          <div className="grid gap-6 xl:grid-cols-[1.4fr_0.8fr]">
+          <div className="mb-10">
             <BookingSegmentsCard segments={booking.segments} />
-
-            <div className="space-y-6">
-              <BookingPricingCard pricing={booking.pricing} />
-              <BookingTicketsCard tickets={booking.tickets} />
-            </div>
+          </div>
+          <div className="grid grid-cols-1 items-stretch gap-4 md:grid-cols-2">
+            <BookingPricingCard pricing={booking.pricing} />
+            <BookingTicketsCard tickets={booking.tickets} />
           </div>
 
           <BookingPassengersCard passengers={booking.passengers} />

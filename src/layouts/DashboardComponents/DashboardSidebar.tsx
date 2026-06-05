@@ -3,10 +3,12 @@ import { useSelector } from "react-redux";
 import {
   ChevronRight,
   Home,
+  Hotel,
   LockKeyhole,
   LogOut,
   Plane,
   UserRound,
+  Users,
 } from "lucide-react";
 
 import type { RootState } from "@/redux/store";
@@ -43,12 +45,12 @@ const dashboardLinks = [
   {
     label: "Hotel Bookings",
     href: "/dashboard/hotel-bookings",
-    icon: Plane,
+    icon: Hotel,
   },
   {
     label: "My Travelers",
     href: "/dashboard/my-travelers",
-    icon: Plane,
+    icon: Users,
   },
 ];
 

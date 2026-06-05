@@ -90,7 +90,7 @@ export type CreatePnrBooking = {
   booking_status: string;
   payment_status: string;
   is_ticketable: boolean;
-  ttl_at: string;
+  payment_ttl: string;
   ticketed_at: string | null;
   cancelled_at: string | null;
   pricing: CreatePnrBookingPricing;

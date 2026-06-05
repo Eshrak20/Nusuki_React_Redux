@@ -10,6 +10,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import type { HotelBookingItem } from "@/types/hotel/hotelBookingList.types";
 import HotelBookingStatusBadge from "./HotelBookingStatusBadge";
+import { formatStatus } from "@/lib/util.hotel";
 
 type HotelBookingCardProps = {
   booking: HotelBookingItem;
@@ -139,9 +140,9 @@ const HotelBookingCard = ({ booking }: HotelBookingCardProps) => {
           />
 
           <SmallInfo
-            icon={<ReceiptText size={16} />}
+            icon={<ReceiptText size={16} />} 
             label="Payment Type"
-            value={booking.payment_type || "N/A"}
+            value={formatStatus(booking.payment_type) || "N/A"}
           />
 
           <SmallInfo
