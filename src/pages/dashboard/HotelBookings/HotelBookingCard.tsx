@@ -56,7 +56,7 @@ const HotelBookingCard = ({ booking }: HotelBookingCardProps) => {
   };
 
   return (
-    <div className="overflow-hidden rounded-2xl border border-border bg-card text-card-foreground shadow-sm transition-all duration-200 hover:border-primary/40 hover:shadow-md">
+    <div className="overflow-hidden rounded-sm border border-border bg-card text-card-foreground shadow-sm transition-all duration-200 hover:border-primary/40 hover:shadow-md">
       <div className="p-4 sm:p-5">
         {/* Top section */}
         <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">

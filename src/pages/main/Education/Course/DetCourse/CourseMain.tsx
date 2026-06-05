@@ -150,7 +150,7 @@ const CourseMain = () => {
             </div>
 
             {/* Quick Trust Badge: Better spacing and typography */}
-            <div className="mt-6 px-4 py-3 bg-muted/20 rounded-2xl border border-dashed border-border/60">
+            <div className="mt-6 px-4 py-3 bg-muted/20 rounded-sm border border-dashed border-border/60">
               <p className="text-[11px] text-muted-foreground leading-tight text-center">
                 <span className="font-semibold text-primary/80">
                   🔒 Secure Inquiry:

@@ -151,7 +151,7 @@ const FlightDetailSearch = () => {
               {compactInfoItems.map((item) => (
                 <div
                   key={item.label}
-                  className="rounded-2xl border border-border/70 bg-white dark:bg-background px-3 py-3"
+                  className="rounded-sm border border-border/70 bg-white dark:bg-background px-3 py-3"
                 >
                   <p className="text-[9px] font-black uppercase tracking-[0.16em] text-muted-foreground">
                     {item.label}
@@ -203,7 +203,7 @@ const FlightDetailSearch = () => {
           {/* Desktop / tablet layout */}
           <div className="hidden lg:flex lg:flex-row lg:items-center lg:justify-between lg:gap-4">
             <div className="flex flex-wrap items-center gap-4 sm:gap-6">
-              <div className="rounded-2xl bg-primary/10 px-4 py-3">
+              <div className="rounded-sm bg-primary/10 px-4 py-3">
                 <p className="text-[10px] font-black uppercase tracking-[0.18em] text-primary/70">
                   Trip Type
                 </p>
@@ -398,7 +398,7 @@ const FlightDetailSearch = () => {
                       initial={{ opacity: 0, y: 8 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.22, delay: index * 0.05 }}
-                      className="rounded-2xl border bg-card p-4 shadow-sm"
+                      className="rounded-sm border bg-card p-4 shadow-sm"
                     >
                       <div className="mb-3 flex items-center justify-between">
                         <span className="inline-flex h-8 w-8 items-center justify-center rounded-xl bg-primary/10 text-xs font-extrabold text-primary">

@@ -8,7 +8,7 @@ const HomeTestCardSkeleton = () => {
             {skeletonItems.map((_, index) => (
                 <div
                     key={index}
-                    className="bg-card rounded-2xl p-8 flex flex-col items-center justify-between border border-border shadow-sm h-full relative overflow-hidden"
+                    className="bg-card rounded-sm p-8 flex flex-col items-center justify-between border border-border shadow-sm h-full relative overflow-hidden"
                 >
                     <div className="flex flex-col items-center w-full">
                         {/* Image Placeholder */}

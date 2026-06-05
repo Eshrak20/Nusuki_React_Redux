@@ -143,7 +143,7 @@ const LoadingCard = () => {
       initial={{ opacity: 0, y: 12, scale: 0.98 }}
       animate={{ opacity: 1, y: 0, scale: 1 }}
       transition={{ duration: 0.3, ease: "easeOut" }}
-      className="flex items-center gap-3 rounded-2xl border border-border bg-card px-6 py-4 text-card-foreground shadow-sm"
+      className="flex items-center gap-3 rounded-sm border border-border bg-card px-6 py-4 text-card-foreground shadow-sm"
     >
       <div className="flex size-10 items-center justify-center rounded-xl bg-primary/10 text-primary">
         <Loader2 className="size-5 animate-spin" />
@@ -182,7 +182,7 @@ const EmptyState = ({
         transition={{ duration: 0.32, ease: "easeOut" }}
         className="mx-auto w-full max-w-xl rounded-3xl border border-border bg-card p-6 text-center text-card-foreground shadow-sm sm:p-8"
       >
-        <div className="mx-auto flex size-14 items-center justify-center rounded-2xl bg-primary/10 text-primary">
+        <div className="mx-auto flex size-14 items-center justify-center rounded-sm bg-primary/10 text-primary">
           {icon}
         </div>
 

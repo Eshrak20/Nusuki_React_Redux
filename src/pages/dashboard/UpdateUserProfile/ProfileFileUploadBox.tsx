@@ -24,7 +24,7 @@ const ProfileFileUploadBox = ({
 
       <label
         htmlFor={name}
-        className="flex cursor-pointer items-center gap-3 rounded-2xl border border-dashed bg-background p-4 transition hover:border-primary hover:bg-primary/5"
+        className="flex cursor-pointer items-center gap-3 rounded-sm border border-dashed bg-background p-4 transition hover:border-primary hover:bg-primary/5"
       >
         <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary">
           <FileImage className="h-5 w-5" />

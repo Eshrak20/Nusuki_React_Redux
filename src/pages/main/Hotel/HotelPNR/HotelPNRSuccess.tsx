@@ -12,7 +12,7 @@ const HotelPNRSuccess = () => {
   if (!booking) {
     return (
       <section className="min-h-screen bg-background px-4 py-10 text-foreground">
-        <div className="mx-auto max-w-3xl rounded-2xl border bg-card p-6 text-card-foreground shadow-sm">
+        <div className="mx-auto max-w-3xl rounded-sm border bg-card p-6 text-card-foreground shadow-sm">
           <h1 className="text-xl font-semibold">No booking data found</h1>
           <p className="mt-2 text-sm text-muted-foreground">
             Please create a booking first.
@@ -32,7 +32,7 @@ const HotelPNRSuccess = () => {
   return (
     <section className="min-h-screen bg-background px-4 py-8 text-foreground sm:px-6 lg:px-8">
       <div className="mx-auto w-full max-w-5xl space-y-6">
-        <div className="rounded-2xl border bg-card p-6 text-card-foreground shadow-sm">
+        <div className="rounded-sm border bg-card p-6 text-card-foreground shadow-sm">
           <p className="text-sm font-medium text-primary">Booking Successful</p>
           <h1 className="mt-2 text-2xl font-bold sm:text-3xl">
             Your hotel booking has been created
@@ -49,7 +49,7 @@ const HotelPNRSuccess = () => {
         </div>
 
         <div className="grid gap-6 lg:grid-cols-2">
-          <div className="rounded-2xl border bg-card p-6 text-card-foreground shadow-sm">
+          <div className="rounded-sm border bg-card p-6 text-card-foreground shadow-sm">
             <h2 className="text-lg font-semibold">Hotel Details</h2>
 
             <div className="mt-4 space-y-3 text-sm">
@@ -63,7 +63,7 @@ const HotelPNRSuccess = () => {
             </div>
           </div>
 
-          <div className="rounded-2xl border bg-card p-6 text-card-foreground shadow-sm">
+          <div className="rounded-sm border bg-card p-6 text-card-foreground shadow-sm">
             <h2 className="text-lg font-semibold">Payment & Pricing</h2>
 
             <div className="mt-4 space-y-3 text-sm">
@@ -86,10 +86,10 @@ const HotelPNRSuccess = () => {
           </div>
         </div>
 
-        <div className="rounded-2xl border bg-card p-6 text-card-foreground shadow-sm">
+        <div className="rounded-sm border bg-card p-6 text-card-foreground shadow-sm">
           <h2 className="text-lg font-semibold">Guests</h2>
 
-          <div className="mt-4 overflow-hidden rounded-2xl border">
+          <div className="mt-4 overflow-hidden rounded-sm border">
             <div className="grid grid-cols-4 bg-muted px-4 py-3 text-xs font-semibold text-muted-foreground">
               <span>Name</span>
               <span>Type</span>
@@ -133,7 +133,7 @@ const HotelPNRSuccess = () => {
 
 const InfoBox = ({ label, value }: { label: string; value: string }) => {
   return (
-    <div className="rounded-2xl border bg-background p-4">
+    <div className="rounded-sm border bg-background p-4">
       <p className="text-xs font-medium text-muted-foreground">{label}</p>
       <p className="mt-1 break-all text-lg font-bold">{value}</p>
     </div>

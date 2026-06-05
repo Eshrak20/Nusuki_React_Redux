@@ -7,7 +7,7 @@ interface AssistanceInfoProps {
 
 const NeedAssistance = ({ assistanceInfo }: AssistanceInfoProps) => {
     return (
-        <div className="relative mb-5 overflow-hidden rounded-2xl bg-primary dark:bg-card dark:border dark:border-border p-6 shadow-lg md:p-8">
+        <div className="relative mb-5 overflow-hidden rounded-sm bg-primary dark:bg-card dark:border dark:border-border p-6 shadow-lg md:p-8">
             {/* Background Gradient matching your banner theme - Hidden in dark mode to keep the card clean */}
             <div className="absolute inset-0 z-0 bg-linear-to-r from-transparent to-black/20 mix-blend-multiply dark:hidden" />
 

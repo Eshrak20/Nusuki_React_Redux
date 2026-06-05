@@ -52,7 +52,7 @@ const NavbarUserMenu = ({
         </Button>
       </DropdownMenuTrigger>
 
-      <DropdownMenuContent align="end" className="w-56 rounded-2xl">
+      <DropdownMenuContent align="end" className="w-56 rounded-sm">
         <DropdownMenuLabel>
           <div className="flex flex-col">
             <span className="truncate text-sm font-semibold">

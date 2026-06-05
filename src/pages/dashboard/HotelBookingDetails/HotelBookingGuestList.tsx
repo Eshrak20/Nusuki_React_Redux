@@ -7,7 +7,7 @@ type HotelBookingGuestListProps = {
 
 const HotelBookingGuestList = ({ guests }: HotelBookingGuestListProps) => {
   return (
-    <div className="rounded-2xl border bg-card p-5 text-card-foreground shadow-sm sm:p-6">
+    <div className="rounded-sm border bg-card p-5 text-card-foreground shadow-sm sm:p-6">
       <div className="flex items-center justify-between gap-4">
         <h3 className="text-lg font-semibold">Guest Information</h3>
 
@@ -20,7 +20,7 @@ const HotelBookingGuestList = ({ guests }: HotelBookingGuestListProps) => {
         {guests.map((guest) => (
           <div
             key={`${guest.room_index}-${guest.guest_index}`}
-            className="rounded-2xl border bg-background p-4"
+            className="rounded-sm border bg-background p-4"
           >
             <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
               <div className="flex min-w-0 items-start gap-3">

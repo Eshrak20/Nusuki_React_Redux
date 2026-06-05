@@ -21,7 +21,7 @@ const StepGuideSkeleton = () => {
           .map((_, sIdx) => (
             <div
               key={sIdx}
-              className="relative overflow-hidden rounded-2xl border border-border bg-card shadow-sm"
+              className="relative overflow-hidden rounded-sm border border-border bg-card shadow-sm"
             >
               {/* Section Header */}
               <div className="bg-muted/30 px-6 py-4 border-b border-border flex items-center justify-between">

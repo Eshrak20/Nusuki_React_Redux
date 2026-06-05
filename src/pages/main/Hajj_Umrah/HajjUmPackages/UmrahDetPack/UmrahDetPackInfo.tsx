@@ -103,7 +103,7 @@ const UmrahDetPackInfo = ({ pack }: Props) => {
               </div>
 
               {/* Experience Section */}
-              <div className="bg-hajj/5 dark:bg-hajj/20 p-6 lg:p-8 rounded-2xl border border-hajj/10">
+              <div className="bg-hajj/5 dark:bg-hajj/20 p-6 lg:p-8 rounded-sm border border-hajj/10">
                 <p className="text-hajj flex items-center gap-2 mb-4 uppercase tracking-[0.2em] text-[10px] font-bold">
                   <Quote size={14} /> The Experience
                 </p>

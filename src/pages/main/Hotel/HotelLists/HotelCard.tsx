@@ -139,7 +139,7 @@ const HotelCard = ({ hotel, currency }: Props) => {
             </div>
 
             {/* Right Column: Pricing & Link Card */}
-            <div className="flex min-w-44 flex-col justify-between rounded-2xl bg-muted/40 dark:bg-muted/20 p-4 text-left lg:text-right">
+            <div className="flex min-w-44 flex-col justify-between rounded-sm bg-muted/40 dark:bg-muted/20 p-4 text-left lg:text-right">
               <div>
                 <p className="text-xs font-semibold text-muted-foreground">
                   Starting from

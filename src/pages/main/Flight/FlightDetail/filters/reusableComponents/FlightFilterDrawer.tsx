@@ -26,7 +26,7 @@ const FlightFilterDrawer = ({ availableFilters, isLoading }: Props) => {
           <Button
             variant="outline"
             size="sm"
-            className="h-11 w-full justify-center rounded-2xl border-border bg-background px-3 text-sm font-medium shadow-sm"
+            className="h-11 w-full justify-center rounded-sm border-border bg-background px-3 text-sm font-medium shadow-sm"
           >
             <SlidersHorizontal className="mr-2 h-4 w-4 transition-transform duration-200 group-hover:rotate-12" />
             <span className="font-medium">Filters</span>

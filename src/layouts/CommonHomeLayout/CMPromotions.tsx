@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useMemo } from "react";
 import { motion, type PanInfo } from "framer-motion";
 import { useFlightPromoListsQuery } from "@/redux/api/flightApi/flightPromo";
 
@@ -9,6 +9,9 @@ const CMPromotions = () => {
   const [itemsPerPage, setItemsPerPage] = useState(3);
   const [currentPage, setCurrentPage] = useState(0);
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const promotions = data?.data?.data || [];
+
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth < 768) setItemsPerPage(1);
@@ -18,29 +21,54 @@ const CMPromotions = () => {
 
     handleResize();
     window.addEventListener("resize", handleResize);
+
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  const promotions = data?.data?.data || [];
-  if (!promotions || promotions.length === 0) return null;
+  const totalPages = useMemo(() => {
+    if (!promotions.length) return 0;
+    return Math.ceil(promotions.length / itemsPerPage);
+  }, [promotions.length, itemsPerPage]);
 
-  // Calculate total pages based on items per page
-  const totalPages = Math.ceil(promotions.length / itemsPerPage);
   const activePage = Math.max(0, Math.min(currentPage, totalPages - 1));
 
-  const handleDragEnd = (_event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
+  const renderedPromotions = useMemo(() => {
+    if (!promotions.length || totalPages === 0) return [];
+
+    const totalItemsNeeded = totalPages * itemsPerPage;
+
+    return Array.from({ length: totalItemsNeeded }).map((_, index) => {
+      return promotions[index % promotions.length];
+    });
+  }, [promotions, totalPages, itemsPerPage]);
+
+  if (!promotions.length) return null;
+
+  const handleDragEnd = (
+    _event: MouseEvent | TouchEvent | PointerEvent,
+    info: PanInfo
+  ) => {
     const swipeThreshold = 50;
     const velocityThreshold = 500;
 
-    if (info.offset.x < -swipeThreshold || info.velocity.x < -velocityThreshold) {
+    if (
+      info.offset.x < -swipeThreshold ||
+      info.velocity.x < -velocityThreshold
+    ) {
       setCurrentPage((prev) => Math.min(prev + 1, totalPages - 1));
-    } else if (info.offset.x > swipeThreshold || info.velocity.x > velocityThreshold) {
+    } else if (
+      info.offset.x > swipeThreshold ||
+      info.velocity.x > velocityThreshold
+    ) {
       setCurrentPage((prev) => Math.max(prev - 1, 0));
     }
   };
 
   return (
-    <div className="w-full -mt-14 lg:mt-15 px-4 overflow-hidden" ref={containerRef}>
+    <div
+      className="w-full -mt-14 lg:mt-15 px-4 overflow-hidden"
+      ref={containerRef}
+    >
       <h2 className="text-3xl md:text-4xl mt-20 lg:mt-0 text-center lg:text-left font-bold text-foreground mb-8">
         Exclusive Offers
       </h2>
@@ -52,8 +80,6 @@ const CMPromotions = () => {
           dragConstraints={containerRef}
           dragElastic={0}
           onDragEnd={handleDragEnd}
-          // The "activePage * 100" moves one full container width per page
-          // Dividing by totalPages is necessary because the width is multiplied by totalPages
           animate={{ x: `-${(activePage * 100) / totalPages}%` }}
           transition={{
             type: "spring",
@@ -62,15 +88,13 @@ const CMPromotions = () => {
           }}
           style={{ width: `${totalPages * 100}%` }}
         >
-          {promotions.map((promo) => (
+          {renderedPromotions.map((promo, index) => (
             <div
-              key={promo.id}
-              // Width must be relative to the entire expanded width (totalPages * 100)
+              key={`${promo.id}-${index}`}
               style={{ width: `${100 / (totalPages * itemsPerPage)}%` }}
               className="shrink-0 px-2 flex flex-col"
             >
-              {/* Card Container */}
-              <div className="relative aspect-16/10 group overflow-hidden rounded-2xl bg-muted border border-border/50">
+              <div className="relative aspect-16/10 group overflow-hidden rounded-sm bg-muted border border-border/50">
                 <img
                   src={promo.image_url}
                   alt={promo.title}
@@ -78,12 +102,19 @@ const CMPromotions = () => {
                   draggable="false"
                 />
 
-                {/* Hover Overlay */}
                 <div className="absolute inset-0 bg-primary/75 dark:bg-black/75 backdrop-blur-[2px] opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-center items-center text-center p-6">
                   <div className="transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 flex flex-col items-center">
-                    <h3 className="font-bold text-xl text-white mb-2 line-clamp-1">{promo.title}</h3>
-                    <p className="text-sm font-medium text-white/90 mb-3 line-clamp-1">{promo.subtitle}</p>
-                    <p className="text-xs text-gray-300 mb-5 line-clamp-3">{promo.description}</p>
+                    <h3 className="font-bold text-xl text-white mb-2 line-clamp-1">
+                      {promo.title}
+                    </h3>
+
+                    <p className="text-sm font-medium text-white/90 mb-3 line-clamp-1">
+                      {promo.subtitle}
+                    </p>
+
+                    <p className="text-xs text-gray-300 mb-5 line-clamp-3">
+                      {promo.description}
+                    </p>
                   </div>
                 </div>
               </div>
@@ -92,15 +123,16 @@ const CMPromotions = () => {
         </motion.div>
       </div>
 
-      {/* Pagination Dots */}
       {totalPages > 1 && (
         <div className="flex justify-center items-center gap-3 mt-8">
           {Array.from({ length: totalPages }).map((_, index) => (
             <button
               key={index}
+              type="button"
               onClick={() => setCurrentPage(index)}
-              className={`h-2 rounded-full transition-all duration-500 ${activePage === index ? "w-10 bg-primary" : "w-2 bg-primary/20"
-                }`}
+              className={`h-2 rounded-full transition-all duration-500 ${
+                activePage === index ? "w-10 bg-primary" : "w-2 bg-primary/20"
+              }`}
             />
           ))}
         </div>

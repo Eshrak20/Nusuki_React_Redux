@@ -26,7 +26,7 @@ const FlightBookingDetails = () => {
 
   if (!numericBookingId) {
     return (
-      <div className="rounded-2xl border bg-card p-6 text-center">
+      <div className="rounded-sm border bg-card p-6 text-center">
         <h2 className="text-xl font-bold text-destructive">
           Invalid booking ID
         </h2>
@@ -50,7 +50,7 @@ const FlightBookingDetails = () => {
       {isLoading ? <FlightBookingDetailsSkeleton /> : null}
 
       {isError ? (
-        <Card className="rounded-2xl border-destructive/20 bg-destructive/10">
+        <Card className="rounded-sm border-destructive/20 bg-destructive/10">
           <CardContent className="p-6 text-center">
             <h3 className="text-lg font-bold text-destructive">
               Failed to load booking details

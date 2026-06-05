@@ -28,7 +28,7 @@ const DreamStudy = () => {
           {destinations.map((dest, index) => (
             <div
               key={index}
-              className="group relative h-64 overflow-hidden rounded-2xl cursor-pointer shadow-md border border-border"
+              className="group relative h-64 overflow-hidden rounded-sm cursor-pointer shadow-md border border-border"
             >
               {/* Image */}
               <img

@@ -20,7 +20,7 @@ const FlightSegmentTimeline = ({ segments }: Props) => {
           whileHover={{ scale: 1.02, y: -4 }}
           transition={{ duration: 0.25, delay: index * 0.06 }}
           // Added 'group', 'hover:shadow-xl', and transition properties
-          className="group rounded-2xl border border-border bg-card p-5 shadow-sm transition-all duration-300 hover:border-primary dark:hover:border-primary-light hover:bg-primary dark:hover:bg-primary-light hover:shadow-xl"
+          className="group rounded-sm border border-border bg-card p-5 shadow-sm transition-all duration-300 hover:border-primary dark:hover:border-primary-light hover:bg-primary dark:hover:bg-primary-light hover:shadow-xl"
         >
           <div className="mb-5 flex items-center gap-3">
             <AirlineLogo

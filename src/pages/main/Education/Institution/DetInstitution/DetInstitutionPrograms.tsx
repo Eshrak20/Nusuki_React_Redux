@@ -92,7 +92,7 @@ const DetInstitutionPrograms = ({ programs }: Props) => {
                     </TableCell>
                     <TableCell>
                       <div className="flex items-center gap-4">
-                        <div className="hidden sm:flex w-12 h-12 items-center justify-center rounded-2xl bg-primary/10 text-primary group-hover:scale-110 group-hover:bg-primary group-hover:text-primary-foreground transition-all duration-500">
+                        <div className="hidden sm:flex w-12 h-12 items-center justify-center rounded-sm bg-primary/10 text-primary group-hover:scale-110 group-hover:bg-primary group-hover:text-primary-foreground transition-all duration-500">
                           <GraduationCap className="w-6 h-6" />
                         </div>
                         <div>
@@ -174,7 +174,7 @@ const DetInstitutionPrograms = ({ programs }: Props) => {
       {/* Highly Visible Tabs */}
       <Tabs defaultValue="masters" className="w-full">
         <div className="flex justify-center mb-12">
-          <TabsList className="h-16 p-2 bg-muted/80 backdrop-blur-md border border-border rounded-2xl shadow-inner gap-2">
+          <TabsList className="h-16 p-2 bg-muted/80 backdrop-blur-md border border-border rounded-sm shadow-inner gap-2">
             <TabsTrigger 
               value="masters" 
               className="rounded-xl px-8 h-12 text-md font-bold transition-all data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-lg"

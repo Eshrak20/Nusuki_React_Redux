@@ -15,7 +15,7 @@ type BookingTicketsCardProps = {
 
 const BookingTicketsCard = ({ tickets }: BookingTicketsCardProps) => {
   return (
-    <Card className="rounded-2xl shadow-sm">
+    <Card className="rounded-sm shadow-sm">
       <CardHeader className="border-b p-5">
         <h3 className="text-lg font-bold text-foreground">
           Ticket Information
@@ -27,7 +27,7 @@ const BookingTicketsCard = ({ tickets }: BookingTicketsCardProps) => {
           tickets.map((ticket) => (
             <div
               key={ticket.id}
-              className="rounded-2xl border bg-muted/30 p-4 dark:bg-muted/10"
+              className="rounded-sm border bg-muted/30 p-4 dark:bg-muted/10"
             >
               <DetailItem
                 icon={Ticket}

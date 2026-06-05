@@ -117,7 +117,7 @@ const DetInstitutionCost = ({ cost }: Props) => {
               whileHover={{ scale: 1.02 }}
               className="bg-card/50 backdrop-blur-md border border-border p-4 rounded-3xl shadow-xl flex items-center gap-4 pr-8"
             >
-              <div className="w-12 h-12 rounded-2xl bg-primary flex items-center justify-center shadow-lg shadow-primary/20">
+              <div className="w-12 h-12 rounded-sm bg-primary flex items-center justify-center shadow-lg shadow-primary/20">
                 <TrendingUp className="w-6 h-6 text-primary-foreground" />
               </div>
               <div>
@@ -152,7 +152,7 @@ const DetInstitutionCost = ({ cost }: Props) => {
                 { icon: CreditCard, label: "Easy EMI", sub: "0% Interest", color: "bg-emerald-500" },
                 { icon: Landmark, label: "Loans", sub: "Tie-ups", color: "bg-amber-500" }
               ].map((item, idx) => (
-                <div key={idx} className="flex items-center gap-3 bg-secondary/50 border border-border px-4 py-2 rounded-2xl hover:bg-secondary transition-colors cursor-default">
+                <div key={idx} className="flex items-center gap-3 bg-secondary/50 border border-border px-4 py-2 rounded-sm hover:bg-secondary transition-colors cursor-default">
                   <item.icon className="w-4 h-4 text-primary" />
                   <div>
                     <p className="text-xs font-bold leading-none">{item.label}</p>
@@ -347,8 +347,8 @@ const DetInstitutionCost = ({ cost }: Props) => {
           transition={{ delay: 0.5 }}
           className="mt-12 relative"
         >
-          <div className="absolute inset-0 bg-primary/5 rounded-2xl blur-xl" />
-          <div className="relative bg-card/50 backdrop-blur-sm border border-border/50 rounded-2xl p-6 md:p-8">
+          <div className="absolute inset-0 bg-primary/5 rounded-sm blur-xl" />
+          <div className="relative bg-card/50 backdrop-blur-sm border border-border/50 rounded-sm p-6 md:p-8">
             <div className="flex gap-4">
               <div className="shrink-0">
                 <div className="p-2 rounded-full bg-primary/10 text-primary">

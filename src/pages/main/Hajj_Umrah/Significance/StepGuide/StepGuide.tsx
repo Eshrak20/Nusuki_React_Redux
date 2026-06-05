@@ -27,7 +27,7 @@ const StepGuide = ({
         {requirements.map((section: StepSection, sIdx: number) => (
           <div
             key={section.id}
-            className="relative overflow-hidden lg:rounded-2xl border border-border bg-card lg:shadow-sm transition-all hover:shadow-md"
+            className="relative overflow-hidden lg:rounded-sm border border-border bg-card lg:shadow-sm transition-all hover:shadow-md"
           >
             {/* Section Header */}
             <div className="bg-muted/30 px-6 py-4 border-b border-border flex items-center justify-between">

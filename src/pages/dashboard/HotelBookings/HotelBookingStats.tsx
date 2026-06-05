@@ -54,7 +54,7 @@ const HotelBookingStats = ({ bookings }: HotelBookingStatsProps) => {
         return (
           <div
             key={item.label}
-            className="rounded-2xl border bg-card p-4 text-card-foreground shadow-sm"
+            className="rounded-sm border bg-card p-4 text-card-foreground shadow-sm"
           >
             <div className="flex items-center justify-between gap-4">
               <div>

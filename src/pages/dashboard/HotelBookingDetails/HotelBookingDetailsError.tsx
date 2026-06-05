@@ -6,7 +6,7 @@ type HotelBookingDetailsErrorProps = {
 
 const HotelBookingDetailsError = ({ onRetry }: HotelBookingDetailsErrorProps) => {
   return (
-    <div className="flex min-h-[420px] flex-col items-center justify-center rounded-2xl border border-destructive/20 bg-destructive/10 p-6 text-center text-destructive">
+    <div className="flex min-h-[420px] flex-col items-center justify-center rounded-sm border border-destructive/20 bg-destructive/10 p-6 text-center text-destructive">
       <div className="flex size-14 items-center justify-center rounded-full bg-destructive/10">
         <AlertTriangle size={28} />
       </div>

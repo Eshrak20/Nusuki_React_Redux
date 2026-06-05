@@ -234,7 +234,7 @@ const FormSubmission = ({ title }: TitleProps) => {
                       whileTap={{ scale: 0.97 }}
                       type="submit"
                       disabled={isLoading}
-                      className="w-full md:w-auto px-14 py-4 bg-hajj text-white rounded-2xl font-bold tracking-widest text-xs flex items-center justify-center gap-3 lg:shadow-xl lg:shadow-hajj/30 hover:shadow-hajj/50 hover:brightness-110 transition-all disabled:opacity-50"
+                      className="w-full md:w-auto px-14 py-4 bg-hajj text-white rounded-sm font-bold tracking-widest text-xs flex items-center justify-center gap-3 lg:shadow-xl lg:shadow-hajj/30 hover:shadow-hajj/50 hover:brightness-110 transition-all disabled:opacity-50"
                     >
                       {isLoading ? "SENDING..." : "SEND MESSAGE"}
                       <Send size={16} />

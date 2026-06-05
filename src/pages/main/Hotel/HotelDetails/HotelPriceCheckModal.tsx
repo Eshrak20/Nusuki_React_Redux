@@ -158,7 +158,7 @@ const HotelPriceCheckModal = ({
               />
             </div>
 
-            <div className="mt-5 rounded-2xl border bg-muted/40 p-4">
+            <div className="mt-5 rounded-sm border bg-muted/40 p-4">
               <h4 className="text-sm font-bold">Rate Plan Details</h4>
 
               <div className="mt-3 space-y-2 text-sm text-muted-foreground">
@@ -229,7 +229,7 @@ const InfoBox = ({
   description: string;
 }) => {
   return (
-    <div className="rounded-2xl border bg-background p-4">
+    <div className="rounded-sm border bg-background p-4">
       <p className="text-xs font-bold uppercase text-muted-foreground">
         {label}
       </p>

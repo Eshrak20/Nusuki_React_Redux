@@ -21,7 +21,7 @@ const ProfileImageUploadSection = ({
   onFileChange,
 }: ProfileImageUploadSectionProps) => {
   return (
-    <Card className="rounded-2xl shadow-sm lg:sticky lg:top-6 overflow-hidden">
+    <Card className="rounded-sm shadow-sm mt-10 overflow-hidden">
       {/* Reduced bottom padding: p-6 pb-2 */}
       <CardHeader className="p-6 pb-2">
         <CardTitle className="flex items-center gap-2 text-lg font-semibold">
@@ -32,8 +32,8 @@ const ProfileImageUploadSection = ({
 
       {/* Consistent content padding: p-6 pt-2 */}
       <CardContent className="space-y-5 p-6 pt-2">
-        <div className="flex flex-col items-center rounded-2xl border bg-muted/20 p-4 text-center">
-          <div className="mb-3 flex h-24 w-24 items-center justify-center overflow-hidden rounded-2xl border bg-background shadow-sm">
+        <div className="flex flex-col items-center rounded-sm border bg-muted/20 p-4 text-center">
+          <div className="mb-3 flex h-24 w-24 items-center justify-center overflow-hidden rounded-sm border bg-background shadow-sm">
             {profilePreview ? (
               <img
                 src={profilePreview}

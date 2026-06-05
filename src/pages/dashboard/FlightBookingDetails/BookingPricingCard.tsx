@@ -10,7 +10,7 @@ type BookingPricingCardProps = {
 
 const BookingPricingCard = ({ pricing }: BookingPricingCardProps) => {
   return (
-    <Card className="rounded-2xl shadow-sm">
+    <Card className="rounded-sm shadow-sm">
       <CardHeader className="border-b p-5">
         <h3 className="text-lg font-bold text-foreground">Pricing Summary</h3>
       </CardHeader>

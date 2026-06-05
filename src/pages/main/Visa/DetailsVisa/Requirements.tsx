@@ -33,7 +33,7 @@ const filteredRequirements = requirements.filter(
 
   return (
     <div className="mx-auto max-w-7xl pt-1 lg:pt-2 lg:-mt-5 lg:p-4">
-      <div className="rounded-2xl border border-border bg-card p-6 text-card-foreground shadow-sm md:p-8">
+      <div className="rounded-sm border border-border bg-card p-6 text-card-foreground shadow-sm md:p-8">
         {/* Header */}
         <div className="mb-8 flex items-center gap-4">
           <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary text-primary-foreground shadow-md shadow-primary/20 lg:h-12 lg:w-12">

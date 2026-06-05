@@ -22,7 +22,7 @@ const PnrCreatingLoader = ({
         <div className="pointer-events-none absolute -left-20 -top-20 h-40 w-40 rounded-full bg-primary/20 blur-3xl" />
         <div className="pointer-events-none absolute -bottom-20 -right-20 h-40 w-40 rounded-full bg-primary/20 blur-3xl" />
 
-        <div className="relative mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl border bg-primary/10 text-primary">
+        <div className="relative mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-sm border bg-primary/10 text-primary">
           <Plane className="h-8 w-8" />
         </div>
 

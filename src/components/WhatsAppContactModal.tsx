@@ -62,7 +62,7 @@ const WhatsAppContactModal = ({ phoneNumber }: WhatsAppContactModalProps) => {
         </DialogHeader>
 
         <div className="space-y-5 px-6 py-6">
-          <div className="rounded-2xl border border-border bg-muted/40 p-4 text-center">
+          <div className="rounded-sm border border-border bg-muted/40 p-4 text-center">
             <p className="mb-2 text-sm font-medium text-muted-foreground">
               WhatsApp Number
             </p>

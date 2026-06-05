@@ -42,7 +42,7 @@ const ChangePasswordForm = ({
   };
 
   return (
-    <Card className="rounded-2xl shadow-sm overflow-hidden">
+    <Card className="rounded-sm shadow-sm overflow-hidden">
       {/* Standardized Header Padding */}
       <CardHeader className="p-6 pb-2">
         <CardTitle className="flex items-center gap-2 text-lg font-semibold">

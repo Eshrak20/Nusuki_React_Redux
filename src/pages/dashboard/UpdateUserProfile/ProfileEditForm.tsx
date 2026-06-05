@@ -49,7 +49,7 @@ const ProfileEditForm = ({
 }: ProfileEditFormProps) => {
   return (
     <form onSubmit={onSubmit} className="">
-      <div className="">
+      <div className="space-y-8">
         <div className="flex justify-end -mt-2 mb-3">
           <Button
             type="button"

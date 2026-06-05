@@ -32,7 +32,7 @@ const Upcoming: React.FC<UpcomingProps> = ({
         initial={{ scale: 0, rotate: -20 }}
         animate={{ scale: 1, rotate: 0 }}
         transition={{ type: "spring", stiffness: 260, damping: 20 }}
-        className="mb-8 flex h-24 w-24 items-center justify-center rounded-2xl bg-primary/10 text-primary ring-1 ring-primary/20 dark:bg-primary/20"
+        className="mb-8 flex h-24 w-24 items-center justify-center rounded-sm bg-primary/10 text-primary ring-1 ring-primary/20 dark:bg-primary/20"
       >
         <Rocket className="h-12 w-12 animate-pulse" />
       </motion.div>

@@ -86,10 +86,10 @@ const HotelBookingDetails = () => {
         </div>
       </div>
 
-      <div className="rounded-2xl border bg-card p-5 text-card-foreground shadow-sm sm:p-6">
+      <div className="rounded-sm border bg-card p-5 text-card-foreground shadow-sm sm:p-6">
         <div className="flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
           <div className="flex min-w-0 items-start gap-4">
-            <div className="flex size-12 shrink-0 items-center justify-center rounded-2xl bg-primary/10 text-primary">
+            <div className="flex size-12 shrink-0 items-center justify-center rounded-sm bg-primary/10 text-primary">
               <Hotel size={25} />
             </div>
 
@@ -158,7 +158,7 @@ const HotelBookingDetails = () => {
 
       <div className="grid gap-6 xl:grid-cols-[1.4fr_0.8fr]">
         <div className="space-y-6">
-          <div className="rounded-2xl border bg-card p-5 text-card-foreground shadow-sm sm:p-6">
+          <div className="rounded-sm border bg-card p-5 text-card-foreground shadow-sm sm:p-6">
             <h3 className="text-lg font-semibold">Booking Information</h3>
 
             <div className="mt-4 grid gap-3 sm:grid-cols-2">

@@ -21,7 +21,7 @@ const EducationPartner = () => {
       key={index}
       className="
         group relative flex items-center justify-center 
-        p-3 bg-white rounded-2xl border border-gray-100
+        p-3 bg-white rounded-sm border border-gray-100
         shadow-sm hover:shadow-md hover:border-blue-100
         transition-all duration-300 ease-in-out
         /* Responsive Widths updated here: */

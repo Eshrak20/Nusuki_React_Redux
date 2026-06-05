@@ -11,7 +11,7 @@ const formatMoney = (amount: number, currency: string) => {
 
 const HotelBookingPricingCard = ({ pricing }: HotelBookingPricingCardProps) => {
   return (
-    <div className="h-fit rounded-2xl border bg-card p-5 text-card-foreground shadow-sm sm:p-6">
+    <div className="h-fit rounded-sm border bg-card p-5 text-card-foreground shadow-sm sm:p-6">
       <div className="flex items-center gap-3">
         <div className="flex size-11 items-center justify-center rounded-xl bg-primary/10 text-primary">
           <WalletCards size={22} />
@@ -45,7 +45,7 @@ const HotelBookingPricingCard = ({ pricing }: HotelBookingPricingCardProps) => {
         </div>
       </div>
 
-      <div className="mt-6 rounded-2xl border bg-background p-4">
+      <div className="mt-6 rounded-sm border bg-background p-4">
         <h4 className="text-sm font-semibold">Supplier Pricing</h4>
 
         <div className="mt-3 space-y-2">

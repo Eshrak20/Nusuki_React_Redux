@@ -8,7 +8,7 @@ const FlightPromotionsSkeleton = () => (
     <div className="flex gap-4">
       {[1, 2, 3].map((i) => (
         <div key={i} className="w-full md:w-[calc(50%-12px)] lg:w-[calc(33.33%-16px)] shrink-0">
-          <Skeleton className="aspect-16/10 w-full rounded-2xl" />
+          <Skeleton className="aspect-16/10 w-full rounded-sm" />
         </div>
       ))}
     </div>

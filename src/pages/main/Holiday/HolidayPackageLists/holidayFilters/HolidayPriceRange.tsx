@@ -133,7 +133,7 @@ const HolidayPriceRange = ({ data }: HolidayPriceRangeProps) => {
   return (
     <FlightFilterSection value="price-range" title="Price Range">
       <div className="">
-        <div className="rounded-2xl bg-muted/20">
+        <div className="rounded-sm bg-muted/20">
           <div className="">
             <Slider
               min={absoluteMin}
@@ -147,7 +147,7 @@ const HolidayPriceRange = ({ data }: HolidayPriceRangeProps) => {
           </div>
 
           <div className="mt-5 grid grid-cols-2 gap-3">
-            <div className="rounded-2xl border bg-background px-3 py-3 shadow-sm">
+            <div className="rounded-sm border bg-background px-3 py-3 shadow-sm">
               <p className="text-[11px] font-medium uppercase tracking-wide text-muted-foreground">
                 Min Price
               </p>
@@ -180,7 +180,7 @@ const HolidayPriceRange = ({ data }: HolidayPriceRangeProps) => {
               )}
             </div>
 
-            <div className="rounded-2xl border bg-background px-3 py-3 text-right shadow-sm">
+            <div className="rounded-sm border bg-background px-3 py-3 text-right shadow-sm">
               <p className="text-[11px] font-medium uppercase tracking-wide text-muted-foreground">
                 Max Price
               </p>

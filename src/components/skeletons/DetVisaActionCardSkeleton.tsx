@@ -2,7 +2,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 const DetVisaActionCardSkeleton = () => {
     return (
-        <div className="mb-5 mt-5 rounded-2xl border border-border bg-card p-6 shadow-sm md:p-8">
+        <div className="mb-5 mt-5 rounded-sm border border-border bg-card p-6 shadow-sm md:p-8">
             {/* Pricing Header Skeleton */}
             <div className="mb-6 flex flex-col items-center justify-center text-center">
                 <Skeleton className="mb-2 h-4 w-40" />

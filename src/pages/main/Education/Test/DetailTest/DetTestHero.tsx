@@ -49,7 +49,7 @@ const DetTestHero = ({ hero }: HeroProps) => {
                     {/* Subtle glow behind the image */}
                     <div className="absolute -inset-2 bg-background/20 blur-xl rounded-[2rem] z-0" />
                     
-                    <div className="relative z-10 w-full aspect-4/3 rounded-2xl overflow-hidden shadow-2xl border border-white/20">
+                    <div className="relative z-10 w-full aspect-4/3 rounded-sm overflow-hidden shadow-2xl border border-white/20">
                         <img 
                             src={hero.image} 
                             alt={hero.image_alt || hero.title} 

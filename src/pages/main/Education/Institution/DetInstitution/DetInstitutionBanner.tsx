@@ -24,8 +24,8 @@ const DetInstitutionBanner = ({ detail }: Props) => {
 
                                 {/* Logo */}
                                 <div className="relative">
-                                    <div className="absolute -inset-1 bg-linear-to-r from-primary/20 to-primary/20 rounded-2xl blur-lg" />
-                                    <div className="relative bg-card p-4 rounded-2xl border border-border shadow-sm transition-colors">
+                                    <div className="absolute -inset-1 bg-linear-to-r from-primary/20 to-primary/20 rounded-sm blur-lg" />
+                                    <div className="relative bg-card p-4 rounded-sm border border-border shadow-sm transition-colors">
                                         <img
                                             src={detail.uni_logo}
                                             alt={detail.universityName}
@@ -105,7 +105,7 @@ const DetInstitutionBanner = ({ detail }: Props) => {
 
                             {/* Floating Badge */}
                             <div className="absolute bottom-8 right-8 z-20">
-                                <div className="bg-background/80 dark:bg-background/60 backdrop-blur-xl border border-border rounded-2xl p-4 text-foreground shadow-2xl">
+                                <div className="bg-background/80 dark:bg-background/60 backdrop-blur-xl border border-border rounded-sm p-4 text-foreground shadow-2xl">
                                     <div className="flex items-center gap-3">
                                         <div className="bg-primary rounded-full p-2">
                                             <GraduationCap className="w-5 h-5 text-primary-foreground" />

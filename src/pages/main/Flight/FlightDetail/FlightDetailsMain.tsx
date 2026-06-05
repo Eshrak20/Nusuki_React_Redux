@@ -111,7 +111,7 @@ const FlightDetailsMain = () => {
             </div>
 
             <div className="sticky top-32 z-20 hidden lg:block">
-              <div className="rounded-2xl bg-background/95 p-3 backdrop-blur supports-backdrop-filter:bg-background/80">
+              <div className="rounded-sm bg-background/95 p-3 backdrop-blur supports-backdrop-filter:bg-background/80">
                 <FlightResultsSortBar
                   isLoading={loading}
                   sortBy={ui.sortBy}

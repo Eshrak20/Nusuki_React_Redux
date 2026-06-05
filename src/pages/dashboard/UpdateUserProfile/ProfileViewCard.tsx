@@ -13,6 +13,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 import type { AuthUserProfileData } from "./types";
+import DocumentPreview from "./DocumentPreview";
 
 type ProfileViewCardProps = {
   userData: AuthUserProfileData;
@@ -26,21 +27,25 @@ const ProfileViewCard = ({ userData, onEdit }: ProfileViewCardProps) => {
     <div className="w-full ">
       <div className="space-y-6">
         {/* Personal Information */}
-        <Card className="rounded-2xl shadow-sm overflow-hidden">
+        <Card className="rounded-sm shadow-sm overflow-hidden">
           <CardHeader className="flex flex-row items-center justify-between gap-4 p-6 pb-2">
             <CardTitle className="flex items-center gap-2 text-lg font-semibold">
               <UserRound className="h-5 w-5 text-primary" />
               Personal Information
             </CardTitle>
 
-            <Button onClick={onEdit} className="rounded-xl h-9">
-              <Edit3 className="mr-2 h-4 w-4" />
+            <Button onClick={onEdit} className="h-9 text-gray-100  dark:text-gray-800">
+              <Edit3 className="mr-2 h-4 w-4 " />
               Edit Profile
             </Button>
           </CardHeader>
 
           <CardContent className="grid gap-4 sm:grid-cols-2 p-6 pt-2">
-            <InfoItem label="Full Name" value={userData.name} icon={UserRound} />
+            <InfoItem
+              label="Full Name"
+              value={userData.name}
+              icon={UserRound}
+            />
             <InfoItem label="Email" value={userData.email} icon={Mail} />
             <InfoItem label="Given Name" value={profile?.given_name} />
             <InfoItem label="Surname" value={profile?.surname} />
@@ -55,7 +60,7 @@ const ProfileViewCard = ({ userData, onEdit }: ProfileViewCardProps) => {
         </Card>
 
         {/* Contact Information */}
-        <Card className="rounded-2xl shadow-sm overflow-hidden">
+        <Card className="rounded-sm shadow-sm overflow-hidden">
           <CardHeader className="p-6 pb-2">
             <CardTitle className="flex items-center gap-2 text-lg font-semibold">
               <Phone className="h-5 w-5 text-primary" />
@@ -80,7 +85,7 @@ const ProfileViewCard = ({ userData, onEdit }: ProfileViewCardProps) => {
         </Card>
 
         {/* Travel Information */}
-        <Card className="rounded-2xl shadow-sm overflow-hidden">
+        <Card className="rounded-sm shadow-sm overflow-hidden">
           <CardHeader className="p-6 pb-2">
             <CardTitle className="flex items-center gap-2 text-lg font-semibold">
               <ShieldCheck className="h-5 w-5 text-primary" />
@@ -89,7 +94,10 @@ const ProfileViewCard = ({ userData, onEdit }: ProfileViewCardProps) => {
           </CardHeader>
 
           <CardContent className="grid gap-4 sm:grid-cols-2 p-6 pt-2">
-            <InfoItem label="Frequent Flyer No" value={profile?.frequent_flyer_no} />
+            <InfoItem
+              label="Frequent Flyer No"
+              value={profile?.frequent_flyer_no}
+            />
             <InfoItem label="Passport No" value={profile?.passport_no} />
             <InfoItem
               label="Passport Expire Date"
@@ -101,8 +109,7 @@ const ProfileViewCard = ({ userData, onEdit }: ProfileViewCardProps) => {
         </Card>
       </div>
 
-      {/* Sidebar: Documents */}
-      <Card className="h-fit rounded-2xl shadow-sm lg:sticky lg:top-6 overflow-hidden">
+      <Card className="h-fit rounded-sm shadow-sm  mt-10 overflow-hidden">
         <CardHeader className="p-6 pb-2">
           <CardTitle className="flex items-center gap-2 text-lg font-semibold">
             <FileText className="h-5 w-5 text-primary" />
@@ -111,9 +118,18 @@ const ProfileViewCard = ({ userData, onEdit }: ProfileViewCardProps) => {
         </CardHeader>
 
         <CardContent className="space-y-4 p-6 pt-2">
-          <DocumentPreview label="Profile Photo" imageUrl={profile?.profile_photo_url} />
-          <DocumentPreview label="Passport Image" imageUrl={profile?.passport_image_url} />
-          <DocumentPreview label="Visa Image" imageUrl={profile?.visa_image_url} />
+          <DocumentPreview
+            label="Profile Photo"
+            imageUrl={profile?.profile_photo_url}
+          />
+          <DocumentPreview
+            label="Passport Image"
+            imageUrl={profile?.passport_image_url}
+          />
+          <DocumentPreview
+            label="Visa Image"
+            imageUrl={profile?.visa_image_url}
+          />
         </CardContent>
       </Card>
     </div>
@@ -122,7 +138,9 @@ const ProfileViewCard = ({ userData, onEdit }: ProfileViewCardProps) => {
 
 const InfoItem = ({ label, value, icon: Icon, className }: InfoItemProps) => {
   return (
-    <div className={`rounded-xl border bg-muted/20 p-3 transition-colors hover:bg-muted/40 ${className ?? ""}`}>
+    <div
+      className={`rounded-xl border bg-muted/20 p-3 transition-colors hover:bg-muted/40 ${className ?? ""}`}
+    >
       <div className="mb-1 flex items-center gap-2 text-[10px] font-bold uppercase tracking-wider text-muted-foreground/80">
         {Icon ? <Icon className="h-3 w-3" /> : null}
         {label}
@@ -142,29 +160,4 @@ type InfoItemProps = {
   value?: string | null;
   icon?: React.ElementType;
   className?: string;
-};
-
-type DocumentPreviewProps = {
-  label: string;
-  imageUrl?: string | null;
-};
-
-const DocumentPreview = ({ label, imageUrl }: DocumentPreviewProps) => {
-  return (
-    <div className="rounded-2xl border bg-muted/30 p-4">
-      <p className="mb-3 text-sm font-semibold">{label}</p>
-
-      {imageUrl ? (
-        <img
-          src={imageUrl}
-          alt={label}
-          className="h-40 w-full rounded-xl object-cover"
-        />
-      ) : (
-        <div className="flex h-32 items-center justify-center rounded-xl border border-dashed bg-background text-sm text-muted-foreground">
-          No image uploaded
-        </div>
-      )}
-    </div>
-  );
 };

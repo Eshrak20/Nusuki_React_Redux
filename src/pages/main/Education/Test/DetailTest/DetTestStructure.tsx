@@ -16,7 +16,7 @@ const DetTestStructure = ({ structure }: DetTestStructureProps) => {
                 </h2>
 
                 {/* Table Container */}
-                <div className="overflow-hidden rounded-2xl border border-primary/20 shadow-lg">
+                <div className="overflow-hidden rounded-sm border border-primary/20 shadow-lg">
                     {/* Header Row */}
                     <div className="bg-primary px-6 py-4">
                         <span className="text-primary-foreground font-bold uppercase tracking-wider text-sm">

@@ -80,7 +80,7 @@ const DetInstitutionCultural = ({ culture }: DetInstitutionCulturalProps) => {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ delay: index * 0.1 }}
-                    className="relative aspect-video rounded-2xl overflow-hidden shadow-2xl bg-black group"
+                    className="relative aspect-video rounded-sm overflow-hidden shadow-2xl bg-black group"
                   >
                     {!isActive ? (
                       /* --- CUSTOM THUMBNAIL --- */

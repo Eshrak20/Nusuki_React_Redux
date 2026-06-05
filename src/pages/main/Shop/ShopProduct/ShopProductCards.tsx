@@ -40,7 +40,7 @@ const ShopProductCards = ({ products, offset }: ShopProductCardsProps) => {
                 />
 
                 {/* Modern Price Badge */}
-                <div className="absolute top-5 right-5 bg-white/80 backdrop-blur-md text-primary px-4 py-2 rounded-2xl text-sm font-black shadow-sm ring-1 ring-black/5">
+                <div className="absolute top-5 right-5 bg-white/80 backdrop-blur-md text-primary px-4 py-2 rounded-sm text-sm font-black shadow-sm ring-1 ring-black/5">
                   ৳{product.price.toLocaleString()}
                 </div>
 
@@ -83,7 +83,7 @@ const ShopProductCards = ({ products, offset }: ShopProductCardsProps) => {
                     </span>
                   </div>
 
-                  <div className="h-12 w-12 rounded-2xl bg-primary text-white flex items-center justify-center group-hover:bg-primary group-hover:rotate-12 transition-all duration-500 shadow-lg">
+                  <div className="h-12 w-12 rounded-sm bg-primary text-white flex items-center justify-center group-hover:bg-primary group-hover:rotate-12 transition-all duration-500 shadow-lg">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="24"

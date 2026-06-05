@@ -105,7 +105,7 @@ const HotelRoomCard = ({ room, index, onPriceCheck }: HotelRoomCardProps) => {
           </div>
         </div>
 
-        <div className="rounded-2xl border border-border bg-card p-4 text-center shadow-sm">
+        <div className="rounded-sm border border-border bg-card p-4 text-center shadow-sm">
           <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
             Total price
           </p>
@@ -139,7 +139,7 @@ const HotelRoomCard = ({ room, index, onPriceCheck }: HotelRoomCardProps) => {
       </div>
 
       {cancellation?.description ? (
-        <div className="mt-4 rounded-2xl border border-border bg-card p-4">
+        <div className="mt-4 rounded-sm border border-border bg-card p-4">
           <div className="flex items-center gap-2">
             <ShieldCheck className="size-4 text-primary" />
             <p className="text-xs font-bold uppercase tracking-wide text-muted-foreground">

@@ -125,7 +125,7 @@ const UpdateUserProfile = () => {
     return (
       <div className="min-h-screen bg-background px-4 py-6 text-foreground">
         <div className="w-full">
-          <div className="rounded-2xl border bg-card p-8 shadow-sm">
+          <div className="rounded-sm border bg-card p-8 shadow-sm">
             <div className="h-7 w-56 animate-pulse rounded bg-muted" />
             <div className="mt-4 h-4 w-80 animate-pulse rounded bg-muted" />
 
@@ -146,7 +146,7 @@ const UpdateUserProfile = () => {
   if (isProfileError || !userData) {
     return (
       <div className="min-h-screen bg-background px-4 py-6 text-foreground">
-        <div className="mx-auto max-w-3xl rounded-2xl border bg-card p-8 text-center shadow-sm">
+        <div className="mx-auto max-w-3xl rounded-sm border bg-card p-8 text-center shadow-sm">
           <h2 className="text-xl font-semibold">Failed to load profile</h2>
 
           <p className="mt-2 text-sm text-muted-foreground">
@@ -166,7 +166,7 @@ const UpdateUserProfile = () => {
   }
 
   return (
-    <div className="min-h-screen bg-background py-6 text-foreground">
+    <div className="min-h-screen bg-gray-200 dark:bg-background py-6 text-foreground">
       <div className="w-full space-y-6">
         <DashboardPageHeader
           title="User Profile"

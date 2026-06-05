@@ -40,7 +40,7 @@ const TestBanner = () => {
                         <img 
                             src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRGg4jlOlXWgTwXwCcB7m-isScCjuuEy98W4g&s" 
                             alt="Student studying" 
-                            className="w-full h-auto object-cover rounded-2xl shadow-2xl relative z-10"
+                            className="w-full h-auto object-cover rounded-sm shadow-2xl relative z-10"
                         />
                     </div>
                 </div>

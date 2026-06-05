@@ -29,7 +29,7 @@ const AppErrorModal = ({
       <DialogContent className="max-w-md overflow-hidden rounded-3xl border-destructive/20 p-0 shadow-2xl">
         <div className="bg-gradient-to-br from-destructive/15 via-background to-background p-6">
           <DialogHeader className="space-y-4 text-left">
-            <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-destructive/10 text-destructive ring-1 ring-destructive/20">
+            <div className="flex h-14 w-14 items-center justify-center rounded-sm bg-destructive/10 text-destructive ring-1 ring-destructive/20">
               <AlertCircle className="h-7 w-7" />
             </div>
 
@@ -45,7 +45,7 @@ const AppErrorModal = ({
           </DialogHeader>
 
           {fieldErrors.length > 0 && (
-            <div className="mt-5 rounded-2xl border border-destructive/15 bg-destructive/5 p-4">
+            <div className="mt-5 rounded-sm border border-destructive/15 bg-destructive/5 p-4">
               <p className="mb-3 text-sm font-semibold text-destructive">
                 Please fix these fields:
               </p>

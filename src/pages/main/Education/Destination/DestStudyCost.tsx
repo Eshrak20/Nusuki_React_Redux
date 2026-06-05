@@ -18,7 +18,7 @@ const DestStudyCost = ({ cost, id = "cost" }: Props) => {
       </div>
 
       {/* Table Container */}
-      <div className="w-full overflow-x-auto border border-border/50 rounded-2xl shadow-sm bg-card">
+      <div className="w-full overflow-x-auto border border-border/50 rounded-sm shadow-sm bg-card">
         <table className="w-full text-left border-collapse whitespace-nowrap min-w-175">
           
           {/* Dynamic Table Header */}

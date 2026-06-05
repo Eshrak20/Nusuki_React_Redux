@@ -16,7 +16,7 @@ const Emi = () => {
             Supported Bank for EMI
           </h2>
 
-          <div className="overflow-hidden rounded-2xl border bg-card shadow-sm dark:bg-card/70">
+          <div className="overflow-hidden rounded-sm border bg-card shadow-sm dark:bg-card/70">
             <div className="overflow-x-auto">
               <table className="w-full min-w-180 text-left text-sm">
                 <thead className="bg-primary/10 text-foreground dark:bg-primary/20">

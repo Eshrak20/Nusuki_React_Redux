@@ -18,7 +18,7 @@ type BookingOverviewCardProps = {
 
 const BookingOverviewCard = ({ booking }: BookingOverviewCardProps) => {
   return (
-    <Card className="overflow-hidden rounded-2xl shadow-sm">
+    <Card className="overflow-hidden rounded-sm shadow-sm">
       <CardHeader className="border-b bg-muted/30 p-5 dark:bg-muted/10">
         <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
           <div>

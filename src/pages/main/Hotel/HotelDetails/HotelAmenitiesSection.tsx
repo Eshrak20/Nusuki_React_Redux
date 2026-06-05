@@ -28,7 +28,7 @@ const HotelAmenitiesSection = ({
       className="rounded-3xl border border-border bg-card p-5 text-card-foreground shadow-sm md:p-6"
     >
       <div className="flex items-center gap-2">
-        <div className="flex size-9 items-center justify-center rounded-2xl bg-primary/10 text-primary">
+        <div className="flex size-9 items-center justify-center rounded-sm bg-primary/10 text-primary">
           <Sparkles className="size-4" />
         </div>
 

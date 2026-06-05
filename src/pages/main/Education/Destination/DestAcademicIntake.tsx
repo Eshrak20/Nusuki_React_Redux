@@ -23,7 +23,7 @@ const DestAcademicIntake = ({ intake, id = "intake" }: Props) => {
       </div>
 
       {/* Table Container */}
-      <div className="w-full overflow-x-auto border border-border/50 lg:rounded-2xl shadow-sm bg-card">
+      <div className="w-full overflow-x-auto border border-border/50 lg:rounded-sm shadow-sm bg-card">
         <table className="w-full text-left border-collapse whitespace-nowrap min-w-150">
 
           {/* Dynamic Table Header */}

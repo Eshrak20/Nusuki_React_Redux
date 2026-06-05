@@ -8,7 +8,7 @@ import {
 
 const RefundPolicyTab = () => {
   return (
-    <div className="overflow-hidden rounded-2xl border border-border bg-card shadow-sm">
+    <div className="overflow-hidden rounded-sm border border-border bg-card shadow-sm">
       <div className="border-b bg-muted/30 px-4 py-4 text-center">
         <h3 className="text-sm font-semibold text-primary md:text-base">
           Refund & Cancellation Policy

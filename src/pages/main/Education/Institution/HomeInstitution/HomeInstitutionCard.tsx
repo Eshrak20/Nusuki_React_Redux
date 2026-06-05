@@ -25,7 +25,7 @@ const HomeInstitutionCard = ({ universities }: HomeInstitutionCardProps) => {
           animate={{ y: 0, opacity: 1 }}
           transition={{ type: "spring", stiffness: 260, damping: 20 }}
           layout
-          className="bg-card dark:bg-card-dark rounded-2xl shadow-sm border border-muted dark:border-muted-dark flex flex-col h-full transition-shadow hover:shadow-md"
+          className="bg-card dark:bg-card-dark rounded-sm shadow-sm border border-muted dark:border-muted-dark flex flex-col h-full transition-shadow hover:shadow-md"
         >
           {/* Logo */}
           <div className="h-32 w-full flex items-center  justify-center bg-white p-6">

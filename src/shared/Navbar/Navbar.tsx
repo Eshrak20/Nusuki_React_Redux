@@ -35,6 +35,8 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  const shouldShowNavbarBg = scrolled || isSpecialRoute;
+
   return (
     <>
       <motion.header
@@ -45,16 +47,22 @@ export default function Navbar() {
           ease: [0.25, 0.46, 0.45, 0.94],
         }}
         className={cn(
-          "fixed left-0 top-0 z-50 w-full transition-all duration-500",
-          scrolled && "bg-card/60 backdrop-blur-xl"
+          "fixed left-0 top-0 z-99999 w-full isolate transition-all duration-500",
+          shouldShowNavbarBg
+            ? "bg-white/90 shadow-lg shadow-black/10 backdrop-blur-2xl dark:bg-slate-950/85"
+            : "bg-transparent"
         )}
       >
         <div className="mx-auto flex h-20 max-w-350 items-center justify-between gap-4 px-4 md:px-6">
-          <NavbarLogo isEducationRoute={isEducationRoute} />
+          <div className="relative z-10">
+            <NavbarLogo isEducationRoute={isEducationRoute} />
+          </div>
 
-          <DesktopNavbar />
+          <div className="relative z-10 hidden lg:flex">
+            <DesktopNavbar />
+          </div>
 
-          <div className="flex items-center gap-2">
+          <div className="relative z-10 flex items-center gap-2">
             <NavbarActions
               isShopRoute={isShopRoute}
               isSpecialRoute={isSpecialRoute}

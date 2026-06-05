@@ -10,7 +10,7 @@ const HotelBookingInfoCard = ({
   value,
 }: HotelBookingInfoCardProps) => {
   return (
-    <div className="rounded-2xl border bg-card p-4 text-card-foreground shadow-sm">
+    <div className="rounded-sm border bg-card p-4 text-card-foreground shadow-sm">
       <div className="flex items-start gap-3">
         <div className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary">
           {icon}

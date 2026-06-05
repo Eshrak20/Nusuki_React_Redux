@@ -63,7 +63,7 @@ const MobileNavbar = ({ isShopRoute, isSpecialRoute }: MobileNavbarProps) => {
         <PopoverContent
           align="end"
           sideOffset={8}
-          className="w-80 rounded-2xl border-border/70 bg-card/95 p-4 shadow-2xl backdrop-blur-xl"
+          className="w-80 rounded-sm border-border/70 bg-card/95 p-4 shadow-2xl backdrop-blur-xl"
         >
           <motion.div
             initial={{ opacity: 0, y: -10 }}

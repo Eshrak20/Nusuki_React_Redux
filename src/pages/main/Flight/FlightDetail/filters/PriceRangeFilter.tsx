@@ -145,7 +145,7 @@ const PriceRangeFilter = ({ data, isLoading }: PriceRangeFilterProps) => {
   return (
     <FlightFilterSection value="price-range" title="Price Range">
       <div className="px-1">
-        <div className="rounded-2xl border border-border/60 bg-muted/20 p-4 sm:p-5">
+        <div className="rounded-sm border border-border/60 bg-muted/20 p-4 sm:p-5">
           <div className="px-1">
             <Slider
               min={data.absolute_min}
@@ -159,7 +159,7 @@ const PriceRangeFilter = ({ data, isLoading }: PriceRangeFilterProps) => {
           </div>
 
           <div className="mt-5 grid grid-cols-2 gap-3">
-            <div className="rounded-2xl border bg-background px-3 py-3 shadow-sm">
+            <div className="rounded-sm border bg-background px-3 py-3 shadow-sm">
               <p className="text-[11px] font-medium uppercase tracking-wide text-muted-foreground">
                 Min Price
               </p>
@@ -192,7 +192,7 @@ const PriceRangeFilter = ({ data, isLoading }: PriceRangeFilterProps) => {
               )}
             </div>
 
-            <div className="rounded-2xl border bg-background px-3 py-3 text-right shadow-sm">
+            <div className="rounded-sm border bg-background px-3 py-3 text-right shadow-sm">
               <p className="text-[11px] font-medium uppercase tracking-wide text-muted-foreground">
                 Max Price
               </p>

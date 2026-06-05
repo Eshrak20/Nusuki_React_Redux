@@ -67,7 +67,7 @@ const FlightBookings = () => {
       ) : null}
 
       {pagination ? (
-        <div className="flex flex-col gap-3 rounded-2xl border bg-card p-4 shadow-sm dark:bg-card/80 sm:flex-row sm:items-center sm:justify-between">
+        <div className="flex flex-col gap-3 rounded-sm border bg-card p-4 shadow-sm dark:bg-card/80 sm:flex-row sm:items-center sm:justify-between">
           <p className="text-sm leading-6 text-muted-foreground">
             Showing page{" "}
             <span className="font-bold text-foreground">
@@ -106,7 +106,7 @@ const FlightBookings = () => {
       ) : null}
 
       {isError ? (
-        <div className="rounded-2xl border border-destructive/20 bg-destructive/10 p-6 text-center">
+        <div className="rounded-sm border border-destructive/20 bg-destructive/10 p-6 text-center">
           <h3 className="text-lg font-bold text-destructive">
             Failed to load booking history
           </h3>

@@ -125,7 +125,7 @@ const InfoBox = ({
   value: string | number;
 }) => {
   return (
-    <div className="rounded-2xl border border-border bg-muted/40 p-4 transition-colors hover:bg-muted/60">
+    <div className="rounded-sm border border-border bg-muted/40 p-4 transition-colors hover:bg-muted/60">
       <p className="text-xs font-medium text-muted-foreground">{label}</p>
       <p className="mt-1 break-words text-sm font-bold text-foreground">
         {value}

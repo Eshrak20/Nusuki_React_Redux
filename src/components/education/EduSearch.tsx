@@ -63,7 +63,7 @@ const EduSearch = ({ placeholder }: EduSearchProps) => {
                 {/* Search Input Container */}
                 <div
                     className={`relative flex items-center bg-white dark:bg-gray-900
-          rounded-2xl border-2 transition-all duration-300 shadow-lg
+          rounded-sm border-2 transition-all duration-300 shadow-lg
           ${isFocused
                             ? "border-gray-200 dark:border-gray-700 shadow-2xl shadow-primary/30"
                             : "border-gray-200 dark:border-gray-700"}

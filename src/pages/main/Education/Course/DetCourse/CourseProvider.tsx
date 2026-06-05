@@ -58,11 +58,11 @@ const CourseProvider = ({ provider }: CourseProviderProps) => {
             {/* Logo Section */}
             <div className="relative shrink-0">
               <div className="absolute -inset-2 bg-primary/5 rounded-full blur-xl" />
-              <div className="relative w-24 h-24 rounded-2xl bg-white shadow-sm ring-1 ring-border group-hover:ring-primary/20 transition-all duration-500 flex items-center justify-center">
+              <div className="relative w-24 h-24 rounded-sm bg-white shadow-sm ring-1 ring-border group-hover:ring-primary/20 transition-all duration-500 flex items-center justify-center">
                 <img
                   src={provider.logo}
                   alt={provider.name}
-                  className="w-full h-full rounded-2xl object-cover"
+                  className="w-full h-full rounded-sm object-cover"
                 />
               </div>
             </div>

@@ -23,7 +23,7 @@ const PaymentCardForm = ({
   onExpiryDateChange,
 }: Props) => {
   return (
-    <div className="space-y-4 rounded-2xl border bg-card p-4">
+    <div className="space-y-4 rounded-sm border bg-card p-4">
       <div>
         <h4 className="font-bold">Pay with bank card</h4>
         <p className="mt-1 text-sm text-muted-foreground">

@@ -25,7 +25,7 @@ return (
       className="rounded-3xl border border-border bg-card p-5 text-card-foreground shadow-sm md:p-6"
     >
       <div className="flex items-center gap-2">
-        <div className="flex size-9 items-center justify-center rounded-2xl bg-primary/10 text-primary">
+        <div className="flex size-9 items-center justify-center rounded-sm bg-primary/10 text-primary">
           <FileText className="size-4" />
         </div>
 
@@ -55,7 +55,7 @@ return (
                 delay: index * 0.05,
                 ease: "easeOut",
               }}
-              className="group rounded-2xl border border-border bg-muted/35 p-4 transition-colors open:bg-muted/50 hover:bg-muted/50"
+              className="group rounded-sm border border-border bg-muted/35 p-4 transition-colors open:bg-muted/50 hover:bg-muted/50"
             >
               <summary className="flex cursor-pointer list-none items-center justify-between gap-3 text-sm font-bold text-foreground">
                 <span>{formatTitle(item.type)}</span>

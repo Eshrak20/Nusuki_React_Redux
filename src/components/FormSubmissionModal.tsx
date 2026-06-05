@@ -145,7 +145,7 @@ const FormSubmissionModal = ({ open, onClose, title, type = "default" }: Props) 
 
                             {/* Education Specific Fields */}
                             {type === "education" && (
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4 rounded-2xl bg-muted/50 border border-border">
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4 rounded-sm bg-muted/50 border border-border">
                                     <Input {...form.register("city")} placeholder="Your City" />
                                     <Input {...form.register("destination")} placeholder="Preferred Destination" />
                                     <Input {...form.register("coaching" as any)} placeholder="Coaching? (Yes/No)" className="bg-background rounded-lg" />

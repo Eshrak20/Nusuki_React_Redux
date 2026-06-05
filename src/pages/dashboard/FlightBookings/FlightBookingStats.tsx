@@ -64,7 +64,7 @@ const FlightBookingStats = ({ bookings }: Props) => {
         return (
           <div
             key={stat.label}
-            className={`rounded-2xl border p-4 shadow-sm ${stat.className}`}
+            className={`rounded-sm border p-4 shadow-sm ${stat.className}`}
           >
             <div className="flex items-center justify-between gap-3">
               <div>
@@ -74,7 +74,7 @@ const FlightBookingStats = ({ bookings }: Props) => {
                 <p className="mt-2 text-3xl font-extrabold">{stat.value}</p>
               </div>
 
-              <div className="rounded-2xl bg-background/70 p-3">
+              <div className="rounded-sm bg-background/70 p-3">
                 <Icon className="h-5 w-5" />
               </div>
             </div>

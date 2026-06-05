@@ -12,7 +12,7 @@ const PaymentBookingSummary = ({ booking }: Props) => {
   const totalAmount = `${currency} ${Number(amount).toLocaleString()}`;
 
   return (
-    <div className="overflow-hidden rounded-2xl border bg-card shadow-sm">
+    <div className="overflow-hidden rounded-sm border bg-card shadow-sm">
       <div className="border-b bg-primary/5 p-4">
         <div className="flex items-center gap-2 text-sm font-bold text-primary">
           <ShieldCheck className="h-4 w-4" />

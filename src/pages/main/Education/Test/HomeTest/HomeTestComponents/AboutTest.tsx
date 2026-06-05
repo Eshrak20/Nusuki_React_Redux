@@ -23,7 +23,7 @@ const AboutTest = () => {
 
                     {/* Left Column: Image with Decorative Background */}
                     <div className="relative w-full lg:w-1/2 flex justify-center lg:justify-start">
-                        <div className="relative w-full max-w-md md:max-w-lg aspect-4/4 rounded-2xl overflow-hidden shadow-2xl border border-border bg-muted">
+                        <div className="relative w-full max-w-md md:max-w-lg aspect-4/4 rounded-sm overflow-hidden shadow-2xl border border-border bg-muted">
                             <img
                                 src={image}
                                 alt="Student studying"

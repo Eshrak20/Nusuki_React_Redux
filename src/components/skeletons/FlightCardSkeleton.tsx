@@ -38,7 +38,7 @@ export const FlightCardSkeleton = () => {
                 <div className="grid grid-cols-1 gap-6 xl:grid-cols-[180px_minmax(0,1fr)] xl:items-center">
                   {/* airline */}
                   <div className="flex items-center gap-3">
-                    <NiceSkeleton className="h-14 w-14 rounded-2xl" />
+                    <NiceSkeleton className="h-14 w-14 rounded-sm" />
 
                     <div className="min-w-0 space-y-2">
                       <NiceSkeleton className="h-5 w-28 rounded-md" />

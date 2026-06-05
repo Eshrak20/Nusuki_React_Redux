@@ -84,7 +84,7 @@ const CourseEntryRequirements = ({ sections }: CourseEntryRequirementsProps) => 
         </motion.div>
 
         {/* Note */}
-        <div className="bg-primary/10 border border-primary/20 rounded-2xl p-4 flex items-center gap-3">
+        <div className="bg-primary/10 border border-primary/20 rounded-sm p-4 flex items-center gap-3">
           <div className="w-2 h-2 rounded-full bg-primary animate-pulse" />
           <p className="text-xs font-medium text-primary">
             Meeting minimum requirements does not guarantee admission.

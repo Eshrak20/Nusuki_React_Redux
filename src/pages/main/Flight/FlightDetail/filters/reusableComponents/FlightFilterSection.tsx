@@ -28,7 +28,7 @@ const FlightFilterSection = ({
       collapsible
       defaultValue={defaultOpen ? value : undefined}
       className={cn(
-        "rounded-2xl border border-border bg-card shadow-sm",
+        "rounded-sm border border-border bg-card shadow-sm",
         className
       )}
     >

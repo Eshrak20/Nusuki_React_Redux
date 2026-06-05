@@ -26,11 +26,11 @@ const HajjUmDetBanner = ({ pack }: Props) => {
 
   return (
     <motion.section
-      className="relative w-full h-[50vh] md:h-screen overflow-hidden pointer-events-none bg-neutral-950"
+      className="relative z-0 w-full h-[50vh] md:h-screen overflow-hidden bg-neutral-950"
       style={{ opacity }}
     >
       {/* 1. Sophisticated Overlays */}
-      <div className="absolute inset-0 z-20 pointer-events-none">
+      <div className="absolute inset-0 z-10 pointer-events-none">
         {/* Deep vignettes for text readability */}
         <div className="absolute inset-0 bg-linear-to-b from-black/80 via-black/20 to-black/90"></div>
         <div className="absolute inset-0 bg-linear-to-r from-black/40 via-transparent to-black/40"></div>
@@ -51,10 +51,11 @@ const HajjUmDetBanner = ({ pack }: Props) => {
         <img
           src={pack.card_image}
           alt={pack.name}
-          className={`absolute inset-0 w-full h-full lg:object-cover transition-all duration-1000 ease-in-out ${loaded
+          className={`absolute inset-0 w-full h-full object-cover transition-all duration-1000 ease-in-out ${
+            loaded
               ? "opacity-100 blur-0 scale-100"
               : "opacity-0 blur-xl scale-110"
-            }`}
+          }`}
           onLoad={() => setLoaded(true)}
           style={{ objectPosition: "center 40%" }}
         />
@@ -74,7 +75,7 @@ const HajjUmDetBanner = ({ pack }: Props) => {
       />
 
       {/* 4. Content Container */}
-      <div className="relative z-30 h-full mt-6 lg:mt-0 flex flex-col justify-center items-center text-center px-6">
+      <div className="relative z-20 h-full mt-6 lg:mt-0 flex flex-col justify-center items-center text-center px-6">
         {/* Status Badge */}
         {pack.status && (
           <motion.div

@@ -58,7 +58,7 @@ const EduNavbarUI = ({
   return (
     <nav
       className={cn(
-        "relative z-50 border border-border/60 bg-background/80 px-4 pb-1 rounded-2xl shadow-xl shadow-black/5 backdrop-blur-xl transition-all duration-500",
+        "relative z-50 border border-border/60 bg-background/80 px-4 pb-1 rounded-sm shadow-xl shadow-black/5 backdrop-blur-xl transition-all duration-500",
         isSticky ? "border-x-0 border-t-0" : " lg:px-6",
       )}
     >
@@ -110,7 +110,7 @@ const EduNavbarUI = ({
 
                 {item.hasSubmenu && (
                   <div className="invisible absolute left-0 top-full w-170 translate-y-3 opacity-0 transition-all duration-300 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100">
-                    <div className="rounded-2xl border bg-background/95 p-5 shadow-2xl shadow-black/10 backdrop-blur-xl">
+                    <div className="rounded-sm border bg-background/95 p-5 shadow-2xl shadow-black/10 backdrop-blur-xl">
                       <div className="mb-4 flex items-center justify-between border-b pb-4">
                         <div>
                           <h3 className="text-base font-extrabold">
@@ -195,7 +195,7 @@ const EduNavbarUI = ({
             transition={{ duration: 0.25 }}
             className="overflow-hidden lg:hidden"
           >
-            <div className="mt-3 space-y-2 rounded-2xl border bg-card/95 p-3 shadow-2xl backdrop-blur-xl">
+            <div className="mt-3 space-y-2 rounded-sm border bg-card/95 p-3 shadow-2xl backdrop-blur-xl">
               {navItems.map((item) => {
                 const Icon = item.icon;
                 const active = activeTab === item.name;

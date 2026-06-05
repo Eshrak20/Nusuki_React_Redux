@@ -6,7 +6,7 @@ const CountryVisaCardSkeleton = () => {
             {[...Array(8)].map((_, index) => (
                 <div
                     key={index}
-                    className="bg-card rounded-2xl shadow-sm border overflow-hidden flex flex-col h-full"
+                    className="bg-card rounded-sm shadow-sm border overflow-hidden flex flex-col h-full"
                 >
                     {/* Top Section / Header Skeleton */}
                     <div className="relative h-30 bg-muted/40 flex flex-col items-center justify-center pt-1">

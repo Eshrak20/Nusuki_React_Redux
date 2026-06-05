@@ -69,7 +69,7 @@ const LayoverDurationFilter = ({
 
   if (isLoading) {
     return (
-      <div className="rounded-2xl border border-border bg-card p-4">
+      <div className="rounded-sm border border-border bg-card p-4">
         <p className="text-sm text-muted-foreground">
           Loading layover duration...
         </p>
@@ -154,7 +154,7 @@ const LayoverDurationFilter = ({
   return (
     <FlightFilterSection value="layover-duration" title="Layover Duration">
       <div className="px-1">
-        <div className="rounded-2xl border border-border/60 bg-muted/20 p-4 sm:p-5">
+        <div className="rounded-sm border border-border/60 bg-muted/20 p-4 sm:p-5">
           <div className="px-1">
             <Slider
               min={data.min_minutes}
@@ -168,7 +168,7 @@ const LayoverDurationFilter = ({
           </div>
 
           <div className="mt-5 grid grid-cols-2 gap-3">
-            <div className="rounded-2xl border bg-background px-3 py-3 shadow-sm">
+            <div className="rounded-sm border bg-background px-3 py-3 shadow-sm">
               <p className="text-[11px] font-medium uppercase tracking-wide text-muted-foreground">
                 Min Layover
               </p>
@@ -201,7 +201,7 @@ const LayoverDurationFilter = ({
               )}
             </div>
 
-            <div className="rounded-2xl border bg-background px-3 py-3 text-right shadow-sm">
+            <div className="rounded-sm border bg-background px-3 py-3 text-right shadow-sm">
               <p className="text-[11px] font-medium uppercase tracking-wide text-muted-foreground">
                 Max Layover
               </p>

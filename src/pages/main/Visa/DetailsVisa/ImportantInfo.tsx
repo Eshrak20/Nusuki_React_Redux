@@ -14,7 +14,7 @@ const ImportantInfo = ({ details }: ImportantInfoProps) => {
 
     return (
         <div className="mx-auto max-w-7xl pt-1 lg:pt-0 lg:p-4">
-            <div className="flex items-start gap-5 rounded-2xl border border-primary/20 bg-primary/10 p-5 shadow-sm">
+            <div className="flex items-start gap-5 rounded-sm border border-primary/20 bg-primary/10 p-5 shadow-sm">
 
                 {/* Icon */}
                 <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-primary text-primary-foreground">

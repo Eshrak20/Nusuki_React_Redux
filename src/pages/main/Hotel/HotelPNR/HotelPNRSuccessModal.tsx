@@ -48,7 +48,7 @@ const HotelPNRSuccessModal = ({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 px-4 backdrop-blur-sm">
-      <div className="relative w-full max-w-xl rounded-2xl border bg-background p-5 text-foreground shadow-xl sm:p-6">
+      <div className="relative w-full max-w-xl rounded-sm border bg-background p-5 text-foreground shadow-xl sm:p-6">
         <button
           type="button"
           onClick={onClose}
@@ -74,7 +74,7 @@ const HotelPNRSuccessModal = ({
           </div>
         </div>
 
-        <div className="mt-5 rounded-2xl border bg-muted/30 p-4">
+        <div className="mt-5 rounded-sm border bg-muted/30 p-4">
           <div className="flex items-start gap-3">
             <div className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-background text-primary">
               <Hotel size={20} />
@@ -97,7 +97,7 @@ const HotelPNRSuccessModal = ({
           </div>
         </div>
 
-        <div className="mt-4 rounded-2xl border bg-card p-4">
+        <div className="mt-4 rounded-sm border bg-card p-4">
           <div className="mb-3 flex items-center gap-2">
             <ReceiptText size={18} className="text-primary" />
             <h3 className="text-sm font-semibold">Booking Overview</h3>

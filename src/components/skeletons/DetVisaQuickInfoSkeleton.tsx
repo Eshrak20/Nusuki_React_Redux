@@ -9,7 +9,7 @@ const DetVisaQuickInfoSkeleton = () => {
                     {[...Array(4)].map((_, index) => (
                         <div
                             key={index}
-                            className="flex flex-col items-center justify-center rounded-2xl bg-card border border-border p-6 shadow-sm"
+                            className="flex flex-col items-center justify-center rounded-sm bg-card border border-border p-6 shadow-sm"
                         >
                             {/* Icon Circle Skeleton */}
                             <Skeleton className="mb-4 h-14 w-14 rounded-full" />

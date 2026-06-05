@@ -55,7 +55,7 @@ const HomeTestCard = ({ tests }: HomeTestCardProps) => {
                         scale: 1.02,
                         transition: { duration: 0.3 }
                     }}
-                    className="group bg-card text-card-foreground rounded-2xl p-8 flex flex-col items-center justify-between border border-border shadow-sm hover:shadow-md dark:shadow-none dark:hover:shadow-[0_10px_30px_-10px_rgba(var(--primary),0.2)] transition-all duration-300 relative overflow-hidden"
+                    className="group bg-card text-card-foreground rounded-sm p-8 flex flex-col items-center justify-between border border-border shadow-sm hover:shadow-md dark:shadow-none dark:hover:shadow-[0_10px_30px_-10px_rgba(var(--primary),0.2)] transition-all duration-300 relative overflow-hidden"
                 >
                     <div className="flex flex-col items-center w-full relative z-10">
                         <div className="h-16 flex items-center justify-center mb-3 lg:mb-6">

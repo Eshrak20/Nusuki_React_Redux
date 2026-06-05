@@ -8,7 +8,7 @@ interface AssistanceInfoProps {
 const OfficeHours = ({ assistanceInfo }: AssistanceInfoProps) => {
     
     return (
-        <div className="mb-5 rounded-2xl border border-border bg-card p-6 text-card-foreground shadow-sm">
+        <div className="mb-5 rounded-sm border border-border bg-card p-6 text-card-foreground shadow-sm">
             {/* Header */}
             <div className="mb-6 flex items-center gap-3">
                 <FaClock className="h-6 w-6 text-primary" />

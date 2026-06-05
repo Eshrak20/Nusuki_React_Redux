@@ -21,7 +21,7 @@ const HotelStaySummary = ({stay}: HotelStayProps) => {
       className="rounded-3xl border border-border bg-card p-5 text-card-foreground shadow-sm md:p-6"
     >
       <div className="flex items-start gap-3">
-        <div className="flex size-10 shrink-0 items-center justify-center rounded-2xl bg-primary/10 text-primary">
+        <div className="flex size-10 shrink-0 items-center justify-center rounded-sm bg-primary/10 text-primary">
           <CalendarCheck2 className="size-5" />
         </div>
 
@@ -70,7 +70,7 @@ const SummaryCard = ({
   value: string;
 }) => {
   return (
-    <div className="group flex items-center gap-3 rounded-2xl border border-border bg-muted/35 p-4 transition-colors hover:bg-muted/55">
+    <div className="group flex items-center gap-3 rounded-sm border border-border bg-muted/35 p-4 transition-colors hover:bg-muted/55">
       <div className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary transition-colors group-hover:bg-primary/15">
         {icon}
       </div>

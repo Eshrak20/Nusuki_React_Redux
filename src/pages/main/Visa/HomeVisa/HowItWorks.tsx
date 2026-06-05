@@ -88,7 +88,7 @@ const HowItWorks = () => {
                             >
                                 {/* Number Box */}
                                 <div
-                                    className={`z-10 flex h-18 w-18 lg:h-20 lg:w-20 items-center justify-center rounded-2xl shadow-lg transition-transform hover:-translate-y-1 bg-primary`}
+                                    className={`z-10 flex h-18 w-18 lg:h-20 lg:w-20 items-center justify-center rounded-sm shadow-lg transition-transform hover:-translate-y-1 bg-primary`}
                                 >
                                     <span className="text-3xl font-bold text-muted">
                                         {step.id}

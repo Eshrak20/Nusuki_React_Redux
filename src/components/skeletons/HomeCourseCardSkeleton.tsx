@@ -7,7 +7,7 @@ const HomeCourseCardSkeleton = () => {
             {skeletonItems.map((_, index) => (
                 <div
                     key={index}
-                    className="bg-card dark:bg-card-dark rounded-2xl border border-muted dark:border-muted-dark flex flex-col relative shadow-sm overflow-hidden animate-pulse"
+                    className="bg-card dark:bg-card-dark rounded-sm border border-muted dark:border-muted-dark flex flex-col relative shadow-sm overflow-hidden animate-pulse"
                 >
                     <div className="p-5 flex flex-col grow">
                         {/* Titles Skeleton */}
@@ -39,7 +39,7 @@ const HomeCourseCardSkeleton = () => {
                             </div>
 
                             {/* Logo Box */}
-                            <div className="w-16 h-16 shrink-0 bg-muted dark:bg-muted-dark rounded-2xl" />
+                            <div className="w-16 h-16 shrink-0 bg-muted dark:bg-muted-dark rounded-sm" />
                         </div>
 
                         {/* Action Buttons Skeleton */}

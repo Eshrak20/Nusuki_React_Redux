@@ -55,7 +55,7 @@ const CountryVisaCard = ({ visas }: CountryVisaCardProps) => {
                 <motion.div
                     key={visa.id}
                     variants={cardVariants}
-                    className="bg-card text-card-foreground rounded-2xl lg:shadow-lg border overflow-hidden flex flex-col transition-all duration-300 ease-out hover:shadow-2xl hover:-translate-y-2 hover:scale-[1.02] group/card"
+                    className="bg-card text-card-foreground rounded-sm lg:shadow-lg border overflow-hidden flex flex-col transition-all duration-300 ease-out hover:shadow-2xl hover:-translate-y-2 hover:scale-[1.02] group/card"
                 >
                     {/* Top Section / Header */}
                     <div className="relative h-32 flex flex-col items-center justify-center overflow-hidden">

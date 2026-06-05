@@ -21,7 +21,7 @@ const HotelBookingPagination = ({
   const endItem = Math.min(current_page * per_page, total);
 
   return (
-    <div className="flex flex-col gap-3 rounded-2xl border bg-card p-4 text-card-foreground shadow-sm sm:flex-row sm:items-center sm:justify-between">
+    <div className="flex flex-col gap-3 rounded-sm border bg-card p-4 text-card-foreground shadow-sm sm:flex-row sm:items-center sm:justify-between">
       <p className="text-sm text-muted-foreground">
         Showing{" "}
         <span className="font-semibold text-foreground">{startItem}</span> to{" "}

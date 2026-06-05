@@ -37,7 +37,7 @@ const FlightFilter = ({
       )}
     >
       {!isDrawer && (
-        <div className="mb-3 flex items-center justify-between rounded-2xl border border-border bg-background px-4 py-3 shadow-sm">
+        <div className="mb-3 flex items-center justify-between rounded-sm border border-border bg-background px-4 py-3 shadow-sm">
           <div className="flex items-center gap-2">
             <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-primary/10 text-primary">
               <SlidersHorizontal className="h-4 w-4" />

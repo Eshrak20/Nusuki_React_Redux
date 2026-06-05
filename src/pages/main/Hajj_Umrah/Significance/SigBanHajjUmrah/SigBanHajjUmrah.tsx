@@ -5,7 +5,7 @@ const SigBanHajjUmrah = ({ title, description }: SignificanceAbout) => {
   const paragraphs = doubleLineBreaker(description);
 
   return (
-    <section className="relative overflow-hidden lg:rounded-2xl">
+    <section className="relative overflow-hidden lg:rounded-sm">
       <div className="relative z-10 max-w-3xl">
         <h1 className="text-xl md:text-4xl font-extrabold tracking-tight text-foreground mb-6 lg:mb-12 ">
           <span className="text-hajj -mt-10">{title}</span>

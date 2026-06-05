@@ -31,7 +31,7 @@ const ActionCard = ({ details }: VisaActionCardProps) => {
   const whatsappNumber = "+8801715248942";
 
   return (
-    <div className="mb-5 mt-5 rounded-2xl border border-border bg-card p-6 text-card-foreground shadow-sm md:p-8">
+    <div className="mb-5 mt-5 rounded-sm border border-border bg-card p-6 text-card-foreground shadow-sm md:p-8">
       {/* Pricing Header */}
       <div className="mb-6 text-center">
         <p className="mb-1 text-sm font-medium text-muted-foreground">

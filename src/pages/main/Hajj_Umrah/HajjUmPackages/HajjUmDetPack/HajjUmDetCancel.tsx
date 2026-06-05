@@ -143,7 +143,7 @@ const ContactCard = ({
   responseTime,
   buttonText,
 }: ContactCardProps) => (
-  <div className="p-6 border rounded-2xl bg-card hover:shadow-md transition-shadow flex flex-col justify-between space-y-4">
+  <div className="p-6 border rounded-sm bg-card hover:shadow-md transition-shadow flex flex-col justify-between space-y-4">
     <div className="space-y-3">
       <div className="w-10 h-10 rounded-full bg-hajj/10 flex items-center justify-center">
         {icon}

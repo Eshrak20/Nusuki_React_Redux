@@ -14,7 +14,7 @@ const DetTestOtherDetails = ({ details }: DetailsProps) => {
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
                 {/* Table Container */}
-                <div className="overflow-hidden rounded-2xl border border-primary/20 shadow-lg mb-10">
+                <div className="overflow-hidden rounded-sm border border-primary/20 shadow-lg mb-10">
                     {/* Header Row */}
                     <div className="bg-primary px-6 py-4">
                         <span className="text-primary-foreground font-bold uppercase tracking-wider text-sm">

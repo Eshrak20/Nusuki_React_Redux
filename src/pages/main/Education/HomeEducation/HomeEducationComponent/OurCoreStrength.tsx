@@ -22,7 +22,7 @@ const OurCoreStrength = () => {
             <div
               key={index}
               // Changed bg-white to bg-card, border-slate-100 to border-border
-              className="group p-8 bg-card rounded-2xl border border-border shadow-sm hover:shadow-2xl hover:-translate-y-2 transition-all duration-500"
+              className="group p-8 bg-card rounded-sm border border-border shadow-sm hover:shadow-2xl hover:-translate-y-2 transition-all duration-500"
             >
               <div className="flex flex-col items-center text-center">
                 {/* Number/Stat - Uses text-primary (auto-swaps in dark mode) */}
@@ -60,7 +60,7 @@ const OurCoreStrength = () => {
           {/* Container - Changed bg-white to bg-card */}
           <div className="relative group rounded-3xl overflow-hidden bg-card p-2 border border-border shadow-md">
             <img
-              className="w-full h-auto object-cover rounded-2xl transition-transform duration-700 group-hover:scale-[1.02]"
+              className="w-full h-auto object-cover rounded-sm transition-transform duration-700 group-hover:scale-[1.02]"
               src={image}
               alt="Study Abroad Process Roadmap"
             />

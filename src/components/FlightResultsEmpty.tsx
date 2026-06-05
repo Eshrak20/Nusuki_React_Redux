@@ -46,7 +46,7 @@ const FlightResultsEmpty = () => {
         <div className="mt-6 flex w-full max-w-md flex-col gap-3 sm:flex-row">
           <Link
             to="/"
-            className="group flex h-12 flex-1 items-center justify-center rounded-2xl bg-primary px-4 text-base font-semibold text-white shadow-lg transition-all duration-200 hover:scale-[1.02] dark:text-black"
+            className="group flex h-12 flex-1 items-center justify-center rounded-sm bg-primary px-4 text-base font-semibold text-white shadow-lg transition-all duration-200 hover:scale-[1.02] dark:text-black"
           >
             <Search className="mr-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
             Search Again
@@ -55,7 +55,7 @@ const FlightResultsEmpty = () => {
           <button
             type="button"
             onClick={handleClearFilters}
-            className="group flex h-12 flex-1 items-center justify-center rounded-2xl border border-slate-300 bg-white px-4 text-base font-semibold text-slate-700 shadow-sm transition-all duration-200 hover:scale-[1.02] hover:border-primary hover:text-primary dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200 dark:hover:border-sky-500 dark:hover:text-sky-400"
+            className="group flex h-12 flex-1 items-center justify-center rounded-sm border border-slate-300 bg-white px-4 text-base font-semibold text-slate-700 shadow-sm transition-all duration-200 hover:scale-[1.02] hover:border-primary hover:text-primary dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200 dark:hover:border-sky-500 dark:hover:text-sky-400"
           >
             <RotateCcw className="mr-2 h-4 w-4 transition-transform duration-300 group-hover:-rotate-90" />
             Clear Filters

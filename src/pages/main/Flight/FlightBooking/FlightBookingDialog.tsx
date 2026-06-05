@@ -78,16 +78,16 @@ const FlightBookingDialog = ({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="h-[94vh] w-[98vw]! max-w-375! overflow-y-auto border-none p-0 shadow-2xl dark:bg-[#0b1220] sm:rounded-xl xl:overflow-hidden">
+      <DialogContent className="h-[88vh] w-[98vw]! max-w-375! mt-10 overflow-y-auto border-none p-0 shadow-2xl dark:bg-[#0b1220] sm:rounded-xl">
         <DialogTitle className="sr-only">Flight booking details</DialogTitle>
 
-        <button
-          type="button"
-          onClick={() => onOpenChange(false)}
-          className="absolute right-4 top-4 z-20 rounded-md border border-black/15 bg-white/90 p-1 text-[#666] transition hover:bg-white dark:border-white/10 dark:bg-[#111827] dark:text-white/70 dark:hover:bg-[#1a2335]"
-        >
-          <X className="h-5 w-5" />
-        </button>
+       <button
+  type="button"
+  onClick={() => onOpenChange(false)}
+  className="absolute right-4 top-4 z-30 rounded-md border border-black/15 bg-white/90 p-1 text-[#666] transition hover:bg-white dark:border-white/10 dark:bg-[#111827] dark:text-white/70 dark:hover:bg-[#1a2335]"
+>
+  <X className="h-5 w-5" />
+</button>
 
         {isFetching ? (
           <FlightDetailState variant="loading" />
@@ -98,10 +98,10 @@ const FlightBookingDialog = ({
             message="Please try again."
           />
         ) : (
-          <div className="flex h-full flex-col">
-            <div className="flex-1 px-4 py-6 md:px-8 xl:overflow-y-auto xl:px-10">
+     <div className="flex min-h-full flex-col">
+  <div className="flex-1 px-4 py-6 md:px-8 xl:px-10">
               <div className="mx-auto w-full max-w-7xl">
-                <div className="mb-6">
+                <div className="mb-6 pt-4">
                   <h2 className="mx-8 text-center text-[18px] font-extrabold uppercase tracking-tight text-[#17306f] dark:text-[#8fb4ff] md:text-[34px] lg:mx-5 lg:text-[28px]">
                     {title}
                   </h2>
@@ -120,7 +120,7 @@ const FlightBookingDialog = ({
                     <BookingPriceSidebar flight={flight} />
                   </div>
 
-                  <div className="order-2 min-h-0 space-y-5 pb-4 lg:pb-28 xl:order-1 xl:max-h-[70vh] xl:overflow-y-auto xl:pb-0 xl:pr-2">
+                  <div className="order-2 min-h-0 space-y-5 pb-4 xl:order-1">
                     <BookingJourneyTimeline flight={flight} />
 
                     <BookingFlightDetailsAccordion
@@ -133,7 +133,7 @@ const FlightBookingDialog = ({
               </div>
             </div>
 
-            <div className="border-t border-black/5 bg-[#eef1f5] px-6 py-4 dark:border-white/10 dark:bg-[#0b1220]">
+            <div className="mt-auto border-t border-black/5 bg-[#eef1f5] px-6 py-4 dark:border-white/10 dark:bg-[#0b1220]">
               <div className="mx-auto flex max-w-7xl justify-center">
                 <Button
                   onClick={handleContinue}

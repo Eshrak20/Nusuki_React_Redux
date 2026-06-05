@@ -57,7 +57,7 @@ const HotelBookings = () => {
       {isLoading ? (
         <HotelBookingSkeleton />
       ) : isError ? (
-        <div className="rounded-2xl border border-destructive/20 bg-destructive/10 p-5 text-destructive">
+        <div className="rounded-sm border border-destructive/20 bg-destructive/10 p-5 text-destructive">
           <h3 className="font-semibold">Failed to load hotel bookings</h3>
 
           <p className="mt-1 text-sm">

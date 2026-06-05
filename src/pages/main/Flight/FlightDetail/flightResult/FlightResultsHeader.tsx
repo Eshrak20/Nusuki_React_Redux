@@ -82,7 +82,7 @@ const FlightResultsHeader = ({
 
   if (isError) {
     return (
-      <Card className="rounded-2xl border bg-card shadow-sm">
+      <Card className="rounded-sm border bg-card shadow-sm">
         <CardContent className="p-4 text-sm text-destructive">
           Failed to load flights.
         </CardContent>
@@ -129,7 +129,7 @@ const FlightResultsHeader = ({
             <Button
               variant="outline"
               size="sm"
-              className="h-11 w-full justify-center rounded-2xl bg-background px-3 text-sm font-medium shadow-sm"
+              className="h-11 w-full justify-center rounded-sm bg-background px-3 text-sm font-medium shadow-sm"
             >
               <SlidersHorizontal className="mr-2 h-4 w-4" />
               <h1 className="text-[12px]">Flight Options</h1>

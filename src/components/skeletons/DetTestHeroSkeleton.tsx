@@ -32,7 +32,7 @@ const DetTestHeroSkeleton = () => {
                 {/* Right Column: Image Placeholder Skeleton */}
                 <div className="w-full lg:w-[45%]">
                     {/* Matching the 4/3 aspect ratio of your actual hero */}
-                    <Skeleton className="w-full aspect-4/3 rounded-2xl" />
+                    <Skeleton className="w-full aspect-4/3 rounded-sm" />
                 </div>
 
             </div>

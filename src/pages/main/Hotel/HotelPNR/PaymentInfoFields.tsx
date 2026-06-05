@@ -16,7 +16,7 @@ const PaymentInfoFields = ({
   updatePaymentType,
 }: PaymentInfoFieldsProps) => {
   return (
-    <div className="rounded-2xl border bg-card p-5 text-card-foreground shadow-sm sm:p-6">
+    <div className="rounded-sm border bg-card p-5 text-card-foreground shadow-sm sm:p-6">
       <h2 className="text-lg font-semibold">Payment Information</h2>
 
       <div className="mt-4 grid gap-4 md:grid-cols-2">

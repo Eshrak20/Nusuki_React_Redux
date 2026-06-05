@@ -20,7 +20,7 @@ const DesktopNavbar = () => {
 
   return (
     <NavigationMenu viewport={false} className="hidden md:flex">
-      <NavigationMenuList className="relative gap-1.5 rounded-2xl border border-border/60 bg-background/50 p-1.5 shadow-sm backdrop-blur transition-all duration-300 hover:shadow-md">
+      <NavigationMenuList className="relative gap-1.5 rounded-sm border border-border/60 bg-background/50 p-1.5 shadow-sm backdrop-blur transition-all duration-300 hover:shadow-md">
         {navigationLinks.map((link) => {
           const isActive = location.pathname.startsWith(link.href);
 
@@ -35,7 +35,7 @@ const DesktopNavbar = () => {
                       initial={{ opacity: 0, y: 12, scale: 0.96 }}
                       animate={{ opacity: 1, y: 0, scale: 1 }}
                       transition={{ duration: 0.25 }}
-                      className="mt-2 w-64 space-y-1 rounded-2xl border border-border/70 bg-popover p-2 shadow-2xl shadow-black/10 backdrop-blur-xl"
+                      className="mt-2 w-64 space-y-1 rounded-sm border border-border/70 bg-popover p-2 shadow-2xl shadow-black/10 backdrop-blur-xl"
                     >
                       {link.subLinks.map((sub, index) => (
                         <motion.li

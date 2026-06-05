@@ -13,7 +13,7 @@ const DetTestAbout = ({ about }: TestAboutProps) => {
 
                     {/* Left Column: Image with Decorative Background */}
                     <div className="relative w-full lg:w-1/2 flex justify-center lg:justify-start">
-                        <div className="relative w-full max-w-md lg:max-w-lg aspect-4/3 rounded-2xl overflow-hidden shadow-xl border border-border bg-card">
+                        <div className="relative w-full max-w-md lg:max-w-lg aspect-4/3 rounded-sm overflow-hidden shadow-xl border border-border bg-card">
                             <img
                                 src={about.image}
                                 alt={about.image_alt || about.title}

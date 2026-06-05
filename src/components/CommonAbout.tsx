@@ -96,7 +96,7 @@ const CommonAbout = ({ title, img }: { title: string; img: string }) => {
               </Card>
 
               {/* Floating Badge - Positioned to stay within bounds */}
-              <div className="absolute -left-6 bottom-12 hidden rounded-2xl bg-white p-4 shadow-2xl ring-1 ring-black/5 md:block dark:bg-slate-900">
+              <div className="absolute -left-6 bottom-12 hidden rounded-sm bg-white p-4 shadow-2xl ring-1 ring-black/5 md:block dark:bg-slate-900">
                 <div className="flex flex-col items-center gap-1">
                   <span className="text-3xl font-black tracking-tight text-hajj">
                     100%

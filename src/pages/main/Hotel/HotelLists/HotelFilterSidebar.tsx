@@ -45,7 +45,7 @@ const HotelFilterSidebar = ({ filters, onChange }: Props) => {
       : undefined;
 
   return (
-    <aside className="h-fit space-y-5 rounded-2xl border border-border bg-background p-4 shadow-sm">
+    <aside className="h-fit space-y-5 rounded-sm border border-border bg-background p-4 shadow-sm">
 
       {/* Sidebar Header */}
       <div className="flex items-center justify-between">

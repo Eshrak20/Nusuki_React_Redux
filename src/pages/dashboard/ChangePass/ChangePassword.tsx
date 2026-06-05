@@ -2,7 +2,6 @@ import { useState } from "react";
 import { toast } from "sonner";
 import { ShieldCheck } from "lucide-react";
 
-
 import {
   initialChangePasswordForm,
   type ChangePasswordFormValues,
@@ -13,15 +12,12 @@ import ChangePasswordForm from "./ChangePasswordForm";
 
 const ChangePassword = () => {
   const [form, setForm] = useState<ChangePasswordFormValues>(
-    initialChangePasswordForm
+    initialChangePasswordForm,
   );
 
   const [changePassword, { isLoading }] = useChangePasswordMutation();
 
-  const handleChange = (
-    key: keyof ChangePasswordFormValues,
-    value: string
-  ) => {
+  const handleChange = (key: keyof ChangePasswordFormValues, value: string) => {
     setForm((prev) => ({
       ...prev,
       [key]: value,
@@ -66,7 +62,7 @@ const ChangePassword = () => {
 
       toast.success(response?.message || "Password changed successfully");
       resetForm();
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       const message =
         error?.data?.message ||
@@ -78,7 +74,7 @@ const ChangePassword = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background py-6 text-foreground">
+    <div className="bg-gray-200 dark:bg-background py-6 text-foreground">
       <div className="w-full space-y-6">
         <DashboardPageHeader
           title="Change Password"
@@ -88,15 +84,13 @@ const ChangePassword = () => {
           badgeText="Use a strong password"
         />
 
-        <div className="">
-          <ChangePasswordForm
-            form={form}
-            isLoading={isLoading}
-            onChange={handleChange}
-            onReset={resetForm}
-            onSubmit={handleSubmit}
-          />
-        </div>
+        <ChangePasswordForm
+          form={form}
+          isLoading={isLoading}
+          onChange={handleChange}
+          onReset={resetForm}
+          onSubmit={handleSubmit}
+        />
       </div>
     </div>
   );

@@ -84,7 +84,7 @@ const SummaryItem = ({
   value: string;
 }) => {
   return (
-    <div className="flex h-full items-center gap-3 rounded-2xl bg-muted/40 px-4 py-3 dark:bg-muted/20">
+    <div className="flex h-full items-center gap-3 rounded-sm bg-muted/40 px-4 py-3 dark:bg-muted/20">
       <div className="grid size-9 shrink-0 place-items-center rounded-full bg-primary/10 text-primary dark:bg-primary/20">
         {icon}
       </div>

@@ -22,7 +22,7 @@ const HotelContactCard = ({ hotel }: HotelContactCardProps) => {
       className="sticky top-20 rounded-3xl border border-border bg-card p-5 text-card-foreground shadow-sm md:p-6"
     >
       <div className="flex items-center gap-3">
-        <div className="flex size-10 shrink-0 items-center justify-center rounded-2xl bg-primary/10 text-primary">
+        <div className="flex size-10 shrink-0 items-center justify-center rounded-sm bg-primary/10 text-primary">
           <Building2 className="size-5" />
         </div>
 
@@ -57,7 +57,7 @@ const HotelContactCard = ({ hotel }: HotelContactCardProps) => {
         />
       </div>
 
-      <div className="mt-5 rounded-2xl border border-border bg-muted/40 p-4">
+      <div className="mt-5 rounded-sm border border-border bg-muted/40 p-4">
         <div className="flex items-center gap-2">
           <Clock3 className="size-4 text-primary" />
 
@@ -92,7 +92,7 @@ type InfoRowProps = {
 
 const InfoRow = ({ icon, label, value }: InfoRowProps) => {
   return (
-    <div className="group flex gap-3 rounded-2xl border border-border bg-muted/35 p-3 transition-colors hover:bg-muted/60">
+    <div className="group flex gap-3 rounded-sm border border-border bg-muted/35 p-3 transition-colors hover:bg-muted/60">
       <div className="mt-0.5 flex size-8 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary transition-colors group-hover:bg-primary/15">
         {icon}
       </div>
@@ -115,7 +115,7 @@ type TimeBoxProps = {
 
 const TimeBox = ({ label, value }: TimeBoxProps) => {
   return (
-    <div className="rounded-2xl border border-border bg-background/70 p-3 transition-colors hover:bg-background">
+    <div className="rounded-sm border border-border bg-background/70 p-3 transition-colors hover:bg-background">
       <p className="text-xs font-medium text-muted-foreground">{label}</p>
 
       <p className="mt-1 text-sm font-bold text-foreground">{value}</p>

@@ -14,7 +14,7 @@ const ProductGallery = ({ images, thumbnail, variant }: Props) => {
   return (
     <div className="space-y-4">
       {/* Main Image Display with smooth layout transitions */}
-      <div className="overflow-hidden rounded-2xl border border-border bg-muted/30 aspect-square relative">
+      <div className="overflow-hidden rounded-sm border border-border bg-muted/30 aspect-square relative">
         <AnimatePresence mode="wait">
           <motion.img
             key={selectedThumb}

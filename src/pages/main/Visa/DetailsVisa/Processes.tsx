@@ -11,7 +11,7 @@ const Processes = ({ details }: ProcessesProps) => {
 
     return (
         <div className="mx-auto max-w-7xl pt-6 lg:pt-0 lg:p-4">
-            <div className="rounded-2xl border border-border bg-card p-6 shadow-sm md:p-8 text-card-foreground">
+            <div className="rounded-sm border border-border bg-card p-6 shadow-sm md:p-8 text-card-foreground">
 
                 {/* Header Section */}
                 <div className="mb-8 flex items-center gap-4">

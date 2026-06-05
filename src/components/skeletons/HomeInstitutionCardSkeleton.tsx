@@ -4,7 +4,7 @@ const HomeInstitutionCardSkeleton = () => {
       {Array.from({ length: 8 }).map((_, index) => (
         <div
           key={index}
-          className="bg-card rounded-2xl border border-border shadow-sm p-6 flex flex-col h-full animate-pulse"
+          className="bg-card rounded-sm border border-border shadow-sm p-6 flex flex-col h-full animate-pulse"
         >
           {/* Logo Container */}
           <div className="h-24 w-full flex items-center justify-center mb-4">

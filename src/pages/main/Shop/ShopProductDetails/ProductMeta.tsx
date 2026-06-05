@@ -8,7 +8,7 @@ interface Props {
 
 const ProductMeta = ({ product }: Props) => {
   return (
-    <div className="p-5 rounded-2xl border border-gray-100 dark:border-gray-800 bg-white/50 dark:bg-gray-900/50 backdrop-blur-md transition-all hover:shadow-sm">
+    <div className="p-5 rounded-sm border border-gray-100 dark:border-gray-800 bg-white/50 dark:bg-gray-900/50 backdrop-blur-md transition-all hover:shadow-sm">
       <h3 className="text-sm font-bold mb-4 flex items-center gap-2 text-gray-900 dark:text-white">
         <Info size={16} className="text-primary dark:text-primary" />
         Information

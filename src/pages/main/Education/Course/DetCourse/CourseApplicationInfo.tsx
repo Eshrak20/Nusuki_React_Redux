@@ -94,7 +94,7 @@ const CourseApplicationInfo = ({ sections }: CourseApplicationInfoProps) => {
         </motion.div>
 
         {/* Bottom Tip */}
-        <div className="bg-primary/5 dark:bg-primary/10 border border-primary/10 rounded-2xl p-4">
+        <div className="bg-primary/5 dark:bg-primary/10 border border-primary/10 rounded-sm p-4">
             <p className="text-xs text-center font-medium text-primary/80">
                 Ensure all documents are translated to English before submission.
             </p>

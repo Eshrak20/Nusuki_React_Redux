@@ -42,7 +42,7 @@ const QuickInfo = ({ details }: QuickInfoProps) => {
                     {infoCards.map((card, index) => (
                         <div
                             key={index}
-                            className="flex flex-col items-center justify-center rounded-2xl bg-card border border-border p-6 shadow-sm transition-transform hover:scale-[1.02]"
+                            className="flex flex-col items-center justify-center rounded-sm bg-card border border-border p-6 shadow-sm transition-transform hover:scale-[1.02]"
                         >
                             {/* Icon Circle */}
                             <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-primary">

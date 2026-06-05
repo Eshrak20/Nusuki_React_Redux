@@ -165,7 +165,7 @@ const PnrTravelerForm = ({
 
   return (
     <div className="space-y-5">
-      <Card className="overflow-hidden rounded-2xl border-slate-200/80 bg-white/80 shadow-sm backdrop-blur dark:border-white/10 dark:bg-slate-950/60">
+      <Card className="overflow-hidden rounded-sm border-slate-200/80 bg-white/80 shadow-sm backdrop-blur dark:border-white/10 dark:bg-slate-950/60">
         <CardHeader className="border-b bg-slate-50/80 px-5 py-4 dark:border-white/10 dark:bg-slate-900/50">
           <CardTitle className="flex items-center gap-2 text-base font-semibold text-slate-900 dark:text-white">
             <ContactRound className="h-5 w-5 text-primary" />
@@ -357,7 +357,7 @@ const PnrTravelerForm = ({
         </CardContent>
       </Card>
 
-      <Card className="overflow-hidden rounded-2xl border-slate-200/80 bg-white/80 shadow-sm backdrop-blur dark:border-white/10 dark:bg-slate-950/60">
+      <Card className="overflow-hidden rounded-sm border-slate-200/80 bg-white/80 shadow-sm backdrop-blur dark:border-white/10 dark:bg-slate-950/60">
         <CardHeader className="border-b bg-slate-50/80 px-5 py-4 dark:border-white/10 dark:bg-slate-900/50">
           <CardTitle className="flex items-center gap-2 text-base font-semibold text-slate-900 dark:text-white">
             <ShieldCheck className="h-5 w-5 text-primary" />

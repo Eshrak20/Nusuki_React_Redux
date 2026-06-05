@@ -31,7 +31,7 @@ const FlightTimer = ({ compact = false }: FlightTimerProps) => {
       <Card
         className={cn(
           "border-border bg-card shadow-sm",
-          compact ? "rounded-2xl px-3 py-2.5" : "mb-4 rounded-3xl p-4",
+          compact ? "rounded-sm px-3 py-2.5" : "mb-4 rounded-3xl p-4",
         )}
       >
         <div
@@ -114,7 +114,7 @@ const FlightTimer = ({ compact = false }: FlightTimerProps) => {
           <AlertDialogFooter className="px-6 pb-6 pt-2 sm:justify-center">
             <AlertDialogAction
               onClick={handleRedirect}
-              className="w-full rounded-2xl bg-primary py-6 text-sm font-semibold text-primary-foreground shadow-sm hover:bg-primary/90 flex items-center justify-center"
+              className="w-full rounded-sm bg-primary py-6 text-sm font-semibold text-primary-foreground shadow-sm hover:bg-primary/90 flex items-center justify-center"
             >
               <RefreshCcw className="mr-2 h-4 w-4" />
               Search Again

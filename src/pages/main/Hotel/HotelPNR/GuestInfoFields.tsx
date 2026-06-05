@@ -20,7 +20,7 @@ const GuestInfoFields = ({
 }: GuestInfoFieldsProps) => {
   
   return (
-    <div className="rounded-2xl border bg-card p-5 text-card-foreground shadow-sm sm:p-6">
+    <div className="rounded-sm border bg-card p-5 text-card-foreground shadow-sm sm:p-6">
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h2 className="text-lg font-semibold">Guest Information</h2>
@@ -40,7 +40,7 @@ const GuestInfoFields = ({
 
       <div className="mt-5 space-y-5">
         {guests.map((guest, index) => (
-          <div key={index} className="rounded-2xl border bg-background p-4">
+          <div key={index} className="rounded-sm border bg-background p-4">
             <div className="mb-4 flex items-center justify-between gap-3">
               <h3 className="font-medium">Guest {index + 1}</h3>
 

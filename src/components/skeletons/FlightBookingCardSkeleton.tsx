@@ -3,7 +3,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 const FlightBookingCardSkeleton = () => {
   return (
-    <Card className="rounded-2xl">
+    <Card className="rounded-sm">
       <CardHeader className="space-y-4 p-5">
         <div className="flex justify-between gap-4">
           <div className="space-y-3">
@@ -26,7 +26,7 @@ const FlightBookingCardSkeleton = () => {
           ))}
         </div>
 
-        <Skeleton className="h-36 rounded-2xl" />
+        <Skeleton className="h-36 rounded-sm" />
       </CardContent>
     </Card>
   );

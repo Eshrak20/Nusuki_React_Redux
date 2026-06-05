@@ -28,7 +28,7 @@ const HomeCourseCard = ({ courses }: HomeCourseCardProps) => {
                     transition={{ type: "spring", stiffness: 260, damping: 20 }}
                     layout
                     // 1. Added 'group' class here to detect hover across the whole card
-                    className="group bg-card dark:bg-card-dark rounded-2xl border border-muted dark:border-muted-dark flex flex-col relative shadow-sm hover:shadow-md transition-shadow overflow-hidden"
+                    className="group bg-card dark:bg-card-dark rounded-sm border border-muted dark:border-muted-dark flex flex-col relative shadow-sm hover:shadow-md transition-shadow overflow-hidden"
                 >
                     {/* Content Wrapper */}
                     <div className="p-5 flex flex-col grow">
@@ -71,7 +71,7 @@ const HomeCourseCard = ({ courses }: HomeCourseCardProps) => {
                             </div>
 
                             {/* Logo */}
-                            <div className="w-16 h-16 shrink-0 bg-white rounded-2xl border border-muted dark:border-muted-dark flex items-center justify-center shadow-sm">
+                            <div className="w-16 h-16 shrink-0 bg-white rounded-sm border border-muted dark:border-muted-dark flex items-center justify-center shadow-sm">
                                 <img
                                     src={course.logo}
                                     alt={`${course.university} logo`}

@@ -88,7 +88,7 @@ const DetTestUpcomingBatches = ({ batches = [] }: DetTestUpcomingBatchesProps) =
                                     scale: 1.02,
                                     transition: { duration: 0.4, ease: "backOut" }
                                 }}
-                                className="group bg-card text-card-foreground rounded-2xl p-8 flex flex-col items-center border border-border relative overflow-hidden h-full transition-all duration-300
+                                className="group bg-card text-card-foreground rounded-sm p-8 flex flex-col items-center border border-border relative overflow-hidden h-full transition-all duration-300
                                 shadow-[0_8px_40px_rgba(var(--primary),0.08)]
                                 dark:shadow-[0_8px_40px_rgba(var(--primary),0.05)] 
                                 dark:border-primary/10

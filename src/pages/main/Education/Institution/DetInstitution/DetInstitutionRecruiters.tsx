@@ -58,8 +58,8 @@ const DetInstitutionRecruiters = ({ placement }: Props) => {
 
         <div className="flex flex-col md:flex-row md:items-center gap-6 mb-8">
           <div className="relative">
-            <div className="absolute inset-0 bg-primary/20 rounded-2xl blur-md" />
-            <div className="relative w-16 h-16 flex items-center justify-center bg-linear-to-br from-primary/20 via-primary/10 to-transparent rounded-2xl border border-primary/30 shadow-lg">
+            <div className="absolute inset-0 bg-primary/20 rounded-sm blur-md" />
+            <div className="relative w-16 h-16 flex items-center justify-center bg-linear-to-br from-primary/20 via-primary/10 to-transparent rounded-sm border border-primary/30 shadow-lg">
               <Briefcase className="w-8 h-8 text-primary" />
             </div>
           </div>
@@ -170,7 +170,7 @@ const DetInstitutionRecruiters = ({ placement }: Props) => {
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
-          className="mt-16 p-6 rounded-2xl bg-muted/30 border border-border/50 relative"
+          className="mt-16 p-6 rounded-sm bg-muted/30 border border-border/50 relative"
         >
           <div className="flex gap-4 items-start">
             <Info className="w-5 h-5 text-primary shrink-0 mt-0.5" />

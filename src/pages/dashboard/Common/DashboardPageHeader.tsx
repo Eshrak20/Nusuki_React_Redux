@@ -22,7 +22,7 @@ const DashboardPageHeader = ({
 
         <div className="relative flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex items-center gap-4">
-            <div className="flex h-16 w-16 items-center justify-center overflow-hidden rounded-2xl border border-primary-foreground/20 bg-primary-foreground/10">
+            <div className="flex h-16 w-16 items-center justify-center overflow-hidden rounded-sm border border-primary-foreground/20 bg-primary-foreground/10">
               {imageUrl ? (
                 <img
                   src={imageUrl}

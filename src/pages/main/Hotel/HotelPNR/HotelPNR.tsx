@@ -39,7 +39,7 @@ const HotelPNR = () => {
   if (!bookingKey || !searchId) {
     return (
       <section className="min-h-screen bg-background mt-20 px-4 py-10 text-foreground">
-        <div className="mx-auto max-w-3xl rounded-2xl border bg-card p-6 text-card-foreground shadow-sm">
+        <div className="mx-auto max-w-3xl rounded-sm border bg-card p-6 text-card-foreground shadow-sm">
           <h1 className="text-xl font-semibold">Invalid booking URL</h1>
           <p className="mt-2 text-sm text-muted-foreground">
             Booking key or search ID is missing from the URL.

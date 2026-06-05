@@ -17,7 +17,7 @@ type BookingSegmentsCardProps = {
 
 const BookingSegmentsCard = ({ segments }: BookingSegmentsCardProps) => {
   return (
-    <Card className="rounded-2xl shadow-sm">
+    <Card className="rounded-sm shadow-sm">
       <CardHeader className="border-b p-5">
         <h3 className="text-lg font-bold text-foreground">Flight Segments</h3>
         <p className="text-sm text-muted-foreground">
@@ -30,7 +30,7 @@ const BookingSegmentsCard = ({ segments }: BookingSegmentsCardProps) => {
           segments.map((segment) => (
             <div
               key={segment.id}
-              className="rounded-2xl border bg-background p-4 dark:bg-background/50"
+              className="rounded-sm border bg-background p-4 dark:bg-background/50"
             >
               <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                 <div>

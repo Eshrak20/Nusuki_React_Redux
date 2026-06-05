@@ -170,7 +170,7 @@ const MyTravelers = () => {
   return (
     <>
       <div className="mx-auto w-full max-w-6xl px-4 py-4 sm:px-5 md:px-6 lg:px-8">
-        <div className="rounded-2xl border bg-card text-card-foreground shadow-sm">
+        <div className="rounded-sm border bg-card text-card-foreground shadow-sm">
           <div className="border-b px-4 py-4 sm:px-5 md:px-6">
             <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
               <div>

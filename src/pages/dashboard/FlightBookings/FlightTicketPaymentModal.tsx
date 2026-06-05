@@ -114,7 +114,7 @@ const FlightTicketPaymentModal = ({
   return (
     <Dialog open={open} onOpenChange={handleModalChange}>
       <DialogContent className="max-h-[92vh] overflow-y-auto border-none p-0 sm:max-w-2xl">
-        <div className="overflow-hidden rounded-2xl bg-background">
+        <div className="overflow-hidden rounded-sm bg-background">
           <DialogHeader className="border-b bg-muted/40 px-5 py-4">
             <DialogTitle className="flex items-center gap-2 text-xl font-bold">
               <ShieldCheck className="h-5 w-5 text-primary" />
@@ -126,7 +126,7 @@ const FlightTicketPaymentModal = ({
             <PaymentBookingSummary booking={booking} />
 
             {isLoading ? (
-              <div className="rounded-2xl border bg-muted/20 p-6 text-center">
+              <div className="rounded-sm border bg-muted/20 p-6 text-center">
                 <Loader2 className="mx-auto h-8 w-8 animate-spin text-primary" />
 
                 <h3 className="mt-4 text-lg font-extrabold">
@@ -140,7 +140,7 @@ const FlightTicketPaymentModal = ({
             ) : null}
 
             {!isLoading && errorMessage ? (
-              <div className="rounded-2xl border border-destructive/30 bg-destructive/5 p-4">
+              <div className="rounded-sm border border-destructive/30 bg-destructive/5 p-4">
                 <div className="flex gap-3">
                   <AlertCircle className="mt-0.5 h-5 w-5 shrink-0 text-destructive" />
 
@@ -170,7 +170,7 @@ const FlightTicketPaymentModal = ({
 
             {!isLoading && paymentInfo ? (
               <div className="space-y-4">
-                <div className="rounded-2xl border bg-card p-4 shadow-sm">
+                <div className="rounded-sm border bg-card p-4 shadow-sm">
                   <div className="mb-4 flex items-center gap-2 text-sm font-bold text-primary">
                     <BadgeCheck className="h-4 w-4" />
                     Payment Link Ready

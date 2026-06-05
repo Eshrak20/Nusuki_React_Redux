@@ -82,7 +82,7 @@ const HotelRoomsSection = ({ rooms = [], searchId }: HotelRoomsSectionProps) => 
       >
         <div className="flex flex-wrap items-center justify-between gap-4">
           <div className="flex items-start gap-3">
-            <div className="flex size-10 shrink-0 items-center justify-center rounded-2xl bg-primary/10 text-primary">
+            <div className="flex size-10 shrink-0 items-center justify-center rounded-sm bg-primary/10 text-primary">
               <BedDouble className="size-5" />
             </div>
 

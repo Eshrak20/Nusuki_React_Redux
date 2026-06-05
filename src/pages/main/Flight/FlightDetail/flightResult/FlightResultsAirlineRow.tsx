@@ -29,7 +29,7 @@ const FlightResultsAirlineRow = ({
   };
 
   return (
-    <Card className="rounded-2xl border bg-card shadow-sm">
+    <Card className="rounded-sm border bg-card shadow-sm">
       <CardContent className="p-3">
         <div className="flex gap-3 overflow-x-auto pb-1">
           {airlineSummary.map((airline) => {
@@ -41,7 +41,7 @@ const FlightResultsAirlineRow = ({
                 type="button"
                 onClick={() => handleClick(airline.code)}
                 className={cn(
-                  "group min-w-[220px] shrink-0 rounded-2xl border px-4 py-3 text-left transition-all duration-200",
+                  "group min-w-[220px] shrink-0 rounded-sm border px-4 py-3 text-left transition-all duration-200",
                   "hover:-translate-y-0.5 hover:shadow-md",
                   "focus:outline-none focus:ring-2 focus:ring-primary/40",
                   isActive

@@ -27,7 +27,7 @@ const DetTestOfferings = ({ offerings }: OfferingProps) => {
                         <div 
                             key={index} 
                             // We set the width manually to mimic the grid-cols-3 behavior (approx 33% minus gap)
-                            className="flex flex-col bg-card rounded-2xl overflow-hidden shadow-lg border border-border transition-transform duration-300 hover:-translate-y-1 w-full md:w-[calc(50%-2rem)] lg:w-[calc(33.333%-3rem)]"
+                            className="flex flex-col bg-card rounded-sm overflow-hidden shadow-lg border border-border transition-transform duration-300 hover:-translate-y-1 w-full md:w-[calc(50%-2rem)] lg:w-[calc(33.333%-3rem)]"
                         >
                             {/* Card Header */}
                             <div className="bg-primary/10 dark:bg-primary/20 p-8 text-center border-b border-primary/10">

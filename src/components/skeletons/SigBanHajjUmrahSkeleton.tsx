@@ -7,7 +7,7 @@ interface SigBanHajjUmrahSkeletonProps {
 
 const SigBanHajjUmrahSkeleton = ({ lines = 4 }: SigBanHajjUmrahSkeletonProps) => {
   return (
-    <section className="relative overflow-hidden rounded-2xl space-y-8 max-w-3xl">
+    <section className="relative overflow-hidden rounded-sm space-y-8 max-w-3xl">
       {/* Heading Skeleton */}
       <Skeleton className="h-10 w-3/5 rounded-md" />
 

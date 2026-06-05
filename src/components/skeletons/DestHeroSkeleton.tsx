@@ -12,9 +12,9 @@ const DestHeroSkeleton = () => {
         
         {/* Title Skeleton - 3 staggered lines using shadcn Skeleton */}
         <div className="w-full mb-8 flex flex-col gap-3 md:gap-4">
-          <Skeleton className="h-12 md:h-16 lg:h-18 w-full rounded-2xl" />
-          <Skeleton className="h-12 md:h-16 lg:h-18 w-4/5 rounded-2xl" />
-          <Skeleton className="h-12 md:h-16 lg:h-18 w-3/5 rounded-2xl" />
+          <Skeleton className="h-12 md:h-16 lg:h-18 w-full rounded-sm" />
+          <Skeleton className="h-12 md:h-16 lg:h-18 w-4/5 rounded-sm" />
+          <Skeleton className="h-12 md:h-16 lg:h-18 w-3/5 rounded-sm" />
         </div>
 
         {/* Call to Action Button Skeleton */}

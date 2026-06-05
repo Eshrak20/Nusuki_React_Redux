@@ -88,7 +88,7 @@ const EduTestModal = ({ open, onClose }: EduTestModalProps) => {
     return (
         <Dialog open={open} onOpenChange={onClose}>
             <DialogContent className="p-0 overflow-hidden w-[95vw] sm:w-full max-w-4xl border-none bg-transparent shadow-none custom-close-hidden">
-                <div className="w-full max-h-[95dvh] bg-card flex flex-col overflow-y-auto rounded-2xl border shadow-2xl relative">
+                <div className="w-full max-h-[95dvh] bg-card flex flex-col overflow-y-auto rounded-sm border shadow-2xl relative">
                     
                     <button
                         onClick={onClose}

@@ -33,7 +33,7 @@ const DestWorkOpportunities = ({ opportunities, id = "work-opportunities" }: Pro
 
             {/* Icon Header */}
             <div className="flex items-start gap-5 mb-6 relative z-10">
-              <div className="shrink-0 w-12 h-12 flex items-center justify-center rounded-2xl bg-primary/10 text-primary group-hover:scale-110 group-hover:bg-primary group-hover:text-primary-foreground transition-all duration-300 shadow-sm">
+              <div className="shrink-0 w-12 h-12 flex items-center justify-center rounded-sm bg-primary/10 text-primary group-hover:scale-110 group-hover:bg-primary group-hover:text-primary-foreground transition-all duration-300 shadow-sm">
                 <Briefcase size={24} strokeWidth={2.5} />
               </div>
               <h3 className="text-2xl font-bold text-foreground tracking-tight leading-snug mt-1">

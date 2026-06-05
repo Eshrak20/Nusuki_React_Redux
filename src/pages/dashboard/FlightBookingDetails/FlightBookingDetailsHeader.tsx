@@ -18,7 +18,7 @@ const FlightBookingDetailsHeader = ({
   onRefresh,
 }: FlightBookingDetailsHeaderProps) => {
   return (
-    <div className="flex flex-col gap-4 rounded-2xl border bg-card p-5 shadow-sm dark:bg-card/80 sm:flex-row sm:items-center sm:justify-between">
+    <div className="flex flex-col gap-4 rounded-sm border bg-card p-5 shadow-sm dark:bg-card/80 sm:flex-row sm:items-center sm:justify-between">
       <div>
         <Button
           variant="ghost"

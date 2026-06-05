@@ -12,7 +12,7 @@ type BookingPassengersCardProps = {
 
 const BookingPassengersCard = ({ passengers }: BookingPassengersCardProps) => {
   return (
-    <Card className="rounded-2xl shadow-sm">
+    <Card className="rounded-sm shadow-sm">
       <CardHeader className="border-b p-5">
         <h3 className="text-lg font-bold text-foreground">
           Passenger Details
@@ -27,7 +27,7 @@ const BookingPassengersCard = ({ passengers }: BookingPassengersCardProps) => {
           passengers.map((passenger) => (
             <div
               key={passenger.id}
-              className="rounded-2xl border bg-background p-4 dark:bg-background/50"
+              className="rounded-sm border bg-background p-4 dark:bg-background/50"
             >
               <div className="flex items-start gap-3">
                 <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary">

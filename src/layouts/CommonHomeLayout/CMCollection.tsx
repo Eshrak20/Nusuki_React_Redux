@@ -94,10 +94,10 @@ const CMCollection = () => {
                 </Swiper>
 
                 {/* Styled Navigation Buttons */}
-                <button className="prev-coll hidden absolute -left-2.5 top-1/2 -translate-y-1/2 z-30 h-14 w-14 rounded-2xl bg-white dark:bg-slate-900 shadow-2xl lg:flex items-center justify-center text-slate-800 dark:text-white hover:bg-primary hover:text-white transition-all duration-300 border border-slate-100 dark:border-slate-800">
+                <button className="prev-coll hidden absolute -left-2.5 top-1/2 -translate-y-1/2 z-30 h-14 w-14 rounded-sm bg-white dark:bg-slate-900 shadow-2xl lg:flex items-center justify-center text-slate-800 dark:text-white hover:bg-primary hover:text-white transition-all duration-300 border border-slate-100 dark:border-slate-800">
                     <ChevronLeft size={28} />
                 </button>
-                <button className="next-coll hidden absolute -right-2.5 top-1/2 -translate-y-1/2 z-30 h-14 w-14 rounded-2xl bg-white dark:bg-slate-900 shadow-2xl lg:flex items-center justify-center text-slate-800 dark:text-white hover:bg-primary hover:text-white transition-all duration-300 border border-slate-100 dark:border-slate-800">
+                <button className="next-coll hidden absolute -right-2.5 top-1/2 -translate-y-1/2 z-30 h-14 w-14 rounded-sm bg-white dark:bg-slate-900 shadow-2xl lg:flex items-center justify-center text-slate-800 dark:text-white hover:bg-primary hover:text-white transition-all duration-300 border border-slate-100 dark:border-slate-800">
                     <ChevronRight size={28} />
                 </button>
             </div>

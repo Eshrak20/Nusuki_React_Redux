@@ -12,13 +12,13 @@ const ProfileUpdateHeader = ({
   subtitle,
 }: ProfileUpdateHeaderProps) => {
   return (
-    <div className="overflow-hidden rounded-2xl border bg-card shadow-sm">
+    <div className="overflow-hidden rounded-sm border bg-card shadow-sm">
       <div className="relative bg-primary px-5 py-8 text-primary-foreground sm:px-8">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.22),transparent_35%)]" />
 
         <div className="relative flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex items-center gap-4">
-            <div className="flex h-16 w-16 items-center justify-center overflow-hidden rounded-2xl border border-primary-foreground/20 bg-primary-foreground/10">
+            <div className="flex h-16 w-16 items-center justify-center overflow-hidden rounded-sm border border-primary-foreground/20 bg-primary-foreground/10">
               {profilePreview ? (
                 <img
                   src={profilePreview}

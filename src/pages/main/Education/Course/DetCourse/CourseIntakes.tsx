@@ -70,7 +70,7 @@ const CourseIntakes = ({ tables }: CourseIntakesProps) => {
               variants={itemVariants}
               onClick={() => setIsOpen(true)}
               className={cn(
-                "cursor-pointer group/item flex items-center justify-between p-5 rounded-2xl border transition-all duration-300",
+                "cursor-pointer group/item flex items-center justify-between p-5 rounded-sm border transition-all duration-300",
                 "bg-card border-border hover:border-primary/40",
                 "shadow-sm hover:shadow-md hover:-translate-y-1"
               )}
@@ -99,7 +99,7 @@ const CourseIntakes = ({ tables }: CourseIntakesProps) => {
         </motion.div>
 
         {/* Trust Banner */}
-        <div className="flex items-center gap-3 bg-muted/30 rounded-2xl p-4 border border-border/40">
+        <div className="flex items-center gap-3 bg-muted/30 rounded-sm p-4 border border-border/40">
           <div className="hidden lg:block p-1.5 rounded-full bg-primary/10 text-primary">
             <CheckCircle2 className="w-4 h-4" />
           </div>

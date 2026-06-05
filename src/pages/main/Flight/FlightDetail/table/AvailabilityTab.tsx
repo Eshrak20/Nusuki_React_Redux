@@ -23,7 +23,7 @@ const AvailabilityTab = ({ flight }: Props) => {
   const baggage = getBaggage(flight);
 
   return (
-    <div className="overflow-hidden rounded-2xl border border-border bg-card shadow-sm">
+    <div className="overflow-hidden rounded-sm border border-border bg-card shadow-sm">
       <div className="flex items-center gap-3 border-b bg-muted/30 px-4 py-3">
         <h3 className="text-sm font-semibold text-foreground md:text-base">
           {originCode}

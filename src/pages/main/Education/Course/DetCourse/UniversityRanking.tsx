@@ -49,7 +49,7 @@ const UniversityRanking = ({ ranking }: UniversityRankingProps) => {
 
             {/* Rank Section */}
             <div className="flex flex-col lg:flex-row items-center gap-5">
-              <div className="flex items-center justify-center w-20 h-20 rounded-2xl bg-primary/10 border border-primary/20">
+              <div className="flex items-center justify-center w-20 h-20 rounded-sm bg-primary/10 border border-primary/20">
                 <div className="text-center">
                   <p className="text-[10px] font-semibold text-primary/70 uppercase">
                     Rank
