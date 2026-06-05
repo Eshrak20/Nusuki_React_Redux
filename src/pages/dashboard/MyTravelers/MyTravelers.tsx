@@ -26,6 +26,7 @@ import type {
   MyTraveller,
   MyTravellerFormPayload,
 } from "@/types/flight/myTravellers.types";
+import { getApiErrorMessage } from "@/lib/getApiErrorMessage";
 
 const getFullName = (traveller: MyTraveller) => {
   return `${traveller.title || ""} ${traveller.given_name || ""} ${traveller.surname || ""
@@ -97,45 +98,42 @@ const MyTravelers = () => {
     setShowForm(false);
   };
 
-  const handleSubmit = async (payload: MyTravellerFormPayload) => {
-    try {
-      if (selectedTraveller) {
-        const response = await updateTraveller({
-          id: selectedTraveller.id,
-          body: payload,
-        }).unwrap();
 
-        if (!response.success) {
-          toast.error(response.message || "Traveller update failed.");
-          return;
-        }
+const handleSubmit = async (payload: MyTravellerFormPayload) => {
+  try {
+    if (selectedTraveller) {
+      const response = await updateTraveller({
+        id: selectedTraveller.id,
+        body: payload,
+      }).unwrap();
 
-        toast.success(response.message || "Traveller updated successfully.");
-      } else {
-        const response = await createTraveller(payload).unwrap();
-
-        if (!response.success) {
-          toast.error(response.message || "Traveller creation failed.");
-          return;
-        }
-
-        toast.success(response.message || "Traveller created successfully.");
+      if (!response.success) {
+        toast.error(response.message || "Traveller update failed.");
+        return;
       }
 
-      setShowForm(false);
-      setSelectedTraveller(null);
-    } catch (error: unknown) {
-      console.error("Traveller Submit Error:", error);
+      toast.success(response.message || "Traveller updated successfully.");
+    } else {
+      const response = await createTraveller(payload).unwrap();
 
-      const apiError = error as {
-        data?: {
-          message?: string;
-        };
-      };
+      if (!response.success) {
+        toast.error(response.message || "Traveller creation failed.");
+        return;
+      }
 
-      toast.error(apiError?.data?.message || "Something went wrong.");
+      toast.success(response.message || "Traveller created successfully.");
     }
-  };
+
+    setShowForm(false);
+    setSelectedTraveller(null);
+  } catch (error: unknown) {
+    console.error("Traveller Submit Error:", error);
+
+    toast.error(
+      getApiErrorMessage(error, "Failed to save traveller."),
+    );
+  }
+};
 
   const handleDeleteClick = (traveller: MyTraveller) => {
     setTravellerToDelete(traveller);

@@ -61,8 +61,15 @@ const Footer = () => {
   const { data: socialLinksResponse } = useGetSocialLinksQuery();
   const { data: addressesResponse } = useGetAddressesQuery();
 
-  const socialLinks = socialLinksResponse?.data ?? [];
-  const addresses = addressesResponse?.data ?? [];
+  const socialLinks =
+    socialLinksResponse?.data
+      ?.filter((item) => item.is_active)
+      ?.sort((a, b) => a.position - b.position) ?? [];
+
+  const addresses =
+    addressesResponse?.data
+      ?.filter((item) => item.is_active)
+      ?.sort((a, b) => a.position - b.position) ?? [];
 
   return (
     <footer className="w-full bg-background border-t border-border pt-12 pb-8">
@@ -226,8 +233,6 @@ const Footer = () => {
             <div className="flex flex-wrap gap-2">
               {socialLinks.length > 0 ? (
                 socialLinks.map((item) => {
-                  const Icon = getSocialIcon(item.icon, item.platform);
-
                   return (
                     <a
                       key={item.id}
@@ -239,9 +244,17 @@ const Footer = () => {
                       <Button
                         variant="ghost"
                         size="icon"
-                        className="rounded-full bg-secondary/50 hover:bg-primary hover:text-white h-9 w-9"
+                        className="rounded-full bg-secondary/50 hover:bg-primary h-9 w-9 p-1"
                       >
-                        <Icon size={16} />
+                        {item.icon ? (
+                          <img
+                            src={item.icon}
+                            alt={item.platform}
+                            className="h-5 w-5 object-contain"
+                          />
+                        ) : (
+                          <Globe size={16} />
+                        )}
                       </Button>
                     </a>
                   );
@@ -272,12 +285,15 @@ const Footer = () => {
 
               {item.google_map_embed && (
                 <a
-                  href={cleanGoogleMapUrl(item.google_map_embed)}
+                  href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+                    item.address,
+                  )}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center gap-2 text-primary text-sm"
                 >
-                  <MapPin size={16} /> View Map
+                  <MapPin size={16} />
+                  View Map
                 </a>
               )}
             </div>

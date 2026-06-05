@@ -76,7 +76,8 @@ const getInitialForm = (
       selectedTraveller.passport_nationality ||
       selectedTraveller.passport_issuing_country ||
       "BD",
-    passport_issuing_country: selectedTraveller.passport_issuing_country || "BD",
+    passport_issuing_country:
+      selectedTraveller.passport_issuing_country || "BD",
     passport_expire_date: selectedTraveller.passport_expire_date || "",
   };
 };
@@ -236,7 +237,9 @@ const MyTravellerModal = ({
                   <input
                     type="tel"
                     value={form.phone}
-                    onChange={(event) => updateField("phone", event.target.value)}
+                    onChange={(event) =>
+                      updateField("phone", event.target.value)
+                    }
                     placeholder="+8801712345678"
                     required
                     className={fieldClass}
@@ -486,6 +489,8 @@ const MyTravellerModal = ({
                           handleDateChange("passport_expire_date", date)
                         }
                         captionLayout="dropdown"
+                        startMonth={new Date()}
+                        endMonth={new Date(new Date().getFullYear() + 20, 11)}
                       />
                     </PopoverContent>
                   </Popover>

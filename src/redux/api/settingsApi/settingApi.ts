@@ -5,13 +5,13 @@ export const settingApi = laravelApi.injectEndpoints({
     endpoints: (builder) => ({
         getSocialLinks: builder.query<SocialLinksApiResponse, void>({
             query: () => ({
-                url: "/social-links",
+                url: "/footer/social-links",
                 method: "GET",
             }),
         }),
         getAddresses: builder.query<AddressesApiResponse, void>({
             query: () => ({
-                url: "/addresses",
+                url: "/footer/addresses",
                 method: "GET",
             }),
         }),
