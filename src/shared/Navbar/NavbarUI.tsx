@@ -24,7 +24,7 @@ export const DesktopNavLinkItem = ({ href, label, active }: NavLinkItemProps) =>
           "relative inline-flex h-11 items-center justify-center overflow-hidden rounded-sm px-4 text-base font-semibold transition-all duration-300",
           "hover:-translate-y-0.5 hover:bg-primary/10 hover:text-primary hover:shadow-md",
           active
-            ? "bg-primary text-white dark:text-black shadow-xl hover:text-white shadow-primary/25"
+            ? "bg-primary text-white dark:text-black  hover:text-white shadow-primary/25"
             : "text-primary",
         )}
       >

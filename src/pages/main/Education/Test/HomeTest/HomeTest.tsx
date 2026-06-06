@@ -24,7 +24,7 @@ const HomeTest = () => {
 
   useEffect(() => {
     window.scrollTo({
-      top: 1350,
+      top: 960,
       behavior: "smooth",
     });
   }, [examType, page]);

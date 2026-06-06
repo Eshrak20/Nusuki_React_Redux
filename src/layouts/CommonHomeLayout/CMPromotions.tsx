@@ -1,11 +1,14 @@
 import { useState, useEffect, useRef, useMemo } from "react";
 import { motion, type PanInfo } from "framer-motion";
 import { useFlightPromoListsQuery } from "@/redux/api/flightApi/flightPromo";
+import { useLocation } from "react-router-dom";
+import clsx from "clsx";
 
 const CMPromotions = () => {
   const { data } = useFlightPromoListsQuery();
   const containerRef = useRef<HTMLDivElement>(null);
-
+  const location = useLocation();
+  const isHolidayPage = location.pathname.includes("/holiday");
   const [itemsPerPage, setItemsPerPage] = useState(3);
   const [currentPage, setCurrentPage] = useState(0);
 
@@ -46,7 +49,7 @@ const CMPromotions = () => {
 
   const handleDragEnd = (
     _event: MouseEvent | TouchEvent | PointerEvent,
-    info: PanInfo
+    info: PanInfo,
   ) => {
     const swipeThreshold = 50;
     const velocityThreshold = 500;
@@ -66,7 +69,10 @@ const CMPromotions = () => {
 
   return (
     <div
-      className="w-full -mt-14 lg:mt-15 px-4 overflow-hidden"
+      className={clsx(
+        "w-full -mt-14 px-4 overflow-hidden",
+        isHolidayPage ? "lg:mt-96" : "lg:mt-15",
+      )}
       ref={containerRef}
     >
       <h2 className="text-3xl md:text-4xl mt-20 lg:mt-0 text-center lg:text-left font-bold text-foreground mb-8">

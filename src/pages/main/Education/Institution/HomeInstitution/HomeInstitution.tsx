@@ -11,7 +11,7 @@ import EduSearch from "@/components/education/EduSearch";
 const HomeInstitution = () => {
   
   window.scrollTo({
-    top: 720,
+    top: 320,
     behavior: "smooth",
   });
 

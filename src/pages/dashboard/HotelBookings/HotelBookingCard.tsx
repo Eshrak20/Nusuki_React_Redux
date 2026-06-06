@@ -11,6 +11,7 @@ import { useNavigate } from "react-router-dom";
 import type { HotelBookingItem } from "@/types/hotel/hotelBookingList.types";
 import HotelBookingStatusBadge from "./HotelBookingStatusBadge";
 import { formatStatus } from "@/lib/util.hotel";
+import { Badge } from "@/components/ui/badge";
 
 type HotelBookingCardProps = {
   booking: HotelBookingItem;
@@ -74,22 +75,23 @@ const HotelBookingCard = ({ booking }: HotelBookingCardProps) => {
               <div className="mt-1 flex min-w-0 items-center gap-1.5 text-sm text-muted-foreground">
                 <MapPin size={14} className="shrink-0" />
                 <span className="line-clamp-1">
-                  {[hotel?.city, hotel?.country_code].filter(Boolean).join(", ") ||
+                  {[hotel?.city, hotel?.country_code]
+                    .filter(Boolean)
+                    .join(", ") ||
                     hotel?.address ||
                     "Location not available"}
                 </span>
+                {hotel?.chain_name && (
+                  <Badge className="mt-1 w-fit rounded-ee-none border border-primary/20 bg-primary/10 px-3 py-1 text-xs font-semibold text-primary">
+                    {hotel.chain_name}
+                  </Badge>
+                )}
               </div>
-
-              {hotel?.chain_name && (
-                <p className="mt-1 text-xs text-muted-foreground">
-                  {hotel.chain_name}
-                </p>
-              )}
             </div>
           </div>
 
           <div className="flex shrink-0 flex-wrap gap-2 lg:flex-col lg:items-end">
-            <HotelBookingStatusBadge status={booking.status} />
+            {/* <HotelBookingStatusBadge status={booking.status} /> */}
             <HotelBookingStatusBadge
               status={booking.payment_status}
               type="payment"
@@ -140,7 +142,7 @@ const HotelBookingCard = ({ booking }: HotelBookingCardProps) => {
           />
 
           <SmallInfo
-            icon={<ReceiptText size={16} />} 
+            icon={<ReceiptText size={16} />}
             label="Payment Type"
             value={formatStatus(booking.payment_type) || "N/A"}
           />

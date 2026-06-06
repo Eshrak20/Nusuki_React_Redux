@@ -10,7 +10,7 @@ import HomeCourseCardSkeleton from "@/components/skeletons/HomeCourseCardSkeleto
 
 const HomeCourse = () => {
   window.scrollTo({
-    top: 720,
+    top: 320,
     behavior: "smooth",
   });
 

@@ -21,7 +21,7 @@ import DestPageNavSkeleton from "@/components/skeletons/DestPageNavSkeleton";
 const DestinationMain = () => {
 
   window.scrollTo({
-    top: 720,
+    top: 320,
     behavior: "smooth",
   });
 

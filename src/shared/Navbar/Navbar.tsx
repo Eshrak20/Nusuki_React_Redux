@@ -47,7 +47,7 @@ export default function Navbar() {
           ease: [0.25, 0.46, 0.45, 0.94],
         }}
         className={cn(
-          "fixed left-0 top-0 z-99999 w-full isolate transition-all duration-500",
+          "fixed left-0 top-0 z-50 w-full isolate transition-all duration-500",
           shouldShowNavbarBg
             ? "bg-white/90 shadow-lg shadow-black/10 backdrop-blur-2xl dark:bg-slate-950/85"
             : "bg-transparent"

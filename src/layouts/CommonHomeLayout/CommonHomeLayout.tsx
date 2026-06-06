@@ -26,70 +26,63 @@ const CommonHomeLayout = ({
   const isHolidayPage = location.pathname.startsWith("/holiday");
   const isHotelPage = location.pathname.startsWith("/hotel");
 
+  const promotionTopSpacing = isFlightPage
+    ? "pt-28 md:pt-32"
+    : isHolidayPage
+      ? "pt-24 md:pt-28"
+      : isHotelPage
+        ? "pt-20 md:pt-24"
+        : "pt-28 md:pt-36";
+
   return (
-    <div className="bg-white dark:bg-gray-950">
-      <div className="relative">
+    <main className="bg-white text-slate-900 dark:bg-gray-950 dark:text-white">
+      <section className="relative">
         <VideoBanner
           title="Welcome to Nusuki"
-          subtitle="Book flights, visa & holiday packages at the best prices"
+          subtitle="Find Flights, Hotels, Visa & Holidays"
         />
 
-        <div className="absolute left-1/2 top-48 z-30 w-full max-w-xs -translate-x-1/2 px-4 sm:top-52 sm:max-w-sm md:top-56 lg:top-60">
-        
-        </div>
+        {searchSection && (
+          <div className="absolute left-1/2 top- z-20 w-full max-w-6xl -translate-x-1/2 px-4 sm:top-28 md:-top-20">
+            {searchSection}
+          </div>
+        )}
+      </section>
 
-        {searchSection}
-      </div>
-
-      <section
-        className={`max-w-7xl mx-auto px-4 pt-96 mt-44 md:mt-0 ${
-          isFlightPage
-            ? "md:pt-32"
-            : isHolidayPage
-              ? "pt-32"
-              : isHotelPage
-                ? "md:pt-14"
-                : "md:pt-72"
-        }`}
-      >
+      <section className={`mx-auto max-w-7xl px-4 ${promotionTopSpacing}`}>
         <CMPromotions />
       </section>
 
       {showDestinations && (
         <>
-          <section className="max-w-7xl mx-auto px-4 py-10 md:py-16">
-            <div className="max-w-3xl mx-auto text-center mb-12">
-              <h2 className="text-3xl lg:text-4xl font-bold text-slate-900 dark:text-white mb-4 tracking-tight">
+          <section className="mx-auto max-w-7xl px-4 py-10">
+            <div className="mx-auto mb-8 max-w-3xl text-center">
+              <h2 className="mb-3 text-2xl font-bold md:text-3xl">
                 Most Popular Destinations
               </h2>
-              <p className="text-slate-600 dark:text-slate-400 text-sm md:text-base leading-relaxed">
-                Discover new horizons and explore the world. Choose your ideal
-                destinations across Asia, Europe, the Americas, Australia, and
-                beyond with Nusuki.
+              <p className="text-sm leading-relaxed text-slate-600 dark:text-slate-400 md:text-base">
+                Discover new horizons and explore the world with Nusuki.
               </p>
             </div>
 
             <CMDestination dests={popularDests} />
           </section>
 
-          <section className="max-w-7xl mx-auto px-4">
+          <section className="mx-auto max-w-7xl px-4 py-8">
             <CMCollection />
           </section>
 
-          <section className="py-6 md:pb-16">
-            <div className="max-w-7xl mx-auto px-4">
-              <CMTourPackages />
-            </div>
+          <section className="mx-auto max-w-7xl px-4 py-8">
+            <CMTourPackages />
           </section>
 
-          <section className="max-w-7xl mx-auto mt-5 lg:mt-0 px-4">
-            <div className="max-w-3xl mx-auto text-center mb-12">
-              <h2 className="text-3xl lg:text-4xl font-bold text-slate-900 dark:text-white mb-4 tracking-tight">
+          <section className="mx-auto max-w-7xl px-4 py-10">
+            <div className="mx-auto mb-8 max-w-3xl text-center">
+              <h2 className="mb-3 text-2xl font-bold md:text-3xl">
                 Dream Destinations
               </h2>
-              <p className="text-slate-600 dark:text-slate-400 text-sm md:text-base leading-relaxed">
-                Discover new horizons and explore the world. Choose your ideal
-                destinations across the globe with our exclusive travel deals.
+              <p className="text-sm leading-relaxed text-slate-600 dark:text-slate-400 md:text-base">
+                Explore beautiful destinations with exclusive travel deals.
               </p>
             </div>
 
@@ -98,10 +91,10 @@ const CommonHomeLayout = ({
         </>
       )}
 
-      <section className="md:pt-20 lg:pt-24">
+      <section className="pt-10 md:pt-16">
         <AppSection />
       </section>
-    </div>
+    </main>
   );
 };
 
