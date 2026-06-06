@@ -5,17 +5,10 @@ import footerLight from "@/assets/reactAssets/Footer/footer.webp";
 import footerDark from "@/assets/reactAssets/Footer/footer-dark.jpeg";
 import { footerPayImages } from "@/data/footerPayImages";
 import {
-  // Facebook,
-  // Twitter,
-  // Instagram,
-  // Youtube,
-  // Linkedin,
   MapPin,
   Phone,
   Mail,
   Globe,
-  Share2,
-  type LucideIcon,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -23,39 +16,6 @@ import {
   useGetSocialLinksQuery,
 } from "@/redux/api/settingsApi/settingApi";
 
-const socialIconMap: Record<string, LucideIcon> = {
-  facebook: Phone,
-  fafacebook: Phone,
-  twitter: Phone,
-  fatwitter: Phone,
-  instagram: Phone,
-  fainstagram: Phone,
-  youtube: Phone,
-  fayoutube: Phone,
-  linkedin: Phone,
-  falinkedin: Phone,
-};
-
-const getSocialIcon = (icon?: string | null, platform?: string | null) => {
-  const iconKey = icon?.toLowerCase();
-  const platformKey = platform?.toLowerCase();
-
-  return (
-    socialIconMap[iconKey || ""] || socialIconMap[platformKey || ""] || Share2
-  );
-};
-
-const cleanGoogleMapUrl = (embed?: string | null) => {
-  if (!embed) return "#";
-
-  const srcMatch = embed.match(/src=["']([^"']+)["']/);
-  if (srcMatch?.[1]) return srcMatch[1];
-
-  return embed
-    .replace(/^"+|"+$/g, "")
-    .split('"')[0]
-    .trim();
-};
 
 const Footer = () => {
   const { data: socialLinksResponse } = useGetSocialLinksQuery();
