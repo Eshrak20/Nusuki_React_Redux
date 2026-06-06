@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import appImage from "@/assets/Images/app.webp"; // Using this as the main phone content
+import appImage from "@/assets/Images/app.webp";
 import appStore from "@/assets/Images/App-Store.svg";
 import qrImage from "@/assets/Images/qrImage.webp";
 
@@ -21,6 +21,7 @@ const AppSection = () => {
           <h2 className="text-3xl md:text-5xl font-black text-primary dark:text-white">
             Your all-in-one Travel App
           </h2>
+
           <p className="text-gray-500 dark:text-gray-400 max-w-2xl mx-auto mb-7 text-sm md:text-base leading-relaxed">
             Get flights, hotels, holidays and visa assistance in just a few
             taps. Enjoy real-time flight updates, schedules, travel info, play
@@ -36,7 +37,12 @@ const AppSection = () => {
           transition={{ delay: 0.3 }}
           className="flex flex-wrap items-center justify-center gap-6 mb-12 lg:mb-16"
         >
-          <a href="#" className="hover:scale-105 transition-transform">
+          <a
+            href="https://apps.apple.com/us/app/nusuk-%D9%86%D8%B3%D9%83/id6469515422"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:scale-105 transition-transform"
+          >
             <img src={appStore} alt="App Store" className="h-12 w-auto" />
           </a>
 
@@ -44,11 +50,21 @@ const AppSection = () => {
             <img src={qrImage} alt="QR Code" className="w-16 h-16" />
           </div>
 
-          <a href="#" className="hover:scale-105 transition-transform">
-            <img src={playsoteImage} alt="Play Store" className="h-12 w-auto" />
+          <a
+            href="https://play.google.com/store/apps/details?id=com.moh.nusukapp&hl=en"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:scale-105 transition-transform"
+          >
+            <img
+              src={playsoteImage}
+              alt="Play Store"
+              className="h-12 w-auto"
+            />
           </a>
         </motion.div>
       </div>
+
       <div className="relative w-full">
         {/* App Image */}
         <img
@@ -60,11 +76,11 @@ const AppSection = () => {
         {/* Overlay Gradient */}
         <div
           className="absolute hidden lg:block inset-x-0 bottom-0 h-40 
-    bg-linear-to-t 
-    from-white dark:from-gray-950 
-    via-white/70 dark:via-gray-950/70 
-    to-transparent"
-        ></div>
+          bg-linear-to-t 
+          from-white dark:from-gray-950 
+          via-white/70 dark:via-gray-950/70 
+          to-transparent"
+        />
       </div>
     </section>
   );

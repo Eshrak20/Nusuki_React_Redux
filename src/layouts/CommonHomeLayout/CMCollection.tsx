@@ -52,6 +52,7 @@ const CMCollection = () => {
                         <SwiperSlide key={item.id} className="py-3 lg:py-8">
                             <a
                                 href={item.button_link || "#"}
+                                target="_blank"
                                 className="group/card block relative h-80 w-full rounded-[2.5rem] rounded-tr-none overflow-hidden transition-all duration-500 hover:-translate-y-2"
                             >
                                 {/* Main Image */}
