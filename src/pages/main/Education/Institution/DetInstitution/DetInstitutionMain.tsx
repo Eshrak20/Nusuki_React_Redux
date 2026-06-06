@@ -13,9 +13,9 @@ import DetInstitutionFaq from "./DetInstitutionFaq";
 import DetInstitutionAccomplish from "./DetInstitutionAccomplish";
 import type { UniversityBannerCardMini } from "@/types/education/type.uniDet";
 import DetInstitutionScholarships from "./DetInstitutionScholarships";
+import { Skeleton } from "@/components/ui/skeleton";
 
 const DetInstitutionMain = () => {
-
   window.scrollTo({
     top: 0,
     behavior: "smooth",
@@ -25,25 +25,35 @@ const DetInstitutionMain = () => {
 
   const { data, isLoading } = useGetUniversitiesDetailsQuery(
     { id: id! },
-    { skip: !id }
+    { skip: !id },
   );
 
   if (!id) return <div>ID not found</div>;
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) {
+    return (
+      <div className="space-y-4 p-4">
+        <Skeleton className="h-8 w-64" />
+        <Skeleton className="h-4 w-full" />
+        <Skeleton className="h-4 w-5/6" />
+        <Skeleton className="h-32 w-full" />
+        <Skeleton className="h-10 w-32" />
+      </div>
+    );
+  }
 
-  const university = data?.data; 
+  const university = data?.data;
   const detail = university?.detail_json;
 
   // ✅ Prepare mini banner card data
   const bannerData: UniversityBannerCardMini | undefined = detail
     ? {
-      uni_logo: university?.uni_logo,
-      universityName: detail.universityName,
-      extraDetail: detail.extraDetail,
-      location: detail.location,
-      universityUrl: detail.universityUrl,
-      universityBannerImage: detail.universityBannerImage,
-    }
+        uni_logo: university?.uni_logo,
+        universityName: detail.universityName,
+        extraDetail: detail.extraDetail,
+        location: detail.location,
+        universityUrl: detail.universityUrl,
+        universityBannerImage: detail.universityBannerImage,
+      }
     : undefined;
 
   return (
@@ -51,13 +61,19 @@ const DetInstitutionMain = () => {
       <DetInstitutionBanner detail={bannerData} />
       <DetInstitutionOverview university={university} />
       <DetInstitutionPrograms programs={detail?.topCourseDetail} />
-      <DetInstitutionScholarships scholarships={detail?.scholarshipsAvailable} />
+      <DetInstitutionScholarships
+        scholarships={detail?.scholarshipsAvailable}
+      />
       <DetInstitutionRanking ranking={detail?.rankingSection} />
       <DetInstitutionCultural culture={detail?.cultureSection} />
       <DetInstitutionCost cost={detail?.costToStudySection} />
       <DetInstitutionIntakes intakes={detail?.intakeSection} />
-      <DetInstitutionAdmissionReq admission={detail?.admissionRequirementDetail} />
-      <DetInstitutionRecruiters placement={detail?.universityPlacementSection} />
+      <DetInstitutionAdmissionReq
+        admission={detail?.admissionRequirementDetail}
+      />
+      <DetInstitutionRecruiters
+        placement={detail?.universityPlacementSection}
+      />
       <DetInstitutionFaq faq={detail?.faqSection} />
       <DetInstitutionAccomplish accomplish={detail?.accomplishSection} />
     </div>

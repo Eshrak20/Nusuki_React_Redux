@@ -23,12 +23,16 @@ type BookingFlightPNRFormProps = {
   flightId: string;
   searchId: string;
   initialForm: PnrFormState;
+  showPassportFields: boolean;
+  documentRequirementMessage?: string;
 };
 
 const BookingFlightPNRForm = ({
   flightId,
   searchId,
   initialForm,
+  showPassportFields,
+  documentRequirementMessage,
 }: BookingFlightPNRFormProps) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -132,21 +136,27 @@ const BookingFlightPNRForm = ({
     if (travelers.length === 0) return true;
 
     return travelers.some((traveller) => {
-      return (
+      const basicInfoMissing =
         !traveller.givenName ||
         !traveller.surname ||
         !traveller.title ||
         !traveller.passengerType ||
         !traveller.gender ||
         !traveller.dateOfBirth ||
-        !traveller.travelerPhone ||
+        !traveller.travelerPhone;
+
+      if (basicInfoMissing) return true;
+
+      if (!showPassportFields) return false;
+
+      return (
         !traveller.passportNumber ||
         !traveller.passportNationality ||
         !traveller.passportIssuingCountry ||
         !traveller.passportExpiryDate
       );
     });
-  }, [flightId, searchId, form]);
+  }, [flightId, searchId, form, showPassportFields]);
 
   const handleCreatePnr = async () => {
     if (isFormInvalid) {
@@ -273,6 +283,8 @@ const BookingFlightPNRForm = ({
           setIsScanning={setIsScanning}
           updateTraveller={updateTraveller}
           replaceTraveller={replaceTraveller}
+          showPassportFields={showPassportFields}
+          documentRequirementMessage={documentRequirementMessage}
         />
       </div>
 

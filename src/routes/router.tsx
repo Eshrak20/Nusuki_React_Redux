@@ -64,6 +64,7 @@ import HotelHome from "@/pages/main/Hotel/HotelHome";
 import HotelLists from "@/pages/main/Hotel/HotelLists/HotelLists";
 import HotelDetails from "@/pages/main/Hotel/HotelDetails/HotelDetails";
 import HotelPNR from "@/pages/main/Hotel/HotelPNR/HotelPNR";
+import PaymentStatus from "@/pages/dashboard/FlightBookings/modals/PaymentStatus";
 
 export const router = createBrowserRouter([
   {
@@ -86,7 +87,14 @@ export const router = createBrowserRouter([
         element: <PublicOnlyRoute />,
         children: authRoutes,
       },
-
+      {
+        path: "/payment/success",
+        element: <PaymentStatus />,
+      },
+      {
+        path: "/payment/failed",
+        element: <PaymentStatus />,
+      },
       // Protected dashboard routes
       // /dashboard
       // /dashboard/profile

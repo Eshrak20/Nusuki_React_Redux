@@ -52,7 +52,7 @@ const ResetPasswordForm = ({
 }: ResetPasswordFormProps) => {
   return (
     <div className="w-full max-w-md">
-      <Card className="border-border/70 bg-card/95 shadow-2xl backdrop-blur-xl dark:shadow-black/40">
+      <Card className="border-border/70 bg-card/95 shadow-2xl backdrop-blur-xl dark:shadow-black/40 px-5 py-8">
         <CardHeader className="space-y-3 text-center">
           <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-sm bg-primary text-xl font-bold text-primary-foreground shadow-lg shadow-primary/20">
             N

@@ -20,12 +20,7 @@ import type {
 
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
@@ -55,6 +50,9 @@ type PnrTravelerFormProps = {
   setFileName: React.Dispatch<React.SetStateAction<string>>;
   setIsScanning: React.Dispatch<React.SetStateAction<boolean>>;
 
+  showPassportFields: boolean;
+  documentRequirementMessage?: string;
+
   updateTraveller: <K extends keyof PnrTravellerForm>(
     travellerIndex: number,
     field: K,
@@ -66,7 +64,6 @@ type PnrTravelerFormProps = {
     traveller: PnrTravellerForm,
   ) => void;
 };
-
 const parseDateValue = (value?: string) => {
   if (!value) return undefined;
 
@@ -144,6 +141,8 @@ const PnrTravelerForm = ({
   isLoadingSavedTravellers,
   updateTraveller,
   replaceTraveller,
+  showPassportFields,
+  documentRequirementMessage,
 }: PnrTravelerFormProps) => {
   const handleSavedTravellerSelect = (value: string) => {
     if (!value || value === "manual") {
@@ -356,108 +355,115 @@ const PnrTravelerForm = ({
           </div>
         </CardContent>
       </Card>
+      {!showPassportFields && documentRequirementMessage ? (
+        <div className="rounded-sm border border-emerald-500/20 bg-emerald-500/10 p-4 text-sm font-medium text-emerald-700 dark:text-emerald-300">
+          {documentRequirementMessage}
+        </div>
+      ) : null}
 
-      <Card className="overflow-hidden rounded-sm border-slate-200/80 bg-white/80 shadow-sm backdrop-blur dark:border-white/10 dark:bg-slate-950/60">
-        <CardHeader className="border-b bg-slate-50/80 px-5 py-4 dark:border-white/10 dark:bg-slate-900/50">
-          <CardTitle className="flex items-center gap-2 text-base font-semibold text-slate-900 dark:text-white">
-            <ShieldCheck className="h-5 w-5 text-primary" />
-            Passport Details
-          </CardTitle>
-        </CardHeader>
+      {showPassportFields ? (
+        <Card className="overflow-hidden rounded-sm border-slate-200/80 bg-white/80 shadow-sm backdrop-blur dark:border-white/10 dark:bg-slate-950/60">
+          <CardHeader className="border-b bg-slate-50/80 px-5 py-4 dark:border-white/10 dark:bg-slate-900/50">
+            <CardTitle className="flex items-center gap-2 text-base font-semibold text-slate-900 dark:text-white">
+              <ShieldCheck className="h-5 w-5 text-primary" />
+              Passport Details
+            </CardTitle>
+          </CardHeader>
 
-        <CardContent className="p-5">
-          <div className="grid gap-4 md:grid-cols-4">
-            <div className="space-y-1.5">
-              <Label className="text-sm font-medium text-slate-700 dark:text-slate-200">
-                Passport Number
-              </Label>
+          <CardContent className="p-5">
+            <div className="grid gap-4 md:grid-cols-4">
+              <div className="space-y-1.5">
+                <Label className="text-sm font-medium text-slate-700 dark:text-slate-200">
+                  Passport Number
+                </Label>
 
-              <div className="relative">
-                <IdCard className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
+                <div className="relative">
+                  <IdCard className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
 
-                <Input
-                  type="text"
-                  value={traveller.passportNumber}
-                  onChange={(event) =>
-                    updateTraveller(
-                      travellerIndex,
-                      "passportNumber",
-                      event.target.value.toUpperCase(),
-                    )
-                  }
-                  className="h-11 rounded-sm border-slate-200 bg-white/80 pl-9 uppercase shadow-sm dark:border-white/10 dark:bg-slate-950/50"
-                  placeholder="AB123456"
-                />
+                  <Input
+                    type="text"
+                    value={traveller.passportNumber}
+                    onChange={(event) =>
+                      updateTraveller(
+                        travellerIndex,
+                        "passportNumber",
+                        event.target.value.toUpperCase(),
+                      )
+                    }
+                    className="h-11 rounded-sm border-slate-200 bg-white/80 pl-9 uppercase shadow-sm dark:border-white/10 dark:bg-slate-950/50"
+                    placeholder="AB123456"
+                  />
+                </div>
               </div>
-            </div>
 
-            <div className="space-y-1.5">
-              <Label className="text-sm font-medium text-slate-700 dark:text-slate-200">
-                Nationality
-              </Label>
+              <div className="space-y-1.5">
+                <Label className="text-sm font-medium text-slate-700 dark:text-slate-200">
+                  Nationality
+                </Label>
 
-              <div className="relative">
-                <Globe2 className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
+                <div className="relative">
+                  <Globe2 className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
 
-                <Input
-                  type="text"
-                  value={traveller.passportNationality}
-                  onChange={(event) =>
-                    updateTraveller(
-                      travellerIndex,
-                      "passportNationality",
-                      event.target.value.toUpperCase(),
-                    )
-                  }
-                  className="h-11 rounded-sm border-slate-200 bg-white/80 pl-9 uppercase shadow-sm dark:border-white/10 dark:bg-slate-950/50"
-                  placeholder="BD"
-                  maxLength={2}
-                />
+                  <Input
+                    type="text"
+                    value={traveller.passportNationality}
+                    onChange={(event) =>
+                      updateTraveller(
+                        travellerIndex,
+                        "passportNationality",
+                        event.target.value.toUpperCase(),
+                      )
+                    }
+                    className="h-11 rounded-sm border-slate-200 bg-white/80 pl-9 uppercase shadow-sm dark:border-white/10 dark:bg-slate-950/50"
+                    placeholder="BD"
+                    maxLength={2}
+                  />
+                </div>
               </div>
-            </div>
 
-            <div className="space-y-1.5">
-              <Label className="text-sm font-medium text-slate-700 dark:text-slate-200">
-                Issuing Country
-              </Label>
+              <div className="space-y-1.5">
+                <Label className="text-sm font-medium text-slate-700 dark:text-slate-200">
+                  Issuing Country
+                </Label>
 
-              <div className="relative">
-                <Globe2 className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
+                <div className="relative">
+                  <Globe2 className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
 
-                <Input
-                  type="text"
-                  value={traveller.passportIssuingCountry}
-                  onChange={(event) =>
-                    updateTraveller(
-                      travellerIndex,
-                      "passportIssuingCountry",
-                      event.target.value.toUpperCase(),
-                    )
-                  }
-                  className="h-11 rounded-sm border-slate-200 bg-white/80 pl-9 uppercase shadow-sm dark:border-white/10 dark:bg-slate-950/50"
-                  placeholder="BD"
-                  maxLength={2}
-                />
+                  <Input
+                    type="text"
+                    value={traveller.passportIssuingCountry}
+                    onChange={(event) =>
+                      updateTraveller(
+                        travellerIndex,
+                        "passportIssuingCountry",
+                        event.target.value.toUpperCase(),
+                      )
+                    }
+                    className="h-11 rounded-sm border-slate-200 bg-white/80 pl-9 uppercase shadow-sm dark:border-white/10 dark:bg-slate-950/50"
+                    placeholder="BD"
+                    maxLength={2}
+                  />
+                </div>
               </div>
+
+              <DatePickerField
+                label="Passport Expiry Date"
+                value={traveller.passportExpiryDate}
+                placeholder="Select expiry date"
+                onChange={(value) =>
+                  updateTraveller(travellerIndex, "passportExpiryDate", value)
+                }
+                disabled={(date) => {
+                  const today = new Date();
+                  today.setHours(0, 0, 0, 0);
+
+                  return date < today;
+                }}
+              />
             </div>
-
-            <DatePickerField
-              label="Passport Expiry Date"
-              value={traveller.passportExpiryDate}
-              placeholder="Select expiry date"
-              onChange={(value) =>
-                updateTraveller(travellerIndex, "passportExpiryDate", value)
-              }
-              disabled={(date) => {
-                const today = new Date();
-                today.setHours(0, 0, 0, 0);
-
-                return date < today;
-              }}
-            />
-          </div>
-        </CardContent>
-      </Card>
+          </CardContent>
+        </Card>
+      ) : null}
     </div>
   );
 };

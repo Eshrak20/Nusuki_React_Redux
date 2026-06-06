@@ -20,6 +20,7 @@ const FlightBookings = () => {
 
   const bookings = data?.data.items ?? [];
   const pagination = data?.data.pagination;
+  const summary = data?.data.summary;
 
   const hasPreviousPage = page > 1;
   const hasNextPage = pagination ? page < pagination.last_page : false;
@@ -31,8 +32,8 @@ const FlightBookings = () => {
 
   return (
     <section className="space-y-5">
-      <div className="rounded-sm border bg-card p-4 shadow-sm dark:bg-card/80 sm:p-5 lg:p-6">
-        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+      <div className="overflow-hidden rounded-sm border bg-card shadow-sm dark:bg-card/80">
+        <div className="flex flex-col gap-4 p-4 sm:flex-row sm:items-center sm:justify-between sm:p-5 lg:p-6">
           <div className="min-w-0">
             <div className="flex items-center gap-2 text-sm font-semibold text-primary">
               <CalendarCheck2 className="h-4 w-4 shrink-0" />
@@ -60,10 +61,57 @@ const FlightBookings = () => {
             Refresh
           </Button>
         </div>
+
+        {summary ? (
+          <div className="border-t bg-muted/30 px-4 py-4 dark:bg-muted/10 sm:px-5 lg:px-6">
+            <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+              <div className="rounded-sm border bg-background p-4 shadow-sm dark:bg-background/50">
+                <p className="text-xs font-bold uppercase text-muted-foreground">
+                  Total Paid Amount
+                </p>
+                <p className="mt-2 text-2xl font-extrabold text-primary">
+                  {summary.currency}{" "}
+                  {summary.total_paid_amount.toLocaleString()}
+                </p>
+              </div>
+
+              <div className="rounded-sm border bg-background p-4 shadow-sm dark:bg-background/50">
+                <p className="text-xs font-bold uppercase text-muted-foreground">
+                  Upcoming Trips
+                </p>
+                <p className="mt-2 text-2xl font-extrabold text-foreground">
+                  {summary.upcoming_trips}
+                </p>
+              </div>
+
+              <div className="rounded-sm border bg-background p-4 shadow-sm dark:bg-background/50">
+                <p className="text-xs font-bold uppercase text-muted-foreground">
+                  Completed Trips
+                </p>
+                <p className="mt-2 text-2xl font-extrabold text-foreground">
+                  {summary.completed_trips}
+                </p>
+              </div>
+
+              <div className="rounded-sm border bg-background p-4 shadow-sm dark:bg-background/50">
+                <p className="text-xs font-bold uppercase text-muted-foreground">
+                  Current Page
+                </p>
+                <p className="mt-2 text-2xl font-extrabold text-foreground">
+                  {pagination?.current_page ?? page}
+                  <span className="text-sm font-bold text-muted-foreground">
+                    {" "}
+                    / {pagination?.last_page ?? 1}
+                  </span>
+                </p>
+              </div>
+            </div>
+          </div>
+        ) : null}
       </div>
 
-      {!isLoading && !isError && bookings.length > 0 ? (
-        <FlightBookingStats bookings={bookings} />
+      {!isLoading && !isError && summary ? (
+        <FlightBookingStats summary={summary} />
       ) : null}
 
       {pagination ? (

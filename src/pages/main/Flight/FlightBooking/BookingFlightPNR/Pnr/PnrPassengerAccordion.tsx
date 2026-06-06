@@ -27,6 +27,9 @@ type PnrPassengerAccordionProps = {
   setFileName: React.Dispatch<React.SetStateAction<string>>;
   setIsScanning: React.Dispatch<React.SetStateAction<boolean>>;
 
+  showPassportFields: boolean;
+  documentRequirementMessage?: string;
+
   updateTraveller: <K extends keyof PnrTravellerForm>(
     travellerIndex: number,
     field: K,
@@ -51,6 +54,8 @@ const PnrPassengerAccordion = ({
   setIsScanning,
   updateTraveller,
   replaceTraveller,
+  showPassportFields,
+  documentRequirementMessage,
 }: PnrPassengerAccordionProps) => {
   const travellersWithLabelIndex = useMemo(() => {
     const counters = {
@@ -82,47 +87,40 @@ const PnrPassengerAccordion = ({
         defaultValue="traveller-0"
         className="w-full"
       >
-        {travellersWithLabelIndex.map(
-          ({ traveller, labelIndex }, index) => (
-            <AccordionItem
-              key={`${traveller.passengerType}-${index}`}
-              value={`traveller-${index}`}
-              className="rounded-sm border bg-card"
-            >
-              <AccordionTrigger className="rounded-t-lg px-4 transition-colors hover:bg-muted/50 hover:no-underline">
-                <span className="font-semibold uppercase text-card-foreground">
-                  {getPassengerLabel(
-                    traveller.passengerType,
-                    labelIndex,
-                  )}
-                </span>
-              </AccordionTrigger>
+        {travellersWithLabelIndex.map(({ traveller, labelIndex }, index) => (
+          <AccordionItem
+            key={`${traveller.passengerType}-${index}`}
+            value={`traveller-${index}`}
+            className="rounded-sm border bg-card"
+          >
+            <AccordionTrigger className="rounded-t-lg px-4 transition-colors hover:bg-muted/50 hover:no-underline">
+              <span className="font-semibold uppercase text-card-foreground">
+                {getPassengerLabel(traveller.passengerType, labelIndex)}
+              </span>
+            </AccordionTrigger>
 
-              <AccordionContent className="space-y-6 p-4">
-                <PnrTravelerForm
-                  travellerIndex={index}
-                  traveller={traveller}
-                  savedTravellers={savedTravellers.filter(
-                    (item) =>
-                      item.passenger_type ===
-                      traveller.passengerType,
-                  )}
-                  isLoadingSavedTravellers={
-                    isLoadingSavedTravellers
-                  }
-                  fileUploaded={fileUploaded}
-                  fileName={fileName}
-                  isScanning={isScanning}
-                  setFileUploaded={setFileUploaded}
-                  setFileName={setFileName}
-                  setIsScanning={setIsScanning}
-                  updateTraveller={updateTraveller}
-                  replaceTraveller={replaceTraveller}
-                />
-              </AccordionContent>
-            </AccordionItem>
-          ),
-        )}
+            <AccordionContent className="space-y-6 p-4">
+              <PnrTravelerForm
+                travellerIndex={index}
+                traveller={traveller}
+                savedTravellers={savedTravellers.filter(
+                  (item) => item.passenger_type === traveller.passengerType,
+                )}
+                isLoadingSavedTravellers={isLoadingSavedTravellers}
+                fileUploaded={fileUploaded}
+                fileName={fileName}
+                isScanning={isScanning}
+                setFileUploaded={setFileUploaded}
+                setFileName={setFileName}
+                setIsScanning={setIsScanning}
+                updateTraveller={updateTraveller}
+                replaceTraveller={replaceTraveller}
+                showPassportFields={showPassportFields}
+                documentRequirementMessage={documentRequirementMessage}
+              />
+            </AccordionContent>
+          </AccordionItem>
+        ))}
       </Accordion>
     </div>
   );

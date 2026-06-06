@@ -52,6 +52,17 @@ export interface FlightJourneyRequested {
   departure_date: string;
 }
 
+export interface FlightPassportRequirement {
+  required: boolean;
+  message: string;
+}
+
+export interface FlightDocumentRequirements {
+  route_type: "domestic" | "international" | string;
+  is_domestic: boolean;
+  passport: FlightPassportRequirement;
+}
+
 export interface FlightJourneyItem {
   journey_index: number;
   requested: FlightJourneyRequested;
@@ -66,6 +77,7 @@ export interface FlightRawInfo {
 }
 
 export interface FlightDetailResultItem extends FlightResultItem {
+  document_requirements?: FlightDocumentRequirements;
   pricing_source?: string;
   distribution_model?: string;
   journeys: FlightJourneyItem[];
@@ -103,6 +115,10 @@ export interface FlightDetailMeta {
 export interface FlightDetailResponseData {
   search_id: string;
   flight_id: string;
+
+  is_bookable: boolean;
+  document_requirements: FlightDocumentRequirements;
+
   search: FlightSearchSnapshot;
   flight: FlightDetailResultItem;
   original_flight: FlightDetailResultItem;

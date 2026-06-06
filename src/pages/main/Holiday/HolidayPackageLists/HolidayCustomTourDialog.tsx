@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { format } from "date-fns";
-import { CalendarIcon, Loader2, Send } from "lucide-react";
+import { CalendarIcon, Loader2, Send, Sparkles } from "lucide-react";
 import { usePostContactInfoMutation } from "@/redux/api/formSubApi";
 
 import { cn } from "@/lib/utils";
@@ -87,17 +87,30 @@ ${form.note}
 
       <DialogContent
         className="
-          w-[95vw] !max-w-2xl rounded-sm
-          [&>button]:text-primary
+          w-[95vw] !max-w-2xl overflow-hidden rounded-sm p-6
+          [&>button]:text-white
           [&>button]:opacity-100
-          [&>button:hover]:bg-primary/10
-          [&>button:hover]:text-primary
+          [&>button:hover]:bg-white/15
+          [&>button:hover]:text-white
         "
       >
-        <DialogHeader>
-          <DialogTitle className="text-xl font-bold text-foreground">
-            Request a Customised Tour
-          </DialogTitle>
+        <DialogHeader className="-mx-6 -mt-6 mb-6 bg-primary px-6 py-5 text-white">
+          <div className="flex items-start gap-3">
+            <div className="mt-1 flex h-10 w-10 shrink-0 items-center justify-center rounded-sm bg-white/15">
+              <Sparkles className="h-5 w-5 text-white" />
+            </div>
+
+            <div>
+              <DialogTitle className="text-xl font-bold text-white">
+                Request a Customised Tour
+              </DialogTitle>
+
+              <p className="mt-1 text-sm leading-6 text-white/80">
+                Tell us your preferred destination, date, budget and travel
+                plan. Our team will contact you with a custom package.
+              </p>
+            </div>
+          </div>
         </DialogHeader>
 
         <div className="grid gap-4 md:grid-cols-2">
@@ -205,7 +218,7 @@ ${form.note}
         <Button
           onClick={handleSubmit}
           disabled={isLoading}
-          className="mt-2 h-11 w-full text-white! dark:text-black! hover:text-primary! dark:hover:text-red-400! rounded-sm"
+          className="mt-2 h-11 w-full rounded-sm text-white! hover:text-primary! dark:text-black! dark:hover:text-red-400!"
         >
           {isLoading ? (
             <Loader2 size={18} className="mr-2 animate-spin" />

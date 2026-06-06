@@ -43,13 +43,15 @@ const CommonHomeLayout = ({
         />
 
         {searchSection && (
-          <div className="absolute left-1/2 top- z-20 w-full max-w-6xl -translate-x-1/2 px-4 sm:top-28 md:-top-20">
+          <div className="absolute left-1/2 -top-20 z-20 w-full max-w-6xl -translate-x-1/2 px-4 md:-top-20">
             {searchSection}
           </div>
         )}
       </section>
 
-      <section className={`mx-auto max-w-7xl px-4 ${promotionTopSpacing}`}>
+      <section
+        className={`mx-auto max-w-7xl px-4 mt-110 md:mt-0 ${promotionTopSpacing}`}
+      >
         <CMPromotions />
       </section>
 

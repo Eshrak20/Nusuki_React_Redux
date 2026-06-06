@@ -1,8 +1,11 @@
 export type FlightBookingStatus =
   | "pnr_created"
+  | "pnr_cancelled"
   | "cancelled"
   | "ticketed"
   | "pending"
+  | "paid"
+  | "expired"
   | string;
 
 export type FlightPaymentStatus =
@@ -10,6 +13,7 @@ export type FlightPaymentStatus =
   | "paid"
   | "voided"
   | "refunded"
+  | "expired"
   | string;
 
 export type FlightTripType = "one_way" | "round_way" | "multi_way" | string;
@@ -73,9 +77,14 @@ export type FlightBookingItem = {
   booking_status: FlightBookingStatus;
   payment_status: FlightPaymentStatus;
   is_ticketable: boolean;
+
+  // New API field
+  ttl_at: string | null;
+
   payment_ttl: string | null;
   ticketed_at: string | null;
   cancelled_at: string | null;
+
   pricing: FlightBookingPricing;
   passengers: FlightBookingPassenger[];
   segments: FlightBookingSegment[];
@@ -89,7 +98,26 @@ export type FlightBookingPagination = {
   last_page: number;
 };
 
+export type FlightBookingSummary = {
+  total_bookings: number;
+  pending_payment: number;
+  paid: number;
+  unpaid: number;
+  ticketed: number;
+  cancelled: number;
+  expired: number;
+  refunded: number;
+  voided: number;
+  upcoming_trips: number;
+  completed_trips: number;
+  total_paid_amount: number;
+  currency: string;
+  by_booking_status: Record<string, number>;
+  by_payment_status: Record<string, number>;
+};
+
 export type FlightBookingHistoryData = {
+  summary: FlightBookingSummary;
   items: FlightBookingItem[];
   pagination: FlightBookingPagination;
 };
@@ -106,12 +134,9 @@ export type GetFlightBookingsParams = {
   size?: number;
 };
 
-
-
 export type FlightBookingDetailResponse = {
   success: boolean;
   message: string;
   data: FlightBookingItem;
   code: number;
 };
-

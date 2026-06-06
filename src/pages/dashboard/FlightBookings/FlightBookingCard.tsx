@@ -178,11 +178,9 @@ const FlightBookingCard = ({ booking, onBookingExpired }: Props) => {
         return;
       }
 
-      toast.success("Ticket cancelled successfully.", {
-        description:
-          response.message ||
-          "Your air ticket has been cancelled successfully.",
-      });
+      toast.success(
+        response.message || "Your air ticket has been cancelled successfully.",
+      );
 
       setCancelOpen(false);
     } catch (error: unknown) {

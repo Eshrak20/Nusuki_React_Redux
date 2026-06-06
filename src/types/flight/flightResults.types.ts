@@ -1,3 +1,5 @@
+import type { FlightDocumentRequirements } from "./flightTicket.types";
+
 export interface AirlineInfo {
     code: string;
     name: string;
@@ -143,17 +145,18 @@ export interface FlightJourneyItem {
 }
 
 export interface FlightResultItem {
-    id: number;
-    airline: AirlineInfo;
-    segments: FlightSegmentItem[];
-    journeys?: FlightJourneyItem[];
-    summary: FlightSummary;
-    pricing: FlightPricing;
-    fare: FlightFare;
-    baggage: FlightBaggage;
-    baggage_allowances: FlightBaggage[];
-    flight_id: string;
-    search_id: string;
+  id: number;
+  document_requirements?: FlightDocumentRequirements;
+  airline: AirlineInfo;
+  segments: FlightSegmentItem[];
+  journeys?: FlightJourneyItem[];
+  summary: FlightSummary;
+  pricing: FlightPricing;
+  fare: FlightFare;
+  baggage: FlightBaggage;
+  baggage_allowances: FlightBaggage[];
+  flight_id: string;
+  search_id: string;
 }
 
 
