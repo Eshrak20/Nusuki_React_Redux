@@ -96,7 +96,7 @@ const DestinationSelector = ({
       <PopoverTrigger asChild>
         <div
           className={cn(
-            "flex-1 w-full border rounded-sm cursor-pointer bg-background min-h-16 flex items-center transition-all px-4 ",
+            "flex-1 min-w-0 w-full border rounded-sm cursor-pointer bg-background min-h-16 flex items-center transition-all px-3",
             openStates[`${index}-${type}`]
               ? "border-primary ring-1 ring-primary"
               : "border-input hover:border-primary",

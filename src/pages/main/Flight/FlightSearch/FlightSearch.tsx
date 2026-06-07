@@ -1,8 +1,8 @@
 import { useRef, useEffect } from "react";
-import { Search } from "lucide-react"; // Added AlertCircle for icons
+import { Search } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { toast } from "sonner"; // Assuming you use Shadcn (which uses Sonner)
+import { toast } from "sonner";
 
 import type { RootState } from "@/redux/store";
 import type { SearchDests } from "@/types/flight/flightHome.types";
@@ -12,7 +12,6 @@ import {
   setSearchField,
 } from "@/redux/features/flightSearchSlice";
 
-// Components
 import DepartureDate from "./DepartureDate";
 import ReturnDate from "./ReturnDate";
 import FareType from "./FareType";
@@ -29,7 +28,10 @@ interface FlightSearchProps {
   ) => void;
 }
 
-const FlightSearch = ({ searchDests, onSearchSubmit }: FlightSearchProps) => {
+const FlightSearch = ({
+  searchDests,
+  onSearchSubmit,
+}: FlightSearchProps) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const searchData = useSelector((state: RootState) => state.flightSearch);
@@ -39,13 +41,16 @@ const FlightSearch = ({ searchDests, onSearchSubmit }: FlightSearchProps) => {
 
   const totalTravelers =
     (searchData?.travelers?.adults || 0) +
-    (searchData?.travelers?.children?.length || 0) + // Use .length here
+    (searchData?.travelers?.children?.length || 0) +
     (searchData?.travelers?.infants || 0);
 
   useEffect(() => {
     if (!searchData.fromDest && searchDests.length > 0) {
       dispatch(
-        setSearchField({ fromDest: searchDests[0], toDest: searchDests[1] }),
+        setSearchField({
+          fromDest: searchDests[0],
+          toDest: searchDests[1],
+        }),
       );
     }
   }, [searchDests, searchData.fromDest, dispatch]);
@@ -87,7 +92,9 @@ const FlightSearch = ({ searchDests, onSearchSubmit }: FlightSearchProps) => {
 
     dispatch(resetFilters());
     dispatch(resetFlightUiState());
+
     const DEFAULT_PAGE_SIZE = 20;
+
     const requestBody = buildFlightSearchPayload({
       searchData,
       currentPage: 1,
@@ -103,7 +110,9 @@ const FlightSearch = ({ searchDests, onSearchSubmit }: FlightSearchProps) => {
       return;
     }
 
-    navigate("/flight/details", { state: { searchPayload: requestBody } });
+    navigate("/flight/details", {
+      state: { searchPayload: requestBody },
+    });
   };
 
   if (!searchData || !searchData.travelers) return null;
@@ -113,24 +122,38 @@ const FlightSearch = ({ searchDests, onSearchSubmit }: FlightSearchProps) => {
       {/* Top Row */}
       <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 mb-6">
         <TripTypeSelector />
+
         <div className="flex gap-7 lg:items-start lg:gap-3 w-full md:w-auto mx-4 lg:mx-0">
           <TravelerSection totalTravelers={totalTravelers} />
           <FlightClassDropdown />
         </div>
       </div>
 
-      {/* Middle Row */}
+      {/* Search Row */}
       <div
-        className="grid grid-cols-1 sm:grid-cols-2 lg:flex items-stretch lg:items-center gap-2 sm:gap-3 mb-6"
         ref={dropdownRef}
+        className="
+          grid
+          grid-cols-1
+          sm:grid-cols-2
+          lg:grid-cols-2
+          xl:flex
+          items-stretch
+          xl:items-center
+          gap-2
+          sm:gap-3
+          mb-6
+        "
       >
-        <div className="col-span-1 sm:col-span-2 lg:flex-1">
+        {/* Destination */}
+        <div className="col-span-1 sm:col-span-2 lg:col-span-2 xl:flex-1 min-w-0">
           <DestinationSelector searchDests={searchDests} />
         </div>
 
         {!isMultiWay && (
           <>
-            <div className="col-span-1 min-w-40">
+            {/* Departure */}
+            <div className="col-span-1 min-w-0">
               <DepartureDate
                 departureDate={searchData.departureDate}
                 returnDate={searchData.returnDate}
@@ -138,7 +161,9 @@ const FlightSearch = ({ searchDests, onSearchSubmit }: FlightSearchProps) => {
                 setSearchField={setSearchField}
               />
             </div>
-            <div className="col-span-1 min-w-40">
+
+            {/* Return */}
+            <div className="col-span-1 min-w-0">
               <ReturnDate
                 departureDate={searchData.departureDate}
                 returnDate={searchData.returnDate}
@@ -150,9 +175,31 @@ const FlightSearch = ({ searchDests, onSearchSubmit }: FlightSearchProps) => {
           </>
         )}
 
+        {/* Search Button */}
         <button
           onClick={handleSearch}
-          className="col-span-1 sm:col-span-2 w-full h-12 lg:w-14 lg:h-14 bg-primary hover:bg-primary/90 dark:hover:bg-primary/80 text-primary-foreground rounded-sm lg:rounded-sm flex items-center justify-center transition-all duration-200 shadow-lg active:scale-95"
+          className="
+            col-span-1
+            sm:col-span-2
+            lg:col-span-2
+            xl:col-auto
+            w-full
+            h-12
+            xl:w-14
+            xl:h-14
+            bg-primary
+            hover:bg-primary/90
+            dark:hover:bg-primary/80
+            text-primary-foreground
+            rounded-sm
+            flex
+            items-center
+            justify-center
+            transition-all
+            duration-200
+            shadow-lg
+            active:scale-95
+          "
         >
           <Search className="w-6 h-6" />
         </button>
@@ -160,8 +207,9 @@ const FlightSearch = ({ searchDests, onSearchSubmit }: FlightSearchProps) => {
 
       <FareType
         fareType={searchData.fareType}
-        onChange={(value) => dispatch(setSearchField({ fareType: value }))}
-        // No extra logic needed here now!
+        onChange={(value) =>
+          dispatch(setSearchField({ fareType: value }))
+        }
       />
     </div>
   );

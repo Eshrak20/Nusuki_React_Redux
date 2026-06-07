@@ -3,7 +3,7 @@ import appImage from "@/assets/Images/app.webp";
 import appStore from "@/assets/Images/App-Store.svg";
 import qrImage from "@/assets/Images/qrImage.webp";
 
-const playsoteImage =
+const playStoreImage =
   "https://cdn.sharetrip.net/sharetrip_net/production/public/images/sample-images/Play-Store.svg";
 
 const AppSection = () => {
@@ -56,12 +56,12 @@ const AppSection = () => {
             rel="noopener noreferrer"
             className="hover:scale-105 transition-transform"
           >
-            <img src={playsoteImage} alt="Play Store" className="h-12 w-auto" />
+            <img src={playStoreImage} alt="Play Store" className="h-12 w-auto" />
           </a>
         </motion.div>
       </div>
 
-      <div className="relative w-full">
+      <div className="relative md:max-w-3xl md:mx-auto lg:w-full">
         {/* App Image */}
         <img
           src={appImage}

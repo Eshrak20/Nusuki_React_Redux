@@ -28,8 +28,8 @@ const CMDestination = ({ dests }: destinationProps) => {
                 breakpoints={{
                     320: { slidesPerView: 1, spaceBetween: 16 },
                     640: { slidesPerView: 2, spaceBetween: 20 },
-                    1024: { slidesPerView: 3, spaceBetween: 24 },
-                    1280: { slidesPerView: 4, spaceBetween: 24 },
+                    1200: { slidesPerView: 3, spaceBetween: 24 },
+                    1400: { slidesPerView: 4, spaceBetween: 24 },
                 }}
                 modules={[Autoplay, Pagination]}
                 className="pb-14 px-2!" // Space for pagination dots
