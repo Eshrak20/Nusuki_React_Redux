@@ -129,20 +129,19 @@ const CMPromotions = () => {
         </motion.div>
       </div>
 
-      {totalPages > 1 && (
+      {/* {totalPages > 1 && (
         <div className="flex justify-center items-center gap-3 mt-8">
           {Array.from({ length: totalPages }).map((_, index) => (
             <button
               key={index}
               type="button"
               onClick={() => setCurrentPage(index)}
-              className={`h-2 rounded-full transition-all duration-500 ${
-                activePage === index ? "w-10 bg-primary" : "w-2 bg-primary/20"
-              }`}
+              className={`h-2 rounded-full transition-all duration-500 ${activePage === index ? "w-10 bg-primary" : "w-2 bg-primary/20"
+                }`}
             />
           ))}
         </div>
-      )}
+      )} */}
     </div>
   );
 };

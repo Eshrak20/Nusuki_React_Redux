@@ -52,14 +52,14 @@ const CommonHomeLayout = ({
       </section>
 
       <section
-        className={`${sectionContainer} mt-110 md:mt-0 ${promotionTopSpacing}`}
+        className={`${sectionContainer} mt-110 md:mt-0 2xl:px-20 mb-14 ${promotionTopSpacing}`}
       >
         <CMPromotions />
       </section>
 
       {showDestinations && (
         <>
-          <section className={`${sectionContainer} py-10`}>
+          <section className={`${sectionContainer} py-10 `}>
             <div className="mx-auto mb-8 max-w-3xl text-center">
               <h2 className="mb-3 text-2xl font-bold md:text-3xl">
                 Most Popular Destinations
