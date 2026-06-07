@@ -34,8 +34,10 @@ const CommonHomeLayout = ({
         ? "pt-20 md:pt-24"
         : "pt-28 md:pt-36";
 
+  const sectionContainer = "mx-auto w-full px-4 md:max-w-4xl 2xl:max-w-7xl";
+
   return (
-    <main className="bg-white text-slate-900 dark:bg-gray-950 dark:text-white">
+    <main className="bg-gray-100 text-slate-900 dark:bg-gray-950 dark:text-white">
       <section className="relative">
         <VideoBanner
           title="Welcome to Nusuki"
@@ -43,21 +45,21 @@ const CommonHomeLayout = ({
         />
 
         {searchSection && (
-          <div className="absolute left-1/2 -top-20 z-20 w-full max-w-6xl -translate-x-1/2 px-4 md:-top-20">
+          <div className="absolute left-1/2 -top-20 z-20 w-full px-4 md:max-w-4xl 2xl:max-w-6xl -translate-x-1/2 md:-top-20">
             {searchSection}
           </div>
         )}
       </section>
 
       <section
-        className={`mx-auto max-w-7xl px-4 mt-110 md:mt-0 ${promotionTopSpacing}`}
+        className={`${sectionContainer} mt-110 md:mt-0 ${promotionTopSpacing}`}
       >
         <CMPromotions />
       </section>
 
       {showDestinations && (
         <>
-          <section className="mx-auto max-w-7xl px-4 py-10">
+          <section className={`${sectionContainer} py-10`}>
             <div className="mx-auto mb-8 max-w-3xl text-center">
               <h2 className="mb-3 text-2xl font-bold md:text-3xl">
                 Most Popular Destinations
@@ -70,15 +72,15 @@ const CommonHomeLayout = ({
             <CMDestination dests={popularDests} />
           </section>
 
-          <section className="mx-auto max-w-7xl px-4 py-8">
+          <section className={`${sectionContainer} py-8`}>
             <CMCollection />
           </section>
 
-          <section className="mx-auto max-w-7xl px-4 py-8">
+          <section className={`${sectionContainer} py-8`}>
             <CMTourPackages />
           </section>
 
-          <section className="mx-auto max-w-7xl px-4 py-10">
+          <section className={`${sectionContainer} py-10`}>
             <div className="mx-auto mb-8 max-w-3xl text-center">
               <h2 className="mb-3 text-2xl font-bold md:text-3xl">
                 Dream Destinations

@@ -96,14 +96,14 @@ const DestinationSelector = ({
       <PopoverTrigger asChild>
         <div
           className={cn(
-            "flex-1 w-full border rounded-sm cursor-pointer bg-background min-h-18 flex items-center transition-all px-4 py-2",
+            "flex-1 w-full border rounded-sm cursor-pointer bg-background min-h-16 flex items-center transition-all px-4 ",
             openStates[`${index}-${type}`]
               ? "border-primary ring-1 ring-primary"
               : "border-input hover:border-primary",
           )}
         >
           <div className="flex items-center gap-3 w-full">
-            <span className="text-2xl font-bold w-12 text-center text-foreground">
+            <span className="text-xl font-bold w-12 text-center text-foreground">
               {currentDest?.iata_code || "---"}
             </span>
             <div className="flex flex-col truncate border-l pl-3 border-border">

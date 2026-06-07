@@ -114,45 +114,6 @@ const FlightBookings = () => {
         <FlightBookingStats summary={summary} />
       ) : null}
 
-      {pagination ? (
-        <div className="flex flex-col gap-3 rounded-sm border bg-card p-4 shadow-sm dark:bg-card/80 sm:flex-row sm:items-center sm:justify-between">
-          <p className="text-sm leading-6 text-muted-foreground">
-            Showing page{" "}
-            <span className="font-bold text-foreground">
-              {pagination.current_page}
-            </span>{" "}
-            of{" "}
-            <span className="font-bold text-foreground">
-              {pagination.last_page}
-            </span>{" "}
-            · Total{" "}
-            <span className="font-bold text-foreground">
-              {pagination.total}
-            </span>{" "}
-            bookings
-          </p>
-
-          <div className="grid grid-cols-2 gap-2 sm:flex sm:items-center">
-            <Button
-              variant="outline"
-              disabled={!hasPreviousPage || isFetching}
-              onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
-              className="h-10 rounded-sm font-bold"
-            >
-              Previous
-            </Button>
-
-            <Button
-              disabled={!hasNextPage || isFetching}
-              onClick={() => setPage((prev) => prev + 1)}
-              className="h-10 rounded-sm font-bold"
-            >
-              Next
-            </Button>
-          </div>
-        </div>
-      ) : null}
-
       {isError ? (
         <div className="rounded-sm border border-destructive/20 bg-destructive/10 p-6 text-center">
           <h3 className="text-lg font-bold text-destructive">
@@ -194,6 +155,44 @@ const FlightBookings = () => {
               onBookingExpired={handleBookingExpired}
             />
           ))}
+        </div>
+      ) : null}
+      {pagination ? (
+        <div className="flex flex-col gap-3 rounded-sm border bg-card p-4 shadow-sm dark:bg-card/80 sm:flex-row sm:items-center sm:justify-between">
+          <p className="text-sm leading-6 text-muted-foreground">
+            Showing page{" "}
+            <span className="font-bold text-foreground">
+              {pagination.current_page}
+            </span>{" "}
+            of{" "}
+            <span className="font-bold text-foreground">
+              {pagination.last_page}
+            </span>{" "}
+            · Total{" "}
+            <span className="font-bold text-foreground">
+              {pagination.total}
+            </span>{" "}
+            bookings
+          </p>
+
+          <div className="grid grid-cols-2 gap-2 sm:flex sm:items-center">
+            <Button
+              variant="outline"
+              disabled={!hasPreviousPage || isFetching}
+              onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
+              className="h-10 rounded-sm font-bold"
+            >
+              Previous
+            </Button>
+
+            <Button
+              disabled={!hasNextPage || isFetching}
+              onClick={() => setPage((prev) => prev + 1)}
+              className="h-10 rounded-sm font-bold"
+            >
+              Next
+            </Button>
+          </div>
         </div>
       ) : null}
     </section>

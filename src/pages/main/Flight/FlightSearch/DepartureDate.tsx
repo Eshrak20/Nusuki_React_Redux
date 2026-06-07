@@ -46,11 +46,11 @@ const DepartureDate: React.FC<DepartureDateProps> = ({
             {selectedDate ? format(selectedDate, "EEE, dd MMM yyyy") : "Select date"}
           </div>
 
-          {selectedDate && (
+          {/* {selectedDate && (
             <div className="mt-1 text-[11px] text-muted-foreground">
               {format(selectedDate, "MMMM yyyy")}
             </div>
-          )}
+          )} */}
         </div>
       </PopoverTrigger>
 

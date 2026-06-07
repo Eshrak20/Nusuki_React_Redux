@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import {
   AlertCircle,
-  BadgeCheck,
+  Check,
+  Copy,
   CreditCard,
   ExternalLink,
   Loader2,
@@ -38,6 +39,7 @@ const FlightTicketPaymentModal = ({
   const [paymentInfo, setPaymentInfo] =
     useState<InitiateFlightPaymentData | null>(null);
   const [errorMessage, setErrorMessage] = useState("");
+  const [copied, setCopied] = useState(false);
 
   const [initiatePayment, { isLoading }] =
     useInitiateFlightBookingPaymentMutation();
@@ -48,6 +50,23 @@ const FlightTicketPaymentModal = ({
   const isCancelled = booking.booking_status === "cancelled";
 
   const canPay = Boolean(bookingCode) && !isTicketed && !isCancelled;
+
+  const displayBookingCode = paymentInfo?.booking_code || bookingCode;
+
+  const handleCopyBookingCode = async () => {
+    if (!displayBookingCode) return;
+
+    try {
+      await navigator.clipboard.writeText(displayBookingCode);
+      setCopied(true);
+
+      setTimeout(() => {
+        setCopied(false);
+      }, 1500);
+    } catch (error) {
+      console.error("Copy failed:", error);
+    }
+  };
 
   const handleInitiatePayment = async () => {
     if (!bookingCode) {
@@ -101,6 +120,7 @@ const FlightTicketPaymentModal = ({
     if (!nextOpen) {
       setPaymentInfo(null);
       setErrorMessage("");
+      setCopied(false);
     }
   };
 
@@ -114,20 +134,69 @@ const FlightTicketPaymentModal = ({
   return (
     <Dialog open={open} onOpenChange={handleModalChange}>
       <DialogContent className="max-h-[92vh] overflow-y-auto border-none p-0 sm:max-w-2xl">
-        <div className="overflow-hidden rounded-sm bg-background">
-          <DialogHeader className="border-b bg-muted/40 px-5 py-4">
-            <DialogTitle className="flex items-center gap-2 text-xl font-bold">
-              <ShieldCheck className="h-5 w-5 text-primary" />
-              SSLCommerz Payment
-            </DialogTitle>
+        <div className="overflow-hidden rounded-sm bg-background shadow-2xl">
+          <DialogHeader className="relative overflow-hidden bg-primary px-5 py-6 text-primary-foreground">
+            <div className="pointer-events-none absolute -right-10 -top-10 h-36 w-36 rounded-full bg-primary-foreground/10 blur-2xl" />
+            <div className="pointer-events-none absolute -bottom-12 left-10 h-32 w-32 rounded-full bg-primary-foreground/10 blur-2xl" />
+
+            <div className="relative flex items-start gap-3">
+              <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-primary-foreground/15 ring-1 ring-primary-foreground/20">
+                <ShieldCheck className="h-6 w-6" />
+              </span>
+
+              <div>
+                <DialogTitle className="text-xl font-extrabold">
+                  Secure Payment
+                </DialogTitle>
+
+                <p className="mt-1 text-sm text-primary-foreground/80">
+                  Complete your payment safely through SSLCommerz.
+                </p>
+              </div>
+            </div>
           </DialogHeader>
 
           <div className="space-y-5 p-5">
             <PaymentBookingSummary booking={booking} />
 
+            <div className="rounded-sm border bg-card p-4 shadow-sm">
+              <div className="mb-2 flex items-center justify-between gap-3">
+                <p className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
+                  Booking Code
+                </p>
+
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  onClick={handleCopyBookingCode}
+                  disabled={!displayBookingCode}
+                  className="h-8 rounded-sm px-2 text-xs font-bold"
+                >
+                  {copied ? (
+                    <>
+                      <Check className="mr-1 h-3.5 w-3.5 text-primary" />
+                      Copied
+                    </>
+                  ) : (
+                    <>
+                      <Copy className="mr-1 h-3.5 w-3.5" />
+                      Copy
+                    </>
+                  )}
+                </Button>
+              </div>
+
+              <p className="break-all rounded-sm bg-muted/40 px-3 py-2 text-sm font-extrabold text-foreground">
+                {displayBookingCode || "N/A"}
+              </p>
+            </div>
+
             {isLoading ? (
-              <div className="rounded-sm border bg-muted/20 p-6 text-center">
-                <Loader2 className="mx-auto h-8 w-8 animate-spin text-primary" />
+              <div className="rounded-sm border bg-muted/20 p-6 text-center shadow-sm">
+                <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-primary/10">
+                  <Loader2 className="h-7 w-7 animate-spin text-primary" />
+                </div>
 
                 <h3 className="mt-4 text-lg font-extrabold">
                   Creating secure payment link...
@@ -140,9 +209,11 @@ const FlightTicketPaymentModal = ({
             ) : null}
 
             {!isLoading && errorMessage ? (
-              <div className="rounded-sm border border-destructive/30 bg-destructive/5 p-4">
+              <div className="rounded-sm border border-destructive/30 bg-destructive/5 p-4 shadow-sm">
                 <div className="flex gap-3">
-                  <AlertCircle className="mt-0.5 h-5 w-5 shrink-0 text-destructive" />
+                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-destructive/10">
+                    <AlertCircle className="h-5 w-5 text-destructive" />
+                  </span>
 
                   <div>
                     <h3 className="font-bold text-destructive">
@@ -170,41 +241,16 @@ const FlightTicketPaymentModal = ({
 
             {!isLoading && paymentInfo ? (
               <div className="space-y-4">
-                <div className="rounded-sm border bg-card p-4 shadow-sm">
-                  <div className="mb-4 flex items-center gap-2 text-sm font-bold text-primary">
-                    <BadgeCheck className="h-4 w-4" />
-                    Payment Link Ready
+                <div className="rounded-sm border border-primary/20 bg-primary/5 p-4">
+                  <div className="flex items-center gap-2 text-sm font-bold text-primary">
+                    <Check className="h-4 w-4" />
+                    Payment link is ready
                   </div>
 
-                  <div className="grid gap-3 sm:grid-cols-2">
-                    <div className="rounded-sm border bg-muted/20 p-3">
-                      <p className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">
-                        Booking Code
-                      </p>
-                      <p className="mt-1 break-all text-sm font-extrabold">
-                        {paymentInfo.booking_code}
-                      </p>
-                    </div>
-
-                    <div className="rounded-sm border bg-muted/20 p-3">
-                      <p className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">
-                        Amount
-                      </p>
-                      <p className="mt-1 text-sm font-extrabold">
-                        {paymentInfo.currency}{" "}
-                        {Number(paymentInfo.amount).toLocaleString()}
-                      </p>
-                    </div>
-
-                    <div className="rounded-sm border bg-muted/20 p-3 sm:col-span-2">
-                      <p className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">
-                        Transaction ID
-                      </p>
-                      <p className="mt-1 break-all text-sm font-extrabold">
-                        {paymentInfo.tran_id}
-                      </p>
-                    </div>
-                  </div>
+                  <p className="mt-2 text-xs leading-5 text-muted-foreground">
+                    Sensitive payment information is hidden for your security.
+                    Click the button below to continue to SSLCommerz.
+                  </p>
                 </div>
 
                 <Button

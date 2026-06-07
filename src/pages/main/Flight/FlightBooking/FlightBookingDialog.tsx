@@ -28,7 +28,11 @@ const FlightBookingDialog = ({
   searchId,
   onContinue,
 }: Props) => {
-  const [showDetails, setShowDetails] = useState(false);
+  const [detailsState, setDetailsState] = useState<{
+    key: string;
+    open: boolean;
+  } | null>(null);
+
   const { timeText } = useSharedFlightTimer();
 
   const lastTriggeredKeyRef = useRef<string>("");
@@ -67,6 +71,24 @@ const FlightBookingDialog = ({
 
   const title = useMemo(() => getTripTitle(flight), [flight]);
 
+  const detailsKey = useMemo(() => {
+    if (!flight) return "";
+
+    return `${pnrFlightId}-${pnrSearchId}-${flight.segments.length}`;
+  }, [flight, pnrFlightId, pnrSearchId]);
+
+  const isSingleFlight = flight?.segments.length === 1;
+
+  const isDetailsOpen =
+    detailsState?.key === detailsKey ? detailsState.open : isSingleFlight;
+
+  const handleToggleDetails = () => {
+    setDetailsState((prev) => ({
+      key: detailsKey,
+      open: prev?.key === detailsKey ? !prev.open : !isSingleFlight,
+    }));
+  };
+
   const handleContinue = () => {
     if (!pnrFlightId || !pnrSearchId) return;
 
@@ -78,16 +100,16 @@ const FlightBookingDialog = ({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="h-[88vh] w-[98vw]! max-w-375! mt-10 overflow-y-auto border-none p-0 shadow-2xl dark:bg-[#0b1220] sm:rounded-sm">
+      <DialogContent className="h-[88vh] w-[98vw]! max-w-375! -mt-10 overflow-y-auto border-none p-0 shadow-2xl dark:bg-[#0b1220] sm:rounded-sm">
         <DialogTitle className="sr-only">Flight booking details</DialogTitle>
 
-       <button
-  type="button"
-  onClick={() => onOpenChange(false)}
-  className="absolute right-4 top-4 z-30 rounded-sm border border-black/15 bg-white/90 p-1 text-[#666] transition hover:bg-white dark:border-white/10 dark:bg-[#111827] dark:text-white/70 dark:hover:bg-[#1a2335]"
->
-  <X className="h-5 w-5" />
-</button>
+        <button
+          type="button"
+          onClick={() => onOpenChange(false)}
+          className="absolute right-4 top-4 z-30 rounded-sm border border-black/15 bg-white/90 p-1 text-[#666] transition hover:bg-white dark:border-white/10 dark:bg-[#111827] dark:text-white/70 dark:hover:bg-[#1a2335]"
+        >
+          <X className="h-5 w-5" />
+        </button>
 
         {isFetching ? (
           <FlightDetailState variant="loading" />
@@ -98,8 +120,8 @@ const FlightBookingDialog = ({
             message="Please try again."
           />
         ) : (
-     <div className="flex min-h-full flex-col">
-  <div className="flex-1 px-4 py-6 md:px-8 xl:px-10">
+          <div className="flex min-h-full flex-col">
+            <div className="flex-1 px-4 py-6 md:px-8 xl:px-10">
               <div className="mx-auto w-full max-w-7xl">
                 <div className="mb-6 pt-4">
                   <h2 className="mx-8 text-center text-[18px] font-extrabold uppercase tracking-tight text-[#17306f] dark:text-[#8fb4ff] md:text-[34px] lg:mx-5 lg:text-[28px]">
@@ -124,8 +146,8 @@ const FlightBookingDialog = ({
                     <BookingJourneyTimeline flight={flight} />
 
                     <BookingFlightDetailsAccordion
-                      open={showDetails}
-                      onToggle={() => setShowDetails((prev) => !prev)}
+                      open={isDetailsOpen}
+                      onToggle={handleToggleDetails}
                       flight={flight}
                     />
                   </div>

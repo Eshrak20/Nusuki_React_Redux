@@ -27,6 +27,12 @@ type BookingFlightPNRFormProps = {
   documentRequirementMessage?: string;
 };
 
+const getStringValue = (value: unknown): string => {
+  if (typeof value === "string") return value;
+  if (typeof value === "number") return String(value);
+  return "";
+};
+
 const BookingFlightPNRForm = ({
   flightId,
   searchId,
@@ -41,20 +47,38 @@ const BookingFlightPNRForm = ({
     (state: RootState) => state.flightSearch.travelers,
   );
 
+  const loggedUser = useSelector((state: RootState) => state.auth.user);
+
+  const loggedUserPhone = useMemo(() => {
+    const user = loggedUser as {
+      phone?: unknown;
+      phone_number?: unknown;
+      mobile?: unknown;
+    } | null;
+
+    return (
+      getStringValue(user?.phone) ||
+      getStringValue(user?.phone_number) ||
+      getStringValue(user?.mobile)
+    );
+  }, [loggedUser]);
+
+  const loggedUserEmail = useMemo(() => {
+    const user = loggedUser as {
+      email?: unknown;
+    } | null;
+
+    return getStringValue(user?.email);
+  }, [loggedUser]);
+
   const safeInitialForm = useMemo<PnrFormState>(() => {
     const searchBasedTravellers = buildInitialPnrTravellers(searchTravelers);
 
     return {
-      // Important:
-      // Only create empty travellers from flight search count/type.
-      // Do not merge logged-in user profile data here.
       travelers: searchBasedTravellers,
 
-      // Important:
-      // Keep contact fields empty.
-      // User will type manually or select traveller from dropdown.
-      contactPhone: "",
-      contactEmail: "",
+      contactPhone: loggedUserPhone || initialForm.contactPhone || "",
+      contactEmail: loggedUserEmail || initialForm.contactEmail || "",
 
       sendBookingEmail: initialForm.sendBookingEmail ?? true,
       paymentMethod: initialForm.paymentMethod || "CK",
@@ -62,9 +86,9 @@ const BookingFlightPNRForm = ({
 
       saveTravellers: initialForm.saveTravellers ?? true,
     };
-  }, [initialForm, searchTravelers]);
+  }, [initialForm, searchTravelers, loggedUserPhone, loggedUserEmail]);
 
-  const [form, setForm] = useState<PnrFormState>(safeInitialForm);
+  const [form, setForm] = useState<PnrFormState>(() => safeInitialForm);
 
   const [fileUploaded, setFileUploaded] = useState(false);
   const [isScanning, setIsScanning] = useState(false);
@@ -214,63 +238,6 @@ const BookingFlightPNRForm = ({
       <PnrCreatingLoader show={isCreatingPnr} />
 
       <div className="space-y-6">
-        <div className="rounded-sm border bg-card p-4">
-          <h3 className="mb-4 text-base font-semibold text-card-foreground">
-            Contact Information
-          </h3>
-
-          <div className="grid gap-4 md:grid-cols-2">
-            <div>
-              <label className="mb-1 block text-sm font-medium">
-                Contact Phone
-              </label>
-              <input
-                type="tel"
-                value={form.contactPhone}
-                onChange={(event) =>
-                  updateForm("contactPhone", event.target.value)
-                }
-                className="w-full rounded-sm border px-3 py-2"
-                placeholder="+8801712345678"
-              />
-            </div>
-
-            <div>
-              <label className="mb-1 block text-sm font-medium">
-                Contact Email
-              </label>
-              <input
-                type="email"
-                value={form.contactEmail}
-                onChange={(event) =>
-                  updateForm("contactEmail", event.target.value)
-                }
-                className="w-full rounded-sm border px-3 py-2"
-                placeholder="example@gmail.com"
-              />
-            </div>
-          </div>
-
-          <div className="mt-4 flex items-center gap-2">
-            <input
-              id="saveTravellers"
-              type="checkbox"
-              checked={form.saveTravellers}
-              onChange={(event) =>
-                updateForm("saveTravellers", event.target.checked)
-              }
-              className="h-4 w-4"
-            />
-
-            <label
-              htmlFor="saveTravellers"
-              className="cursor-pointer text-sm font-medium"
-            >
-              Save traveller information for future booking
-            </label>
-          </div>
-        </div>
-
         <PnrPassengerAccordion
           form={form}
           savedTravellers={savedTravellers}
@@ -287,7 +254,67 @@ const BookingFlightPNRForm = ({
           documentRequirementMessage={documentRequirementMessage}
         />
       </div>
+      <div className="rounded-sm border border-slate-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-slate-950/70">
+        <div className="mb-5">
+          <h3 className="text-base font-bold text-slate-900 dark:text-white">
+            Contact Information
+          </h3>
+          <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
+            This contact information will be used for booking communication.
+          </p>
+        </div>
 
+        <div className="grid gap-4 md:grid-cols-2">
+          <div className="space-y-2">
+            <label className="block text-sm font-semibold text-slate-600 dark:text-slate-300">
+              Contact Phone
+            </label>
+            <input
+              type="tel"
+              value={form.contactPhone}
+              onChange={(event) =>
+                updateForm("contactPhone", event.target.value)
+              }
+              className="h-12 w-full rounded-sm border border-slate-200 bg-white px-4 text-sm text-slate-900 shadow-sm outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/20 dark:border-white/10 dark:bg-slate-950 dark:text-white"
+              placeholder="+8801712345678"
+            />
+          </div>
+
+          <div className="space-y-2">
+            <label className="block text-sm font-semibold text-slate-600 dark:text-slate-300">
+              Contact Email
+            </label>
+            <input
+              type="email"
+              value={form.contactEmail}
+              onChange={(event) =>
+                updateForm("contactEmail", event.target.value)
+              }
+              className="h-12 w-full rounded-sm border border-slate-200 bg-white px-4 text-sm text-slate-900 shadow-sm outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/20 dark:border-white/10 dark:bg-slate-950 dark:text-white"
+              placeholder="example@gmail.com"
+            />
+          </div>
+        </div>
+
+        <div className="mt-5 flex items-center gap-2 rounded-xl border border-slate-100 bg-slate-50 px-4 py-3 dark:border-white/10 dark:bg-slate-900/50">
+          <input
+            id="saveTravellers"
+            type="checkbox"
+            checked={form.saveTravellers}
+            onChange={(event) =>
+              updateForm("saveTravellers", event.target.checked)
+            }
+            className="h-4 w-4 accent-primary"
+          />
+
+          <label
+            htmlFor="saveTravellers"
+            className="cursor-pointer text-sm font-medium text-slate-700 dark:text-slate-300"
+          >
+            Save traveller information for future booking
+          </label>
+        </div>
+      </div>
       <PnrSubmitFooter
         isCreatingPnr={isCreatingPnr}
         isScanning={isScanning}

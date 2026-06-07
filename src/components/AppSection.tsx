@@ -8,7 +8,7 @@ const playsoteImage =
 
 const AppSection = () => {
   return (
-    <section className="relative pt-20 pb-0 max-w-7xl mx-auto overflow-hidden bg-white dark:bg-gray-950">
+    <section className="relative pt-20 pb-0 max-w-7xl mx-auto overflow-hidden bg-gray-100 dark:bg-gray-950">
       <div className="px-4 text-center">
         {/* Header Text */}
         <motion.div
@@ -56,11 +56,7 @@ const AppSection = () => {
             rel="noopener noreferrer"
             className="hover:scale-105 transition-transform"
           >
-            <img
-              src={playsoteImage}
-              alt="Play Store"
-              className="h-12 w-auto"
-            />
+            <img src={playsoteImage} alt="Play Store" className="h-12 w-auto" />
           </a>
         </motion.div>
       </div>
@@ -75,10 +71,10 @@ const AppSection = () => {
 
         {/* Overlay Gradient */}
         <div
-          className="absolute hidden lg:block inset-x-0 bottom-0 h-40 
-          bg-linear-to-t 
-          from-white dark:from-gray-950 
-          via-white/70 dark:via-gray-950/70 
+          className="absolute hidden lg:block inset-x-0 bottom-0 h-40
+          bg-linear-to-t
+          from-primary/40
+          via-primary/10
           to-transparent"
         />
       </div>

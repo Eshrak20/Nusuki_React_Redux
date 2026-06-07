@@ -11,7 +11,7 @@ type PnrCreatingLoaderProps = {
 
 const PnrCreatingLoader = ({
   show,
-  title = "Creating your PNR...",
+  title = "Creating your Booking...",
   description = "Please wait while we confirm passenger details and prepare your booking.",
 }: PnrCreatingLoaderProps) => {
   if (!show) return null;
