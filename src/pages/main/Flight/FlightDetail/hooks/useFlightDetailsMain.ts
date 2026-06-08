@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useReducer } from "react";
+import { useEffect, useMemo } from "react";
 import { addDays, isAfter, isSameDay, startOfDay } from "date-fns";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -9,38 +9,9 @@ import { setSearchField, setUiField } from "@/redux/features/flightSearchSlice";
 import { startFlightSession } from "@/redux/features/flightSessionSlice";
 import { useFlightSearchTicketListsQuery } from "@/redux/api/flightApi/flightSearch";
 
-import {
-  buildFlightSearchPayload,
-  buildSearchResetKey,
-  getClientFilteredFlights,
-  paginateFlights,
-  sortFlightsClientSide,
-} from "../flightDetails.helpers";
-
-import {
-  cacheReducer,
-  createInitialCacheState,
-} from "../flightDetails.cache";
+import { buildFlightSearchPayload } from "../flightDetails.helpers";
 
 const DEFAULT_PAGE_SIZE = 20;
-const DEFAULT_SERVER_SORT_BY = "price" as const;
-const DEFAULT_SERVER_SORT_ORDER = "asc" as const;
-
-const EMPTY_FILTERS = {
-  refundability: [] as string[],
-  stops: [] as number[],
-  airlines: [] as string[],
-  layover_cities: [] as string[],
-  flight_schedules: {
-    departure: [] as string[],
-    arrival: [] as string[],
-  },
-  aircraft: [] as string[],
-  price_min: null as number | null,
-  price_max: null as number | null,
-  layover_duration_min: null as number | null,
-  layover_duration_max: null as number | null,
-};
 
 export const useFlightDetailsMain = () => {
   const dispatch = useDispatch();
@@ -62,44 +33,15 @@ export const useFlightDetailsMain = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, []);
 
-  const searchResetKey = useMemo(
-    () => buildSearchResetKey(searchData),
-    [searchData],
-  );
-
-  const [cacheState, cacheDispatch] = useReducer(
-    cacheReducer,
-    searchResetKey,
-    createInitialCacheState,
-  );
-
-  const isSameSearch = cacheState.searchKey === searchResetKey;
-
-  const serverPage = isSameSearch ? cacheState.serverPage : 1;
-  const serverTotalPages = isSameSearch ? cacheState.serverTotalPages : 1;
-  const serverTotalFlights = isSameSearch ? cacheState.serverTotalFlights : 0;
-  const pageCache = cacheState.pageCache;
-
-  const serverQuerySearchData = useMemo(() => {
-    return {
-      ...searchData,
-      filters: EMPTY_FILTERS,
-      ui: {
-        ...searchData.ui,
-        selectedAirlineCode: null,
-      },
-    };
-  }, [searchData]);
-
   const apiPayload = useMemo(() => {
     return buildFlightSearchPayload({
-      searchData: serverQuerySearchData,
-      currentPage: serverPage,
+      searchData,
+      currentPage: searchData.ui.currentPage,
       pageSize: DEFAULT_PAGE_SIZE,
-      sortBy: DEFAULT_SERVER_SORT_BY,
-      sortOrder: DEFAULT_SERVER_SORT_ORDER,
+      sortBy: searchData.ui.sortBy,
+      sortOrder: searchData.ui.sortOrder,
     });
-  }, [serverPage, serverQuerySearchData]);
+  }, [searchData]);
 
   const shouldSkip =
     searchData.tripType === "multi_way"
@@ -109,77 +51,24 @@ export const useFlightDetailsMain = () => {
   const { data, isLoading, isError, isFetching, error, refetch } =
     useFlightSearchTicketListsQuery(apiPayload, {
       skip: shouldSkip,
-      refetchOnMountOrArgChange: false,
+      refetchOnMountOrArgChange: true,
       refetchOnFocus: false,
       refetchOnReconnect: false,
     });
 
   const response = data as FlightSearchApiResponse | undefined;
 
-  useEffect(() => {
-    if (!response) return;
-
-    const incomingFlights = response?.data?.flights ?? [];
-    const incomingPagination = response?.data?.pagination;
-
-    cacheDispatch({
-      type: "MERGE_RESPONSE",
-      payload: {
-        searchKey: searchResetKey,
-        page: serverPage,
-        flights: incomingFlights,
-        totalPages: incomingPagination?.total_pages ?? 1,
-        totalFlights: incomingPagination?.total ?? 0,
-      },
-    });
-  }, [response, searchResetKey, serverPage]);
-
-  const cachedFlights = useMemo(() => {
-    return Object.keys(pageCache)
-      .map(Number)
-      .sort((a, b) => a - b)
-      .flatMap((page) => pageCache[page] ?? []);
-  }, [pageCache]);
-
-  const filteredFlights = useMemo(() => {
-    return getClientFilteredFlights({
-      flights: cachedFlights,
-      filters: searchData.filters,
-      selectedAirlineCode: ui.selectedAirlineCode,
-    });
-  }, [cachedFlights, searchData.filters, ui.selectedAirlineCode]);
-
-  const sortedFlights = useMemo(() => {
-    return sortFlightsClientSide({
-      flights: filteredFlights,
-      sortBy: ui.sortBy,
-      sortOrder: ui.sortOrder,
-    });
-  }, [filteredFlights, ui.sortBy, ui.sortOrder]);
-
   const visibleFlights = useMemo(() => {
-    return paginateFlights({
-      flights: sortedFlights,
-      currentPage: ui.currentPage,
-      pageSize: DEFAULT_PAGE_SIZE,
-    });
-  }, [sortedFlights, ui.currentPage]);
-
-  const loadedPageNumbers = useMemo(() => {
-    return Object.keys(pageCache).map(Number);
-  }, [pageCache]);
-
-  const highestLoadedPage = loadedPageNumbers.length
-    ? Math.max(...loadedPageNumbers)
-    : 0;
+    return response?.data?.flights ?? [];
+  }, [response]);
 
   const totalFlightsForHeader =
     response?.data?.pagination?.total ??
     response?.data?.statistics?.available_flights ??
-    serverTotalFlights;
+    0;
 
   const totalPagesForPagination =
-    response?.data?.pagination?.total_pages ?? serverTotalPages;
+    response?.data?.pagination?.total_pages ?? 1;
 
   const shouldShowPagination =
     totalPagesForPagination > 1 && totalFlightsForHeader > DEFAULT_PAGE_SIZE;
@@ -196,25 +85,9 @@ export const useFlightDetailsMain = () => {
 
   const handlePageChange = (page: number) => {
     if (page === ui.currentPage) return;
+    if (page < 1 || page > totalPagesForPagination) return;
 
     dispatch(setUiField({ currentPage: page }));
-
-    const hasThisPageCached = !!pageCache[page];
-
-    const shouldFetchFromApi =
-      !hasThisPageCached &&
-      page > highestLoadedPage &&
-      page <= totalPagesForPagination;
-
-    if (shouldFetchFromApi) {
-      cacheDispatch({
-        type: "SET_SERVER_PAGE",
-        payload: {
-          searchKey: searchResetKey,
-          page,
-        },
-      });
-    }
 
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
