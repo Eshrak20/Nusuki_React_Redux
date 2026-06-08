@@ -10,7 +10,7 @@ import FlightBookingStats from "./FlightBookingStats";
 
 const FlightBookings = () => {
   const [page, setPage] = useState(1);
-  const size = 12;
+  const size = 20;
 
   const { data, isLoading, isFetching, isError, refetch } =
     useGetFlightBookingsQuery({

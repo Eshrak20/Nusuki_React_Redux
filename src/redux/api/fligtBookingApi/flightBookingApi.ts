@@ -29,11 +29,15 @@ export const flightBookingApi = laravelApi.injectEndpoints({
     >({
       query: (params) => {
         const page = params?.page ?? 1;
-        const size = params?.size ?? 10;
+        const size = params?.size ?? 20;
 
         return {
-          url: `flights/bookings?page=${page}&size=${size}`,
+          url: "flights/bookings",
           method: "GET",
+          params: {
+            page,
+            size,
+          },
         };
       },
       providesTags: ["FlightBookings", "MyTravellers"],
@@ -88,7 +92,7 @@ export const flightBookingApi = laravelApi.injectEndpoints({
       InitiateFlightPaymentRequest
     >({
       query: ({ bookingCode }) => ({
-        url: `/flights/bookings/${bookingCode}/initiate-payment`,
+        url: `flights/bookings/${bookingCode}/initiate-payment`,
         method: "POST",
       }),
       invalidatesTags: ["FlightBookings"],
