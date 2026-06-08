@@ -1,5 +1,6 @@
 import { AlertCircle, Loader2 } from "lucide-react";
 import { motion } from "framer-motion";
+import { FlightMiniLoader } from "./FlightMiniLoader";
 
 type FlightDetailStateVariant = "loading" | "error";
 
@@ -34,8 +35,8 @@ const FlightDetailState = ({
         <div className="relative flex flex-col items-center">
           {isLoading ? (
             <>
-              <div className="relative mb-5 flex h-20 w-20 items-center justify-center rounded-full bg-primary/10 ring-8 ring-primary/5">
-                <Loader2 className="h-10 w-10 animate-spin text-primary" />
+              <div className="mb-5">
+                <FlightMiniLoader />
               </div>
 
               <h3 className="text-lg font-bold tracking-tight text-foreground">

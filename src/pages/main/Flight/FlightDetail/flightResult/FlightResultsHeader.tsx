@@ -19,6 +19,7 @@ import { MAX_RETRY_COUNT, shouldShowFlightLoadingState } from "@/lib/utils";
 import type { FetchBaseQueryError } from "@reduxjs/toolkit/query";
 import type { SerializedError } from "@reduxjs/toolkit";
 import { FlightMiniLoader } from "@/components/skeletons/FlightMiniLoader";
+import FlightSuperMiniLoader from "@/components/skeletons/FlightSuperMiniLoader";
 
 export type SortBy = "price" | "duration" | "departure_at";
 export type SortOrder = "asc" | "desc";
@@ -77,7 +78,7 @@ const FlightResultsHeader = ({
   });
 
   if (shouldShowLoadingState) {
-    return <FlightMiniLoader />;
+    return <FlightSuperMiniLoader />;
   }
 
   if (isError) {
