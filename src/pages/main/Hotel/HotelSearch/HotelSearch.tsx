@@ -186,19 +186,23 @@ export default function HotelSearch() {
 
   return (
     <section className="relative z-30 w-full">
-      <div className="relative mx-auto max-w-6xl px-4">
+      <div className="relative mx-auto w-full px-4 md:max-w-4xl lg:max-w-6xl">
         <div className="overflow-visible rounded-sm border border-slate-200 bg-white shadow-xl dark:border-[#272047] dark:bg-[#050018] lg:shadow-2xl">
-          <div className="p-4 sm:p-6 md:p-8">
-            <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-[1.2fr_1fr_1fr_1fr_0.8fr_auto]">
+          <div className="p-4 sm:p-5 md:p-6 lg:p-8">
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-[1.25fr_1fr_1fr_1fr_0.8fr_auto] md:gap-3 lg:grid-cols-[1.2fr_1fr_1fr_1fr_0.8fr_auto] lg:gap-4">
               <div className="relative">
                 <SearchField
                   label="Destination"
-                  icon={<MapPin className="h-5 w-5 text-slate-600 dark:text-[#8B93FF]" />}
+                  icon={
+                    <MapPin className="h-5 w-5 text-slate-600 dark:text-[#8B93FF]" />
+                  }
                 >
                   <div className="flex items-center gap-1">
                     <input
                       value={destination}
-                      onChange={(event) => handleDestinationChange(event.target.value)}
+                      onChange={(event) =>
+                        handleDestinationChange(event.target.value)
+                      }
                       className="mt-1 w-full bg-transparent text-sm font-semibold text-slate-800 outline-none placeholder:text-slate-400 dark:text-white dark:placeholder:text-slate-500"
                       placeholder="Where are you going?"
                     />
@@ -267,10 +271,12 @@ export default function HotelSearch() {
                   <div className="cursor-pointer">
                     <SearchField
                       label="Radius"
-                      icon={<Compass className="h-5 w-5 text-slate-400 dark:text-[#8B93FF]" />}
+                      icon={
+                        <Compass className="h-5 w-5 text-slate-400 dark:text-[#8B93FF]" />
+                      }
                     >
                       <div className="mt-1 flex items-center justify-between">
-                        <span className="text-sm font-semibold text-slate-800 dark:text-white">
+                        <span className="text-xs font-semibold text-slate-800 dark:text-white">
                           {radius} Miles
                         </span>
                       </div>
@@ -292,8 +298,8 @@ export default function HotelSearch() {
                           setOpenRadius(false);
                         }}
                         className={`w-full rounded-sm px-3 py-2 text-left text-sm transition-colors ${radius === value
-                            ? "bg-primary text-primary-foreground dark:bg-[#8B93FF] dark:text-[#050018]"
-                            : "text-slate-700 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-[#151222]"
+                          ? "bg-primary text-primary-foreground dark:bg-[#8B93FF] dark:text-[#050018]"
+                          : "text-slate-700 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-[#151222]"
                           }`}
                       >
                         {value} Miles
@@ -307,16 +313,14 @@ export default function HotelSearch() {
                 type="button"
                 onClick={handleSearch}
                 disabled={isLoading}
-                className="min-h-15 bg-primary px-10 text-primary-foreground hover:bg-primary/90 dark:bg-[#8B93FF] dark:text-[#050018] dark:hover:bg-[#9AA1FF] md:w-18"
+                className="h-full min-h-12 bg-primary px-5 text-primary-foreground hover:bg-primary/90 dark:bg-[#8B93FF] dark:text-[#050018] dark:hover:bg-[#9AA1FF] md:w-14 lg:min-h-15 lg:w-18 lg:px-10"
               >
                 {isLoading ? (
-                  <>
-                    <Loader2 className="h-4 w-4 animate-spin" />
-                  </>
+                  <Loader2 className="h-4 w-4 animate-spin" />
                 ) : (
                   <>
-                    <Search className="h-6 w-6" />
-                    <span className="text-sm font-semibold lg:hidden">
+                    <Search className="h-5 w-5 lg:h-6 lg:w-6" />
+                    <span className="text-sm font-semibold md:hidden">
                       Search Hotels
                     </span>
                   </>

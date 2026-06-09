@@ -45,7 +45,7 @@ const CommonHomeLayout = ({
         />
 
         {searchSection && (
-          <div className="absolute left-1/2 -top-20 z-20 w-full px-4 md:max-w-4xl 2xl:max-w-6xl -translate-x-1/2 md:-top-20">
+          <div className="absolute left-1/2 -top-20 z-20 w-full px-4 md:max-w-5xl 2xl:max-w-6xl -translate-x-1/2 md:-top-20">
             {searchSection}
           </div>
         )}
