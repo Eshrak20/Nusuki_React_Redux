@@ -2,7 +2,6 @@ import { Navigate, Outlet, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 import type { RootState } from "@/redux/store";
 import { useGetUserProfileQuery } from "@/redux/api/authApi/authApi";
-import { FlightMiniLoader } from "@/components/skeletons/FlightMiniLoader";
 
 const ProtectedRoute = () => {
   const location = useLocation();

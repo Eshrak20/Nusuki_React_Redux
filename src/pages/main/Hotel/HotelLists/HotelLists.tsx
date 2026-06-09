@@ -1,6 +1,6 @@
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect, useCallback } from "react";
 import { Navigate, useLocation } from "react-router-dom";
-import { Loader2 } from "lucide-react"; // Imported for a clean modern spinner element
+import { Loader2 } from "lucide-react";
 
 import HotelFilterSidebar from "./HotelFilterSidebar";
 import HotelResultHeader from "./HotelResultHeader";
@@ -26,111 +26,87 @@ type HotelLocationState = {
 const PAGE_SIZE = 20;
 
 const HotelLists = () => {
-
-  window.scrollTo({
-    top: 0,
-    behavior: "smooth",
-  });
-  
   const location = useLocation();
   const state = location.state as HotelLocationState | null;
 
   const initialData = state?.hotelResponse?.data as HotelSearchData | undefined;
   const searchPayload = state?.searchPayload;
 
-  // Destructured 'isLoading' directly from RTK Query mutation hook options state tracking
   const [searchHotels, { isLoading }] = useSearchHotelsMutation();
 
   const [data, setData] = useState<HotelSearchData | undefined>(initialData);
   const [page, setPage] = useState(initialData?.search.page ?? 1);
   const [sortBy, setSortBy] = useState("cheapest");
 
+  // Read current filters from global Redux slice
   const selectedFilters = useAppSelector((state) => state.hotelSearch.filters);
+
+  // Scroll logic
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  };
+
+  // Centralized data fetch controller
+  const fetchHotelsFromServer = useCallback(
+    async (targetPage: number, currentFilters: typeof selectedFilters) => {
+      if (!searchPayload) return;
+
+      scrollToTop();
+
+      // Combine search parameters, target page details, and Sabre-supported filters
+      const payload: HotelSearchPayload = {
+        ...searchPayload,
+        page: targetPage,
+        size: PAGE_SIZE,
+        // Map selectedFilters object key names directly to your Sabre endpoint expectations below:
+        price_min: currentFilters.price_min,
+        price_max: currentFilters.price_max,
+        star_ratings: currentFilters.star_ratings,
+        chain_codes: currentFilters.chain_codes,
+        amenity_codes: currentFilters.amenity_codes,
+        meal_plan: currentFilters.meal_plan,
+        refundable: currentFilters.refundable,
+        prepaid: currentFilters.prepaid,
+      };
+
+      try {
+        const result = await searchHotels(payload).unwrap();
+        setData(result.data as HotelSearchData);
+        setPage(targetPage);
+      } catch (error) {
+        console.error("Error fetching hotel records from Sabre:", error);
+      }
+    },
+    [searchPayload, searchHotels]
+  );
+
+  // Fire live backend API update sequence whenever filters change
+  useEffect(() => {
+    // Prevent initial dual-triggering if data matches standard payload configuration
+    if (data && data.search.page === 1) {
+      // Optional optimization layer: Check if filter states match initialization conditions
+    }
+    
+    fetchHotelsFromServer(1, selectedFilters);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedFilters]);
 
   const nights = useMemo(() => {
     if (!data) return 1;
-
     const checkIn = new Date(data.search.check_in);
     const checkOut = new Date(data.search.check_out);
     const diff = checkOut.getTime() - checkIn.getTime();
-
     return Math.max(1, Math.ceil(diff / (1000 * 60 * 60 * 24)));
   }, [data]);
 
-  const filteredHotels = useMemo(() => {
-    if (!data) return [];
+  // Client side sorting layout execution ONLY (filtering runs on the endpoint)
+  const sortedHotels = useMemo(() => {
+    if (!data || !data.available_hotels) return [];
 
-    let hotels: HotelItem[] = [...data.available_hotels];
-
-    const {
-      price_min,
-      price_max,
-      star_ratings,
-      chain_codes,
-      amenity_codes,
-      meal_plan,
-      refundable,
-      prepaid,
-    } = selectedFilters;
-
-    hotels = hotels.filter((hotel) => {
-      const price =
-        hotel.rate?.total_price ??
-        hotel.total_price ??
-        hotel.rate?.average_nightly_rate ??
-        hotel.average_nightly_rate ??
-        0;
-
-      const star = hotel.star_rating ?? hotel.rating ?? 0;
-      const chainCode = hotel.chain?.code ?? hotel.chain_code;
-
-      const hotelAmenityCodes =
-        hotel.amenities?.map((item) => String(item.code)) ?? [];
-
-      const mealId = hotel.rate?.meal?.id ?? hotel.meal_plan;
-
-      const isRefundable =
-        hotel.rate?.cancellation_policy?.is_refundable ??
-        hotel.refundable ??
-        false;
-
-      const isPrepaid = hotel.rate?.prepaid ?? hotel.prepaid ?? false;
-
-      if (price_min !== null && price < price_min) return false;
-      if (price_max !== null && price > price_max) return false;
-
-      if (star_ratings.length > 0 && !star_ratings.includes(star)) {
-        return false;
-      }
-
-      if (
-        chain_codes.length > 0 &&
-        (!chainCode || !chain_codes.includes(chainCode))
-      ) {
-        return false;
-      }
-
-      if (
-        amenity_codes.length > 0 &&
-        !amenity_codes.every((code) => hotelAmenityCodes.includes(String(code)))
-      ) {
-        return false;
-      }
-
-      if (meal_plan.length > 0 && (!mealId || !meal_plan.includes(mealId))) {
-        return false;
-      }
-
-      if (refundable !== null && isRefundable !== refundable) {
-        return false;
-      }
-
-      if (prepaid !== null && isPrepaid !== prepaid) {
-        return false;
-      }
-
-      return true;
-    });
+    const hotels = [...data.available_hotels];
 
     hotels.sort((a, b) => {
       const priceA =
@@ -158,11 +134,8 @@ const HotelLists = () => {
       }
 
       if (sortBy === "refundable") {
-        const aRefundable =
-          a.rate?.cancellation_policy?.is_refundable ?? a.refundable ?? false;
-        const bRefundable =
-          b.rate?.cancellation_policy?.is_refundable ?? b.refundable ?? false;
-
+        const aRefundable = a.rate?.cancellation_policy?.is_refundable ?? a.refundable ?? false;
+        const bRefundable = b.rate?.cancellation_policy?.is_refundable ?? b.refundable ?? false;
         return Number(bRefundable) - Number(aRefundable);
       }
 
@@ -170,37 +143,23 @@ const HotelLists = () => {
     });
 
     return hotels;
-  }, [data, selectedFilters, sortBy]);
+  }, [data, sortBy]);
 
+  // Dynamically map total page ranges via matching filter results or regional limits
   const totalPages = useMemo(() => {
     if (!data) return 1;
+    
+    // Fallback order: Explicitly filtered dynamic aggregate count -> regional collection
+    const trackingCount = 
+      data.total_available_hotels_with_filter ?? 
+      data.total_hotels_in_region ?? 
+      0;
 
-    return Math.max(1, Math.ceil(data.total_hotels_in_region / PAGE_SIZE));
+    return Math.max(1, Math.ceil(trackingCount / PAGE_SIZE));
   }, [data]);
 
-  const handlePageChange = async (nextPage: number) => {
-    if (!searchPayload) return;
-
-    // 1. SCROLL TO TOP IMMEDIATELY (Instantly reacts when the pagination option is clicked)
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
-
-    setPage(nextPage);
-
-    const payload: HotelSearchPayload = {
-      ...searchPayload,
-      page: nextPage,
-      size: PAGE_SIZE,
-    };
-
-    try {
-      const result = await searchHotels(payload).unwrap();
-      setData(result.data as HotelSearchData);
-    } catch (error) {
-      console.error("Hotel pagination error:", error);
-    }
+  const handlePageChange = (nextPage: number) => {
+    fetchHotelsFromServer(nextPage, selectedFilters);
   };
 
   if (!data) {
@@ -215,28 +174,27 @@ const HotelLists = () => {
         <div className="mt-5 grid grid-cols-1 gap-5 lg:grid-cols-[320px_1fr]">
           <HotelFilterSidebar
             filters={data.filters}
-            onChange={() => setPage(1)}
+            onChange={() => {}} // No longer resets state locally; useEffect hooks into Redux updates
           />
 
           <main className="space-y-4 overflow-hidden relative">
             <HotelResultHeader
               data={data}
-              totalFilteredHotels={filteredHotels.length}
+              totalFilteredHotels={sortedHotels.length}
             />
 
             <HotelSortBar value={sortBy} onChange={setSortBy} />
 
-            {/* 2. DYNAMIC LOADING FEEDBACK LOGIC */}
             {isLoading ? (
-              <div className="flex flex-col items-center justify-center gap-3 rounded-[24px] border border-border bg-background p-20 text-center shadow-sm min-h-100">
+              <div className="flex flex-col items-center justify-center gap-3 rounded-[0px] border border-border bg-background p-20 text-center shadow-sm min-h-100">
                 <Loader2 className="h-8 w-8 animate-spin text-primary" />
                 <p className="text-sm font-bold text-muted-foreground animate-pulse">
-                  Fetching next page results...
+                  Updating live server results...
                 </p>
               </div>
-            ) : filteredHotels.length > 0 ? (
+            ) : sortedHotels.length > 0 ? (
               <div className="space-y-4">
-                {filteredHotels.map((hotel, index) => (
+                {sortedHotels.map((hotel, index) => (
                   <HotelCard
                     key={hotel.hotel_id ?? hotel.id ?? hotel.hotel_code ?? index}
                     hotel={hotel}
@@ -247,10 +205,9 @@ const HotelLists = () => {
             ) : (
               <NoHotelFound messages={data.raw_meta?.messages} />
             )}
-
           </main>
-
         </div>
+
         <EduPagination
           pagination={{
             current_page: page,

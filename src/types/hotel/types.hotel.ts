@@ -5,7 +5,6 @@ export type HotelRoom = {
   children: number;
   child_ages?: number[];
 };
-
 export type HotelSearchPayload = {
   check_in: string;
   check_out: string;
@@ -21,6 +20,16 @@ export type HotelSearchPayload = {
   sort_by: string;
   sort_order: "ASC" | "DESC";
   include_images: boolean;
+
+  // Add optional server-side filter params here 👇
+  price_min?: number | null;
+  price_max?: number | null;
+  star_ratings?: number[];
+  chain_codes?: string[];
+  amenity_codes?: string[] | number[];
+  meal_plan?: string[];
+  refundable?: boolean | null;
+  prepaid?: boolean | null;
 };
 
 export type HotelSearchResponse = {
