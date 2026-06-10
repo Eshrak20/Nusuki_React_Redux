@@ -57,10 +57,11 @@ export const useFlightDetailsMain = () => {
     });
 
   const response = data as FlightSearchApiResponse | undefined;
-
   const visibleFlights = useMemo(() => {
     return response?.data?.flights ?? [];
   }, [response]);
+
+
 
   const totalFlightsForHeader =
     response?.data?.pagination?.total ??

@@ -26,35 +26,31 @@ const Footer = () => {
       ?.sort((a, b) => a.position - b.position) ?? [];
 
   return (
-    <footer className="relative w-full overflow-hidden border-t border-primary/20 bg-primary text-primary-foreground dark:bg-background dark:text-foreground dark:border-border">
+    <footer className="relative w-full overflow-hidden border-t border-primary/20 bg-primary text-primary-foreground dark:border-border dark:bg-background dark:text-foreground">
       {/* Background Decoration */}
-      <div className="pointer-events-none absolute inset-0 opacity-10 dark:opacity-5">
-        {/* <div className="absolute -top-24 -left-24 h-72 w-72 rounded-full bg-white blur-3xl" />
-        <div className="absolute top-1/3 -right-20 h-80 w-80 rounded-full bg-white blur-3xl" />
-        <div className="absolute bottom-0 left-1/3 h-64 w-64 rounded-full bg-white blur-3xl" /> */}
-      </div>
+      <div className="pointer-events-none absolute inset-0 opacity-10 dark:opacity-5" />
 
       <div className="relative mx-auto max-w-360 px-4 pt-14 pb-8">
         {/* ==================================================
             TOP SECTION : BRAND + NAV LINKS
         ================================================== */}
-        <div className="grid grid-cols-1 gap-8 rounded-md border border-white/15 bg-white/10 p-6 shadow-2xl backdrop-blur-md sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-12 lg:p-8 dark:border-border dark:bg-card/60">
+        <div className="grid grid-cols-1 gap-8 rounded-md border border-white/15 p-6 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-12 lg:p-8 dark:border-border">
           {/* Brand */}
-          <div className="lg:col-span-3 space-y-4">
-            <div className="rounded-sm bg-white/95 px-4 py-3 w-fit shadow-md dark:bg-transparent dark:shadow-none dark:px-0 dark:py-0">
+          <div className="space-y-4 lg:col-span-3">
+            <div className="w-fit rounded-sm bg-white/95 px-4 py-3 shadow-md dark:bg-transparent dark:px-0 dark:py-0 dark:shadow-none">
               <img
                 src={logoWhite}
                 alt="Logo"
-                className="dark:hidden h-16 w-fit"
+                className="h-16 w-fit dark:hidden"
               />
               <img
                 src={logoDark}
                 alt="Logo"
-                className="hidden dark:block h-16 w-fit"
+                className="hidden h-16 w-fit dark:block"
               />
             </div>
 
-            <div className="space-y-1 text-xs uppercase leading-6 text-white/80 dark:text-muted-foreground">
+            <div className="space-y-1 text-xs leading-6 text-white/80 uppercase dark:text-muted-foreground">
               <p>MOCAT CERTIFICATE NO : 0013878</p>
               <p>ATAB CERTIFICATE NO : MN-00005396</p>
               <p>IATA CERTIFICATE NO : 42343350</p>
@@ -70,22 +66,34 @@ const Footer = () => {
             </h4>
             <ul className="space-y-2 text-sm text-white/75 dark:text-muted-foreground">
               <li>
-                <Link to="/about" className="transition hover:text-white dark:hover:text-primary">
+                <Link
+                  to="/about"
+                  className="transition hover:text-white dark:hover:text-primary"
+                >
                   About Us
                 </Link>
               </li>
               <li>
-                <Link to="/terms" className="transition hover:text-white dark:hover:text-primary">
+                <Link
+                  to="/terms"
+                  className="transition hover:text-white dark:hover:text-primary"
+                >
                   Terms & Conditions
                 </Link>
               </li>
               <li>
-                <Link to="/faq" className="transition hover:text-white dark:hover:text-primary">
+                <Link
+                  to="/faq"
+                  className="transition hover:text-white dark:hover:text-primary"
+                >
                   FAQ
                 </Link>
               </li>
               <li>
-                <Link to="/sitemap" className="transition hover:text-white dark:hover:text-primary">
+                <Link
+                  to="/sitemap"
+                  className="transition hover:text-white dark:hover:text-primary"
+                >
                   Hotel Sitemap
                 </Link>
               </li>
@@ -99,22 +107,34 @@ const Footer = () => {
             </h4>
             <ul className="space-y-2 text-sm text-white/75 dark:text-muted-foreground">
               <li>
-                <Link to="/" className="transition hover:text-white dark:hover:text-primary">
+                <Link
+                  to="/"
+                  className="transition hover:text-white dark:hover:text-primary"
+                >
                   Flight
                 </Link>
               </li>
               <li>
-                <Link to="/hotel" className="transition hover:text-white dark:hover:text-primary">
+                <Link
+                  to="/hotel"
+                  className="transition hover:text-white dark:hover:text-primary"
+                >
                   Hotel
                 </Link>
               </li>
               <li>
-                <Link to="/visa" className="transition hover:text-white dark:hover:text-primary">
+                <Link
+                  to="/visa"
+                  className="transition hover:text-white dark:hover:text-primary"
+                >
                   Visa
                 </Link>
               </li>
               <li>
-                <Link to="/hajj" className="transition hover:text-white dark:hover:text-primary">
+                <Link
+                  to="/hajj"
+                  className="transition hover:text-white dark:hover:text-primary"
+                >
                   Hajj
                 </Link>
               </li>
@@ -128,17 +148,26 @@ const Footer = () => {
             </h4>
             <ul className="space-y-2 text-sm text-white/75 dark:text-muted-foreground">
               <li>
-                <Link to="/guide" className="transition hover:text-white dark:hover:text-primary">
+                <Link
+                  to="/guide"
+                  className="transition hover:text-white dark:hover:text-primary"
+                >
                   Travel Guide
                 </Link>
               </li>
               <li>
-                <Link to="/advisory" className="transition hover:text-white dark:hover:text-primary">
+                <Link
+                  to="/advisory"
+                  className="transition hover:text-white dark:hover:text-primary"
+                >
                   Travel Advisory
                 </Link>
               </li>
               <li>
-                <Link to="/stpay" className="transition hover:text-white dark:hover:text-primary">
+                <Link
+                  to="/stpay"
+                  className="transition hover:text-white dark:hover:text-primary"
+                >
                   ST Pay
                 </Link>
               </li>
@@ -152,12 +181,18 @@ const Footer = () => {
             </h4>
             <ul className="space-y-2 text-sm text-white/75 dark:text-muted-foreground">
               <li>
-                <Link to="/news" className="transition hover:text-white dark:hover:text-primary">
+                <Link
+                  to="/news"
+                  className="transition hover:text-white dark:hover:text-primary"
+                >
                   News
                 </Link>
               </li>
               <li>
-                <Link to="/promotions" className="transition hover:text-white dark:hover:text-primary">
+                <Link
+                  to="/promotions"
+                  className="transition hover:text-white dark:hover:text-primary"
+                >
                   Offers
                 </Link>
               </li>
@@ -192,8 +227,8 @@ const Footer = () => {
         ================================================== */}
         <div className="my-10 grid grid-cols-1 gap-6 md:grid-cols-3">
           {/* Contact */}
-          <div className="rounded-md border border-white/15 bg-white/10 p-6 shadow-xl backdrop-blur-md dark:border-border dark:bg-card/60">
-            <h4 className="mb-5 text-xl font-bold uppercase text-white dark:text-foreground">
+          <div className="rounded-md border border-white/15 p-6 dark:border-border">
+            <h4 className="mb-5 text-xl font-bold text-white uppercase dark:text-foreground">
               Contact Us
             </h4>
 
@@ -285,13 +320,13 @@ const Footer = () => {
           {addresses.map((item) => (
             <div
               key={item.id}
-              className="rounded-md border border-white/15 bg-white/10 p-6 shadow-xl backdrop-blur-md dark:border-border dark:bg-card/60"
+              className="rounded-md border border-white/15 p-6 dark:border-border"
             >
-              <h4 className="mb-4 text-xl font-bold uppercase text-white dark:text-foreground">
+              <h4 className="mb-4 text-xl font-bold text-white uppercase dark:text-foreground">
                 {item.title || "Office Address"}
               </h4>
 
-              <p className="text-sm leading-7 text-white/75 whitespace-pre-line dark:text-muted-foreground">
+              <p className="text-sm leading-7 whitespace-pre-line text-white/75 dark:text-muted-foreground">
                 {item.address}
               </p>
 
@@ -313,7 +348,7 @@ const Footer = () => {
         </div>
 
         {/* Footer Image */}
-        <div className="rounded-md border border-white/15 bg-white p-4 shadow-xl dark:border-border dark:bg-card/60">
+        <div className="rounded-md border border-white/15 bg-white p-4 dark:border-border dark:bg-card">
           <img
             src={footerLight}
             alt="footer"
@@ -335,25 +370,40 @@ const Footer = () => {
             <div className="flex flex-wrap justify-center gap-4 md:justify-start">
               <span>© {new Date().getFullYear()}</span>
 
-              <Link to="/support-center" className="transition hover:text-white dark:hover:text-primary">
+              <Link
+                to="/support-center"
+                className="transition hover:text-white dark:hover:text-primary"
+              >
                 Support Center
               </Link>
-              <Link to="/payment" className="transition hover:text-white dark:hover:text-primary">
+              <Link
+                to="/payment"
+                className="transition hover:text-white dark:hover:text-primary"
+              >
                 Payment
               </Link>
-              <Link to="/security" className="transition hover:text-white dark:hover:text-primary">
+              <Link
+                to="/security"
+                className="transition hover:text-white dark:hover:text-primary"
+              >
                 Security
               </Link>
-              <Link to="/privacy-policy" className="transition hover:text-white dark:hover:text-primary">
+              <Link
+                to="/privacy-policy"
+                className="transition hover:text-white dark:hover:text-primary"
+              >
                 Privacy Policy
               </Link>
-              <Link to="/emi" className="transition hover:text-white dark:hover:text-primary">
+              <Link
+                to="/emi"
+                className="transition hover:text-white dark:hover:text-primary"
+              >
                 EMI
               </Link>
             </div>
 
             <p className="text-center md:text-right">
-              Copyright © 2026 Nusuki. All rights reserved.
+              Copyright © {new Date().getFullYear()} Nusuki. All rights reserved.
             </p>
           </div>
 

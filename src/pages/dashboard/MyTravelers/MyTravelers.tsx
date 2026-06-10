@@ -65,6 +65,7 @@ const MyTravelers = () => {
   const [deleteTraveller, { isLoading: isDeleting }] =
     useDeleteMyTravellerMutation();
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const travellers = data?.data || [];
 
   const filteredTravellers = useMemo(() => {
@@ -243,10 +244,10 @@ const handleSubmit = async (payload: MyTravellerFormPayload) => {
 
             {!isLoading && !isError && filteredTravellers.length > 0 ? (
               <div className="divide-y">
-                {filteredTravellers.map((traveller, index) => {
+                {filteredTravellers.map((traveller) => {
                   const fullName = getFullName(traveller);
                   const email = getTravellerEmail(traveller);
-                  const isPrimaryTraveller = index === 0;
+                  // const isPrimaryTraveller = index === 0;
 
                   return (
                     <div
@@ -259,16 +260,18 @@ const handleSubmit = async (payload: MyTravellerFormPayload) => {
                             {fullName || "Unnamed Traveller"}
                           </h3>
 
-                          {isPrimaryTraveller ? (
+                          {/* {isPrimaryTraveller ? (
                             <span className="rounded-sm border border-primary px-1.5 py-0.5 text-[10px] font-bold uppercase leading-none text-primary">
                               Primary Traveler
                             </span>
-                          ) : null}
+                          ) : null} */}
                         </div>
 
-                        <p className="mt-1 truncate text-xs text-muted-foreground sm:text-sm">
+                        { email !== "No email" && (
+                          <p className="mt-1 truncate text-xs text-muted-foreground sm:text-sm">
                           {email}
                         </p>
+                        )}
                       </div>
 
                       <div className="flex shrink-0 items-center gap-4 md:justify-end">

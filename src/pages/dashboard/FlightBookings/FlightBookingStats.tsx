@@ -7,7 +7,7 @@ import {
   PlaneTakeoff,
   RotateCcw,
   Ticket,
-  WalletCards,
+  // WalletCards,
   XCircle,
 } from "lucide-react";
 
@@ -60,13 +60,13 @@ const FlightBookingStats = ({ summary }: Props) => {
       className:
         "border-orange-500/25 bg-gradient-to-r from-orange-500/15 to-orange-500/10 text-orange-700 shadow-orange-500/10 dark:text-orange-300",
     },
-    {
-      label: "Voided",
-      value: summary.voided,
-      icon: WalletCards,
-      className:
-        "border-purple-500/25 bg-gradient-to-r from-purple-500/15 to-purple-500/10 text-purple-700 shadow-purple-500/10 dark:text-purple-300",
-    },
+    // {
+    //   label: "Voided",
+    //   value: summary.voided,
+    //   icon: WalletCards,
+    //   className:
+    //     "border-purple-500/25 bg-gradient-to-r from-purple-500/15 to-purple-500/10 text-purple-700 shadow-purple-500/10 dark:text-purple-300",
+    // },
     {
       label: "Refunded",
       value: summary.refunded,

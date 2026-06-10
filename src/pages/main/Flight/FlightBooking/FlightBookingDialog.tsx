@@ -100,7 +100,7 @@ const FlightBookingDialog = ({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="h-[88vh] w-[98vw]! max-w-375! -mt-10 overflow-y-auto border-none p-0 shadow-2xl dark:bg-[#0b1220] sm:rounded-sm">
+      <DialogContent className="h-[91vh] w-[98vw]! max-w-375! -mt-5 overflow-y-auto border-none p-0 shadow-2xl dark:bg-[#0b1220] sm:rounded-sm">
         <DialogTitle className="sr-only">Flight booking details</DialogTitle>
 
         <button
@@ -121,7 +121,7 @@ const FlightBookingDialog = ({
           />
         ) : (
           <div className="flex min-h-full flex-col">
-            <div className="flex-1 px-4 py-6 md:px-8 xl:px-10">
+            <div className="flex-1 px-4 pt-6 md:px-8 xl:px-10">
               <div className="mx-auto w-full max-w-7xl">
                 <div className="mb-6 pt-4">
                   <h2 className="mx-8 text-center text-[18px] font-extrabold uppercase tracking-tight text-[#17306f] dark:text-[#8fb4ff] md:text-[34px] lg:mx-5 lg:text-[28px]">
@@ -155,7 +155,7 @@ const FlightBookingDialog = ({
               </div>
             </div>
 
-            <div className="mt-auto border-t border-black/5 bg-[#eef1f5] px-6 py-4 dark:border-white/10 dark:bg-[#0b1220]">
+            <div className=" border-t border-black/5 bg-[#eef1f5] px-6 py-4 dark:border-white/10 dark:bg-[#0b1220]">
               <div className="mx-auto flex max-w-7xl justify-center">
                 <Button
                   onClick={handleContinue}

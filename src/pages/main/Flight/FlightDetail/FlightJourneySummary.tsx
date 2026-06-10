@@ -6,7 +6,7 @@ import AirlineLogo from "@/components/AirlineLogo";
 interface Props {
   flight: FlightResultItem;
 }
-
+ 
 const FlightJourneySummary = ({ flight }: Props) => {
   const { airline, summary, segments } = flight;
 
@@ -42,8 +42,8 @@ const FlightJourneySummary = ({ flight }: Props) => {
 
         <div className="grid grid-cols-3 gap-13 lg:gap-5 md:grid-cols-[140px_minmax(0,1fr)_140px] md:items-center">
           <div>
-            <p className="text-xl font-bold leading-none text-foreground sm:text-4xl">
-              {format(new Date(summary.departure_at), "HH:mm")}
+            <p className="text-lg font-bold leading-none text-foreground sm:text-3xl">
+              {format(new Date(summary.departure_at), "hh:mm a")}
             </p>
             <p className="mt-2 text-base font-semibold text-foreground">
               {summary.origin.airport}
@@ -78,8 +78,8 @@ const FlightJourneySummary = ({ flight }: Props) => {
           </div>
 
           <div className="text-left md:text-right">
-            <p className="text-xl font-bold leading-none text-foreground sm:text-4xl">
-              {format(new Date(summary.arrival_at), "HH:mm")}
+            <p className="text-lg font-bold leading-none text-foreground sm:text-3xl">
+              {format(new Date(summary.arrival_at), "hh:mm a")}
             </p>
             <p className="mt-2 text-base font-semibold text-foreground">
               {summary.destination.airport}

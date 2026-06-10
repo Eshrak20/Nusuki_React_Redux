@@ -28,7 +28,7 @@ const BookingFlightDetailsAccordion = ({ open, onToggle, flight }: Props) => {
       </button>
 
       {open && (
-        <div className="border-t px-4 py-4 max-h-80 overflow-y-auto scrollbar-thin">
+        <div className="border-t px-4 py-4 max-h-84 overflow-y-auto scrollbar-thin">
           <div className="space-y-4">
             {flight.segments.map((segment, index) => (
               <div

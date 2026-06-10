@@ -20,7 +20,7 @@ const DesktopNavbar = () => {
 
   return (
     <NavigationMenu viewport={false} className="hidden md:flex">
-      <NavigationMenuList className="relative gap-1.5 rounded-sm border border-border/60 bg-background/50 p-1.5 shadow-sm backdrop-blur transition-all duration-300 hover:shadow-md">
+      <NavigationMenuList className="relative gap-1.5 rounded-sm p-1.5 backdrop-blur transition-all duration-300">
         {navigationLinks.map((link) => {
           const isActive = location.pathname.startsWith(link.href);
 
