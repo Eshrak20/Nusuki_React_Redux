@@ -27,11 +27,44 @@ type BookingFlightPNRFormProps = {
   documentRequirementMessage?: string;
 };
 
+type MissingFieldTarget = {
+  accordionValue?: string;
+  fieldId?: string;
+  autoOpenKey?: string | null;
+};
+
 const getStringValue = (value: unknown): string => {
   if (typeof value === "string") return value;
   if (typeof value === "number") return String(value);
   return "";
 };
+
+const isEmpty = (value?: string | null) => !String(value ?? "").trim();
+
+const errorBorderClass =
+  "border-red-500 ring-1 ring-red-500/20 focus:border-red-500 focus:ring-red-500/20 dark:border-red-400 dark:ring-red-400/20";
+
+const FieldError = ({ message }: { message?: string }) => {
+  if (!message) return null;
+
+  return (
+    <p className="text-xs font-semibold text-red-500 dark:text-red-400">
+      {message}
+    </p>
+  );
+};
+
+const getTravellerFieldKey = (
+  travellerIndex: number,
+  field: keyof PnrTravellerForm,
+) => `traveller-${travellerIndex}-${field}`;
+
+const dropdownLikeFields: Array<keyof PnrTravellerForm> = [
+  "title",
+  "gender",
+  "dateOfBirth",
+  "passportExpiryDate",
+];
 
 const BookingFlightPNRForm = ({
   flightId,
@@ -89,6 +122,10 @@ const BookingFlightPNRForm = ({
   }, [initialForm, searchTravelers, loggedUserPhone, loggedUserEmail]);
 
   const [form, setForm] = useState<PnrFormState>(() => safeInitialForm);
+  const [showValidationErrors, setShowValidationErrors] = useState(false);
+  const [openTravellerAccordion, setOpenTravellerAccordion] =
+    useState("traveller-0");
+  const [autoOpenFieldKey, setAutoOpenFieldKey] = useState<string | null>(null);
 
   const [fileUploaded, setFileUploaded] = useState(false);
   const [isScanning, setIsScanning] = useState(false);
@@ -151,9 +188,9 @@ const BookingFlightPNRForm = ({
   };
 
   const isFormInvalid = useMemo(() => {
-    if (!flightId || !searchId) return true;
+    if (isEmpty(flightId) || isEmpty(searchId)) return true;
 
-    if (!form.contactEmail || !form.contactPhone) return true;
+    if (isEmpty(form.contactEmail) || isEmpty(form.contactPhone)) return true;
 
     const travelers = Array.isArray(form.travelers) ? form.travelers : [];
 
@@ -161,30 +198,142 @@ const BookingFlightPNRForm = ({
 
     return travelers.some((traveller) => {
       const basicInfoMissing =
-        !traveller.givenName ||
-        !traveller.surname ||
-        !traveller.title ||
-        !traveller.passengerType ||
-        !traveller.gender ||
-        !traveller.dateOfBirth ||
-        !traveller.travelerPhone;
+        isEmpty(traveller.givenName) ||
+        isEmpty(traveller.surname) ||
+        isEmpty(traveller.title) ||
+        isEmpty(traveller.passengerType) ||
+        isEmpty(traveller.gender) ||
+        isEmpty(traveller.dateOfBirth) ||
+        isEmpty(traveller.travelerPhone);
 
       if (basicInfoMissing) return true;
 
       if (!showPassportFields) return false;
 
       return (
-        !traveller.passportNumber ||
-        !traveller.passportNationality ||
-        !traveller.passportIssuingCountry ||
-        !traveller.passportExpiryDate
+        isEmpty(traveller.passportNumber) ||
+        isEmpty(traveller.passportNationality) ||
+        isEmpty(traveller.passportIssuingCountry) ||
+        isEmpty(traveller.passportExpiryDate)
       );
     });
   }, [flightId, searchId, form, showPassportFields]);
 
+  const getRequiredError = (fieldLabel: string, value?: string | null) => {
+    if (!showValidationErrors || !isEmpty(value)) return "";
+    return `${fieldLabel} is required.`;
+  };
+
+  const getFirstMissingFieldTarget = (): MissingFieldTarget | null => {
+    const travelers = Array.isArray(form.travelers) ? form.travelers : [];
+
+    for (let index = 0; index < travelers.length; index++) {
+      const traveller = travelers[index];
+
+      const fieldsToCheck: Array<{
+        field: keyof PnrTravellerForm;
+        value?: string | null;
+      }> = [
+        { field: "title", value: traveller.title },
+        { field: "givenName", value: traveller.givenName },
+        { field: "surname", value: traveller.surname },
+        { field: "gender", value: traveller.gender },
+        { field: "dateOfBirth", value: traveller.dateOfBirth },
+        { field: "travelerPhone", value: traveller.travelerPhone },
+      ];
+
+      if (showPassportFields) {
+        fieldsToCheck.push(
+          { field: "passportNumber", value: traveller.passportNumber },
+          {
+            field: "passportNationality",
+            value: traveller.passportNationality,
+          },
+          {
+            field: "passportIssuingCountry",
+            value: traveller.passportIssuingCountry,
+          },
+          {
+            field: "passportExpiryDate",
+            value: traveller.passportExpiryDate,
+          },
+        );
+      }
+
+      const missingField = fieldsToCheck.find((item) => isEmpty(item.value));
+
+      if (missingField) {
+        const fieldKey = getTravellerFieldKey(index, missingField.field);
+
+        return {
+          accordionValue: `traveller-${index}`,
+          fieldId: fieldKey,
+          autoOpenKey: dropdownLikeFields.includes(missingField.field)
+            ? fieldKey
+            : null,
+        };
+      }
+    }
+
+    if (isEmpty(form.contactPhone)) {
+      return {
+        fieldId: "contactPhone",
+        autoOpenKey: null,
+      };
+    }
+
+    if (isEmpty(form.contactEmail)) {
+      return {
+        fieldId: "contactEmail",
+        autoOpenKey: null,
+      };
+    }
+
+    return null;
+  };
+
+  const scrollToMissingField = (fieldId?: string) => {
+    if (!fieldId) return;
+
+    window.setTimeout(() => {
+      const targetElement = document.getElementById(fieldId);
+
+      if (!targetElement) return;
+
+      targetElement.scrollIntoView({
+        behavior: "smooth",
+        block: "center",
+      });
+
+      targetElement.focus();
+    }, 150);
+  };
+
+  const openFirstMissingField = () => {
+    const target = getFirstMissingFieldTarget();
+
+    if (!target) return;
+
+    setAutoOpenFieldKey(null);
+
+    if (target.accordionValue) {
+      setOpenTravellerAccordion(target.accordionValue);
+    }
+
+    window.setTimeout(() => {
+      scrollToMissingField(target.fieldId);
+
+      if (target.autoOpenKey) {
+        setAutoOpenFieldKey(target.autoOpenKey);
+      }
+    }, 220);
+  };
+
   const handleCreatePnr = async () => {
+    setShowValidationErrors(true);
+
     if (isFormInvalid) {
-      alert("Please fill all required fields.");
+      openFirstMissingField();
       return;
     }
 
@@ -208,6 +357,9 @@ const BookingFlightPNRForm = ({
         alert("Booking code not found from PNR response.");
         return;
       }
+
+      setShowValidationErrors(false);
+      setAutoOpenFieldKey(null);
 
       dispatch(setFlightBookingCode(booking.booking_code));
 
@@ -233,6 +385,9 @@ const BookingFlightPNRForm = ({
     }
   };
 
+  const contactPhoneError = getRequiredError("Contact phone", form.contactPhone);
+  const contactEmailError = getRequiredError("Contact email", form.contactEmail);
+
   return (
     <>
       <PnrCreatingLoader show={isCreatingPnr} />
@@ -252,13 +407,20 @@ const BookingFlightPNRForm = ({
           replaceTraveller={replaceTraveller}
           showPassportFields={showPassportFields}
           documentRequirementMessage={documentRequirementMessage}
+          showValidationErrors={showValidationErrors}
+          openTravellerAccordion={openTravellerAccordion}
+          onOpenTravellerAccordionChange={setOpenTravellerAccordion}
+          autoOpenFieldKey={autoOpenFieldKey}
+          onAutoOpenHandled={() => setAutoOpenFieldKey(null)}
         />
       </div>
+
       <div className="rounded-sm border border-slate-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-slate-950/70">
         <div className="mb-5">
           <h3 className="text-base font-bold text-slate-900 dark:text-white">
             Contact Information
           </h3>
+
           <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
             This contact information will be used for booking communication.
           </p>
@@ -269,30 +431,42 @@ const BookingFlightPNRForm = ({
             <label className="block text-sm font-semibold text-slate-600 dark:text-slate-300">
               Contact Phone
             </label>
+
             <input
+              id="contactPhone"
               type="tel"
               value={form.contactPhone}
               onChange={(event) =>
                 updateForm("contactPhone", event.target.value)
               }
-              className="h-12 w-full rounded-sm border border-slate-200 bg-white px-4 text-sm text-slate-900 shadow-sm outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/20 dark:border-white/10 dark:bg-slate-950 dark:text-white"
+              className={`h-12 w-full rounded-sm border border-slate-200 bg-white px-4 text-sm text-slate-900 shadow-sm outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/20 dark:border-white/10 dark:bg-slate-950 dark:text-white ${
+                contactPhoneError ? errorBorderClass : ""
+              }`}
               placeholder="+8801712345678"
             />
+
+            <FieldError message={contactPhoneError} />
           </div>
 
           <div className="space-y-2">
             <label className="block text-sm font-semibold text-slate-600 dark:text-slate-300">
               Contact Email
             </label>
+
             <input
+              id="contactEmail"
               type="email"
               value={form.contactEmail}
               onChange={(event) =>
                 updateForm("contactEmail", event.target.value)
               }
-              className="h-12 w-full rounded-sm border border-slate-200 bg-white px-4 text-sm text-slate-900 shadow-sm outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/20 dark:border-white/10 dark:bg-slate-950 dark:text-white"
+              className={`h-12 w-full rounded-sm border border-slate-200 bg-white px-4 text-sm text-slate-900 shadow-sm outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/20 dark:border-white/10 dark:bg-slate-950 dark:text-white ${
+                contactEmailError ? errorBorderClass : ""
+              }`}
               placeholder="example@gmail.com"
             />
+
+            <FieldError message={contactEmailError} />
           </div>
         </div>
 
@@ -315,6 +489,7 @@ const BookingFlightPNRForm = ({
           </label>
         </div>
       </div>
+
       <PnrSubmitFooter
         isCreatingPnr={isCreatingPnr}
         isScanning={isScanning}

@@ -34,7 +34,7 @@ const Footer = () => {
         {/* ==================================================
             TOP SECTION : BRAND + NAV LINKS
         ================================================== */}
-        <div className="grid grid-cols-1 gap-8 rounded-md border border-white/15 p-6 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-12 lg:p-8 dark:border-border">
+        <div className="grid grid-cols-1 gap-8 rounded-md  p-6 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-12 lg:p-8 dark:border-border">
           {/* Brand */}
           <div className="space-y-4 lg:col-span-3">
             <div className="w-fit rounded-sm bg-white/95 px-4 py-3 shadow-md dark:bg-transparent dark:px-0 dark:py-0 dark:shadow-none">
@@ -67,7 +67,7 @@ const Footer = () => {
             <ul className="space-y-2 text-sm text-white/75 dark:text-muted-foreground">
               <li>
                 <Link
-                  to="/about"
+                  to="/privacy-policy"
                   className="transition hover:text-white dark:hover:text-primary"
                 >
                   About Us
@@ -75,7 +75,7 @@ const Footer = () => {
               </li>
               <li>
                 <Link
-                  to="/terms"
+                  to="/privacy-policy"
                   className="transition hover:text-white dark:hover:text-primary"
                 >
                   Terms & Conditions
@@ -83,7 +83,7 @@ const Footer = () => {
               </li>
               <li>
                 <Link
-                  to="/faq"
+                  to="/support-center"
                   className="transition hover:text-white dark:hover:text-primary"
                 >
                   FAQ
@@ -91,7 +91,7 @@ const Footer = () => {
               </li>
               <li>
                 <Link
-                  to="/sitemap"
+                  to="/hotel"
                   className="transition hover:text-white dark:hover:text-primary"
                 >
                   Hotel Sitemap
@@ -149,26 +149,26 @@ const Footer = () => {
             <ul className="space-y-2 text-sm text-white/75 dark:text-muted-foreground">
               <li>
                 <Link
-                  to="/guide"
+                  to="/visa"
                   className="transition hover:text-white dark:hover:text-primary"
                 >
-                  Travel Guide
+                 Visa
                 </Link>
               </li>
               <li>
                 <Link
-                  to="/advisory"
+                  to="/holiday"
                   className="transition hover:text-white dark:hover:text-primary"
                 >
-                  Travel Advisory
+                  Holiday
                 </Link>
               </li>
               <li>
                 <Link
-                  to="/stpay"
+                  to="/hotel"
                   className="transition hover:text-white dark:hover:text-primary"
                 >
-                  ST Pay
+                  Hotel
                 </Link>
               </li>
             </ul>
@@ -182,7 +182,7 @@ const Footer = () => {
             <ul className="space-y-2 text-sm text-white/75 dark:text-muted-foreground">
               <li>
                 <Link
-                  to="/news"
+                  to="/privacy-policy"
                   className="transition hover:text-white dark:hover:text-primary"
                 >
                   News
@@ -190,7 +190,7 @@ const Footer = () => {
               </li>
               <li>
                 <Link
-                  to="/promotions"
+                  to="/privacy-policy"
                   className="transition hover:text-white dark:hover:text-primary"
                 >
                   Offers
@@ -209,7 +209,7 @@ const Footer = () => {
               {footerPayImages.map((image, i) => (
                 <div
                   key={i}
-                  className="flex h-9 w-12 items-center justify-center rounded-lg border border-white/20 bg-white p-1 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md"
+                  className="flex h-10 w-12 items-center gap-x-2 justify-center  border border-white/20 bg-white p-1 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md"
                 >
                   <img
                     src={image.url}
@@ -227,7 +227,7 @@ const Footer = () => {
         ================================================== */}
         <div className="my-10 grid grid-cols-1 gap-6 md:grid-cols-3">
           {/* Contact */}
-          <div className="rounded-md border border-white/15 p-6 dark:border-border">
+          <div className="rounded-md  p-6 dark:border-border">
             <h4 className="mb-5 text-xl font-bold text-white uppercase dark:text-foreground">
               Contact Us
             </h4>
@@ -318,10 +318,7 @@ const Footer = () => {
 
           {/* Dynamic Addresses */}
           {addresses.map((item) => (
-            <div
-              key={item.id}
-              className="rounded-md border border-white/15 p-6 dark:border-border"
-            >
+            <div key={item.id} className="rounded-md  p-6 dark:border-border">
               <h4 className="mb-4 text-xl font-bold text-white uppercase dark:text-foreground">
                 {item.title || "Office Address"}
               </h4>
@@ -348,7 +345,7 @@ const Footer = () => {
         </div>
 
         {/* Footer Image */}
-        <div className="rounded-md border border-white/15 bg-white p-4 dark:border-border dark:bg-card">
+        <div className="rounded-md  bg-white p-4 dark:border-border dark:bg-card">
           <img
             src={footerLight}
             alt="footer"
@@ -362,65 +359,69 @@ const Footer = () => {
           />
         </div>
 
-        {/* ==================================================
-            FOOTER BOTTOM
-        ================================================== */}
-        <div className="mt-10 rounded-md border border-white/15 bg-white/10 px-5 py-6 shadow-xl backdrop-blur-md dark:border-border dark:bg-card/60">
-          <div className="flex flex-col items-center justify-between gap-5 text-sm text-white/75 md:flex-row dark:text-muted-foreground">
-            <div className="flex flex-wrap justify-center gap-4 md:justify-start">
-              <span>© {new Date().getFullYear()}</span>
+     
+       <div className="mt-10 rounded-md border border-white/15 bg-white/10 px-5 py-6 shadow-xl backdrop-blur-md dark:border-border dark:bg-card/60">
+  <div className="grid items-center gap-5 text-sm text-white/75 md:grid-cols-3 dark:text-muted-foreground">
+    {/* Left Links */}
+    <div className="flex flex-wrap justify-center gap-4 md:justify-start">
+      <span>© {new Date().getFullYear()}</span>
 
-              <Link
-                to="/support-center"
-                className="transition hover:text-white dark:hover:text-primary"
-              >
-                Support Center
-              </Link>
-              <Link
-                to="/payment"
-                className="transition hover:text-white dark:hover:text-primary"
-              >
-                Payment
-              </Link>
-              <Link
-                to="/security"
-                className="transition hover:text-white dark:hover:text-primary"
-              >
-                Security
-              </Link>
-              <Link
-                to="/privacy-policy"
-                className="transition hover:text-white dark:hover:text-primary"
-              >
-                Privacy Policy
-              </Link>
-              <Link
-                to="/emi"
-                className="transition hover:text-white dark:hover:text-primary"
-              >
-                EMI
-              </Link>
-            </div>
+      <Link
+        to="/support-center"
+        className="transition hover:text-white dark:hover:text-primary"
+      >
+        Support Center
+      </Link>
 
-            <p className="text-center md:text-right">
-              Copyright © {new Date().getFullYear()} Nusuki. All rights reserved.
-            </p>
-          </div>
+      <Link
+        to="/payment"
+        className="transition hover:text-white dark:hover:text-primary"
+      >
+        Payment
+      </Link>
 
-          {/* Developer Credit */}
-          <div className="mt-5 border-t border-white/15 pt-5 text-center text-sm text-white/75 dark:border-border dark:text-muted-foreground">
-            This website is developed by{" "}
-            <a
-              href="http://ilabs360.com/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="font-semibold text-white underline-offset-4 hover:underline dark:text-primary"
-            >
-              ilabs360
-            </a>{" "}
-            team
-          </div>
-        </div>
+      <Link
+        to="/security"
+        className="transition hover:text-white dark:hover:text-primary"
+      >
+        Security
+      </Link>
+
+      <Link
+        to="/privacy-policy"
+        className="transition hover:text-white dark:hover:text-primary"
+      >
+        Privacy Policy
+      </Link>
+
+      <Link
+        to="/emi"
+        className="transition hover:text-white dark:hover:text-primary"
+      >
+        EMI
+      </Link>
+    </div>
+
+    {/* Center Credit */}
+    <div className="text-center">
+      This website is developed by{" "}
+      <a
+        href="http://ilabs360.com/"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="font-semibold text-white underline-offset-4 hover:underline dark:text-primary"
+      >
+        ilabs360
+      </a>{" "}
+      team
+    </div>
+
+    {/* Right Copyright */}
+    <p className="text-center md:text-right">
+      Copyright © {new Date().getFullYear()} Nusuki. All rights reserved.
+    </p>
+  </div>
+</div>
       </div>
     </footer>
   );

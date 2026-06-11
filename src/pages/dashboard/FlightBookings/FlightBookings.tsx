@@ -9,6 +9,10 @@ import FlightBookingCard from "./FlightBookingCard";
 import FlightBookingStats from "./FlightBookingStats";
 
 const FlightBookings = () => {
+  window.scrollTo({
+    top: 300,
+    behavior: "smooth",
+  });
   const [page, setPage] = useState(1);
   const size = 20;
 

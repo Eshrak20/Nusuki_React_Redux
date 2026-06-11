@@ -16,7 +16,7 @@ import type {
   HotelSearchPayload,
   HotelSearchResponse,
 } from "@/types/hotel/types.hotel";
-import type { HotelItem, HotelSearchData } from "@/types/hotel/types.hotelList";
+import type { HotelSearchData } from "@/types/hotel/types.hotelList";
 
 type HotelLocationState = {
   hotelResponse?: HotelSearchResponse;

@@ -174,7 +174,7 @@ const EduNavbarUI = ({
           <span className="flex size-9 items-center justify-center rounded-full bg-red-600 shadow-md">
             <Video className="size-4 fill-white text-white" />
           </span>
-          Avail Free Counselling
+          Book a Free Online Counselling
         </button>
 
         <button

@@ -3,7 +3,6 @@ import {
   Ban,
   CheckCircle2,
   Clock3,
-  CreditCard,
   PlaneTakeoff,
   RotateCcw,
   Ticket,
@@ -32,13 +31,13 @@ const FlightBookingStats = ({ summary }: Props) => {
       className:
         "border-emerald-500/25 bg-gradient-to-r from-emerald-500/15 to-emerald-500/10 text-emerald-700 shadow-emerald-500/10 dark:text-emerald-300",
     },
-    {
-      label: "Unpaid",
-      value: summary.unpaid,
-      icon: Clock3,
-      className:
-        "border-amber-500/30 bg-gradient-to-r from-amber-400/25 to-amber-400/10 text-amber-700 shadow-amber-500/10 dark:text-amber-300",
-    },
+    // {
+    //   label: "Unpaid",
+    //   value: summary.unpaid,
+    //   icon: CreditCard,
+    //   className:
+    //     "border-amber-500/30 bg-gradient-to-r from-amber-400/25 to-amber-400/10 text-amber-700 shadow-amber-500/10 dark:text-amber-300",
+    // },
     {
       label: "Ticketed",
       value: summary.ticketed,
@@ -77,7 +76,7 @@ const FlightBookingStats = ({ summary }: Props) => {
     {
       label: "Pending Payment",
       value: summary.pending_payment,
-      icon: CreditCard,
+      icon: Clock3,
       className:
         "border-yellow-500/30 bg-gradient-to-r from-yellow-400/25 to-yellow-400/10 text-yellow-700 shadow-yellow-500/10 dark:text-yellow-300",
     },
@@ -111,7 +110,7 @@ const FlightBookingStats = ({ summary }: Props) => {
         })}
       </div>
 
-      <div className="grid gap-4 lg:grid-cols-2">
+      {/* <div className="grid gap-4 lg:grid-cols-2">
         <div className="rounded-sm border bg-card p-4 shadow-sm dark:bg-card/80">
           <h3 className="text-sm font-extrabold uppercase tracking-wide text-foreground">
             Booking Status
@@ -157,7 +156,7 @@ const FlightBookingStats = ({ summary }: Props) => {
             ))}
           </div>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };

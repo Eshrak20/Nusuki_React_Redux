@@ -1,4 +1,5 @@
 import { useMemo } from "react";
+import type { Dispatch, SetStateAction } from "react";
 import {
   Accordion,
   AccordionContent,
@@ -23,12 +24,19 @@ type PnrPassengerAccordionProps = {
   fileName: string;
   isScanning: boolean;
 
-  setFileUploaded: React.Dispatch<React.SetStateAction<boolean>>;
-  setFileName: React.Dispatch<React.SetStateAction<string>>;
-  setIsScanning: React.Dispatch<React.SetStateAction<boolean>>;
+  setFileUploaded: Dispatch<SetStateAction<boolean>>;
+  setFileName: Dispatch<SetStateAction<string>>;
+  setIsScanning: Dispatch<SetStateAction<boolean>>;
 
   showPassportFields: boolean;
   documentRequirementMessage?: string;
+  showValidationErrors?: boolean;
+
+  openTravellerAccordion: string;
+  onOpenTravellerAccordionChange: (value: string) => void;
+
+  autoOpenFieldKey?: string | null;
+  onAutoOpenHandled?: () => void;
 
   updateTraveller: <K extends keyof PnrTravellerForm>(
     travellerIndex: number,
@@ -56,6 +64,11 @@ const PnrPassengerAccordion = ({
   replaceTraveller,
   showPassportFields,
   documentRequirementMessage,
+  showValidationErrors = false,
+  openTravellerAccordion,
+  onOpenTravellerAccordionChange,
+  autoOpenFieldKey = null,
+  onAutoOpenHandled,
 }: PnrPassengerAccordionProps) => {
   const travellersWithLabelIndex = useMemo(() => {
     const counters = {
@@ -84,7 +97,8 @@ const PnrPassengerAccordion = ({
       <Accordion
         type="single"
         collapsible
-        defaultValue="traveller-0"
+        value={openTravellerAccordion}
+        onValueChange={onOpenTravellerAccordionChange}
         className="w-full"
       >
         {travellersWithLabelIndex.map(({ traveller, labelIndex }, index) => (
@@ -117,6 +131,9 @@ const PnrPassengerAccordion = ({
                 replaceTraveller={replaceTraveller}
                 showPassportFields={showPassportFields}
                 documentRequirementMessage={documentRequirementMessage}
+                showValidationErrors={showValidationErrors}
+                autoOpenFieldKey={autoOpenFieldKey}
+                onAutoOpenHandled={onAutoOpenHandled}
               />
             </AccordionContent>
           </AccordionItem>

@@ -1,12 +1,6 @@
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import {
-  Home,
-  MapPin,
-  School,
-  GraduationCap,
-  FileText,
-} from "lucide-react";
+import { Home, MapPin, School, GraduationCap, FileText } from "lucide-react";
 
 import FormSubmissionModal from "../FormSubmissionModal";
 import EduNavbarUI, {
@@ -112,6 +106,7 @@ const EduNavbar = ({ isSticky }: { isSticky?: boolean }) => {
         open={isCounsellingOpen}
         onClose={() => setIsCounsellingOpen(false)}
         title="Book Free Study Abroad Counselling"
+        type="education"
       />
     </>
   );

@@ -1,6 +1,9 @@
+import { useState } from "react";
+import type { Dispatch, SetStateAction } from "react";
 import { format, isValid, parse } from "date-fns";
 import {
   CalendarIcon,
+  ChevronDown,
   ContactRound,
   Globe2,
   IdCard,
@@ -21,6 +24,12 @@ import type {
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
@@ -28,13 +37,6 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 
 type PnrTravelerFormProps = {
   travellerIndex: number;
@@ -46,12 +48,16 @@ type PnrTravelerFormProps = {
   fileName: string;
   isScanning: boolean;
 
-  setFileUploaded: React.Dispatch<React.SetStateAction<boolean>>;
-  setFileName: React.Dispatch<React.SetStateAction<string>>;
-  setIsScanning: React.Dispatch<React.SetStateAction<boolean>>;
+  setFileUploaded: Dispatch<SetStateAction<boolean>>;
+  setFileName: Dispatch<SetStateAction<string>>;
+  setIsScanning: Dispatch<SetStateAction<boolean>>;
 
   showPassportFields: boolean;
   documentRequirementMessage?: string;
+  showValidationErrors?: boolean;
+
+  autoOpenFieldKey?: string | null;
+  onAutoOpenHandled?: () => void;
 
   updateTraveller: <K extends keyof PnrTravellerForm>(
     travellerIndex: number,
@@ -64,6 +70,37 @@ type PnrTravelerFormProps = {
     traveller: PnrTravellerForm,
   ) => void;
 };
+
+type DropdownOption = {
+  value: string;
+  label: string;
+};
+
+type DropdownSelectFieldProps = {
+  label: string;
+  value: string;
+  placeholder: string;
+  options: DropdownOption[];
+  onChange: (value: string) => void;
+  disabled?: boolean;
+  error?: string;
+  triggerId?: string;
+  autoOpen?: boolean;
+  onAutoOpenHandled?: () => void;
+};
+
+type DatePickerFieldProps = {
+  label: string;
+  value: string;
+  placeholder: string;
+  onChange: (value: string) => void;
+  disabled?: (date: Date) => boolean;
+  error?: string;
+  triggerId?: string;
+  autoOpen?: boolean;
+  onAutoOpenHandled?: () => void;
+};
+
 const parseDateValue = (value?: string) => {
   if (!value) return undefined;
 
@@ -77,12 +114,101 @@ const formatDateValue = (date?: Date) => {
   return format(date, "yyyy-MM-dd");
 };
 
-type DatePickerFieldProps = {
-  label: string;
-  value: string;
-  placeholder: string;
-  onChange: (value: string) => void;
-  disabled?: (date: Date) => boolean;
+const isEmpty = (value?: string | null) => !String(value ?? "").trim();
+
+const FieldError = ({ message }: { message?: string }) => {
+  if (!message) return null;
+
+  return (
+    <p className="text-xs font-semibold text-red-500 dark:text-red-400">
+      {message}
+    </p>
+  );
+};
+
+const errorBorderClass =
+  "border-red-500 ring-1 ring-red-500/20 focus-visible:ring-red-500/30 dark:border-red-400 dark:ring-red-400/20";
+
+const DropdownSelectField = ({
+  label,
+  value,
+  placeholder,
+  options,
+  onChange,
+  disabled,
+  error,
+  triggerId,
+  autoOpen = false,
+  onAutoOpenHandled,
+}: DropdownSelectFieldProps) => {
+  const [manualOpen, setManualOpen] = useState(false);
+
+  const selectedOption = options.find((option) => option.value === value);
+  const isOpen = !disabled && (autoOpen || manualOpen);
+
+  const handleOpenChange = (nextOpen: boolean) => {
+    setManualOpen(nextOpen);
+
+    if (!nextOpen && autoOpen) {
+      onAutoOpenHandled?.();
+    }
+  };
+
+  const handleSelect = (selectedValue: string) => {
+    onChange(selectedValue);
+    setManualOpen(false);
+    onAutoOpenHandled?.();
+  };
+
+  return (
+    <div className="space-y-1.5">
+      <Label className="text-sm font-medium text-slate-700 dark:text-slate-200">
+        {label}
+      </Label>
+
+      <DropdownMenu modal={false} open={isOpen} onOpenChange={handleOpenChange}>
+        <DropdownMenuTrigger asChild>
+          <button
+            id={triggerId}
+            type="button"
+            disabled={disabled}
+            className={`flex h-11 w-full items-center justify-between rounded-sm border border-slate-200 bg-white/80 px-3 text-left text-sm shadow-sm outline-none transition hover:bg-slate-50 focus:ring-2 focus:ring-primary/30 disabled:cursor-not-allowed disabled:opacity-60 dark:border-white/10 dark:bg-slate-950/50 dark:hover:bg-slate-900 ${
+              error ? errorBorderClass : ""
+            }`}
+          >
+            <span
+              className={
+                selectedOption
+                  ? "text-slate-900 dark:text-white"
+                  : "text-slate-400"
+              }
+            >
+              {selectedOption?.label || placeholder}
+            </span>
+
+            <ChevronDown className="h-4 w-4 shrink-0 text-slate-400" />
+          </button>
+        </DropdownMenuTrigger>
+
+        <DropdownMenuContent
+          align="start"
+          className="z-[9999] max-h-72 w-[var(--radix-dropdown-menu-trigger-width)] overflow-y-auto rounded-sm border-slate-200 bg-white shadow-lg dark:border-white/10 dark:bg-slate-950"
+        >
+          {options.map((option) => (
+            <DropdownMenuItem
+              key={option.value}
+              onSelect={() => handleSelect(option.value)}
+              className="cursor-pointer text-sm"
+            >
+              {option.label}
+            </DropdownMenuItem>
+          ))}
+        </DropdownMenuContent>
+      </DropdownMenu>
+
+      <FieldError message={error} />
+    </div>
+  );
 };
 
 const DatePickerField = ({
@@ -91,8 +217,28 @@ const DatePickerField = ({
   placeholder,
   onChange,
   disabled,
+  error,
+  triggerId,
+  autoOpen = false,
+  onAutoOpenHandled,
 }: DatePickerFieldProps) => {
+  const [manualOpen, setManualOpen] = useState(false);
   const selectedDate = parseDateValue(value);
+  const isOpen = autoOpen || manualOpen;
+
+  const handleOpenChange = (nextOpen: boolean) => {
+    setManualOpen(nextOpen);
+
+    if (!nextOpen && autoOpen) {
+      onAutoOpenHandled?.();
+    }
+  };
+
+  const handleDateSelect = (date?: Date) => {
+    onChange(formatDateValue(date));
+    setManualOpen(false);
+    onAutoOpenHandled?.();
+  };
 
   return (
     <div className="space-y-1.5">
@@ -100,12 +246,15 @@ const DatePickerField = ({
         {label}
       </Label>
 
-      <Popover>
+      <Popover open={isOpen} onOpenChange={handleOpenChange}>
         <PopoverTrigger asChild>
           <Button
+            id={triggerId}
             type="button"
             variant="outline"
-            className="h-11 w-full justify-start rounded-sm border-slate-200 bg-white/80 px-3 text-left font-normal shadow-sm transition hover:bg-slate-50 dark:border-white/10 dark:bg-slate-950/50 dark:hover:bg-slate-900"
+            className={`h-11 w-full justify-start rounded-sm border-slate-200 bg-white/80 px-3 text-left font-normal shadow-sm transition hover:bg-slate-50 dark:border-white/10 dark:bg-slate-950/50 dark:hover:bg-slate-900 ${
+              error ? errorBorderClass : ""
+            }`}
           >
             <CalendarIcon className="mr-2 h-4 w-4 text-slate-500" />
 
@@ -121,7 +270,7 @@ const DatePickerField = ({
           <Calendar
             mode="single"
             selected={selectedDate}
-            onSelect={(date) => onChange(formatDateValue(date))}
+            onSelect={handleDateSelect}
             disabled={disabled}
             captionLayout="dropdown"
             fromYear={1900}
@@ -130,6 +279,8 @@ const DatePickerField = ({
           />
         </PopoverContent>
       </Popover>
+
+      <FieldError message={error} />
     </div>
   );
 };
@@ -143,6 +294,9 @@ const PnrTravelerForm = ({
   replaceTraveller,
   showPassportFields,
   documentRequirementMessage,
+  showValidationErrors = false,
+  autoOpenFieldKey = null,
+  onAutoOpenHandled,
 }: PnrTravelerFormProps) => {
   const handleSavedTravellerSelect = (value: string) => {
     if (!value || value === "manual") {
@@ -162,6 +316,32 @@ const PnrTravelerForm = ({
     );
   };
 
+  const getRequiredError = (fieldLabel: string, value?: string | null) => {
+    if (!showValidationErrors || !isEmpty(value)) return "";
+    return `${fieldLabel} is required.`;
+  };
+
+  const getTravellerFieldKey = (field: keyof PnrTravellerForm) =>
+    `traveller-${travellerIndex}-${field}`;
+
+  const savedTravellerValue =
+    traveller.selectedSavedTravellerId?.toString() || "manual";
+
+  const savedTravellerOptions: DropdownOption[] = [
+    {
+      value: "manual",
+      label: isLoadingSavedTravellers
+        ? "Loading saved travellers..."
+        : "Select saved traveller or enter manually",
+    },
+    ...savedTravellers.map((savedTraveller) => ({
+      value: savedTraveller.id.toString(),
+      label: `${savedTraveller.given_name} ${savedTraveller.surname} - ${
+        savedTraveller.passenger_type
+      } - ${savedTraveller.passport_no || "No Passport"}`,
+    })),
+  ];
+
   return (
     <div className="space-y-5">
       <Card className="overflow-hidden rounded-sm border-slate-200/80 bg-white/80 shadow-sm backdrop-blur dark:border-white/10 dark:bg-slate-950/60">
@@ -173,79 +353,46 @@ const PnrTravelerForm = ({
         </CardHeader>
 
         <CardContent className="space-y-5 p-5">
-          <div className="space-y-1.5">
-            <Label className="text-sm font-medium text-slate-700 dark:text-slate-200">
-              Select Saved Traveller
-            </Label>
+          <DropdownSelectField
+            label="Select Saved Traveller"
+            value={savedTravellerValue}
+            placeholder={
+              isLoadingSavedTravellers
+                ? "Loading saved travellers..."
+                : "Select saved traveller or enter manually"
+            }
+            options={savedTravellerOptions}
+            onChange={handleSavedTravellerSelect}
+            disabled={isLoadingSavedTravellers}
+          />
 
-            <Select
-              value={traveller.selectedSavedTravellerId?.toString() || "manual"}
-              onValueChange={handleSavedTravellerSelect}
-              disabled={isLoadingSavedTravellers}
-            >
-              <SelectTrigger className="h-11 w-full rounded-sm border-slate-200 bg-white/80 shadow-sm dark:border-white/10 dark:bg-slate-950/50">
-                <SelectValue
-                  placeholder={
-                    isLoadingSavedTravellers
-                      ? "Loading saved travellers..."
-                      : "Select saved traveller or enter manually"
-                  }
-                />
-              </SelectTrigger>
-
-              <SelectContent>
-                <SelectItem value="manual">
-                  {isLoadingSavedTravellers
-                    ? "Loading saved travellers..."
-                    : "Select saved traveller or enter manually"}
-                </SelectItem>
-
-                {savedTravellers.map((savedTraveller) => (
-                  <SelectItem
-                    key={savedTraveller.id}
-                    value={savedTraveller.id.toString()}
-                  >
-                    {savedTraveller.given_name} {savedTraveller.surname} -{" "}
-                    {savedTraveller.passenger_type} -{" "}
-                    {savedTraveller.passport_no || "No Passport"}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-
-            {isLoadingSavedTravellers && (
-              <p className="flex items-center gap-1.5 text-xs text-slate-500">
-                <Loader2 className="h-3.5 w-3.5 animate-spin" />
-                Fetching your saved travellers...
-              </p>
-            )}
-          </div>
+          {isLoadingSavedTravellers && (
+            <p className="flex items-center gap-1.5 text-xs text-slate-500">
+              <Loader2 className="h-3.5 w-3.5 animate-spin" />
+              Fetching your saved travellers...
+            </p>
+          )}
 
           <div className="grid gap-4 md:grid-cols-3">
-            <div className="space-y-1.5">
-              <Label className="text-sm font-medium text-slate-700 dark:text-slate-200">
-                Title
-              </Label>
-
-              <Select
-                value={traveller.title}
-                onValueChange={(value) =>
-                  updateTraveller(travellerIndex, "title", value as Title)
-                }
-              >
-                <SelectTrigger className="h-11 rounded-sm border-slate-200 bg-white/80 shadow-sm dark:border-white/10 dark:bg-slate-950/50">
-                  <SelectValue placeholder="Select title" />
-                </SelectTrigger>
-
-                <SelectContent>
-                  <SelectItem value="MR">MR</SelectItem>
-                  <SelectItem value="MRS">MRS</SelectItem>
-                  <SelectItem value="MS">MS</SelectItem>
-                  <SelectItem value="MSTR">MSTR</SelectItem>
-                  <SelectItem value="MISS">MISS</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
+            <DropdownSelectField
+              label="Title"
+              value={traveller.title}
+              placeholder="Select title"
+              options={[
+                { value: "MR", label: "MR" },
+                { value: "MRS", label: "MRS" },
+                { value: "MS", label: "MS" },
+                { value: "MSTR", label: "MSTR" },
+                { value: "MISS", label: "MISS" },
+              ]}
+              onChange={(value) =>
+                updateTraveller(travellerIndex, "title", value as Title)
+              }
+              error={getRequiredError("Title", traveller.title)}
+              triggerId={getTravellerFieldKey("title")}
+              autoOpen={autoOpenFieldKey === getTravellerFieldKey("title")}
+              onAutoOpenHandled={onAutoOpenHandled}
+            />
 
             <div className="space-y-1.5">
               <Label className="text-sm font-medium text-slate-700 dark:text-slate-200">
@@ -256,6 +403,7 @@ const PnrTravelerForm = ({
                 <UserRound className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
 
                 <Input
+                  id={getTravellerFieldKey("givenName")}
                   type="text"
                   value={traveller.givenName}
                   onChange={(event) =>
@@ -265,10 +413,18 @@ const PnrTravelerForm = ({
                       event.target.value.toUpperCase(),
                     )
                   }
-                  className="h-11 rounded-sm border-slate-200 bg-white/80 pl-9 uppercase shadow-sm dark:border-white/10 dark:bg-slate-950/50"
+                  className={`h-11 rounded-sm border-slate-200 bg-white/80 pl-9 uppercase shadow-sm dark:border-white/10 dark:bg-slate-950/50 ${
+                    getRequiredError("Given name", traveller.givenName)
+                      ? errorBorderClass
+                      : ""
+                  }`}
                   placeholder="ESHRAK"
                 />
               </div>
+
+              <FieldError
+                message={getRequiredError("Given name", traveller.givenName)}
+              />
             </div>
 
             <div className="space-y-1.5">
@@ -280,6 +436,7 @@ const PnrTravelerForm = ({
                 <UserRound className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
 
                 <Input
+                  id={getTravellerFieldKey("surname")}
                   type="text"
                   value={traveller.surname}
                   onChange={(event) =>
@@ -289,35 +446,36 @@ const PnrTravelerForm = ({
                       event.target.value.toUpperCase(),
                     )
                   }
-                  className="h-11 rounded-sm border-slate-200 bg-white/80 pl-9 uppercase shadow-sm dark:border-white/10 dark:bg-slate-950/50"
+                  className={`h-11 rounded-sm border-slate-200 bg-white/80 pl-9 uppercase shadow-sm dark:border-white/10 dark:bg-slate-950/50 ${
+                    getRequiredError("Surname", traveller.surname)
+                      ? errorBorderClass
+                      : ""
+                  }`}
                   placeholder="HASAN"
                 />
               </div>
+
+              <FieldError message={getRequiredError("Surname", traveller.surname)} />
             </div>
           </div>
 
           <div className="grid gap-4 md:grid-cols-3">
-            <div className="space-y-1.5">
-              <Label className="text-sm font-medium text-slate-700 dark:text-slate-200">
-                Gender
-              </Label>
-
-              <Select
-                value={traveller.gender}
-                onValueChange={(value) =>
-                  updateTraveller(travellerIndex, "gender", value as Gender)
-                }
-              >
-                <SelectTrigger className="h-11 rounded-sm border-slate-200 bg-white/80 shadow-sm dark:border-white/10 dark:bg-slate-950/50">
-                  <SelectValue placeholder="Select gender" />
-                </SelectTrigger>
-
-                <SelectContent>
-                  <SelectItem value="M">Male</SelectItem>
-                  <SelectItem value="F">Female</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
+            <DropdownSelectField
+              label="Gender"
+              value={traveller.gender}
+              placeholder="Select gender"
+              options={[
+                { value: "M", label: "Male" },
+                { value: "F", label: "Female" },
+              ]}
+              onChange={(value) =>
+                updateTraveller(travellerIndex, "gender", value as Gender)
+              }
+              error={getRequiredError("Gender", traveller.gender)}
+              triggerId={getTravellerFieldKey("gender")}
+              autoOpen={autoOpenFieldKey === getTravellerFieldKey("gender")}
+              onAutoOpenHandled={onAutoOpenHandled}
+            />
 
             <DatePickerField
               label="Date of Birth"
@@ -327,6 +485,10 @@ const PnrTravelerForm = ({
                 updateTraveller(travellerIndex, "dateOfBirth", value)
               }
               disabled={(date) => date > new Date()}
+              error={getRequiredError("Date of birth", traveller.dateOfBirth)}
+              triggerId={getTravellerFieldKey("dateOfBirth")}
+              autoOpen={autoOpenFieldKey === getTravellerFieldKey("dateOfBirth")}
+              onAutoOpenHandled={onAutoOpenHandled}
             />
 
             <div className="space-y-1.5">
@@ -338,6 +500,7 @@ const PnrTravelerForm = ({
                 <Phone className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
 
                 <Input
+                  id={getTravellerFieldKey("travelerPhone")}
                   type="tel"
                   value={traveller.travelerPhone}
                   onChange={(event) =>
@@ -347,14 +510,23 @@ const PnrTravelerForm = ({
                       event.target.value,
                     )
                   }
-                  className="h-11 rounded-sm border-slate-200 bg-white/80 pl-9 shadow-sm dark:border-white/10 dark:bg-slate-950/50"
+                  className={`h-11 rounded-sm border-slate-200 bg-white/80 pl-9 shadow-sm dark:border-white/10 dark:bg-slate-950/50 ${
+                    getRequiredError("Phone", traveller.travelerPhone)
+                      ? errorBorderClass
+                      : ""
+                  }`}
                   placeholder="+8801712345678"
                 />
               </div>
+
+              <FieldError
+                message={getRequiredError("Phone", traveller.travelerPhone)}
+              />
             </div>
           </div>
         </CardContent>
       </Card>
+
       {!showPassportFields && documentRequirementMessage ? (
         <div className="rounded-sm border border-emerald-500/20 bg-emerald-500/10 p-4 text-sm font-medium text-emerald-700 dark:text-emerald-300">
           {documentRequirementMessage}
@@ -381,6 +553,7 @@ const PnrTravelerForm = ({
                   <IdCard className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
 
                   <Input
+                    id={getTravellerFieldKey("passportNumber")}
                     type="text"
                     value={traveller.passportNumber}
                     onChange={(event) =>
@@ -390,10 +563,24 @@ const PnrTravelerForm = ({
                         event.target.value.toUpperCase(),
                       )
                     }
-                    className="h-11 rounded-sm border-slate-200 bg-white/80 pl-9 uppercase shadow-sm dark:border-white/10 dark:bg-slate-950/50"
+                    className={`h-11 rounded-sm border-slate-200 bg-white/80 pl-9 uppercase shadow-sm dark:border-white/10 dark:bg-slate-950/50 ${
+                      getRequiredError(
+                        "Passport number",
+                        traveller.passportNumber,
+                      )
+                        ? errorBorderClass
+                        : ""
+                    }`}
                     placeholder="AB123456"
                   />
                 </div>
+
+                <FieldError
+                  message={getRequiredError(
+                    "Passport number",
+                    traveller.passportNumber,
+                  )}
+                />
               </div>
 
               <div className="space-y-1.5">
@@ -405,6 +592,7 @@ const PnrTravelerForm = ({
                   <Globe2 className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
 
                   <Input
+                    id={getTravellerFieldKey("passportNationality")}
                     type="text"
                     value={traveller.passportNationality}
                     onChange={(event) =>
@@ -414,11 +602,25 @@ const PnrTravelerForm = ({
                         event.target.value.toUpperCase(),
                       )
                     }
-                    className="h-11 rounded-sm border-slate-200 bg-white/80 pl-9 uppercase shadow-sm dark:border-white/10 dark:bg-slate-950/50"
+                    className={`h-11 rounded-sm border-slate-200 bg-white/80 pl-9 uppercase shadow-sm dark:border-white/10 dark:bg-slate-950/50 ${
+                      getRequiredError(
+                        "Nationality",
+                        traveller.passportNationality,
+                      )
+                        ? errorBorderClass
+                        : ""
+                    }`}
                     placeholder="BD"
                     maxLength={2}
                   />
                 </div>
+
+                <FieldError
+                  message={getRequiredError(
+                    "Nationality",
+                    traveller.passportNationality,
+                  )}
+                />
               </div>
 
               <div className="space-y-1.5">
@@ -430,6 +632,7 @@ const PnrTravelerForm = ({
                   <Globe2 className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
 
                   <Input
+                    id={getTravellerFieldKey("passportIssuingCountry")}
                     type="text"
                     value={traveller.passportIssuingCountry}
                     onChange={(event) =>
@@ -439,11 +642,25 @@ const PnrTravelerForm = ({
                         event.target.value.toUpperCase(),
                       )
                     }
-                    className="h-11 rounded-sm border-slate-200 bg-white/80 pl-9 uppercase shadow-sm dark:border-white/10 dark:bg-slate-950/50"
+                    className={`h-11 rounded-sm border-slate-200 bg-white/80 pl-9 uppercase shadow-sm dark:border-white/10 dark:bg-slate-950/50 ${
+                      getRequiredError(
+                        "Issuing country",
+                        traveller.passportIssuingCountry,
+                      )
+                        ? errorBorderClass
+                        : ""
+                    }`}
                     placeholder="BD"
                     maxLength={2}
                   />
                 </div>
+
+                <FieldError
+                  message={getRequiredError(
+                    "Issuing country",
+                    traveller.passportIssuingCountry,
+                  )}
+                />
               </div>
 
               <DatePickerField
@@ -459,6 +676,15 @@ const PnrTravelerForm = ({
 
                   return date < today;
                 }}
+                error={getRequiredError(
+                  "Passport expiry date",
+                  traveller.passportExpiryDate,
+                )}
+                triggerId={getTravellerFieldKey("passportExpiryDate")}
+                autoOpen={
+                  autoOpenFieldKey === getTravellerFieldKey("passportExpiryDate")
+                }
+                onAutoOpenHandled={onAutoOpenHandled}
               />
             </div>
           </CardContent>

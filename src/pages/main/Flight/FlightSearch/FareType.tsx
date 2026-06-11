@@ -8,7 +8,7 @@ type FareTypeProps = {
 const FareType = ({ fareType, onChange }: FareTypeProps) => {
 
   return (
-    <div className="flex flex-wrap items-center gap-6 mt-4 mb-4 lg:mb-0">
+    <div className="hidden flex flex-wrap items-center gap-6 mt-4 mb-4 lg:mb-0">
       {fares.map((fare) => {
         const isActive = fareType === fare.value;
 
