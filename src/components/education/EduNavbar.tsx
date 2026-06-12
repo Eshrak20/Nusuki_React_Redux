@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { Home, MapPin, School, GraduationCap, FileText } from "lucide-react";
+import { Home, MapPin, School, GraduationCap } from "lucide-react";
 
 import FormSubmissionModal from "../FormSubmissionModal";
 import EduNavbarUI, {
