@@ -96,7 +96,7 @@ export type CreatePnrPayload = {
     gender: Gender;
     date_of_birth: string;
     phone: string;
-    passport: {
+    passport?: {
       number: string;
       nationality: string;
       issuing_country: string;

@@ -25,6 +25,8 @@ const BookingFlightPNR = () => {
 
   const flightId = searchParams.get("flight_id") ?? "";
   const searchId = searchParams.get("search_id") ?? "";
+  console.log("flightId",flightId)
+  console.log("searchId",searchId)
 
   const { data: profileResponse, isLoading: isProfileLoading } =
     useGetUserProfileQuery();
@@ -45,7 +47,6 @@ const BookingFlightPNR = () => {
 
     return mapProfileToPnrForm(profile);
   }, [profileResponse]);
-
   const documentRequirements =
     flightDetailResponse?.data?.document_requirements ??
     flightDetailResponse?.data?.flight?.document_requirements;
