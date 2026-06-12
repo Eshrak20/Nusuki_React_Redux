@@ -41,12 +41,12 @@ const navItems: EduNavItem[] = [
     hasSubmenu: false,
     path: "/education/courses",
   },
-  {
-    name: "Tests",
-    icon: FileText,
-    hasSubmenu: false,
-    path: "/education/tests",
-  },
+  // {
+  //   name: "Tests",
+  //   icon: FileText,
+  //   hasSubmenu: false,
+  //   path: "/education/tests",
+  // },
 ];
 
 const EduNavbar = ({ isSticky }: { isSticky?: boolean }) => {
