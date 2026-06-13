@@ -192,7 +192,7 @@ const DropdownSelectField = ({
 
         <DropdownMenuContent
           align="start"
-          className="z-[9999] max-h-72 w-[var(--radix-dropdown-menu-trigger-width)] overflow-y-auto rounded-sm border-slate-200 bg-white shadow-lg dark:border-white/10 dark:bg-slate-950"
+          className="z-9999 max-h-72 w-(--radix-dropdown-menu-trigger-width) overflow-y-auto rounded-sm border-slate-200 bg-white shadow-lg dark:border-white/10 dark:bg-slate-950"
         >
           {options.map((option) => (
             <DropdownMenuItem
