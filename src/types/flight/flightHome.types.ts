@@ -103,3 +103,10 @@ export interface ApiResponse<T> {
   data: T;
   code: number;
 }
+
+
+export type FlightSearchListsParams = {
+    page?: number;
+    size?: number;
+    search?: string;
+};

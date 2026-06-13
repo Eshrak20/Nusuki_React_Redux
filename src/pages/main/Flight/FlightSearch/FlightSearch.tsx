@@ -21,16 +21,22 @@ import TravelerSection from "./TravelerSection";
 import FlightClassDropdown from "./FlightClassDropdown";
 import { buildFlightSearchPayload } from "../FlightDetail/flightDetails.helpers";
 
+type DestinationSearchHandler = (
+  keyword: string,
+) => Promise<SearchDests[]> | SearchDests[];
+
 interface FlightSearchProps {
   searchDests: SearchDests[];
   onSearchSubmit?: (
     payload: ReturnType<typeof buildFlightSearchPayload>,
   ) => void;
+  onDestinationSearch?: DestinationSearchHandler;
 }
 
 const FlightSearch = ({
   searchDests,
   onSearchSubmit,
+  onDestinationSearch,
 }: FlightSearchProps) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -49,7 +55,7 @@ const FlightSearch = ({
       dispatch(
         setSearchField({
           fromDest: searchDests[0],
-          toDest: searchDests[1],
+          toDest: searchDests[1] ?? searchDests[0],
         }),
       );
     }
@@ -147,7 +153,10 @@ const FlightSearch = ({
       >
         {/* Destination */}
         <div className="col-span-1 sm:col-span-2 lg:col-span-2 xl:flex-1 min-w-0">
-          <DestinationSelector searchDests={searchDests} />
+          <DestinationSelector
+            searchDests={searchDests}
+            onDestinationSearch={onDestinationSearch}
+          />
         </div>
 
         {!isMultiWay && (
@@ -207,9 +216,7 @@ const FlightSearch = ({
 
       <FareType
         fareType={searchData.fareType}
-        onChange={(value) =>
-          dispatch(setSearchField({ fareType: value }))
-        }
+        onChange={(value) => dispatch(setSearchField({ fareType: value }))}
       />
     </div>
   );

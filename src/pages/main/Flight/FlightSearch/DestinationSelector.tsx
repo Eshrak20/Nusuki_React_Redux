@@ -1,10 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useState, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   ArrowRightLeft,
   Plus,
   X,
   Calendar as CalendarIcon,
+  Loader2,
 } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import { format, parseISO } from "date-fns";
@@ -36,135 +37,312 @@ import {
 } from "@/components/ui/popover";
 import { Calendar } from "@/components/ui/calendar";
 
+type PickerType = "from" | "to";
+
+type DestinationSearchHandler = (
+  keyword: string,
+) => Promise<SearchDests[]> | SearchDests[];
+
+type DestinationSelectorProps = {
+  searchDests: SearchDests[];
+  onDestinationSearch?: DestinationSearchHandler;
+};
+
+const MIN_SEARCH_LENGTH = 2;
+const SEARCH_DEBOUNCE_MS = 350;
+
+const getPickerKey = (index: number, type: PickerType) => `${index}-${type}`;
+
+const filterLocalDests = (items: SearchDests[], keyword: string) => {
+  const searchText = keyword.trim().toLowerCase();
+
+  if (!searchText) return items;
+
+  return items.filter((dest) => {
+    return [
+      dest.city_name,
+      dest.iata_code,
+      dest.name,
+      String(dest.id),
+    ]
+      .filter(Boolean)
+      .join(" ")
+      .toLowerCase()
+      .includes(searchText);
+  });
+};
+
 const DestinationSelector = ({
   searchDests,
-}: {
-  searchDests: SearchDests[];
-}) => {
+  onDestinationSearch,
+}: DestinationSelectorProps) => {
   const dispatch = useDispatch();
   const searchData = useSelector((state: RootState) => state.flightSearch);
   const { tripType, segments } = searchData;
   const isMultiWay = tripType === "multi_way";
 
   const [openStates, setOpenStates] = useState<Record<string, boolean>>({});
+  const [activePickerKey, setActivePickerKey] = useState<string | null>(null);
+  const [searchValues, setSearchValues] = useState<Record<string, string>>({});
+  const [resultsByPicker, setResultsByPicker] = useState<
+    Record<string, SearchDests[]>
+  >({});
+  const [loadingByPicker, setLoadingByPicker] = useState<
+    Record<string, boolean>
+  >({});
 
-  const toggleOpen = (index: number, type: "from" | "to", isOpen: boolean) => {
-    setOpenStates((prev) => ({ ...prev, [`${index}-${type}`]: isOpen }));
+  const toggleOpen = (index: number, type: PickerType, isOpen: boolean) => {
+    const pickerKey = getPickerKey(index, type);
+
+    setOpenStates((prev) => ({ ...prev, [pickerKey]: isOpen }));
+
+    if (isOpen) {
+      setActivePickerKey(pickerKey);
+      setResultsByPicker((prev) => ({
+        ...prev,
+        [pickerKey]: prev[pickerKey] ?? searchDests,
+      }));
+      return;
+    }
+
+    setSearchValues((prev) => ({ ...prev, [pickerKey]: "" }));
+    setLoadingByPicker((prev) => ({ ...prev, [pickerKey]: false }));
   };
+
+  useEffect(() => {
+    if (!activePickerKey || !openStates[activePickerKey]) return;
+
+    const keyword = (searchValues[activePickerKey] ?? "").trim();
+
+    if (!onDestinationSearch) {
+      setResultsByPicker((prev) => ({
+        ...prev,
+        [activePickerKey]: filterLocalDests(searchDests, keyword),
+      }));
+      return;
+    }
+
+    if (keyword.length < MIN_SEARCH_LENGTH) {
+      setResultsByPicker((prev) => ({
+        ...prev,
+        [activePickerKey]: searchDests,
+      }));
+      setLoadingByPicker((prev) => ({
+        ...prev,
+        [activePickerKey]: false,
+      }));
+      return;
+    }
+
+    let cancelled = false;
+
+    const timeoutId = window.setTimeout(async () => {
+      setLoadingByPicker((prev) => ({
+        ...prev,
+        [activePickerKey]: true,
+      }));
+
+      try {
+        const results = await onDestinationSearch(keyword);
+
+        if (cancelled) return;
+
+        setResultsByPicker((prev) => ({
+          ...prev,
+          [activePickerKey]: Array.isArray(results) ? results : [],
+        }));
+      } catch (error) {
+        console.error("Airport search failed:", error);
+
+        if (cancelled) return;
+
+        setResultsByPicker((prev) => ({
+          ...prev,
+          [activePickerKey]: [],
+        }));
+      } finally {
+        if (!cancelled) {
+          setLoadingByPicker((prev) => ({
+            ...prev,
+            [activePickerKey]: false,
+          }));
+        }
+      }
+    }, SEARCH_DEBOUNCE_MS);
+
+    return () => {
+      cancelled = true;
+      window.clearTimeout(timeoutId);
+    };
+  }, [
+    activePickerKey,
+    openStates,
+    searchValues,
+    searchDests,
+    onDestinationSearch,
+  ]);
 
   const handleUpdateSegment = (index: number, updates: any) => {
     const reduxSegmentData: any = { ...updates };
+
     if (updates.date) {
       reduxSegmentData.departureDate = updates.date;
       delete reduxSegmentData.date;
     }
+
     dispatch(updateSegment({ index, data: reduxSegmentData }));
 
     // Autofill & Cascade logic
     if (updates.toDest && index < segments.length - 1) {
       dispatch(
-        updateSegment({ index: index + 1, data: { fromDest: updates.toDest } }),
+        updateSegment({
+          index: index + 1,
+          data: { fromDest: updates.toDest },
+        }),
       );
     }
+
     if (updates.date) {
       const newDateObj = parseISO(updates.date);
+
       for (let i = index + 1; i < segments.length; i++) {
-        const subDate = parseISO(segments[i].departureDate);
-        if (newDateObj > subDate) {
+        const subDateValue = segments[i].departureDate;
+
+        if (!subDateValue || newDateObj > parseISO(subDateValue)) {
           dispatch(
-            updateSegment({ index: i, data: { departureDate: updates.date } }),
+            updateSegment({
+              index: i,
+              data: { departureDate: updates.date },
+            }),
           );
         }
       }
     }
+
     if (index === 0) {
       const rootPayload: any = { ...updates };
-      if (updates.date) rootPayload.departureDate = updates.date;
+
+      if (updates.date) {
+        rootPayload.departureDate = updates.date;
+        delete rootPayload.date;
+      }
+
       dispatch(setSearchField(rootPayload));
     }
   };
 
   const renderCityPicker = (
     index: number,
-    type: "from" | "to",
+    type: PickerType,
     currentDest: SearchDests | null,
-  ) => (
-    <Popover
-      open={openStates[`${index}-${type}`]}
-      onOpenChange={(val) => toggleOpen(index, type, val)}
-    >
-      <PopoverTrigger asChild>
-        <div
-          className={cn(
-            "flex-1 min-w-0 w-full border rounded-sm cursor-pointer bg-background min-h-16 flex items-center transition-all px-3",
-            openStates[`${index}-${type}`]
-              ? "border-primary ring-1 ring-primary"
-              : "border-input hover:border-primary",
-          )}
-        >
-          <div className="flex items-center gap-3 w-full">
-            <span className="text-xl font-bold w-12 text-center text-foreground">
-              {currentDest?.iata_code || "---"}
-            </span>
-            <div className="flex flex-col truncate border-l pl-3 border-border">
-              <span className="text-sm font-bold truncate text-foreground">
-                {currentDest?.city_name ||
-                  (type === "from" ? "From where?" : "To where?")}
+  ) => {
+    const pickerKey = getPickerKey(index, type);
+    const pickerResults = resultsByPicker[pickerKey] ?? searchDests;
+    const pickerSearchValue = searchValues[pickerKey] ?? "";
+    const isSearching = loadingByPicker[pickerKey] ?? false;
+
+    return (
+      <Popover
+        open={openStates[pickerKey]}
+        onOpenChange={(val) => toggleOpen(index, type, val)}
+      >
+        <PopoverTrigger asChild>
+          <div
+            className={cn(
+              "flex-1 min-w-0 w-full border rounded-sm cursor-pointer bg-background min-h-16 flex items-center transition-all px-3",
+              openStates[pickerKey]
+                ? "border-primary ring-1 ring-primary"
+                : "border-input hover:border-primary",
+            )}
+          >
+            <div className="flex items-center gap-3 w-full">
+              <span className="text-xl font-bold w-12 text-center text-foreground">
+                {currentDest?.iata_code || "---"}
               </span>
-              <span className="text-xs text-muted-foreground truncate">
-                {currentDest?.name ||
-                  (type === "from" ? "Departure Airport" : "Arrival Airport")}
-              </span>
+
+              <div className="flex flex-col truncate border-l pl-3 border-border">
+                <span className="text-sm font-bold truncate text-foreground">
+                  {currentDest?.city_name ||
+                    (type === "from" ? "From where?" : "To where?")}
+                </span>
+
+                <span className="text-xs text-muted-foreground truncate">
+                  {currentDest?.name ||
+                    (type === "from"
+                      ? "Departure Airport"
+                      : "Arrival Airport")}
+                </span>
+              </div>
             </div>
           </div>
-        </div>
-      </PopoverTrigger>
+        </PopoverTrigger>
 
-      <PopoverContent
-        className="p-0 w-[80vw] sm:w-100 md:w-112.5 shadow-2xl border-border"
-        align="start"
-        sideOffset={8}
-      >
-        <Command className="bg-popover">
-          <div className="flex items-center border-b border-border">
-            <CommandInput
-              placeholder={
-                type === "from" ? "Departure city..." : "Arrival city..."
-              }
-              className="h-12 border-none focus:ring-0 bg-transparent"
-            />
-          </div>
-          <CommandList className="max-h-72">
-            <CommandEmpty className="p-4 text-sm text-muted-foreground">
-              No airport found.
-            </CommandEmpty>
-            <CommandGroup>
-              {searchDests.map((dest) => (
-                <CommandItem
-                  key={dest.id}
-                  value={`${dest.city_name} ${dest.iata_code} ${dest.name}`}
-                  onSelect={() => {
-                    handleUpdateSegment(index, {
-                      [type === "from" ? "fromDest" : "toDest"]: dest,
-                    });
-                    toggleOpen(index, type, false);
-                  }}
-                  className="flex flex-col items-start p-3 cursor-pointer aria-selected:bg-accent aria-selected:text-accent-foreground"
-                >
-                  <div className="font-bold text-sm">
-                    {dest.city_name} ({dest.iata_code})
+        <PopoverContent
+          className="p-0 w-[80vw] sm:w-100 md:w-112.5 shadow-2xl border-border"
+          align="start"
+          sideOffset={8}
+        >
+          <Command className="bg-popover" shouldFilter={!onDestinationSearch}>
+            <div className="flex items-center border-b border-border">
+              <CommandInput
+                value={pickerSearchValue}
+                onValueChange={(value) => {
+                  setActivePickerKey(pickerKey);
+                  setSearchValues((prev) => ({
+                    ...prev,
+                    [pickerKey]: value,
+                  }));
+                }}
+                placeholder={
+                  type === "from" ? "Departure city..." : "Arrival city..."
+                }
+                className="h-12 border-none focus:ring-0 bg-transparent"
+              />
+            </div>
+
+            <CommandList className="max-h-72">
+              <CommandEmpty className="p-4 text-sm text-muted-foreground">
+                {isSearching ? "Searching airports..." : "No airport found."}
+              </CommandEmpty>
+
+              <CommandGroup>
+                {isSearching && (
+                  <div className="flex items-center gap-2 p-3 text-sm text-muted-foreground">
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                    Searching airports...
                   </div>
-                  <div className="text-[11px] text-muted-foreground leading-tight">
-                    {dest.name}
-                  </div>
-                </CommandItem>
-              ))}
-            </CommandGroup>
-          </CommandList>
-        </Command>
-      </PopoverContent>
-    </Popover>
-  );
+                )}
+
+                {!isSearching &&
+                  pickerResults.map((dest) => (
+                    <CommandItem
+                      key={`${dest.id}-${dest.iata_code}`}
+                      value={`${dest.city_name} ${dest.iata_code} ${dest.name}`}
+                      onSelect={() => {
+                        handleUpdateSegment(index, {
+                          [type === "from" ? "fromDest" : "toDest"]: dest,
+                        });
+
+                        toggleOpen(index, type, false);
+                      }}
+                      className="flex flex-col items-start p-3 cursor-pointer aria-selected:bg-accent aria-selected:text-accent-foreground"
+                    >
+                      <div className="font-bold text-sm">
+                        {dest.city_name} ({dest.iata_code})
+                      </div>
+
+                      <div className="text-[11px] text-muted-foreground leading-tight">
+                        {dest.name}
+                      </div>
+                    </CommandItem>
+                  ))}
+              </CommandGroup>
+            </CommandList>
+          </Command>
+        </PopoverContent>
+      </Popover>
+    );
+  };
 
   const renderList = useMemo(
     () =>
@@ -195,9 +373,13 @@ const DestinationSelector = ({
               dispatch(
                 updateSegment({
                   index,
-                  data: { fromDest: segment.toDest, toDest: segment.fromDest },
+                  data: {
+                    fromDest: segment.toDest,
+                    toDest: segment.fromDest,
+                  },
                 }),
               );
+
               if (index === 0) dispatch(swapDestinations());
             }}
             className="hidden lg:flex items-center justify-center bg-background border border-border shadow-sm w-9 h-9 rounded-full text-primary hover:scale-110 transition-all shrink-0 z-10 -mx-3"
@@ -215,6 +397,7 @@ const DestinationSelector = ({
                     <div className="flex items-center gap-2 mb-1 text-xs text-muted-foreground font-medium">
                       <CalendarIcon className="w-3.5 h-3.5" /> Departure Date
                     </div>
+
                     <div className="text-sm font-bold text-foreground">
                       {segment.departureDate
                         ? format(parseISO(segment.departureDate), "dd MMM, yy")
@@ -222,6 +405,7 @@ const DestinationSelector = ({
                     </div>
                   </div>
                 </PopoverTrigger>
+
                 <PopoverContent
                   className="w-auto p-0 border-border"
                   align="end"
@@ -243,10 +427,8 @@ const DestinationSelector = ({
                       const today = new Date();
                       today.setHours(0, 0, 0, 0);
 
-                      // ❗ Prevent past dates
                       if (date < today) return true;
 
-                      // ❗ Prevent selecting before previous segment
                       if (index > 0) {
                         const prevDate =
                           searchData.segments[index - 1]?.departureDate;
@@ -264,6 +446,7 @@ const DestinationSelector = ({
               </Popover>
             </div>
           )}
+
           {isMultiWay && renderList.length > 2 && (
             <button
               type="button"
