@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { Home, MapPin, School, GraduationCap } from "lucide-react";
+import { Home, MapPin, School, GraduationCap, Contact } from "lucide-react";
 
 import FormSubmissionModal from "../FormSubmissionModal";
 import EduNavbarUI, {
@@ -40,6 +40,12 @@ const navItems: EduNavItem[] = [
     icon: GraduationCap,
     hasSubmenu: false,
     path: "/education/courses",
+  },
+  {
+    name: "Contact",
+    icon: Contact,
+    hasSubmenu: false,
+    path: "/education/contact",
   },
   // {
   //   name: "Tests",

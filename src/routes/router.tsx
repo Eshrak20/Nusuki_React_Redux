@@ -65,6 +65,7 @@ import HotelLists from "@/pages/main/Hotel/HotelLists/HotelLists";
 import HotelDetails from "@/pages/main/Hotel/HotelDetails/HotelDetails";
 import HotelPNR from "@/pages/main/Hotel/HotelPNR/HotelPNR";
 import PaymentStatus from "@/pages/dashboard/FlightBookings/modals/PaymentStatus";
+import EduContact from "@/pages/main/Education/EduContact/EduContact";
 
 export const router = createBrowserRouter([
   {
@@ -156,6 +157,10 @@ export const router = createBrowserRouter([
           {
             path: "courses/:id",
             element: <DetCourseMain />,
+          },
+          {
+            path: "contact",
+            element: <EduContact />,
           },
           {
             path: "tests",
