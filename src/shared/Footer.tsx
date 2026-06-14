@@ -1,6 +1,11 @@
 import { Link } from "react-router-dom";
-import logoWhite from "../assets/reactAssets/Logo/whiteLogo.png";
-import logoDark from "../assets/reactAssets/Logo/darkLogo.png";
+import { useLocation } from "react-router-dom";
+
+import logoMainWhite from "../assets/reactAssets/Logo/whiteLogo.png";
+import logoEduLight from "../assets/reactAssets/Logo/eduLight.png";
+
+import logoMainDark from "../assets/reactAssets/Logo/darkLogo.png";
+import logoEduDark from "../assets/reactAssets/Logo/eduDark1.png";
 import footerLight from "@/assets/reactAssets/Footer/footer.webp";
 import footerDark from "@/assets/reactAssets/Footer/footer-dark.jpeg";
 import { footerPayImages } from "@/data/footerPayImages";
@@ -24,7 +29,28 @@ const Footer = () => {
     addressesResponse?.data
       ?.filter((item) => item.is_active)
       ?.sort((a, b) => a.position - b.position) ?? [];
+  const { pathname } = useLocation();
 
+  const isEducationPage =
+    pathname === "/education" || pathname.startsWith("/education/");
+
+  const footerInfo = isEducationPage
+    ? {
+        email: "ceo@nusukibd.com",
+        phoneDisplay: "+880 1805-483777",
+        phoneHref: "+8801805483777",
+        whatsappHref: "8801805483777",
+        logoLight: logoEduLight,
+        logoDark: logoEduDark,
+      }
+    : {
+        email: "info@nusukibd.com",
+        phoneDisplay: "09611678658",
+        phoneHref: "09611678658",
+        whatsappHref: "8801714742454",
+        logoLight: logoMainWhite,
+        logoDark: logoMainDark,
+      };
   return (
     <footer className="relative w-full overflow-hidden border-t border-primary/20 bg-primary text-primary-foreground dark:border-border dark:bg-background dark:text-foreground">
       {/* Background Decoration */}
@@ -39,12 +65,13 @@ const Footer = () => {
           <div className="space-y-4 lg:col-span-3">
             <div className="w-fit rounded-sm bg-white/95 px-4 py-3 shadow-md dark:bg-transparent dark:px-0 dark:py-0 dark:shadow-none">
               <img
-                src={logoWhite}
+                src={footerInfo.logoLight}
                 alt="Logo"
                 className="h-16 w-fit dark:hidden"
               />
+
               <img
-                src={logoDark}
+                src={footerInfo.logoDark}
                 alt="Logo"
                 className="hidden h-16 w-fit dark:block"
               />
@@ -152,7 +179,7 @@ const Footer = () => {
                   to="/visa"
                   className="transition hover:text-white dark:hover:text-primary"
                 >
-                 Visa
+                  Visa
                 </Link>
               </li>
               <li>
@@ -240,10 +267,10 @@ const Footer = () => {
                 <span>
                   Email:{" "}
                   <a
-                    href="mailto:info@nusukibd.com"
+                    href={`mailto:${footerInfo.email}`}
                     className="font-medium text-white hover:underline dark:text-foreground"
                   >
-                    info@nusukibd.com
+                    {footerInfo.email}
                   </a>
                 </span>
               </p>
@@ -255,10 +282,10 @@ const Footer = () => {
                 <span>
                   Hotline:{" "}
                   <a
-                    href="tel:09611678658"
+                    href={`tel:${footerInfo.phoneHref}`}
                     className="font-medium text-white hover:underline dark:text-foreground"
                   >
-                    09611678658
+                    {footerInfo.phoneDisplay}
                   </a>
                 </span>
               </p>
@@ -266,12 +293,12 @@ const Footer = () => {
               <p className="text-sm text-white/80 dark:text-muted-foreground">
                 WhatsApp:{" "}
                 <a
-                  href="https://wa.me/8801714742454"
+                  href={`https://wa.me/${footerInfo.whatsappHref}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="font-semibold text-white hover:underline dark:text-primary"
                 >
-                  +8801714742454
+                  {footerInfo.phoneDisplay}
                 </a>
               </p>
 
@@ -359,69 +386,69 @@ const Footer = () => {
           />
         </div>
 
-     
-       <div className="mt-10 rounded-md border border-white/15 bg-white/10 px-5 py-6 shadow-xl backdrop-blur-md dark:border-border dark:bg-card/60">
-  <div className="grid items-center gap-5 text-sm text-white/75 md:grid-cols-3 dark:text-muted-foreground">
-    {/* Left Links */}
-    <div className="flex flex-wrap justify-center gap-4 md:justify-start">
-      <span>© {new Date().getFullYear()}</span>
+        <div className="mt-10 rounded-md border border-white/15 bg-white/10 px-5 py-6 shadow-xl backdrop-blur-md dark:border-border dark:bg-card/60">
+          <div className="grid items-center gap-5 text-sm text-white/75 md:grid-cols-3 dark:text-muted-foreground">
+            {/* Left Links */}
+            <div className="flex flex-wrap justify-center gap-4 md:justify-start">
+              <span>© {new Date().getFullYear()}</span>
 
-      <Link
-        to="/support-center"
-        className="transition hover:text-white dark:hover:text-primary"
-      >
-        Support Center
-      </Link>
+              <Link
+                to="/support-center"
+                className="transition hover:text-white dark:hover:text-primary"
+              >
+                Support Center
+              </Link>
 
-      <Link
-        to="/payment"
-        className="transition hover:text-white dark:hover:text-primary"
-      >
-        Payment
-      </Link>
+              <Link
+                to="/payment"
+                className="transition hover:text-white dark:hover:text-primary"
+              >
+                Payment
+              </Link>
 
-      <Link
-        to="/security"
-        className="transition hover:text-white dark:hover:text-primary"
-      >
-        Security
-      </Link>
+              <Link
+                to="/security"
+                className="transition hover:text-white dark:hover:text-primary"
+              >
+                Security
+              </Link>
 
-      <Link
-        to="/privacy-policy"
-        className="transition hover:text-white dark:hover:text-primary"
-      >
-        Privacy Policy
-      </Link>
+              <Link
+                to="/privacy-policy"
+                className="transition hover:text-white dark:hover:text-primary"
+              >
+                Privacy Policy
+              </Link>
 
-      <Link
-        to="/emi"
-        className="transition hover:text-white dark:hover:text-primary"
-      >
-        EMI
-      </Link>
-    </div>
+              <Link
+                to="/emi"
+                className="transition hover:text-white dark:hover:text-primary"
+              >
+                EMI
+              </Link>
+            </div>
 
-    {/* Center Credit */}
-    <div className="text-center">
-      This website is developed by{" "}
-      <a
-        href="http://ilabs360.com/"
-        target="_blank"
-        rel="noopener noreferrer"
-        className="font-semibold text-white underline-offset-4 hover:underline dark:text-primary"
-      >
-        ilabs360
-      </a>{" "}
-      team
-    </div>
+            {/* Center Credit */}
+            <div className="text-center">
+              This website is developed by{" "}
+              <a
+                href="http://ilabs360.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-semibold text-white underline-offset-4 hover:underline dark:text-primary"
+              >
+                ilabs360
+              </a>{" "}
+              team
+            </div>
 
-    {/* Right Copyright */}
-    <p className="text-center md:text-right">
-      Copyright © {new Date().getFullYear()} Nusuki. All rights reserved.
-    </p>
-  </div>
-</div>
+            {/* Right Copyright */}
+            <p className="text-center md:text-right">
+              Copyright © {new Date().getFullYear()} Nusuki. All rights
+              reserved.
+            </p>
+          </div>
+        </div>
       </div>
     </footer>
   );
