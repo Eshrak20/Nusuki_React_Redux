@@ -7,6 +7,7 @@ import EduNavbarUI, {
   type EduDestination,
   type EduNavItem,
 } from "./EduNavbarUI";
+import EduContactModal from "@/pages/main/Education/EduContact/CouncellingComponents/EduContactModal";
 
 const destinations: EduDestination[] = [
   { name: "USA", code: "us" },
@@ -108,11 +109,9 @@ const EduNavbar = ({ isSticky }: { isSticky?: boolean }) => {
         onSearchUniversities={handleSearchUniversities}
       />
 
-      <FormSubmissionModal
+      <EduContactModal
         open={isCounsellingOpen}
         onClose={() => setIsCounsellingOpen(false)}
-        title="Book Free Study Abroad Counselling"
-        type="education"
       />
     </>
   );

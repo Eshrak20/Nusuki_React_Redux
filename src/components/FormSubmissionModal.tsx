@@ -123,35 +123,35 @@ const FormSubmissionModal = ({
       name: keyof ContactFormValues;
       message: string;
     }> = [
-      {
-        name: "interestedCountry",
-        message: "Interested country is required",
-      },
-      {
-        name: "dateOfBirth",
-        message: "Date of birth is required",
-      },
-      {
-        name: "interestedCourse",
-        message: "Interested course is required",
-      },
-      {
-        name: "previousVisaRefusal",
-        message: "Previous visa refusal is required",
-      },
-      {
-        name: "country",
-        message: "Country is required",
-      },
-      {
-        name: "city",
-        message: "City is required",
-      },
-      {
-        name: "street",
-        message: "Street is required",
-      },
-    ];
+        {
+          name: "interestedCountry",
+          message: "Interested country is required",
+        },
+        {
+          name: "dateOfBirth",
+          message: "Date of birth is required",
+        },
+        {
+          name: "interestedCourse",
+          message: "Interested course is required",
+        },
+        {
+          name: "previousVisaRefusal",
+          message: "Previous visa refusal is required",
+        },
+        {
+          name: "country",
+          message: "Country is required",
+        },
+        {
+          name: "city",
+          message: "City is required",
+        },
+        {
+          name: "street",
+          message: "Street is required",
+        },
+      ];
 
     requiredFields.forEach((field) => {
       const value = values[field.name];

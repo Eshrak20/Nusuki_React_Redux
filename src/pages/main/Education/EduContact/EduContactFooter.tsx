@@ -33,7 +33,7 @@ const EduContactFooter = () => {
         <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mx-auto mb-12 max-w-3xl text-center">
             <h2 className="text-3xl font-extrabold tracking-tight text-foreground sm:text-4xl lg:text-5xl">
-              Find <span className="text-primary">WISDOM EDUCATION</span>
+              Find <span className="text-primary">NUSUKI EDUCATION</span>
             </h2>
             <p className="mt-4 text-base text-muted-foreground sm:text-lg">
               Follow the Google Map or check the details below to visit our
@@ -49,20 +49,20 @@ const EduContactFooter = () => {
               >
                 <CardContent className="p-0">
                   {/* Card Header */}
-                  <div className="bg-gradient-to-r from-primary/10 to-primary/5 px-6 py-6 text-center dark:from-primary/20 dark:to-primary/5">
+                  <div className="bg-linear-to-r from-primary/10 to-primary/5 px-6 py-6 text-center dark:from-primary/20 dark:to-primary/5">
                     <h3 className="text-xl font-bold tracking-tight text-primary sm:text-2xl">
                       {branch.title}
                     </h3>
                   </div>
 
                   {/* Map Embed */}
-                  <div className="aspect-[16/9] w-full overflow-hidden bg-muted transition-opacity group-hover:opacity-95">
+                  <div className="aspect-video w-full overflow-hidden bg-muted transition-opacity group-hover:opacity-95">
                     <iframe
                       src={branch.mapUrl}
                       title={`${branch.title} map`}
                       loading="lazy"
                       referrerPolicy="no-referrer-when-downgrade"
-                      className="h-full w-full border-0 grayscale-[20%] transition-all duration-500 group-hover:grayscale-0"
+                      className="h-full w-full border-0 grayscale-20 transition-all duration-500 group-hover:grayscale-0"
                       allowFullScreen
                     />
                   </div>
@@ -131,10 +131,10 @@ const EduContactFooter = () => {
           </div>
 
           {/* Info Notice Banner */}
-          <div className="mx-auto mt-12 max-w-4xl rounded-2xl border border-primary/10 bg-gradient-to-b from-card to-muted/20 px-6 py-5 text-center shadow-sm">
+          <div className="mx-auto mt-12 max-w-4xl rounded-2xl border border-primary/10 bg-linear-to-b from-card to-muted/20 px-6 py-5 text-center shadow-sm">
             <p className="text-base font-medium leading-relaxed text-muted-foreground sm:text-lg">
               You can contact{" "}
-              <span className="font-bold text-primary">WISDOM EDUCATION</span>{" "}
+              <span className="font-bold text-primary">NUSUKI EDUCATION</span>{" "}
               during their office hours to inquire about programs, admissions,
               and services.
             </p>

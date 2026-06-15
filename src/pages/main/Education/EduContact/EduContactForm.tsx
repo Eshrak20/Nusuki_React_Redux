@@ -42,7 +42,7 @@ const EduContactForm = () => {
           </p>
 
           <h2 className="text-3xl font-extrabold leading-tight text-primary sm:text-4xl lg:text-5xl">
-            Follow The Google Map & Below Details to Find WISDOM EDUCATION
+            Follow The Google Map & Below Details to Find NUSUKI EDUCATION
           </h2>
 
           <p className="mx-auto mt-4 max-w-2xl text-base text-muted-foreground sm:text-lg">
@@ -65,7 +65,7 @@ const EduContactForm = () => {
                   </h3>
                 </div>
 
-                <div className="aspect-[16/9] w-full overflow-hidden bg-muted">
+                <div className="aspect-video w-full overflow-hidden bg-muted">
                   <iframe
                     src={branch.mapUrl}
                     title={`${branch.title} Google Map`}
@@ -142,7 +142,7 @@ const EduContactForm = () => {
         <div className="mx-auto mt-10 max-w-4xl rounded-2xl border border-primary/15 bg-primary/5 px-5 py-6 text-center dark:bg-primary/10 sm:px-8">
           <p className="text-lg font-bold leading-8 text-foreground sm:text-xl">
             You can contact{" "}
-            <span className="text-primary">WISDOM EDUCATION</span> during their
+            <span className="text-primary">NUSUKI EDUCATION</span> during their
             office hours to inquire about their programs and services.
           </p>
         </div>

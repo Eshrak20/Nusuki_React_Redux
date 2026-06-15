@@ -10,7 +10,14 @@ export const formSubApi = laravelApi.injectEndpoints({
         body: formData,
       }),
     }),
+    postCouncellingInfo: builder.mutation<{ message: string }, ContactFormData>({
+      query: (formData) => ({
+        url: "/councelling-request",
+        method: "POST",
+        body: formData,
+      }),
+    }),
   }),
 });
 
-export const { usePostContactInfoMutation } = formSubApi;
+export const { usePostContactInfoMutation, usePostCouncellingInfoMutation } = formSubApi;

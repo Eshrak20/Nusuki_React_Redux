@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 
 // image path ta tomar project onujayi update kore nio
-import officeImage from "@/assets/images/nusuki-office.png";
+import officeImage from "@/assets/Images/nusuki-office.png";
 
 const EduContactBanner = () => {
   return (
@@ -41,7 +41,7 @@ const EduContactBanner = () => {
 
           <Button
             size="lg"
-            className="mt-8 rounded-full px-6 text-base font-extrabold shadow-lg transition hover:-translate-y-0.5"
+            className="mt-8 rounded-full px-6 text-base font-extrabold shadow-lg py-8 transition hover:-translate-y-0.5"
           >
             <ArrowRightCircle className="mr-2 h-5 w-5" />
             Book A Free Online Counselling
