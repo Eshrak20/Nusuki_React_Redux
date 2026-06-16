@@ -126,8 +126,6 @@ export interface DestinationApiResponse {
 }
 
 
-
-
 export interface DestinationQueryParams {
   page?: number;
   keyword?: string;

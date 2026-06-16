@@ -15,7 +15,7 @@ const HolidayHero = ({
 }: Props) => {
   return (
     <div>
-      <h1 className="max-w-4xl text-3xl font-bold tracking-tight text-foreground sm:text-4xl lg:text-5xl">
+      <h1 className="max-w-4xl text-3xl font-bold tracking-tight text-foreground sm:text-4xl lg:mt-12 lg:text-5xl">
         {name}
       </h1>
 

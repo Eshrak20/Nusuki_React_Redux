@@ -140,7 +140,7 @@ const HolidayImageGallery = ({
     !h-[94vh] !w-[98vw] !max-w-[98vw]
     !translate-x-[-50%] !translate-y-[-50%]
     overflow-hidden border-none bg-black p-0 shadow-2xl
-    sm:rounded-none
+    sm:rounded-none [&>button]:hidden
   "
         >
           <DialogTitle className="sr-only">{title} Viewer</DialogTitle>
@@ -281,7 +281,7 @@ const GalleryImage = ({
   delay = 0,
   children,
   onClick,
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
 }: any) => (
   <motion.button
     initial={{ opacity: 0, y: 20 }}

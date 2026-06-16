@@ -4,8 +4,10 @@ import { Card } from "@/components/ui/card";
 
 // image path ta tomar project onujayi update kore nio
 import officeImage from "@/assets/Images/nusuki-office.png";
+import { useState } from "react";
 
 const EduContactBanner = () => {
+ 
   return (
     <section className="relative overflow-hidden bg-linear-to-br from-primary/10 via-background to-primary-light/25 py-14 sm:py-16 lg:py-24 dark:from-primary/10 dark:via-background dark:to-primary/10">
       <div className="absolute inset-0 opacity-20 dark:opacity-10">
@@ -40,12 +42,14 @@ const EduContactBanner = () => {
           </div>
 
           <Button
+          type="button"
+          //  onClick={() => setIsCounsellingOpen(true)}
             size="lg"
             className="mt-8 rounded-full px-6 text-base font-extrabold shadow-lg py-8 transition hover:-translate-y-0.5"
           >
             <ArrowRightCircle className="mr-2 h-5 w-5" />
             Book A Free Online Counselling
-          </Button>
+          </Button> 
         </div>
 
         <Card className="overflow-hidden rounded-2xl border border-primary/10 bg-card shadow-2xl">

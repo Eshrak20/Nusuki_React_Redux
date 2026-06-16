@@ -1,4 +1,4 @@
-import { useFieldArray, type Control } from "react-hook-form";
+import { useFieldArray } from "react-hook-form";
 import { Plus, Trash2 } from "lucide-react";
 
 import {
@@ -11,12 +11,9 @@ import {
 
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import type { ContactFormValues, ScoreFormValue, ScoresSectionProps } from "@/types/education/type.contact";
 
-type ScoresSectionProps = {
-  control: Control<any>;
-};
-
-const emptyScore = {
+const emptyScore: ScoreFormValue = {
   test_name: "",
   overall: "",
   listening: "",
@@ -27,7 +24,10 @@ const emptyScore = {
 };
 
 const ScoresSection = ({ control }: ScoresSectionProps) => {
-  const { fields, append, remove } = useFieldArray({
+  const { fields, append, remove } = useFieldArray<
+    ContactFormValues,
+    "scores"
+  >({
     control,
     name: "scores",
   });

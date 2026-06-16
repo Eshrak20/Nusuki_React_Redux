@@ -1,4 +1,4 @@
-import { useFieldArray, type Control } from "react-hook-form";
+import { useFieldArray } from "react-hook-form";
 import { Plus, Trash2 } from "lucide-react";
 
 import {
@@ -12,11 +12,13 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
-type AcademicsSectionProps = {
-  control: Control<any>;
-};
+import type {
+  AcademicsSectionProps,
+  AcademicFormValue,
+  ContactFormValues,
+} from "@/types/education/type.contact";
 
-const emptyAcademic = {
+const emptyAcademic: AcademicFormValue = {
   institution: "",
   degree_level: "",
   passed_year: "",
@@ -25,7 +27,10 @@ const emptyAcademic = {
 };
 
 const AcademicsSection = ({ control }: AcademicsSectionProps) => {
-  const { fields, append, remove } = useFieldArray({
+  const { fields, append, remove } = useFieldArray<
+    ContactFormValues,
+    "academics"
+  >({
     control,
     name: "academics",
   });
