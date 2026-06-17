@@ -10,8 +10,10 @@ import FlightFilterDrawer from "./filters/reusableComponents/FlightFilterDrawer"
 import FlightResultsSortBar from "./flightResult/FlightResultsSortBar";
 
 import { useFlightDetailsMain } from "./hooks/useFlightDetailsMain";
+import { useState } from "react";
 
 const FlightDetailsMain = () => {
+  const [open, setOpen] = useState(true)
   const {
     ui,
     response,
@@ -87,6 +89,9 @@ const FlightDetailsMain = () => {
             <FlightFilter
               availableFilters={response?.data?.filters}
               isLoading={loading}
+              isDrawer
+              onDrawerClose={() => setOpen(false)}
+              drawerSide="right"
             />
           </aside>
 

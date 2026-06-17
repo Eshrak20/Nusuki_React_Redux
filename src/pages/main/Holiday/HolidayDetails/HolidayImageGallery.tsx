@@ -69,7 +69,7 @@ const HolidayImageGallery = ({
 
   if (!visibleImages.length) {
     return (
-      <div className="flex h-[260px] items-center justify-center border bg-muted/50 text-muted-foreground rounded-sm">
+      <div className="flex h-65 items-center justify-center border bg-muted/50 text-muted-foreground rounded-sm">
         No images available
       </div>
     );
@@ -80,13 +80,13 @@ const HolidayImageGallery = ({
   return (
     <>
       <section className="group">
-        <div className="grid gap-3 lg:h-[480px] lg:grid-cols-[1.5fr_0.8fr_1fr]">
+        <div className="grid gap-3 lg:h-120 lg:grid-cols-[1.5fr_0.8fr_1fr]">
           {/* Main Large Image */}
           {mainImg && (
             <GalleryImage
               image={mainImg}
               title={title}
-              className="min-h-[300px] lg:min-h-0 rounded-l-md"
+              className="min-h-75 lg:min-h-0 rounded-l-md"
               onClick={() => openViewer(0)}
             />
           )}
@@ -100,7 +100,7 @@ const HolidayImageGallery = ({
                     key={image.id}
                     image={image}
                     title={title}
-                    className="min-h-[145px] lg:min-h-0"
+                    className="min-h-36.25 lg:min-h-0"
                     delay={0.1 * (index + 1)}
                     onClick={() => openViewer(index + 1)}
                   />
@@ -113,7 +113,7 @@ const HolidayImageGallery = ({
             <GalleryImage
               image={rightImg}
               title={title}
-              className="min-h-[250px] lg:min-h-0 rounded-r-md"
+              className="min-h-62.5 lg:min-h-0 rounded-r-md"
               delay={0.2}
               onClick={() => openViewer(3)}
             >
@@ -136,9 +136,9 @@ const HolidayImageGallery = ({
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent
           className="
-    !fixed !left-1/2 !top-1/2
-    !h-[94vh] !w-[98vw] !max-w-[98vw]
-    !translate-x-[-50%] !translate-y-[-50%]
+    fixed! left-1/2! top-1/2!
+    h-[94vh]! w-[98vw]! max-w-[98vw]!
+    translate-x-[-50%]! translate-y-[-50%]!
     overflow-hidden border-none bg-black p-0 shadow-2xl
     sm:rounded-none [&>button]:hidden
   "
@@ -147,7 +147,7 @@ const HolidayImageGallery = ({
 
           <div className="relative flex h-full flex-col">
             {/* Header */}
-            <div className="absolute left-0 right-0 top-0 z-50 flex items-center justify-between bg-gradient-to-b from-black/80 to-transparent px-5 py-4">
+            <div className="absolute left-0 right-0 top-0 z-50 flex items-center justify-between bg-linear-to-b from-black/80 to-transparent px-5 py-4">
               <div className="min-w-0 text-white">
                 <h3 className="max-w-[70vw] truncate text-xs font-semibold uppercase tracking-[0.18em] text-white/80">
                   {title}
@@ -241,7 +241,7 @@ const HolidayImageGallery = ({
             </div>
 
             {/* Thumbnails */}
-            <div className="absolute bottom-0 left-0 right-0 z-50 bg-gradient-to-t from-black/90 to-transparent px-4 pb-5 pt-10">
+            <div className="absolute bottom-0 left-0 right-0 z-50 bg-linear-to-t from-black/90 to-transparent px-4 pb-5 pt-10">
               <div className="mx-auto flex max-w-5xl gap-3 overflow-x-auto">
                 {visibleImages.map((image, index) => (
                   <button

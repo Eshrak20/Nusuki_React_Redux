@@ -1,3 +1,4 @@
+import { useRef, useState, type PointerEvent } from "react";
 import { Button } from "@/components/ui/button";
 import type { ApiFilters } from "@/types/flight/flightResults.types";
 import PriceRangeFilter from "./PriceRangeFilter";
@@ -18,6 +19,13 @@ interface Props {
   isLoading: boolean;
   className?: string;
   isDrawer?: boolean;
+
+  // Add this for drawer swipe close
+  onDrawerClose?: () => void;
+
+  // left drawer = swipe left to close
+  // right drawer = swipe right to close
+  drawerSide?: "left" | "right";
 }
 
 const FlightFilter = ({
@@ -25,14 +33,86 @@ const FlightFilter = ({
   isLoading,
   className,
   isDrawer = false,
+  onDrawerClose,
+  drawerSide = "left",
 }: Props) => {
   const dispatch = useDispatch();
 
+  const [dragX, setDragX] = useState(0);
+  const [isDragging, setIsDragging] = useState(false);
+
+  const startX = useRef(0);
+  const startY = useRef(0);
+  const startTime = useRef(0);
+
+  const handlePointerDown = (e: PointerEvent<HTMLElement>) => {
+    if (!isDrawer || !onDrawerClose) return;
+    if (e.pointerType === "mouse") return;
+
+    startX.current = e.clientX;
+    startY.current = e.clientY;
+    startTime.current = Date.now();
+
+    setIsDragging(true);
+    e.currentTarget.setPointerCapture(e.pointerId);
+  };
+
+  const handlePointerMove = (e: PointerEvent<HTMLElement>) => {
+    if (!isDragging || !isDrawer) return;
+
+    const diffX = e.clientX - startX.current;
+    const diffY = e.clientY - startY.current;
+
+    // allow normal vertical scrolling inside drawer
+    if (Math.abs(diffY) > Math.abs(diffX)) return;
+
+    if (drawerSide === "left") {
+      // left drawer closes by swiping left
+      setDragX(Math.min(diffX, 0));
+    } else {
+      // right drawer closes by swiping right
+      setDragX(Math.max(diffX, 0));
+    }
+  };
+
+  const handlePointerUp = (e: PointerEvent<HTMLElement>) => {
+    if (!isDragging || !isDrawer) return;
+
+    const diffX = e.clientX - startX.current;
+    const duration = Date.now() - startTime.current;
+    const velocity = Math.abs(diffX) / Math.max(duration, 1);
+
+    const shouldClose =
+      drawerSide === "left"
+        ? diffX < -90 || (diffX < -45 && velocity > 0.45)
+        : diffX > 90 || (diffX > 45 && velocity > 0.45);
+
+    if (shouldClose) {
+      onDrawerClose?.();
+    }
+
+    setDragX(0);
+    setIsDragging(false);
+  };
+
   return (
     <aside
+      onPointerDown={handlePointerDown}
+      onPointerMove={handlePointerMove}
+      onPointerUp={handlePointerUp}
+      onPointerCancel={handlePointerUp}
+      style={
+        isDrawer
+          ? {
+              transform: `translateX(${dragX}px)`,
+              transition: isDragging ? "none" : "transform 180ms ease",
+            }
+          : undefined
+      }
       className={cn(
         "w-full rounded-sm py-3 md:py-4",
-        isDrawer && "rounded-none border-0 bg-transparent p-0 shadow-none",
+        isDrawer &&
+          "touch-pan-y rounded-none border-0 bg-transparent p-0 shadow-none",
         className,
       )}
     >
@@ -68,7 +148,7 @@ const FlightFilter = ({
             variant="ghost"
             size="sm"
             className="rounded-sm"
-            onClick={() => dispatch(resetFilters())} 
+            onClick={() => dispatch(resetFilters())}
           >
             <RotateCcw className="mr-2 h-4 w-4" />
             Reset
@@ -79,14 +159,17 @@ const FlightFilter = ({
       <div className="space-y-3">
         <AirlinesFilter data={availableFilters?.airlines || []} />
         <AircraftFilter data={availableFilters?.aircraft || []} />
+
         <PriceRangeFilter
           data={availableFilters?.price_range}
           isLoading={isLoading}
         />
+
         <LayoverDurationFilter
           data={availableFilters?.layover_duration}
           isLoading={isLoading}
         />
+
         <FlightScheduleFilter data={availableFilters?.flight_schedules} />
         <StopsFilter data={availableFilters?.stops || []} />
         <RefundabilityFilter data={availableFilters?.refundability || []} />

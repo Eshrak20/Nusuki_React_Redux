@@ -4,7 +4,6 @@ import { Card } from "@/components/ui/card";
 
 // image path ta tomar project onujayi update kore nio
 import officeImage from "@/assets/Images/nusuki-office.png";
-import { useState } from "react";
 
 const EduContactBanner = () => {
  

@@ -70,8 +70,8 @@ const CMPromotions = () => {
   return (
     <div
       className={clsx(
-        "w-full -mt-14 px-4 overflow-hidden",
-        isHolidayPage ? "lg:mt-96" : "lg:mt-15",
+        "w-full -mt-36 px-4 overflow-hidden",
+        isHolidayPage ? "mt-137.5 lg:mt-96" : "lg:mt-15",
       )}
       ref={containerRef}
     >
