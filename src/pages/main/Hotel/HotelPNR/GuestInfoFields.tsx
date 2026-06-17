@@ -2,7 +2,6 @@ import type { CreateHotelBookingGuest } from "@/types/hotel/hotelBooking.types";
 
 type GuestInfoFieldsProps = {
   guests: CreateHotelBookingGuest[];
-  guestCount : string |null;
   addGuest: () => void;
   removeGuest: (index: number) => void;
   updateGuest: (

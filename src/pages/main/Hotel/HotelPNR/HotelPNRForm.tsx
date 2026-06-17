@@ -40,6 +40,19 @@ const createChildrenByCount = (count: number): CreateHotelBookingGuest[] => {
   return Array.from({ length: count }, () => createEmptyChildrenGuest());
 };
 
+const parseGuestCount = (
+  value: number | string | null,
+  fallback: number,
+) => {
+  const parsedValue = Number(value);
+
+  if (!Number.isFinite(parsedValue) || parsedValue < 0) {
+    return fallback;
+  }
+
+  return parsedValue;
+};
+
 
 const HotelPNRForm = ({
   searchId,
@@ -53,37 +66,30 @@ const HotelPNRForm = ({
     useState<HotelBookingSuccessResponse | null>(null);
 
 
-  const totalAdults = useMemo(() => {
-    const parsedAdults = Number(adults);
+   const totalAdults = useMemo(() => {
+  const count = parseGuestCount(adults, 1);
+  return count <= 0 ? 1 : count;
+}, [adults]);
 
-    if (!Number.isFinite(parsedAdults) || parsedAdults <= 0) {
-      return 1;
-    }
+const totalChildren = useMemo(() => {
+  return parseGuestCount(children, 0);
+}, [children]);
 
-    return parsedAdults;
-  }, [adults]);
+const initialGuests = useMemo(
+  () => [
+    ...createAdultsByCount(totalAdults),
+    ...createChildrenByCount(totalChildren),
+  ],
+  [totalAdults, totalChildren],
+);
 
-  const totalChildren = useMemo(() => {
-    const parsedChildren = Number(children);
-
-    if (!Number.isFinite(parsedChildren) || parsedChildren <= 0) {
-      return 1;
-    }
-
-    return parsedChildren;
-  }, [children]);
-
+const [guests, setGuests] = useState<CreateHotelBookingGuest[]>(initialGuests);
 
   const [contact, setContact] = useState({
     email: "",
     phone: "",
   });
 
-  const createTotalGuests = [...createAdultsByCount(totalAdults), ...createChildrenByCount(totalChildren)]
-
-  const [guests, setGuests] = useState<CreateHotelBookingGuest[]>(() =>
-    createTotalGuests
-  );
 
   const [payment, setPayment] = useState<CreateHotelBookingPayment>({
     type: "DEPOSIT",
@@ -184,7 +190,6 @@ const HotelPNRForm = ({
 
         <GuestInfoFields
           guests={guests}
-          guestCount={String(guests.length)}
           addGuest={addGuest}
           removeGuest={removeGuest}
           updateGuest={updateGuest}

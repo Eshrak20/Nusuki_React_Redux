@@ -89,7 +89,7 @@ const HotelLists = () => {
     if (data && data.search.page === 1) {
       // Optional optimization layer: Check if filter states match initialization conditions
     }
-    
+
     fetchHotelsFromServer(1, selectedFilters);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedFilters]);
@@ -148,11 +148,11 @@ const HotelLists = () => {
   // Dynamically map total page ranges via matching filter results or regional limits
   const totalPages = useMemo(() => {
     if (!data) return 1;
-    
+
     // Fallback order: Explicitly filtered dynamic aggregate count -> regional collection
-    const trackingCount = 
-      data.total_available_hotels_with_filter ?? 
-      data.total_hotels_in_region ?? 
+    const trackingCount =
+      data.total_available_hotels_with_filter ??
+      data.total_hotels_in_region ??
       0;
 
     return Math.max(1, Math.ceil(trackingCount / PAGE_SIZE));
@@ -174,7 +174,7 @@ const HotelLists = () => {
         <div className="mt-5 grid grid-cols-1 gap-5 lg:grid-cols-[320px_1fr]">
           <HotelFilterSidebar
             filters={data.filters}
-            onChange={() => {}} // No longer resets state locally; useEffect hooks into Redux updates
+            onChange={() => { }} // No longer resets state locally; useEffect hooks into Redux updates
           />
 
           <main className="space-y-4 overflow-hidden relative">
@@ -186,7 +186,7 @@ const HotelLists = () => {
             <HotelSortBar value={sortBy} onChange={setSortBy} />
 
             {isLoading ? (
-              <div className="flex flex-col items-center justify-center gap-3 rounded-[0px] border border-border bg-background p-20 text-center shadow-sm min-h-100">
+              <div className="flex flex-col items-center justify-center gap-3 rounded-none border border-border bg-background p-20 text-center shadow-sm min-h-100">
                 <Loader2 className="h-8 w-8 animate-spin text-primary" />
                 <p className="text-sm font-bold text-muted-foreground animate-pulse">
                   Updating live server results...
@@ -203,7 +203,7 @@ const HotelLists = () => {
                 ))}
               </div>
             ) : (
-              <NoHotelFound messages={data.raw_meta?.messages} />
+              <NoHotelFound />
             )}
           </main>
         </div>
