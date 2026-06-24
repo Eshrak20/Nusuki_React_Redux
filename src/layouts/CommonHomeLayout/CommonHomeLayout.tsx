@@ -1,4 +1,4 @@
-import AppSection from "@/components/AppSection";
+// import AppSection from "@/components/AppSection";
 import VideoBanner from "@/components/VideoBanner";
 import CMCollection from "@/layouts/CommonHomeLayout/CMCollection";
 import CMDestination from "@/layouts/CommonHomeLayout/CMDestination";
@@ -34,7 +34,7 @@ const CommonHomeLayout = ({
         ? "pt-20 md:pt-24"
         : "pt-28 md:pt-36";
 
-  const sectionContainer = "mx-auto w-full px-4 md:max-w-4xl 2xl:max-w-7xl";
+  const sectionContainer = "mx-auto w-full md:px-9 2xl:px-24 md:max-w-5xl 2xl:max-w-7xl";
 
   return (
     <main className="bg-gray-100 text-slate-900 dark:bg-gray-950 dark:text-white">
@@ -52,7 +52,7 @@ const CommonHomeLayout = ({
       </section>
 
       <section
-        className={`${sectionContainer} mt-110 md:mt-0 2xl:px-20 mb-14 ${promotionTopSpacing}`}
+        className={`${sectionContainer} mt-110 md:mt-0 mb-14 ${promotionTopSpacing}`}
       >
         <CMPromotions />
       </section>
@@ -96,7 +96,7 @@ const CommonHomeLayout = ({
       )}
 
       <section className="pt-10 md:pt-16">
-        <AppSection />
+        {/* <AppSection /> */}
       </section>
     </main>
   );

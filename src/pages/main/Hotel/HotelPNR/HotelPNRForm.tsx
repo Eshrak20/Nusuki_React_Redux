@@ -66,24 +66,24 @@ const HotelPNRForm = ({
     useState<HotelBookingSuccessResponse | null>(null);
 
 
-   const totalAdults = useMemo(() => {
-  const count = parseGuestCount(adults, 1);
-  return count <= 0 ? 1 : count;
-}, [adults]);
+  const totalAdults = useMemo(() => {
+    const count = parseGuestCount(adults, 1);
+    return count <= 0 ? 1 : count;
+  }, [adults]);
 
-const totalChildren = useMemo(() => {
-  return parseGuestCount(children, 0);
-}, [children]);
+  const totalChildren = useMemo(() => {
+    return parseGuestCount(children, 0);
+  }, [children]);
 
-const initialGuests = useMemo(
-  () => [
-    ...createAdultsByCount(totalAdults),
-    ...createChildrenByCount(totalChildren),
-  ],
-  [totalAdults, totalChildren],
-);
+  const initialGuests = useMemo(
+    () => [
+      ...createAdultsByCount(totalAdults),
+      ...createChildrenByCount(totalChildren),
+    ],
+    [totalAdults, totalChildren],
+  );
 
-const [guests, setGuests] = useState<CreateHotelBookingGuest[]>(initialGuests);
+  const [guests, setGuests] = useState<CreateHotelBookingGuest[]>(initialGuests);
 
   const [contact, setContact] = useState({
     email: "",

@@ -23,5 +23,5 @@ export const navigationLinks = [
     ],
   },
   { href: "/hotel", label: "Hotel" },
-  // { href: "/shop", label: "Shop" },
+  { href: "/shop", label: "Shop" },
 ];

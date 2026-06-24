@@ -104,15 +104,15 @@ const FlightFilter = ({
       style={
         isDrawer
           ? {
-              transform: `translateX(${dragX}px)`,
-              transition: isDragging ? "none" : "transform 180ms ease",
-            }
+            transform: `translateX(${dragX}px)`,
+            transition: isDragging ? "none" : "transform 180ms ease",
+          }
           : undefined
       }
       className={cn(
         "w-full rounded-sm py-3 md:py-4",
         isDrawer &&
-          "touch-pan-y rounded-none border-0 bg-transparent p-0 shadow-none",
+        "touch-pan-y rounded-none border-0 bg-transparent p-0 shadow-none",
         className,
       )}
     >
