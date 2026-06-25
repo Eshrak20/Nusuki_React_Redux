@@ -9,7 +9,7 @@ import {
 import { logout } from "@/redux/features/auth/authSlice";
 
 const API_BASE_URL =
-  import.meta.env.VITE_API_BASE_URL || "https://engine.nusukibd.com/api/";
+  import.meta.env.VITE_API_BASE_URL;
 
 const getAuthToken = () => {
   return (
